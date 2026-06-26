@@ -86,6 +86,9 @@
 <style>
   html { scroll-behavior: smooth; }
   body { font-family: '"EB Garamond"', Georgia, serif; }
+  /* containers: coluna de leitura (texto) e grade larga (cards), ambos centralizados */
+  .wrap { margin-left:auto; margin-right:auto; width:100%; max-width:720px; padding-left:1.25rem; padding-right:1.25rem; }
+  .wrap-wide { margin-left:auto; margin-right:auto; width:100%; max-width:1040px; padding-left:1.25rem; padding-right:1.25rem; }
   .eyebrow {
     font-family: Jost, system-ui, sans-serif;
     text-transform: uppercase;
@@ -115,73 +118,89 @@
 
 <!-- ============================ HERO ============================ -->
 <header class="bg-ink text-cream">
-  <div class="mx-auto w-full max-w-[680px] px-5 pt-6 pb-2">
+  <div class="wrap-wide pt-6 pb-2">
     <div class="flex items-center justify-between">
       <span class="font-display text-[20px] tracking-tight text-cream">Só o que <span class="text-champagne italic">Cai</span></span>
       <span class="eyebrow text-warm">1ª fase da OAB</span>
     </div>
   </div>
 
-  <div class="mx-auto w-full max-w-[680px] px-5 pt-8 pb-12">
-    <p class="eyebrow text-champagne mb-4">Guia interativo de aprovação</p>
-    <p class="font-sans text-[15px] sm:text-[16px] text-cream/60 mb-5 max-w-[46ch] leading-snug">
-      Para quem já reprovou uma ou duas vezes, trabalha o dia inteiro e não aguenta mais a ideia de explicar isso de novo em casa.
-    </p>
+  <div class="wrap-wide pt-8 pb-14">
+    <div class="grid lg:grid-cols-[1.05fr_0.9fr] gap-10 lg:gap-14 lg:items-center">
+      <!-- coluna esquerda: copy -->
+      <div>
+        <p class="eyebrow text-champagne mb-4">Guia interativo de aprovação</p>
+        <p class="font-sans text-[15px] sm:text-[16px] text-cream/60 mb-5 max-w-[46ch] leading-snug">
+          Para quem já reprovou uma ou duas vezes, trabalha o dia inteiro e não aguenta mais a ideia de explicar isso de novo em casa.
+        </p>
 
-    <h1 class="font-display font-700 text-[32px] leading-[1.13] sm:text-[44px] sm:leading-[1.08] text-cream">
-      Você não reprovou por falta de inteligência. Reprovou porque te empurraram centenas de horas de aula para esconder que a prova se decide em poucas matérias.
-    </h1>
+        <h1 class="font-display font-700 text-[32px] leading-[1.13] sm:text-[44px] sm:leading-[1.08] text-cream">
+          Você não reprovou por falta de inteligência. Reprovou porque te empurraram centenas de horas de aula para esconder que a prova se decide em poucas matérias.
+        </h1>
 
-    <p class="prose-body font-body text-[19px] sm:text-[21px] leading-[1.55] text-cream/80 mt-6 max-w-[44ch]">
-      <strong class="text-cream font-600">Só o que Cai</strong> é o guia interativo que te mostra, com
-      todas as letras, o que mais cai na 1ª fase da OAB, em que ordem atacar com o pouco tempo que você
-      tem, e o que dá para ignorar sem culpa. Você para de correr atrás de toda a matéria e passa
-      estudando só o que decide a prova.
-    </p>
+        <p class="prose-body font-body text-[19px] sm:text-[21px] leading-[1.55] text-cream/80 mt-6 max-w-[44ch]">
+          <strong class="text-cream font-600">Só o que Cai</strong> é o guia interativo que te mostra, com
+          todas as letras, o que mais cai na 1ª fase da OAB, em que ordem atacar com o pouco tempo que você
+          tem, e o que dá para ignorar sem culpa. Você para de correr atrás de toda a matéria e passa
+          estudando só o que decide a prova.
+        </p>
 
-    <div class="mt-8">
-      <a href="#" class="js-cta inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-accent hover:bg-accentd text-ink hover:text-cream font-sans font-600 text-[17px] tracking-wide px-8 py-4 rounded-[5px] shadow-[0_10px_30px_-10px_rgba(166,129,74,.7)] transition">
-        <span>Quero estudar só o que cai</span>
-        <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <p class="font-sans text-[13px] text-cream/55 mt-3">
-        Acesso na hora. R$ <span class="js-price">47</span> uma vez, sem mensalidade. 7 dias de garantia para testar.
-      </p>
-    </div>
-
-    <div class="mt-10 border-t border-white/10 pt-6">
-      <p class="eyebrow text-warm mb-3">Faltam para o próximo Exame de Ordem</p>
-      <div class="flex items-end gap-5 sm:gap-7">
-        <div class="text-center">
-          <div class="cd-num js-cd-days font-display text-[34px] sm:text-[40px] leading-none text-champagne">--</div>
-          <div class="font-sans text-[11px] tracking-widest uppercase text-warm mt-1">dias</div>
-        </div>
-        <div class="text-champagne/40 font-display text-[30px] leading-none pb-2">:</div>
-        <div class="text-center">
-          <div class="cd-num js-cd-hours font-display text-[34px] sm:text-[40px] leading-none text-cream">--</div>
-          <div class="font-sans text-[11px] tracking-widest uppercase text-warm mt-1">horas</div>
-        </div>
-        <div class="text-champagne/40 font-display text-[30px] leading-none pb-2">:</div>
-        <div class="text-center">
-          <div class="cd-num js-cd-mins font-display text-[34px] sm:text-[40px] leading-none text-cream">--</div>
-          <div class="font-sans text-[11px] tracking-widest uppercase text-warm mt-1">min</div>
-        </div>
-        <div class="text-champagne/40 font-display text-[30px] leading-none pb-2">:</div>
-        <div class="text-center">
-          <div class="cd-num js-cd-secs font-display text-[34px] sm:text-[40px] leading-none text-cream">--</div>
-          <div class="font-sans text-[11px] tracking-widest uppercase text-warm mt-1">seg</div>
+        <div class="mt-8">
+          <a href="#" class="js-cta inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-accent hover:bg-accentd text-ink hover:text-cream font-sans font-600 text-[17px] tracking-wide px-8 py-4 rounded-[5px] shadow-[0_10px_30px_-10px_rgba(166,129,74,.7)] transition">
+            <span>Quero estudar só o que cai</span>
+            <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <p class="font-sans text-[13px] text-cream/55 mt-3">
+            Acesso na hora. R$ <span class="js-price">47</span> uma vez, sem mensalidade. 7 dias de garantia para testar.
+          </p>
         </div>
       </div>
-      <p class="font-sans text-[12.5px] text-cream/45 mt-4">
-        Cada semana estudando a coisa errada é uma semana que não volta. O relógio já está correndo.
-      </p>
+
+      <!-- coluna direita: card de contador + o que você recebe -->
+      <aside class="lg:pl-2">
+        <div class="border border-white/15 bg-white/5 rounded-[8px] p-6 sm:p-7">
+          <p class="eyebrow text-warm mb-4">Faltam para o próximo Exame de Ordem</p>
+          <div class="flex items-end gap-4 sm:gap-5">
+            <div class="text-center">
+              <div class="cd-num js-cd-days font-display text-[34px] sm:text-[38px] leading-none text-champagne">--</div>
+              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">dias</div>
+            </div>
+            <div class="text-champagne/40 font-display text-[26px] leading-none pb-1.5">:</div>
+            <div class="text-center">
+              <div class="cd-num js-cd-hours font-display text-[34px] sm:text-[38px] leading-none text-cream">--</div>
+              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">horas</div>
+            </div>
+            <div class="text-champagne/40 font-display text-[26px] leading-none pb-1.5">:</div>
+            <div class="text-center">
+              <div class="cd-num js-cd-mins font-display text-[34px] sm:text-[38px] leading-none text-cream">--</div>
+              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">min</div>
+            </div>
+            <div class="text-champagne/40 font-display text-[26px] leading-none pb-1.5">:</div>
+            <div class="text-center">
+              <div class="cd-num js-cd-secs font-display text-[34px] sm:text-[38px] leading-none text-cream">--</div>
+              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">seg</div>
+            </div>
+          </div>
+
+          <div class="border-t border-white/10 my-5"></div>
+
+          <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-champagne mb-3">O que você recebe</p>
+          <ul class="space-y-2.5 font-body text-[16.5px] leading-[1.4] text-cream/85">
+            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>O mapa do que mais cai na prova</span></li>
+            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Um plano de estudo pelo tempo que você tem</span></li>
+            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>O filtro do que dá para ignorar sem culpa</span></li>
+            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Progresso que salva e te acompanha até a prova</span></li>
+          </ul>
+          <p class="font-sans text-[12px] text-cream/45 mt-5">Acesso imediato, pelo celular. 7 dias de garantia.</p>
+        </div>
+      </aside>
     </div>
   </div>
 </header>
 
 <!-- ============================ AGITAÇÃO ============================ -->
 <section class="bg-creamlt">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-20">
+  <div class="wrap py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">Você conhece esse domingo</p>
     <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.15] text-ink max-w-[22ch]">
       Você lembra do peso de fechar o caderno sem ter aprendido nada, com a casa inteira já dormindo.
@@ -209,7 +228,7 @@
 
 <!-- ============================ VILÃO + RAZÃO ============================ -->
 <section class="bg-cream border-y border-line">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-20">
+  <div class="wrap py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">Por que isso continua acontecendo</p>
     <h2 class="font-display font-700 text-[28px] sm:text-[37px] leading-[1.14] text-ink max-w-[22ch]">
       O cursinho caro não vive de você passar. Vive de você voltar.
@@ -238,7 +257,7 @@
 
 <!-- ============================ A VIRADA / MECANISMO ============================ -->
 <section class="bg-creamlt">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-20">
+  <div class="wrap py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">A virada</p>
     <h2 class="font-display font-700 text-[29px] sm:text-[38px] leading-[1.13] text-ink max-w-[20ch]">
       A 1ª fase não é uma muralha. É um padrão que se repete.
@@ -289,7 +308,7 @@
 
 <!-- ============================ PROVA / INCIDÊNCIA (PLACEHOLDERS) ============================ -->
 <section class="bg-cream border-t border-line">
-  <div class="mx-auto w-full max-w-[760px] px-5 py-16 sm:py-20">
+  <div class="wrap-wide py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">Não é sorte, é estatística</p>
     <h2 class="font-display font-700 text-[29px] sm:text-[38px] leading-[1.13] text-ink">
       Olhe o padrão com os seus próprios olhos.
@@ -300,7 +319,7 @@
     </p>
 
     <!-- TODO: substitua cada [INSERIR: ...] pelo número real. NÃO use número que você não auditou. -->
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-9">
       <div class="bg-creamlt border border-line rounded-[6px] p-6">
         <div class="font-display text-[15px] text-gold font-600 mb-2">Concentração</div>
         <p class="font-body text-[18px] leading-[1.45] text-text">[INSERIR: as 6 matérias mais cobradas somam cerca de N% da prova]</p>
@@ -326,7 +345,7 @@
 
 <!-- ============================ AUTORIDADE (foto do advogado) ============================ -->
 <section class="bg-ink text-cream">
-  <div class="mx-auto w-full max-w-[760px] px-5 py-16 sm:py-20">
+  <div class="wrap-wide py-16 sm:py-20">
     <div class="grid sm:grid-cols-[200px_1fr] gap-8 sm:gap-10 items-start">
       <div class="mx-auto sm:mx-0 w-[180px]">
         <div class="rounded-[6px] overflow-hidden border border-champagne/30 bg-ink2">
@@ -362,7 +381,7 @@
 
 <!-- ============================ O QUE É O PRODUTO ============================ -->
 <section class="bg-creamlt">
-  <div class="mx-auto w-full max-w-[760px] px-5 py-16 sm:py-20">
+  <div class="wrap-wide py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">O que você recebe</p>
     <h2 class="font-display font-700 text-[28px] sm:text-[37px] leading-[1.13] text-ink max-w-[24ch]">
       Não é PDF. Não é mais um cursão para você não assistir. É um plano que decide por você.
@@ -415,7 +434,7 @@
 
 <!-- ============================ NÃO É PARA TODO MUNDO (qualificação) ============================ -->
 <section class="bg-cream border-y border-line">
-  <div class="mx-auto w-full max-w-[760px] px-5 py-16 sm:py-20">
+  <div class="wrap-wide py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">Antes de comprar, seja honesta com você</p>
     <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.14] text-ink">
       Isto aqui não é para todo mundo.
@@ -444,7 +463,7 @@
 
 <!-- ============================ OFERTA ============================ -->
 <section id="oferta" class="bg-ink text-cream">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-20">
+  <div class="wrap py-16 sm:py-20">
     <p class="eyebrow text-champagne mb-5">A oferta</p>
     <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.14] text-cream max-w-[26ch]">
       O cursinho te custou mais de mil reais e quase um ano da sua vida. Isto custa menos que a sua taxa
@@ -524,7 +543,7 @@
 
 <!-- ============================ GARANTIA ============================ -->
 <section class="bg-creamlt">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-20">
+  <div class="wrap py-16 sm:py-20">
     <div class="bg-cream border border-line rounded-[6px] p-7 sm:p-9">
       <div class="flex items-start gap-4">
         <svg class="shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -553,7 +572,7 @@
 
 <!-- ============================ DUAS ESCOLHAS ============================ -->
 <section class="bg-cream border-t border-line">
-  <div class="mx-auto w-full max-w-[760px] px-5 py-16 sm:py-20">
+  <div class="wrap-wide py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">No fundo, só existem duas escolhas</p>
     <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.14] text-ink max-w-[24ch]">
       Daqui a um ano, qual história você quer estar contando lá em casa?
@@ -584,7 +603,7 @@
 
 <!-- ============================ DEPOIMENTOS (PLACEHOLDERS) ============================ -->
 <section class="bg-creamlt border-t border-line">
-  <div class="mx-auto w-full max-w-[760px] px-5 py-16 sm:py-20">
+  <div class="wrap-wide py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">Quem já usou</p>
     <h2 class="font-display font-700 text-[27px] sm:text-[34px] leading-[1.14] text-ink">
       Espaço reservado para as suas alunas.
@@ -606,7 +625,7 @@
 
 <!-- ============================ FAQ ============================ -->
 <section class="bg-cream border-t border-line">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-20">
+  <div class="wrap py-16 sm:py-20">
     <p class="eyebrow text-gold rule-top pt-5 mb-5">Antes de você decidir</p>
     <h2 class="font-display font-700 text-[27px] sm:text-[35px] leading-[1.13] text-ink mb-9">
       Perguntas que talvez estejam na sua cabeça agora.
@@ -661,7 +680,7 @@
 
 <!-- ============================ CTA FINAL ============================ -->
 <section class="bg-ink text-cream">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-16 sm:py-24 text-center">
+  <div class="wrap py-16 sm:py-24 text-center">
     <p class="eyebrow text-champagne mb-6">A sua próxima prova começa na direção certa</p>
     <h2 class="font-display font-700 text-[30px] sm:text-[42px] leading-[1.1] text-cream max-w-[20ch] mx-auto">
       Você não reprovou por falta de inteligência. Da próxima vez, mire só no que cai.
@@ -692,7 +711,7 @@
 
 <!-- ============================ RODAPÉ ============================ -->
 <footer class="bg-ink2 text-cream/55 border-t border-white/10">
-  <div class="mx-auto w-full max-w-[680px] px-5 py-10 pb-28 sm:pb-10">
+  <div class="wrap py-10 pb-28 sm:pb-10">
     <p class="font-display text-[18px] text-cream/80">Só o que <span class="text-champagne italic">Cai</span></p>
     <p class="font-body text-[14.5px] leading-[1.55] mt-3 max-w-[60ch]">
       Só o que Cai é um material de estudo independente. Não tem vínculo com a OAB, com a FGV nem com
