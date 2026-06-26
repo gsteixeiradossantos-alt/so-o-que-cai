@@ -1,819 +1,431 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Só o que Cai · Guia interativo de aprovação na 1ª fase da OAB</title>
-<meta name="description" content="Pare de tentar estudar tudo. Veja o que mais cai na 1ª fase da OAB, em que ordem atacar com o tempo que você tem, e o que ignorar sem culpa. Passe estudando só o que cai, sem virar refém de cursinho." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Em 20 minutos, descubra exatamente o que está entre você e a aprovação na 1ª fase da OAB. Um diagnóstico que te testa só no que mais cai, mostra onde você perde ponto, e revela como você se sabota na hora da prova.">
+<title>Só o que Cai · Diagnóstico de aprovação na 1ª fase da OAB</title>
 
-<!-- =========================================================================
-     PARA EDITAR (procure por estes pontos):
-     1. CHECKOUT ........ no <script> final, CONFIG.checkoutUrl
-     2. DATA DO EXAME ... no <script> final, CONFIG.examDate (contador de urgência)
-     3. PIXEL DO FACEBOOK no bloco comentado logo abaixo, troque SEU_PIXEL_ID
-     4. NÚMEROS DE INCIDÊNCIA .. seção "Não é sorte, é estatística", marcados como [INSERIR: ...]
-     5. SUA HISTÓRIA / BIO ..... seção "Quem está te falando isso", [INSERIR ...]
-     6. IMAGEM OPEN GRAPH ...... og:image abaixo (suba uma imagem 1200x630)
-     7. DEPOIMENTOS ............ seção marcada, placeholders [DEPOIMENTO ...]
-     8. BÔNUS (opcional) ....... no stack da oferta, linha marcada [BÔNUS opcional]
-     ========================================================================= -->
+<!-- ============================================================
+     PARA PREENCHER ANTES DE PUBLICAR (procure por cada item):
+     1. CHECKOUT_URL ...... no <script> final (link do Kiwify/Hotmart)
+     2. DATA_PROVA ........ no <script> final (data do próximo exame, confira no edital da FGV)
+     3. FOTO .............. assets/gustavo.webp (já incluída; troque se quiser)
+     4. PIXEL DO FACEBOOK . bloco comentado abaixo (troque SEU_PIXEL_ID e descomente)
+     5. MICROSOFT CLARITY . bloco comentado abaixo (troque SEU_CLARITY_ID e descomente)
+     6. IMAGEM OG ......... assets/og.png já incluída; ajuste og:url/og:image se mudar de domínio
+     7. DEPOIMENTOS ....... seção "Quem já fez" (placeholders marcados [DEPOIMENTO ...])
+     ============================================================ -->
 
-<!-- Open Graph / compartilhamento -->
-<meta property="og:type" content="website" />
-<meta property="og:locale" content="pt_BR" />
-<meta property="og:site_name" content="Só o que Cai" />
-<meta property="og:title" content="Você não reprovou por falta de inteligência. Estava estudando a coisa errada." />
-<meta property="og:description" content="O guia interativo que mostra o que realmente cai na 1ª fase da OAB, em que ordem estudar conforme o seu tempo, e o que ignorar sem culpa." />
-<!-- TODO: suba uma imagem 1200x630 e cole a URL absoluta aqui -->
-<meta property="og:image" content="https://SEU-DOMINIO.com/og-so-o-que-cai.jpg" />
-<meta property="og:url" content="https://SEU-DOMINIO.com/" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Você não reprovou por falta de inteligência. Estava estudando a coisa errada." />
-<meta name="twitter:description" content="Passe estudando só o que cai. O guia interativo de incidência da 1ª fase da OAB." />
-<meta name="twitter:image" content="https://SEU-DOMINIO.com/og-so-o-que-cai.jpg" />
+<!-- Open Graph / compartilhamento e anúncio -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Só o que Cai">
+<meta property="og:title" content="Em 20 minutos, descubra o que está entre você e a aprovação na OAB.">
+<meta property="og:description" content="Um diagnóstico que te testa só no que mais cai e mostra onde você perde ponto. Pare de estudar tudo.">
+<meta property="og:url" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/">
+<meta property="og:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Em 20 minutos, descubra o que está entre você e a aprovação na OAB.">
+<meta name="twitter:description" content="Um diagnóstico que te testa só no que mais cai e mostra onde você perde ponto.">
+<meta name="twitter:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
 
-<!-- ===== FACEBOOK PIXEL (cole o seu ID e descomente este bloco) =====
+<!-- ===== FACEBOOK PIXEL (troque SEU_PIXEL_ID e descomente) =====
 <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', 'SEU_PIXEL_ID');
-  fbq('track', 'PageView');
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','SEU_PIXEL_ID'); fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=SEU_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
-===== fim do Facebook Pixel ===== -->
+===== fim Facebook Pixel ===== -->
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=Jost:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230F0F0E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' fill='%23C4AE8C' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          ink:     '#0F0F0E',
-          ink2:    '#16150F',
-          champagne:'#C4AE8C',
-          gold:    '#9A834F',
-          accent:  '#A6814A',
-          accentd: '#8A6C3B',
-          warm:    '#918D89',
-          cream:   '#F5F3EF',
-          creamlt: '#FAF8F4',
-          line:    '#D8D8D4',
-          text:    '#26241F',
-        },
-        fontFamily: {
-          display: ['"Playfair Display"', 'Georgia', 'serif'],
-          sans:    ['Jost', 'system-ui', 'sans-serif'],
-          body:    ['"EB Garamond"', 'Georgia', 'serif'],
-        },
-      },
-    },
-  };
+<!-- ===== MICROSOFT CLARITY (mapa de calor grátis; troque SEU_CLARITY_ID e descomente) =====
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","SEU_CLARITY_ID");
 </script>
+===== fim Clarity ===== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23EFF1F4'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23D9851A'/%3E%3C/svg%3E">
 
 <style>
-  html { scroll-behavior: smooth; }
-  body { font-family: '"EB Garamond"', Georgia, serif; }
-  /* containers: coluna de leitura (texto) e grade larga (cards), ambos centralizados */
-  .wrap { margin-left:auto; margin-right:auto; width:100%; max-width:720px; padding-left:1.25rem; padding-right:1.25rem; }
-  .wrap-wide { margin-left:auto; margin-right:auto; width:100%; max-width:1040px; padding-left:1.25rem; padding-right:1.25rem; }
-  .eyebrow {
-    font-family: Jost, system-ui, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    font-weight: 600;
-    font-size: 11px;
+  :root{
+    --ink:#181B22; --soft:#414A5A; --paper:#EFF1F4; --card:#FFFFFF;
+    --hot:#D9851A; --hot-b:#F2AE38; --hot-w:#FBEED7;
+    --btn:#A85E0B; --btn-h:#8F4F09;            /* fundo do botão: passa no WCAG com texto branco */
+    --cold:#98A1B0; --cold-w:#E7E9ED; --line:#DCDFE6;
+    --navy:#1C2738; --ok:#2C8A78; --ok-w:#DCEEEA;
   }
-  .rule-top { position: relative; }
-  .rule-top::before {
-    content: ""; position: absolute; top: 0; left: 0;
-    width: 38px; height: 2px; background: #A6814A;
-  }
-  .prose-body p { margin-top: 1.05rem; }
-  .prose-body p:first-child { margin-top: 0; }
-  .cd-num { font-variant-numeric: tabular-nums; }
-  .faq-panel { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-  .faq-item[open-state="1"] .faq-panel { max-height: 520px; }
-  .faq-item[open-state="1"] .faq-chev { transform: rotate(180deg); }
-  .stickybar { transition: transform .25s ease; }
-  @supports (padding: max(0px)) {
-    .safe-b { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
-  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:74px}
+  .wrap{max-width:780px;margin:0 auto;padding:0 20px}
+  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.015em;line-height:1.12}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;justify-content:center;background:var(--btn);color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:16px;text-decoration:none;padding:15px 28px;border-radius:12px;transition:background .15s,transform .15s;border:0;cursor:pointer;box-shadow:0 8px 22px -10px rgba(168,94,11,.8)}
+  .btn:hover{background:var(--btn-h)}
+  .btn:active{transform:translateY(1px)}
+  .btn svg{width:18px;height:18px;flex-shrink:0}
+  .safe{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--soft);margin-top:11px}
+  .safe svg{width:14px;height:14px;color:var(--ok)}
+
+  header.top{padding:20px 0 0}
+  .mark{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .mark .dot{width:8px;height:8px;border-radius:50%;background:var(--hot);transform:translateY(-2px)}
+  .mark .name{font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:-.02em}
+  .mark .tag{font-size:12px;color:var(--soft);font-weight:500;letter-spacing:.02em;text-transform:uppercase}
+
+  .hero{padding:42px 0 8px}
+  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--hot);margin-bottom:16px}
+  .hero h1{font-size:clamp(30px,5.9vw,49px);font-weight:700;max-width:16ch}
+  .hero h1 em{font-style:normal;color:var(--hot);box-shadow:inset 0 -.28em 0 var(--hot-w)}
+  .lede{margin-top:20px;font-size:17.5px;color:var(--soft);max-width:54ch}
+  .cta-row{margin-top:26px;display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap}
+  .price-line{font-size:13.5px;color:var(--soft);line-height:1.5}
+  .price-line b{color:var(--ink)}
+
+  .count{margin-top:28px;background:var(--navy);color:#fff;border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .count .lbl{font-size:13px;color:#AEB6C4;max-width:24ch}
+  .clock{display:flex;gap:12px}
+  .clock div{text-align:center}
+  .clock .n{font-family:'JetBrains Mono';font-weight:700;font-size:25px;line-height:1}
+  .clock .u{font-size:10px;color:#8C97A8;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+
+  section{padding:40px 0}
+  .kk{font-family:'JetBrains Mono';font-size:12px;color:var(--cold);font-weight:700;letter-spacing:.05em}
+  h2.big{font-size:clamp(23px,4.2vw,32px);font-weight:600;margin-top:8px;max-width:21ch}
+  .p{margin-top:16px;font-size:16px;color:var(--soft);max-width:62ch}
+  .p strong{color:var(--ink);font-weight:600}
+
+  .enemy{background:var(--navy);color:#E7E9ED;border-radius:18px;padding:30px 26px}
+  .enemy .kk{color:var(--hot-b)}
+  .enemy h2{color:#fff;font-size:clamp(21px,3.8vw,28px);font-weight:600;margin-top:8px;max-width:24ch}
+  .enemy .p{color:#B9C0CC}
+  .enemy .p strong{color:#fff}
+  .enemy .punch{font-family:'Space Grotesk';font-weight:600;font-size:18px;color:var(--hot-b);margin-top:20px;max-width:36ch}
+
+  .axes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+  .axis{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .axis .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;margin-bottom:12px}
+  .axis.know .ic{background:var(--hot-w)} .axis.perf .ic{background:var(--ok-w)}
+  .axis .ic svg{width:21px;height:21px}
+  .axis h3{font-size:16px;font-weight:600}
+  .axis p{font-size:13.5px;color:var(--soft);margin-top:7px}
+  @media(max-width:560px){.axes{grid-template-columns:1fr}}
+
+  .steps{margin-top:22px;counter-reset:s}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .step .num{counter-increment:s;font-family:'JetBrains Mono';font-weight:700;font-size:15px;color:#fff;background:var(--navy);width:44px;height:44px;border-radius:12px;display:grid;place-items:center}
+  .step .num::before{content:counter(s)}
+  .step h3{font-size:16.5px;font-weight:600}
+  .step p{font-size:14.5px;color:var(--soft);margin-top:5px}
+
+  .inside{margin-top:20px;display:grid;gap:10px}
+  .item{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--hot);border-radius:11px;padding:14px 16px}
+  .item h3{font-size:15.5px;font-weight:600}
+  .item p{font-size:13.5px;color:var(--soft);margin-top:4px}
+
+  .founder{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;gap:20px;align-items:flex-start}
+  .founder img{width:92px;height:110px;border-radius:12px;object-fit:cover;flex-shrink:0;background:var(--cold-w)}
+  .founder .kk{margin-bottom:6px}
+  .founder p{font-size:15px;color:var(--soft);margin-top:8px}
+  .founder .sig{font-family:'Space Grotesk';font-weight:600;color:var(--ink);font-size:14px;margin-top:10px}
+  @media(max-width:560px){.founder{flex-direction:column;gap:14px}.founder img{width:104px;height:124px}}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  .st{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .st .n{font-family:'JetBrains Mono';font-weight:700;font-size:26px;color:var(--navy);line-height:1}
+  .st .n small{font-size:13px;color:var(--cold)}
+  .st .l{font-size:12.5px;color:var(--soft);margin-top:8px;line-height:1.35}
+  .barwrap{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .barwrap .lab{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;margin-bottom:6px}
+  .barwrap .lab.cold{color:var(--soft);font-weight:500;margin-top:14px}
+  .bbar{height:13px;border-radius:7px;overflow:hidden;background:var(--cold-w)}
+  .bbar i{display:block;height:100%;border-radius:7px}
+  .note{font-size:12px;color:var(--cold);margin-top:14px}
+  @media(max-width:560px){.stats{grid-template-columns:1fr}}
+
+  .quotes{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .quote{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:18px}
+  .quote p{font-size:14.5px;color:var(--soft);font-style:italic}
+  .quote .who{font-family:'Space Grotesk';font-weight:600;font-size:13px;color:var(--ink);margin-top:10px;font-style:normal}
+  .quotes + .note{text-align:left}
+  @media(max-width:560px){.quotes{grid-template-columns:1fr}}
+
+  .offer{background:var(--card);border:2px solid var(--hot);border-radius:18px;padding:28px;text-align:center}
+  .anchor{display:flex;align-items:stretch;justify-content:center;margin:6px 0 18px;flex-wrap:wrap}
+  .anchor .col{flex:1;min-width:180px;padding:16px}
+  .anchor .col.bad .h,.anchor .col.good .h{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);margin-bottom:8px}
+  .anchor .col.bad .v{font-family:'Space Grotesk';font-weight:600;font-size:19px;text-decoration:line-through;text-decoration-color:var(--cold);color:var(--soft)}
+  .anchor .col .sub{font-size:12px;color:var(--cold);margin-top:6px;line-height:1.4}
+  .anchor .col.good{border-left:1px solid var(--line)}
+  .anchor .col.good .v{font-family:'Space Grotesk';font-weight:700;font-size:36px;color:var(--hot)}
+  .anchor .col.good .sub{color:var(--soft)}
+  .guar{display:inline-flex;align-items:center;gap:9px;background:var(--ok-w);color:#1c5c50;font-size:13px;font-weight:600;padding:9px 15px;border-radius:30px;margin-top:16px}
+  .guar svg{width:16px;height:16px}
+
+  .faq{margin-top:14px}
+  details.q{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+  details.q summary{padding:15px 17px;cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:10px;font-family:'Space Grotesk'}
+  details.q summary::-webkit-details-marker{display:none}
+  details.q summary::after{content:"+";color:var(--hot);font-family:'JetBrains Mono';font-size:18px}
+  details.q[open] summary::after{content:"\2013"}
+  details.q .a{padding:0 17px 16px;font-size:14px;color:var(--soft)}
+
+  .final{text-align:center;padding:48px 0 30px}
+  .final h2{font-size:clamp(24px,4.6vw,34px);font-weight:700;max-width:18ch;margin:0 auto}
+  .final h2 em{font-style:normal;color:var(--hot)}
+  .final .btn{margin-top:22px}
+
+  footer{padding:26px 0 40px;color:var(--cold);font-size:12px;text-align:center;line-height:1.7}
+
+  .sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50;padding-bottom:max(11px,env(safe-area-inset-bottom))}
+  .sticky .pl{font-size:12px;color:var(--soft)}
+  .sticky .pl b{font-family:'Space Grotesk';color:var(--ink);font-size:16px}
+  .sticky .btn{padding:12px 18px;font-size:14px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
+<body>
 
-<body class="bg-creamlt text-text antialiased selection:bg-champagne/40">
+<!-- 1. HEADER -->
+<header class="top"><div class="wrap"><div class="mark">
+  <span class="dot"></span><span class="name">Só o que Cai</span><span class="tag">Diagnóstico · 1ª fase OAB</span>
+</div></div></header>
 
-<!-- ============================ HERO ============================ -->
-<header class="bg-ink text-cream">
-  <div class="wrap-wide pt-6 pb-2">
-    <div class="flex items-center justify-between">
-      <span class="font-display text-[20px] tracking-tight text-cream">Só o que <span class="text-champagne italic">Cai</span></span>
-      <span class="eyebrow text-warm">1ª fase da OAB</span>
-    </div>
-  </div>
+<div class="wrap">
 
-  <div class="wrap-wide pt-8 pb-14">
-    <div class="grid lg:grid-cols-[1.05fr_0.9fr] gap-10 lg:gap-14 lg:items-center">
-      <!-- coluna esquerda: copy -->
+  <!-- 2. HERO -->
+  <div class="hero">
+    <div class="eyebrow">Diagnóstico de aprovação · 1ª fase da OAB</div>
+    <h1>Em 20 minutos, descubra exatamente o que está entre você e a <em>aprovação</em>.</h1>
+    <p class="lede">Não é mais um cursinho com centenas de horas de aula. É um diagnóstico que te testa só no que mais cai, mostra onde você perde ponto, revela como você se sabota na hora da prova, e te entrega o caminho mais curto até os 40 acertos.</p>
+    <div class="cta-row">
       <div>
-        <p class="eyebrow text-champagne mb-4">Guia interativo de aprovação</p>
-        <p class="font-sans text-[15px] sm:text-[16px] text-cream/60 mb-5 max-w-[46ch] leading-snug">
-          Para quem já reprovou uma ou duas vezes, trabalha o dia inteiro e não aguenta mais a ideia de explicar isso de novo em casa.
-        </p>
-
-        <h1 class="font-display font-700 text-[32px] leading-[1.13] sm:text-[44px] sm:leading-[1.08] text-cream">
-          Você não reprovou por falta de inteligência. Reprovou porque te empurraram centenas de horas de aula para esconder que a prova se decide em poucas matérias.
-        </h1>
-
-        <p class="prose-body font-body text-[19px] sm:text-[21px] leading-[1.55] text-cream/80 mt-6 max-w-[44ch]">
-          <strong class="text-cream font-600">Só o que Cai</strong> é o guia interativo que te mostra, com
-          todas as letras, o que mais cai na 1ª fase da OAB, em que ordem atacar com o pouco tempo que você
-          tem, e o que dá para ignorar sem culpa. Você para de correr atrás de toda a matéria e passa
-          estudando só o que decide a prova.
-        </p>
-
-        <div class="mt-8">
-          <a href="#" class="js-cta inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-accent hover:bg-accentd text-ink hover:text-cream font-sans font-600 text-[17px] tracking-wide px-8 py-4 rounded-[5px] shadow-[0_10px_30px_-10px_rgba(166,129,74,.7)] transition">
-            <span>Quero estudar só o que cai</span>
-            <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <p class="font-sans text-[13px] text-cream/55 mt-3">
-            Acesso na hora. R$ <span class="js-price">47</span> uma vez, sem mensalidade. 7 dias de garantia para testar.
-          </p>
+        <a class="btn js-buy" href="#">Quero meu diagnóstico
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <div class="safe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          Pix ou cartão · compra 100% segura
         </div>
       </div>
-
-      <!-- coluna direita: card de contador + o que você recebe -->
-      <aside class="lg:pl-2">
-        <div class="border border-white/15 bg-white/5 rounded-[8px] p-6 sm:p-7">
-          <p class="eyebrow text-warm mb-4">Faltam para o próximo Exame de Ordem</p>
-          <div class="flex items-end gap-4 sm:gap-5">
-            <div class="text-center">
-              <div class="cd-num js-cd-days font-display text-[34px] sm:text-[38px] leading-none text-champagne">--</div>
-              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">dias</div>
-            </div>
-            <div class="text-champagne/40 font-display text-[26px] leading-none pb-1.5">:</div>
-            <div class="text-center">
-              <div class="cd-num js-cd-hours font-display text-[34px] sm:text-[38px] leading-none text-cream">--</div>
-              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">horas</div>
-            </div>
-            <div class="text-champagne/40 font-display text-[26px] leading-none pb-1.5">:</div>
-            <div class="text-center">
-              <div class="cd-num js-cd-mins font-display text-[34px] sm:text-[38px] leading-none text-cream">--</div>
-              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">min</div>
-            </div>
-            <div class="text-champagne/40 font-display text-[26px] leading-none pb-1.5">:</div>
-            <div class="text-center">
-              <div class="cd-num js-cd-secs font-display text-[34px] sm:text-[38px] leading-none text-cream">--</div>
-              <div class="font-sans text-[10px] tracking-widest uppercase text-warm mt-1">seg</div>
-            </div>
-          </div>
-
-          <div class="border-t border-white/10 my-5"></div>
-
-          <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-champagne mb-3">O que você recebe</p>
-          <ul class="space-y-2.5 font-body text-[16.5px] leading-[1.4] text-cream/85">
-            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>O mapa do que mais cai na prova</span></li>
-            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Um plano de estudo pelo tempo que você tem</span></li>
-            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>O filtro do que dá para ignorar sem culpa</span></li>
-            <li class="flex gap-2.5"><svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Progresso que salva e te acompanha até a prova</span></li>
-          </ul>
-          <p class="font-sans text-[12px] text-cream/45 mt-5">Acesso imediato, pelo celular. 7 dias de garantia.</p>
-        </div>
-      </aside>
+      <div class="price-line"><b>R$ 47</b> uma vez, sem mensalidade.<br>Resultado na hora. 7 dias de garantia.</div>
+    </div>
+    <div class="count">
+      <div class="lbl">Cada semana estudando a coisa errada não volta. Falta para o próximo Exame de Ordem:</div>
+      <div class="clock" id="clock">
+        <div><div class="n" id="cd">--</div><div class="u">dias</div></div>
+        <div><div class="n" id="ch">--</div><div class="u">horas</div></div>
+        <div><div class="n" id="cm">--</div><div class="u">min</div></div>
+      </div>
     </div>
   </div>
-</header>
 
-<!-- ============================ AGITAÇÃO ============================ -->
-<section class="bg-creamlt">
-  <div class="wrap py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">Você conhece esse domingo</p>
-    <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.15] text-ink max-w-[22ch]">
-      Você lembra do peso de fechar o caderno sem ter aprendido nada, com a casa inteira já dormindo.
-    </h2>
-
-    <div class="prose-body font-body text-[18.5px] sm:text-[20px] leading-[1.62] text-text mt-7 max-w-[46ch]">
-      <p>
-        Foi assim quase todo fim de semana. O passeio que seu filho pediu e você trocou por apostila. O
-        almoço de família que você comeu com pressa para voltar a estudar. As noites em que sentou
-        exausta, depois do trabalho e da rotina da casa, e ainda tentou empurrar mais uma aula para
-        dentro da cabeça.
-      </p>
-      <p class="font-600 text-ink">E mesmo assim veio a reprovação. De novo.</p>
-      <p>
-        A pior parte nunca foi a nota. Foi ter que olhar para quem você ama e dizer, mais uma vez, que
-        todo aquele tempo que você tirou deles não deu em nada. Foi a pergunta no grupo da família que
-        você não quer responder. Foi começar a achar, lá no fundo, que talvez o problema seja você.
-      </p>
-      <p class="font-600 text-ink">
-        Não é. E eu vou te mostrar exatamente onde ele esteve esse tempo todo.
-      </p>
+  <!-- 3. INIMIGO -->
+  <section>
+    <div class="enemy">
+      <div class="kk">POR QUE ISSO CONTINUA ACONTECENDO</div>
+      <h2>O cursinho caro não vive de você passar. Vive de você voltar.</h2>
+      <p class="p">Você lembra do peso de fechar o caderno sem ter aprendido nada, com a casa inteira já dormindo. O passeio que seu filho pediu e você trocou por apostila. O almoço de família comido com pressa para voltar a estudar. E, mesmo assim, a reprovação. De novo.</p>
+      <p class="p">Eles cobram <strong>mais de mil reais, mais mensalidade sem data para acabar</strong>, e mandam você estudar tudo, todo dia, como se você não trabalhasse e não tivesse uma casa para tocar. Quanto mais aula empilham, mais parece que a culpa de reprovar é sua. E a solução que oferecem é sempre a mesma: recomeçar, pagando de novo.</p>
+      <div class="punch">Mandar estudar tudo é o conselho perfeito para quem ganha enquanto você continua matriculada.</div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================ VILÃO + RAZÃO ============================ -->
-<section class="bg-cream border-y border-line">
-  <div class="wrap py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">Por que isso continua acontecendo</p>
-    <h2 class="font-display font-700 text-[28px] sm:text-[37px] leading-[1.14] text-ink max-w-[22ch]">
-      O cursinho caro não vive de você passar. Vive de você voltar.
-    </h2>
-
-    <div class="prose-body font-body text-[18.5px] sm:text-[20px] leading-[1.62] text-text mt-7 max-w-[46ch]">
-      <p>Pensa comigo, sem raiva, só com lógica.</p>
-      <p>
-        Eles cobram mais de mil reais, mais mensalidade que não tem data para acabar. Entregam centenas
-        de horas de aula e mandam você estudar tudo, todo dia, como se você não trabalhasse e não
-        tivesse uma casa para tocar.
-      </p>
-      <p>
-        Quanto mais aula eles empilham, mais parece que, se você reprovou, foi porque não se dedicou o
-        suficiente. A culpa cai no seu colo. E a solução que oferecem é sempre a mesma: recomeçar, do
-        zero, pagando de novo.
-      </p>
-      <p class="font-600 text-ink">
-        Repara na engenharia disso. Mandar estudar tudo é o conselho perfeito para quem ganha enquanto
-        você continua matriculada. Ninguém ali tem o menor incentivo de te mostrar o atalho.
-      </p>
-      <p>Eu tenho.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ A VIRADA / MECANISMO ============================ -->
-<section class="bg-creamlt">
-  <div class="wrap py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">A virada</p>
-    <h2 class="font-display font-700 text-[29px] sm:text-[38px] leading-[1.13] text-ink max-w-[20ch]">
-      A 1ª fase não é uma muralha. É um padrão que se repete.
-    </h2>
-
-    <div class="prose-body font-body text-[18.5px] sm:text-[20px] leading-[1.62] text-text mt-7 max-w-[46ch]">
-      <p>
-        São 80 questões de múltipla escolha. Para passar, você precisa de 40. Metade. E essas questões
-        não caem espalhadas por igual.
-      </p>
-      <p>
-        Exame após exame, as mesmas poucas matérias dominam a prova, enquanto uma parte enorme do
-        conteúdo quase não aparece. Isso não é opinião, está escrito nas provas passadas, em preto no
-        branco, para quem se der ao trabalho de olhar.
-      </p>
-      <p>
-        Quer dizer que você não precisa aprender Direito de novo. Isso você já fez, durante anos, na
-        faculdade. O que ninguém te deu foi o mapa dizendo onde a prova realmente mora, para você
-        gastar suas poucas horas no que vale ponto, e não no que só enche apostila.
-      </p>
-      <p class="font-600 text-ink">
-        É exatamente isso que o Só o que Cai faz. Ele te entrega o caminho mais curto entre o pouco
-        tempo que você tem e os 40 acertos que você precisa.
-      </p>
-    </div>
-
-    <div class="mt-10 bg-cream border border-line rounded-[6px] p-6">
-      <div class="space-y-4">
-        <div>
-          <div class="flex justify-between font-sans text-[13px] mb-1.5">
-            <span class="font-600 text-ink">Poucas matérias decidem a prova</span>
-            <span class="text-gold font-600">[__]%</span>
-          </div>
-          <div class="h-3 bg-line rounded-[2px] overflow-hidden"><div class="h-full bg-accent" style="width:72%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between font-sans text-[13px] mb-1.5">
-            <span class="text-warm">Todo o resto do conteúdo</span>
-            <span class="text-warm">[__]%</span>
-          </div>
-          <div class="h-3 bg-line rounded-[2px] overflow-hidden"><div class="h-full bg-warm/60" style="width:28%"></div></div>
-        </div>
+  <!-- 4. A VIRADA / DOIS EIXOS -->
+  <section>
+    <div class="kk">A VIRADA</div>
+    <h2 class="big">Talvez o seu problema não seja estudar mais.</h2>
+    <p class="p">Existem dois jeitos de reprovar na 1ª fase. Um todo mundo conhece: não saber o conteúdo. O outro, que ninguém te conta, é <strong>saber e errar mesmo assim</strong>: travar na questão difícil, ficar sem tempo, trocar a resposta certa por insegurança no último segundo. Você pode estar perdendo pontos nos dois lados ao mesmo tempo, e estudar mais horas não conserta o segundo.</p>
+    <p class="p">O Só o que Cai mede os dois. Por isso ele te diz mais do que "estude isto". Ele te diz <strong>o que você não sabe</strong> e <strong>como você se sabota</strong>, que são problemas diferentes, com soluções diferentes.</p>
+    <div class="axes">
+      <div class="axis know">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#D9851A" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3>Eixo do conteúdo</h3>
+        <p>Em quais das matérias que decidem a prova você está furado, e quais já estão garantidas.</p>
       </div>
-      <p class="font-sans text-[12px] text-warm mt-4 italic">Ilustração do conceito. Os números reais da incidência entram logo abaixo.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ PROVA / INCIDÊNCIA (PLACEHOLDERS) ============================ -->
-<section class="bg-cream border-t border-line">
-  <div class="wrap-wide py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">Não é sorte, é estatística</p>
-    <h2 class="font-display font-700 text-[29px] sm:text-[38px] leading-[1.13] text-ink">
-      Olhe o padrão com os seus próprios olhos.
-    </h2>
-    <p class="prose-body font-body text-[18.5px] sm:text-[20px] leading-[1.6] text-text mt-6 max-w-[48ch]">
-      Coloque as últimas provas lado a lado e o desenho aparece sozinho. Estes são os números que guiam
-      o Só o que Cai. Troque cada bloco pelos dados reais da análise de incidência:
-    </p>
-
-    <!-- TODO: substitua cada [INSERIR: ...] pelo número real. NÃO use número que você não auditou. -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-9">
-      <div class="bg-creamlt border border-line rounded-[6px] p-6">
-        <div class="font-display text-[15px] text-gold font-600 mb-2">Concentração</div>
-        <p class="font-body text-[18px] leading-[1.45] text-text">[INSERIR: as 6 matérias mais cobradas somam cerca de N% da prova]</p>
-      </div>
-      <div class="bg-creamlt border border-line rounded-[6px] p-6">
-        <div class="font-display text-[15px] text-gold font-600 mb-2">Ética Profissional</div>
-        <p class="font-body text-[18px] leading-[1.45] text-text">[INSERIR: Ética caiu N vezes nas últimas 9 provas]</p>
-      </div>
-      <div class="bg-creamlt border border-line rounded-[6px] p-6">
-        <div class="font-display text-[15px] text-gold font-600 mb-2">Tema recorrente</div>
-        <p class="font-body text-[18px] leading-[1.45] text-text">[INSERIR: tema X apareceu em N dos últimos N exames]</p>
-      </div>
-      <div class="bg-creamlt border border-line rounded-[6px] p-6">
-        <div class="font-display text-[15px] text-gold font-600 mb-2">O que pesa menos</div>
-        <p class="font-body text-[18px] leading-[1.45] text-text">[INSERIR: a matéria Y representou em média apenas N questões]</p>
+      <div class="axis perf">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2C8A78" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Eixo da prova</h3>
+        <p>Como você age sob pressão, e a tática certa para a sua cabeça não te derrubar no dia.</p>
       </div>
     </div>
-    <p class="font-sans text-[12.5px] text-warm mt-5 italic">
-      Cada número aqui sai das provas oficiais da banca. Sem invenção, sem achismo.
-    </p>
-  </div>
-</section>
+  </section>
 
-<!-- ============================ AUTORIDADE (foto do advogado) ============================ -->
-<section class="bg-ink text-cream">
-  <div class="wrap-wide py-16 sm:py-20">
-    <div class="grid sm:grid-cols-[200px_1fr] gap-8 sm:gap-10 items-start">
-      <div class="mx-auto sm:mx-0 w-[180px]">
-        <div class="rounded-[6px] overflow-hidden border border-champagne/30 bg-ink2">
-          <img src="data:image/jpeg;base64,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ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg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" alt="Gustavo Teixeira, advogado" width="180" loading="lazy" class="w-full h-auto block" />
-        </div>
-        <p class="font-sans text-[12px] text-warm mt-3 leading-snug">
-          Gustavo Teixeira, advogado.<br />OAB/PR 112.743.
-        </p>
-      </div>
+  <!-- 5. COMO FUNCIONA -->
+  <section>
+    <div class="kk">COMO FUNCIONA</div>
+    <h2 class="big">Da compra ao seu plano, em poucos minutos.</h2>
+    <div class="steps">
+      <div class="step"><div class="num"></div><div><h3>Você responde 24 questões</h3><p>Só das 6 matérias que decidem a prova, no estilo da banca. Nada de questão que quase não cai.</p></div></div>
+      <div class="step"><div class="num"></div><div><h3>Faz o raio-x de como você prova</h3><p>Um questionário rápido sobre o que acontece com você na hora: tempo, travada, insegurança, pânico.</p></div></div>
+      <div class="step"><div class="num"></div><div><h3>Recebe o relatório na hora</h3><p>Em dois eixos, com o seu nome: onde está a lacuna de conteúdo e onde está a lacuna de desempenho.</p></div></div>
+      <div class="step"><div class="num"></div><div><h3>Recebe a prescrição e treina</h3><p>O que estudar primeiro, as fichas do que mais cai, a tática para o seu perfil, e simulados para medir se você melhorou.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 6. O QUE VOCÊ RECEBE -->
+  <section>
+    <div class="kk">O QUE VOCÊ RECEBE</div>
+    <h2 class="big">Tudo voltado para uma coisa: passar.</h2>
+    <div class="inside">
+      <div class="item"><h3>O diagnóstico das 6 matérias do núcleo duro</h3><p>As que sozinhas valem quase metade da prova. É onde a aprovação se decide.</p></div>
+      <div class="item"><h3>Seu relatório de dois eixos, personalizado</h3><p>Conteúdo e desempenho lado a lado, para você parar de tratar como falta de estudo o que é nervosismo, e o contrário.</p></div>
+      <div class="item"><h3>As fichas do que mais cai</h3><p>A revisão condensada dos pontos quentes das suas matérias fracas. Lei seca, súmula e a pegadinha clássica. Sem apostila de mil páginas.</p></div>
+      <div class="item"><h3>A folha de tática de prova para o seu perfil</h3><p>Gestão de tempo, a regra de pular e voltar, como cortar a espiral de pânico. O que ninguém te ensina e decide o dia.</p></div>
+      <div class="item"><h3>3 simulados focados para medir sua evolução</h3><p>Liberados como checkpoints rumo ao exame, para você ver, em número, que está melhorando.</p></div>
+    </div>
+  </section>
+
+  <!-- 7. FUNDADOR -->
+  <section>
+    <div class="founder">
+      <img src="assets/gustavo.webp" width="92" height="110" loading="lazy" alt="Gustavo, advogado">
       <div>
-        <p class="eyebrow text-champagne mb-4">Quem está te falando isso</p>
-        <h2 class="font-display font-700 text-[26px] sm:text-[32px] leading-[1.16] text-cream max-w-[22ch]">
-          Eu sou advogado. Eu cansei de ver gente capaz reprovando à toa.
-        </h2>
-        <div class="prose-body font-body text-[18px] sm:text-[19.5px] leading-[1.6] text-cream/80 mt-6 max-w-[46ch]">
-          <p>
-            Meu nome é Gustavo Teixeira, sou advogado inscrito na OAB.
-            <span class="text-cream/50">[INSERIR sua história em 2 ou 3 linhas: quando você fez o exame,
-            o que te revoltou no caminho tradicional, por que decidiu montar o Só o que Cai.]</span>
-          </p>
-          <p>
-            Vou ser direto com você, inclusive no que não soa bonito. Eu não vou prometer a sua
-            aprovação, porque ninguém honesto promete, o dia da prova é seu. O que eu posso colocar na
-            sua mão é o caminho mais curto e mais inteligente até lá, montado a partir do que a prova
-            realmente cobra. O esforço continua sendo seu. A diferença é que dessa vez ele vai inteiro
-            para o lugar certo.
-          </p>
+        <div class="kk">QUEM ESTÁ FALANDO COM VOCÊ</div>
+        <p>Sou Gustavo, advogado. Passei pela 1ª fase e, de lá pra cá, vi gente capaz demais reprovar não por saber menos, mas por gastar as poucas horas que tinha na matéria errada, ou por travar bem na hora. O Só o que Cai é o diagnóstico que eu queria ter tido: o que a banca realmente cobra, levantado das provas recentes, cruzado com como você se comporta na prova, para você mirar onde estão os pontos e parar de se sabotar.</p>
+        <div class="sig">Gustavo · Só o que Cai</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. NÃO É ACHISMO -->
+  <section>
+    <div class="kk">NÃO É ACHISMO</div>
+    <h2 class="big">A prova não cai espalhada por igual.</h2>
+    <p class="p">Coloque as provas recentes lado a lado e o desenho aparece sozinho. Poucas matérias decidem quase tudo, e é exatamente nelas que o diagnóstico te testa, para não desperdiçar um minuto seu.</p>
+    <div class="stats">
+      <div class="st"><div class="n">80<small> q</small></div><div class="l">Questões na prova. Você precisa de 40, metade.</div></div>
+      <div class="st"><div class="n">~48<small>%</small></div><div class="l">Da prova em 6 matérias: Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal.</div></div>
+      <div class="st"><div class="n">~8</div><div class="l">Questões de Ética por edição, o maior peso individual da prova.</div></div>
+    </div>
+    <div class="barwrap">
+      <div class="lab"><span>As 11 matérias principais concentram cerca de 78% dos pontos</span><span class="mono">~78%</span></div>
+      <div class="bbar"><i style="width:78%;background:linear-gradient(90deg,var(--hot),var(--hot-b))"></i></div>
+      <div class="lab cold"><span>As outras valem juntas só cerca de 22%</span><span class="mono">~22%</span></div>
+      <div class="bbar"><i style="width:22%;background:var(--cold)"></i></div>
+      <div class="note">Distribuição aproximada com base no edital e nas provas recentes do exame. Varia um pouco de uma edição para outra.</div>
+    </div>
+  </section>
+
+  <!-- 9. PROVA SOCIAL (preencher com depoimentos REAIS; remova o bloco se não tiver) -->
+  <section>
+    <div class="kk">QUEM JÁ FEZ</div>
+    <h2 class="big">O que dizem quem já se diagnosticou.</h2>
+    <!-- TODO: troque pelos depoimentos REAIS (print de WhatsApp, nome, cidade). Não invente. -->
+    <div class="quotes">
+      <div class="quote"><p>[DEPOIMENTO 1: cole aqui o relato real de quem usou o diagnóstico.]</p><div class="who">[Nome] · [cidade]</div></div>
+      <div class="quote"><p>[DEPOIMENTO 2: de preferência de quem já tinha reprovado antes.]</p><div class="who">[Nome] · [cidade]</div></div>
+    </div>
+    <div class="note">Seção opcional. Sem depoimento real ainda, basta apagar este bloco inteiro.</div>
+  </section>
+
+  <!-- 10. OFERTA -->
+  <section>
+    <div class="kk" style="text-align:center">A OFERTA</div>
+    <div class="offer">
+      <h2 class="big" style="margin:6px auto 4px">Saber onde você perde ponto custa menos que a sua taxa de inscrição.</h2>
+      <div class="anchor">
+        <div class="col bad">
+          <div class="h">O cursinho</div>
+          <div class="v">+ R$ 1.000</div>
+          <div class="sub">mais mensalidade sem fim, mais um ano da sua vida, mais a chance de recomeçar do zero.</div>
+        </div>
+        <div class="col good">
+          <div class="h">Só o que Cai</div>
+          <div class="v">R$ 47</div>
+          <div class="sub">uma vez, sem mensalidade, com o seu diagnóstico pronto na hora.</div>
         </div>
       </div>
+      <a class="btn js-buy" href="#">Quero meu diagnóstico
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="safe" style="justify-content:center;width:100%">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        Pix ou cartão · compra 100% segura
+      </div>
+      <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke="#1c5c50" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 7 dias de garantia. Não gostou, devolvemos.</span></div>
+    </div>
+  </section>
+
+  <!-- 11. FAQ -->
+  <section>
+    <div class="kk">PERGUNTAS</div>
+    <h2 class="big">O que costumam perguntar.</h2>
+    <div class="faq">
+      <details class="q"><summary>Serve para quem já reprovou?</summary><div class="a">É feito exatamente para você. Quem já reprovou costuma ter base, o que falta é direção e desempenho na hora. O diagnóstico aponta os dois.</div></details>
+      <details class="q"><summary>Preciso ter estudado muito antes?</summary><div class="a">Você não precisa aprender Direito de novo, isso você já fez na faculdade. O Só o que Cai serve para quem tem base e está mal direcionado, não para começar do zero.</div></details>
+      <details class="q"><summary>Quanto tempo leva?</summary><div class="a">O diagnóstico leva de 15 a 20 minutos, e o relatório sai na hora. Os simulados você faz quando quiser, rumo ao exame.</div></details>
+      <details class="q"><summary>É atualizado para o próximo exame?</summary><div class="a">Sim. Esta edição é montada para o próximo Exame de Ordem, com base nas provas mais recentes da banca.</div></details>
+      <details class="q"><summary>É seguro pagar?</summary><div class="a">É. O pagamento é processado pela plataforma de checkout, em ambiente seguro e com seus dados protegidos. Você escolhe pagar no Pix ou no cartão.</div></details>
+      <details class="q"><summary>Serve para o exame de qualquer estado?</summary><div class="a">Serve. A prova da 1ª fase é da FGV e é a mesma no país inteiro, então o diagnóstico vale para você onde quer que vá prestar o exame.</div></details>
+      <details class="q"><summary>Por quanto tempo eu tenho acesso?</summary><div class="a">O acesso fica liberado para você usar no seu ritmo até o próximo Exame de Ordem, quantas vezes quiser. <!-- confirme a política de acesso real com a sua plataforma --></div></details>
+      <details class="q"><summary>E se eu não gostar?</summary><div class="a">Você tem 7 dias de garantia. Não serviu para você, devolvemos o valor, sem discussão.</div></details>
+    </div>
+  </section>
+
+  <!-- 12. CTA FINAL -->
+  <div class="final">
+    <h2>Pare de estudar tudo. Comece a estudar <em>só o que cai</em>.</h2>
+    <a class="btn js-buy" href="#">Quero meu diagnóstico · R$ 47
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="safe" style="justify-content:center;width:100%">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      Resultado na hora, no celular. 7 dias de garantia.
     </div>
   </div>
-</section>
 
-<!-- ============================ O QUE É O PRODUTO ============================ -->
-<section class="bg-creamlt">
-  <div class="wrap-wide py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">O que você recebe</p>
-    <h2 class="font-display font-700 text-[28px] sm:text-[37px] leading-[1.13] text-ink max-w-[24ch]">
-      Não é PDF. Não é mais um cursão para você não assistir. É um plano que decide por você.
-    </h2>
-    <p class="prose-body font-body text-[18.5px] sm:text-[20px] leading-[1.6] text-text mt-6 max-w-[48ch]">
-      Você abre, diz quanto tempo tem, e ele te mostra o que fazer hoje. Quatro coisas, sem enrolação:
-    </p>
+  <!-- 13. RODAPÉ -->
+  <footer>
+    Só o que Cai · ferramenta de estudo por incidência para a 1ª fase da OAB<br>
+    Não é vinculado à FGV nem à OAB · Gustavo, idealizador
+  </footer>
 
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
-      <div class="bg-cream border border-line rounded-[6px] p-6">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
-        <h3 class="font-display font-600 text-[20px] text-ink mt-4">Mapa do que cai</h3>
-        <p class="font-body text-[17.5px] leading-[1.5] text-text mt-2">
-          Toda a matéria organizada por quanto cai de verdade, do que decide a prova ao que é só
-          detalhe. Você bate o olho e enxerga na hora onde está o ponto.
-        </p>
-      </div>
-      <div class="bg-cream border border-line rounded-[6px] p-6">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        <h3 class="font-display font-600 text-[20px] text-ink mt-4">Plano de ataque pelo seu tempo</h3>
-        <p class="font-body text-[17.5px] leading-[1.5] text-text mt-2">
-          Uma hora por dia? Só os fins de semana? Faltam poucas semanas? Você diz o tempo real que tem,
-          e ele monta a ordem de estudo que cabe na sua vida, não na vida de quem não faz mais nada.
-        </p>
-      </div>
-      <div class="bg-cream border border-line rounded-[6px] p-6">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5z"/></svg>
-        <h3 class="font-display font-600 text-[20px] text-ink mt-4">Filtro do que ignorar</h3>
-        <p class="font-body text-[17.5px] leading-[1.5] text-text mt-2">
-          A parte que mais alivia. Ele aponta, com todas as letras, o que você pode deixar de fora sem
-          culpa, para não queimar suas poucas horas no que quase nunca cai.
-        </p>
-      </div>
-      <div class="bg-cream border border-line rounded-[6px] p-6">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-        <h3 class="font-display font-600 text-[20px] text-ink mt-4">Progresso que salva sozinho</h3>
-        <p class="font-body text-[17.5px] leading-[1.5] text-text mt-2">
-          Você marca o que venceu e ele lembra por você. Fecha no ônibus, abre na cozinha, continua de
-          onde parou. Tudo no celular, nos quinze minutos que sobram.
-        </p>
-      </div>
-    </div>
+</div>
 
-    <p class="font-body text-[18.5px] sm:text-[20px] text-ink font-600 mt-8 max-w-[46ch] leading-[1.45]">
-      Nada de trezentas aulas para assistir. Você abre, vê o que importa hoje, e fecha sabendo que cada
-      minuto foi para o lugar que dá ponto.
-    </p>
-  </div>
-</section>
-
-<!-- ============================ NÃO É PARA TODO MUNDO (qualificação) ============================ -->
-<section class="bg-cream border-y border-line">
-  <div class="wrap-wide py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">Antes de comprar, seja honesta com você</p>
-    <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.14] text-ink">
-      Isto aqui não é para todo mundo.
-    </h2>
-
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
-      <div class="bg-creamlt border border-line rounded-[6px] p-6">
-        <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-warm mb-4">Não é para você se</p>
-        <ul class="space-y-3.5 font-body text-[17.5px] leading-[1.5] text-text">
-          <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#918D89" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Você quer alguém prometendo aprovação garantida. Isso não existe, e quem promete está mentindo.</span></li>
-          <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#918D89" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Você nunca cursou Direito e quer aprender a matéria do zero. Aqui a base já é sua.</span></li>
-          <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#918D89" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg><span>Você se sente produtiva só de comprar mais um curso e colecionar aula que não assiste.</span></li>
-        </ul>
-      </div>
-      <div class="bg-ink text-cream rounded-[6px] p-6">
-        <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-champagne mb-4">É para você se</p>
-        <ul class="space-y-3.5 font-body text-[17.5px] leading-[1.5] text-cream/90">
-          <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Você já tem a base da faculdade e só precisa parar de se perder no meio de tanta matéria.</span></li>
-          <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Você tem pouco tempo e precisa que cada minuto de estudo renda ponto na prova.</span></li>
-          <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Você está cansada de estudar muito e avançar pouco, e quer direção, não mais conteúdo.</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ OFERTA ============================ -->
-<section id="oferta" class="bg-ink text-cream">
-  <div class="wrap py-16 sm:py-20">
-    <p class="eyebrow text-champagne mb-5">A oferta</p>
-    <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.14] text-cream max-w-[26ch]">
-      O cursinho te custou mais de mil reais e quase um ano da sua vida. Isto custa menos que a sua taxa
-      de inscrição.
-    </h2>
-
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
-      <div class="border border-white/12 rounded-[6px] p-6">
-        <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-warm mb-3">O caminho do cursinho</p>
-        <ul class="font-body text-[17px] leading-[1.5] text-cream/75 space-y-2">
-          <li>Mais de R$ 1.000 de entrada</li>
-          <li>Mais mensalidade sem data para acabar</li>
-          <li>Mais centenas de horas de aula</li>
-          <li>Mais um ano inteiro de domingos</li>
-          <li class="text-cream/50 italic pt-1">E nenhuma garantia no fim.</li>
-        </ul>
-      </div>
-      <div class="border border-champagne/40 bg-white/5 rounded-[6px] p-6">
-        <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-champagne mb-3">O Só o que Cai</p>
-        <ul class="font-body text-[17px] leading-[1.5] text-cream space-y-2">
-          <li>R$ <span class="js-price">47</span>, uma vez só</li>
-          <li>Acesso na hora, pelo celular</li>
-          <li>O que cai, em que ordem, e o que ignorar</li>
-          <li>Feito para caber na vida que você já tem</li>
-          <li class="text-champagne italic pt-1">7 dias de garantia incondicional.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- stack de valor -->
-    <div class="mt-8 border-t border-white/10 pt-7">
-      <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-champagne mb-4">Tudo que entra no seu acesso</p>
-      <ul class="space-y-2.5 font-body text-[17.5px] leading-[1.45] text-cream/90">
-        <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Mapa completo do que cai na 1ª fase, organizado por incidência</span></li>
-        <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Plano de ataque que se molda ao tempo que você tem</span></li>
-        <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Filtro do que dá para ignorar sem culpa</span></li>
-        <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Progresso que salva e te acompanha até o dia da prova</span></li>
-        <li class="flex gap-3"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4AE8C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Acesso pelo celular, do jeito que a sua rotina permite</span></li>
-        <li class="flex gap-3 text-cream/45"><svg class="shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#918D89" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>[BÔNUS opcional: cole aqui um bônus real, por exemplo um checklist da reta final. Se não tiver, apague esta linha.]</span></li>
-      </ul>
-    </div>
-
-    <div class="mt-10 text-center">
-      <p class="font-sans text-[13px] tracking-widest uppercase text-warm">Acesso completo, pagamento único</p>
-      <div class="flex items-end justify-center gap-2 mt-2">
-        <span class="font-display text-[22px] text-cream/60 pb-3">R$</span>
-        <span class="font-display font-800 text-[76px] leading-none text-champagne">47</span>
-      </div>
-      <p class="font-body text-[18px] text-cream/70 mt-2">uma vez, sem mensalidade.</p>
-      <p class="font-body italic text-[18px] text-cream mt-1">Menos que a sua taxa de inscrição no exame.</p>
-
-      <div class="mt-7">
-        <a href="#" class="js-cta inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-accent hover:bg-accentd text-ink hover:text-cream font-sans font-600 text-[17px] tracking-wide px-9 py-4 rounded-[5px] shadow-[0_10px_30px_-10px_rgba(166,129,74,.7)] transition">
-          <span>Quero garantir o meu acesso</span>
-          <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <p class="font-sans text-[13px] text-cream/55 mt-3">
-          Acesso imediato. Faltam <span class="js-cd-days">--</span> dias para o exame.
-        </p>
-        <!-- ORDER BUMP e UPSELL: configure no seu checkout (Hotmart, Kiwify, Cakto, etc.).
-             O bump aparece na própria página de pagamento e o upsell logo após a compra. -->
-      </div>
-    </div>
-
-    <!-- razão do preço -->
-    <div class="mt-10 bg-white/5 border border-white/10 rounded-[6px] p-6 sm:p-7">
-      <p class="font-display font-600 text-[20px] text-champagne mb-2">Por que tão barato?</p>
-      <p class="font-body text-[17.5px] sm:text-[18.5px] leading-[1.6] text-cream/85">
-        Porque é uma ferramenta, não uma folha de pagamento. O cursinho cobra caro porque sustenta
-        prédio, professor e mensalidade. Eu montei o Só o que Cai uma vez, para servir muita gente, e
-        por isso posso cobrar o preço de um lanche em vez do preço de um carro velho. Não tem pegadinha.
-        É só uma conta diferente da deles.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ GARANTIA ============================ -->
-<section class="bg-creamlt">
-  <div class="wrap py-16 sm:py-20">
-    <div class="bg-cream border border-line rounded-[6px] p-7 sm:p-9">
-      <div class="flex items-start gap-4">
-        <svg class="shrink-0" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
-        <div>
-          <p class="eyebrow text-gold mb-3">O risco é todo meu</p>
-          <h2 class="font-display font-700 text-[25px] sm:text-[31px] leading-[1.16] text-ink">
-            Sete dias para abrir, usar e decidir. Se não for para você, eu devolvo tudo.
-          </h2>
-        </div>
-      </div>
-      <div class="prose-body font-body text-[18px] sm:text-[19.5px] leading-[1.6] text-text mt-6">
-        <p>
-          Faça assim: entre hoje, use de verdade, veja o mapa, monte o seu plano. Se em sete dias você
-          achar que não valeu, por qualquer motivo ou por nenhum, me peça o reembolso e eu devolvo cada
-          centavo. Sem formulário interminável, sem pergunta constrangedora.
-        </p>
-        <p class="font-600 text-ink">
-          Repara no que eu prometo e no que eu não prometo. Eu não prometo a sua aprovação, isso depende
-          de você e do dia da prova. Eu prometo o método, a direção e o seu dinheiro de volta se não
-          fizer sentido. Do jeito que está montado, você não tem como sair perdendo.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ DUAS ESCOLHAS ============================ -->
-<section class="bg-cream border-t border-line">
-  <div class="wrap-wide py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">No fundo, só existem duas escolhas</p>
-    <h2 class="font-display font-700 text-[28px] sm:text-[36px] leading-[1.14] text-ink max-w-[24ch]">
-      Daqui a um ano, qual história você quer estar contando lá em casa?
-    </h2>
-
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
-      <div class="bg-creamlt border border-line rounded-[6px] p-6">
-        <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-warm mb-3">Continuar como está</p>
-        <p class="font-body text-[17.5px] leading-[1.55] text-text">
-          Voltar a tentar estudar tudo, gastar mais fins de semana, chegar na prova cansada e torcendo.
-          E, se não der, recomeçar mais uma vez, pagar de novo, e ter que explicar tudo de novo para
-          quem te pergunta.
-        </p>
-      </div>
-      <div class="bg-ink text-cream rounded-[6px] p-6">
-        <p class="font-sans font-600 text-[12px] tracking-widest uppercase text-champagne mb-3">Mudar a direção</p>
-        <p class="font-body text-[17.5px] leading-[1.55] text-cream/90">
-          Estudar só o que cai, com um plano que cabe na sua semana, e chegar na prova sabendo onde
-          estão os pontos. Por menos do que você gasta sem pensar num fim de semana qualquer.
-        </p>
-      </div>
-    </div>
-    <p class="font-body text-[18.5px] sm:text-[20px] text-ink font-600 mt-8 max-w-[44ch] leading-[1.45]">
-      Os dois caminhos custam o seu tempo. Só um deles foi desenhado para você passar.
-    </p>
-  </div>
-</section>
-
-<!-- ============================ DEPOIMENTOS (PLACEHOLDERS) ============================ -->
-<section class="bg-creamlt border-t border-line">
-  <div class="wrap-wide py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">Quem já usou</p>
-    <h2 class="font-display font-700 text-[27px] sm:text-[34px] leading-[1.14] text-ink">
-      Espaço reservado para as suas alunas.
-    </h2>
-    <!-- TODO: troque pelos depoimentos REAIS. Não publique nada que você não tenha autorização e prova. -->
-    <div class="grid sm:grid-cols-2 gap-4 mt-9">
-      <figure class="bg-cream border border-dashed border-line rounded-[6px] p-6">
-        <blockquote class="font-body text-[18px] leading-[1.5] text-warm italic">[DEPOIMENTO 1: cole aqui o relato real de quem usou o material.]</blockquote>
-        <figcaption class="font-sans text-[13px] text-gold mt-4">[Nome] · [cidade ou turma]</figcaption>
-      </figure>
-      <figure class="bg-cream border border-dashed border-line rounded-[6px] p-6">
-        <blockquote class="font-body text-[18px] leading-[1.5] text-warm italic">[DEPOIMENTO 2: cole aqui outro relato real, de preferência de quem já tinha reprovado antes.]</blockquote>
-        <figcaption class="font-sans text-[13px] text-gold mt-4">[Nome] · [cidade ou turma]</figcaption>
-      </figure>
-    </div>
-    <p class="font-sans text-[12.5px] text-warm mt-5 italic">Seção opcional. Se ainda não tiver depoimentos, basta remover este bloco inteiro.</p>
-  </div>
-</section>
-
-<!-- ============================ FAQ ============================ -->
-<section class="bg-cream border-t border-line">
-  <div class="wrap py-16 sm:py-20">
-    <p class="eyebrow text-gold rule-top pt-5 mb-5">Antes de você decidir</p>
-    <h2 class="font-display font-700 text-[27px] sm:text-[35px] leading-[1.13] text-ink mb-9">
-      Perguntas que talvez estejam na sua cabeça agora.
-    </h2>
-
-    <div class="divide-y divide-line border-y border-line" id="faq">
-      <div class="faq-item" open-state="0">
-        <button class="faq-btn w-full flex items-center justify-between gap-4 text-left py-5">
-          <span class="font-display font-600 text-[19px] sm:text-[21px] text-ink">Serve para quem já reprovou uma ou duas vezes?</span>
-          <svg class="faq-chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-panel"><p class="font-body text-[17.5px] leading-[1.55] text-text pb-5 max-w-[52ch]">Foi feito principalmente para você. Quem já reprovou quase nunca tem falta de conteúdo, tem falta de direção e de tempo bem gasto. É exatamente isso que o Só o que Cai organiza, do que mais cai ao que dá para ignorar.</p></div>
-      </div>
-      <div class="faq-item" open-state="0">
-        <button class="faq-btn w-full flex items-center justify-between gap-4 text-left py-5">
-          <span class="font-display font-600 text-[19px] sm:text-[21px] text-ink">Preciso já saber a matéria? E se eu estiver enferrujada?</span>
-          <svg class="faq-chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-panel"><p class="font-body text-[17.5px] leading-[1.55] text-text pb-5 max-w-[52ch]">Você precisa da base que a faculdade já te deu. O guia não ensina Direito do zero, ele te diz onde focar essa base para a prova. Se você cursou Direito, já tem o que precisa para começar hoje.</p></div>
-      </div>
-      <div class="faq-item" open-state="0">
-        <button class="faq-btn w-full flex items-center justify-between gap-4 text-left py-5">
-          <span class="font-display font-600 text-[19px] sm:text-[21px] text-ink">O conteúdo é atualizado?</span>
-          <svg class="faq-chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-panel"><p class="font-body text-[17.5px] leading-[1.55] text-text pb-5 max-w-[52ch]">Sim. A análise acompanha as provas mais recentes da banca. [INSERIR a sua política de atualização, por exemplo: atualizado a cada novo exame, e as revisões já entram no seu acesso sem custo.]</p></div>
-      </div>
-      <div class="faq-item" open-state="0">
-        <button class="faq-btn w-full flex items-center justify-between gap-4 text-left py-5">
-          <span class="font-display font-600 text-[19px] sm:text-[21px] text-ink">Como eu recebo depois de comprar?</span>
-          <svg class="faq-chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-panel"><p class="font-body text-[17.5px] leading-[1.55] text-text pb-5 max-w-[52ch]">Na hora. Assim que o pagamento é confirmado, você recebe o acesso por e-mail e entra direto pelo navegador, no computador ou no celular. Nada para baixar nem instalar.</p></div>
-      </div>
-      <div class="faq-item" open-state="0">
-        <button class="faq-btn w-full flex items-center justify-between gap-4 text-left py-5">
-          <span class="font-display font-600 text-[19px] sm:text-[21px] text-ink">Funciona no celular?</span>
-          <svg class="faq-chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-panel"><p class="font-body text-[17.5px] leading-[1.55] text-text pb-5 max-w-[52ch]">Funciona, e foi pensado primeiro para o celular. Dá para usar nos intervalos pequenos do seu dia, na fila, no ônibus, esperando o jantar ficar pronto.</p></div>
-      </div>
-      <div class="faq-item" open-state="0">
-        <button class="faq-btn w-full flex items-center justify-between gap-4 text-left py-5">
-          <span class="font-display font-600 text-[19px] sm:text-[21px] text-ink">E se eu não gostar?</span>
-          <svg class="faq-chev shrink-0 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A6814A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-panel"><p class="font-body text-[17.5px] leading-[1.55] text-text pb-5 max-w-[52ch]">Você tem sete dias de garantia incondicional. Se não for para você, devolvo todo o valor. Você não arrisca nada para experimentar.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ CTA FINAL ============================ -->
-<section class="bg-ink text-cream">
-  <div class="wrap py-16 sm:py-24 text-center">
-    <p class="eyebrow text-champagne mb-6">A sua próxima prova começa na direção certa</p>
-    <h2 class="font-display font-700 text-[30px] sm:text-[42px] leading-[1.1] text-cream max-w-[20ch] mx-auto">
-      Você não reprovou por falta de inteligência. Da próxima vez, mire só no que cai.
-    </h2>
-    <p class="prose-body font-body text-[19px] sm:text-[20px] leading-[1.55] text-cream/75 mt-6 max-w-[42ch] mx-auto">
-      Você já entregou fim de semana, noite e dinheiro mais do que suficiente. Que o próximo esforço caia
-      inteiro no lugar que decide a aprovação. Por R$ <span class="js-price">47</span>, com sete dias para
-      testar sem risco.
-    </p>
-    <div class="mt-9">
-      <a href="#" class="js-cta inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-accent hover:bg-accentd text-ink hover:text-cream font-sans font-600 text-[17px] tracking-wide px-9 py-4 rounded-[5px] shadow-[0_10px_30px_-10px_rgba(166,129,74,.7)] transition">
-        <span>Quero estudar só o que cai</span>
-        <svg class="shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <p class="font-sans text-[13px] text-cream/55 mt-3">Acesso imediato. 7 dias de garantia incondicional.</p>
-    </div>
-
-    <div class="mt-10 text-left border-t border-white/10 pt-7 max-w-[46ch] mx-auto">
-      <p class="font-body text-[17.5px] sm:text-[18.5px] leading-[1.6] text-cream/70">
-        <span class="font-600 text-cream">P.S.</span> Faça a conta rápido: quanto já te custou reprovar,
-        somando inscrição, cursinho e o ano que passou? O Só o que Cai custa R$ <span class="js-price">47</span>
-        e te dá sete dias para decidir se vale. Caro nunca foi tentar de um jeito novo. Caro é repetir o
-        mesmo e esperar um resultado diferente.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ RODAPÉ ============================ -->
-<footer class="bg-ink2 text-cream/55 border-t border-white/10">
-  <div class="wrap py-10 pb-28 sm:pb-10">
-    <p class="font-display text-[18px] text-cream/80">Só o que <span class="text-champagne italic">Cai</span></p>
-    <p class="font-body text-[14.5px] leading-[1.55] mt-3 max-w-[60ch]">
-      Só o que Cai é um material de estudo independente. Não tem vínculo com a OAB, com a FGV nem com
-      qualquer instituição examinadora, e não garante aprovação no exame. O resultado depende do empenho
-      de cada pessoa. [INSERIR razão social, CNPJ e e-mail de contato.]
-    </p>
-    <p class="font-sans text-[12px] text-cream/35 mt-5">© <span id="year">2026</span> Só o que Cai. Todos os direitos reservados.</p>
-  </div>
-</footer>
-
-<!-- ============================ BARRA FIXA MOBILE ============================ -->
-<div id="stickybar" class="stickybar sm:hidden fixed bottom-0 inset-x-0 z-50 bg-ink/95 backdrop-blur border-t border-champagne/25 translate-y-full">
-  <div class="flex items-center justify-between gap-3 px-4 py-3 safe-b">
-    <div class="leading-tight">
-      <div class="font-display text-cream text-[20px]">R$ <span class="js-price">47</span></div>
-      <div class="font-sans text-[11px] text-warm">à vista, garantia de 7 dias</div>
-    </div>
-    <a href="#" class="js-cta flex-1 max-w-[62%] inline-flex items-center justify-center gap-2 bg-accent text-ink font-sans font-600 text-[15px] px-4 py-3 rounded-[5px]">
-      Garantir agora
-      <svg class="shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </div>
+<!-- CTA FIXO MOBILE -->
+<div class="sticky">
+  <div class="pl"><b>R$ 47</b> uma vez · resultado na hora</div>
+  <a class="btn js-buy" href="#">Quero meu diagnóstico</a>
 </div>
 
 <script>
-/* =========================================================================
-   CONFIGURAÇÃO. Edite só este bloco no dia a dia.
-   ========================================================================= */
-const CONFIG = {
-  // Link do seu checkout (Hotmart, Kiwify, Cakto, Eduzz, etc.).
-  checkoutUrl: "https://SEU-CHECKOUT-AQUI.com",
+  // ======================= CONFIGURAR ANTES DE PUBLICAR =======================
+  // 1) Link do seu checkout (Kiwify, Hotmart, Cakto...). Vai em TODOS os botões.
+  var CHECKOUT_URL = "https://COLE-SEU-CHECKOUT-AQUI.com";
+  // 2) Data e hora reais do próximo Exame de Ordem (confira no edital oficial da FGV).
+  var DATA_PROVA = new Date("2026-09-13T13:00:00-03:00");
+  // ===========================================================================
 
-  // Data e hora oficial do próximo Exame de Ordem (1ª fase), formato ISO.
-  // Ajuste para a data real. O contador de urgência usa exatamente isto.
-  examDate: "2026-07-26T13:00:00-03:00",
-
-  // Preço exibido na página (apenas o número).
-  price: "47",
-};
-
-/* ---- aplica preço ---- */
-document.querySelectorAll('.js-price').forEach(function(el){ el.textContent = CONFIG.price; });
-
-/* ---- aplica link de checkout + dispara evento de pixel ao clicar ---- */
-document.querySelectorAll('.js-cta').forEach(function(a){
-  a.setAttribute('href', CONFIG.checkoutUrl);
-  a.addEventListener('click', function(){
-    if (typeof fbq !== 'undefined') {
-      fbq('track', 'InitiateCheckout', { value: Number(CONFIG.price), currency: 'BRL' });
-    }
+  // aplica o link em todos os botões de compra + dispara evento de pixel ao clicar
+  document.querySelectorAll('.js-buy').forEach(function(a){
+    a.setAttribute('href', CHECKOUT_URL);
+    a.addEventListener('click', function(){
+      if (typeof fbq !== 'undefined') { fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); }
+    });
   });
-});
 
-/* ---- contador regressivo ---- */
-(function(){
-  var target = new Date(CONFIG.examDate).getTime();
-  function pad(n){ return String(n).padStart(2,'0'); }
-  function set(cls, val){
-    document.querySelectorAll('.'+cls).forEach(function(el){ el.textContent = val; });
-  }
+  // contador regressivo (dias, horas, minutos)
   function tick(){
-    var diff = target - Date.now();
-    if (isNaN(target)) return;
-    if (diff <= 0){
-      set('js-cd-days','0'); set('js-cd-hours','00'); set('js-cd-mins','00'); set('js-cd-secs','00');
-      return;
-    }
-    var d = Math.floor(diff/86400000);
-    var h = Math.floor(diff%86400000/3600000);
-    var m = Math.floor(diff%3600000/60000);
-    var s = Math.floor(diff%60000/1000);
-    set('js-cd-days', d);
-    set('js-cd-hours', pad(h));
-    set('js-cd-mins', pad(m));
-    set('js-cd-secs', pad(s));
+    var diff = DATA_PROVA - new Date();
+    if (diff < 0){ document.getElementById('clock').innerHTML = '<div class="lbl" style="color:#AEB6C4">o exame está chegando</div>'; return; }
+    var d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4);
+    document.getElementById('cd').textContent = d;
+    document.getElementById('ch').textContent = String(h).padStart(2,'0');
+    document.getElementById('cm').textContent = String(m).padStart(2,'0');
   }
-  tick();
-  setInterval(tick, 1000);
-})();
-
-/* ---- FAQ acordeão ---- */
-document.querySelectorAll('#faq .faq-btn').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var item = btn.closest('.faq-item');
-    var open = item.getAttribute('open-state') === '1';
-    item.setAttribute('open-state', open ? '0' : '1');
-  });
-});
-
-/* ---- barra fixa mobile aparece depois de rolar a primeira dobra ---- */
-(function(){
-  var bar = document.getElementById('stickybar');
-  function onScroll(){
-    if (window.scrollY > 620){ bar.classList.remove('translate-y-full'); }
-    else { bar.classList.add('translate-y-full'); }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-})();
-
-/* ---- ano do rodapé ---- */
-document.getElementById('year').textContent = new Date().getFullYear();
+  tick(); setInterval(tick, 20000);
 </script>
 </body>
 </html>
