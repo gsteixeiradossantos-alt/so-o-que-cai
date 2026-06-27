@@ -3,32 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Em 20 minutos, descubra exatamente o que está entre você e a aprovação na 1ª fase da OAB. Um diagnóstico que te testa só no que mais cai, mostra onde você perde ponto, e revela como você se sabota na hora da prova.">
+<meta name="description" content="Em 20 minutos, descubra onde você perde ponto na 1ª fase da OAB. Um diagnóstico que te testa só no que mais cai e separa o que você não sabe do que sabe mas trava na prova.">
 <title>Só o que Cai · Diagnóstico de aprovação na 1ª fase da OAB</title>
 
 <!-- ============================================================
      PARA PREENCHER ANTES DE PUBLICAR (procure por cada item):
-     1. CHECKOUT_URL ...... no <script> final (link do Kiwify/Hotmart)
+     1. CHECKOUT_URL ...... no <script> final (link do Kiwify/Hotmart/Cakto)
      2. DATA_PROVA ........ no <script> final (data do próximo exame, confira no edital da FGV)
-     3. FOTO .............. assets/gustavo.webp (já incluída; troque se quiser)
+     3. FOTO .............. assets/gustavo.webp (troque o placeholder pela foto real)
      4. PIXEL DO FACEBOOK . bloco comentado abaixo (troque SEU_PIXEL_ID e descomente)
      5. MICROSOFT CLARITY . bloco comentado abaixo (troque SEU_CLARITY_ID e descomente)
-     6. IMAGEM OG ......... assets/og.png já incluída; ajuste og:url/og:image se mudar de domínio
-     7. DEPOIMENTOS ....... seção "Quem já fez" (placeholders marcados [DEPOIMENTO ...])
+     6. IMAGEM OG ......... assets/og.png; ajuste og:url/og:image se mudar de domínio
+     7. DEPOIMENTOS ....... seção "Quem já fez" (placeholders [DEPOIMENTO]); use só reais
      ============================================================ -->
 
-<!-- Open Graph / compartilhamento e anúncio -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Só o que Cai">
-<meta property="og:title" content="Em 20 minutos, descubra o que está entre você e a aprovação na OAB.">
-<meta property="og:description" content="Um diagnóstico que te testa só no que mais cai e mostra onde você perde ponto. Pare de estudar tudo.">
+<meta property="og:title" content="Em 20 minutos, descubra onde você perde ponto na 1ª fase da OAB.">
+<meta property="og:description" content="Um diagnóstico que te testa só no que mais cai e separa o que você não sabe do que sabe mas trava na prova. Pare de estudar tudo.">
 <meta property="og:url" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/">
 <meta property="og:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Em 20 minutos, descubra o que está entre você e a aprovação na OAB.">
+<meta name="twitter:title" content="Em 20 minutos, descubra onde você perde ponto na 1ª fase da OAB.">
 <meta name="twitter:description" content="Um diagnóstico que te testa só no que mais cai e mostra onde você perde ponto.">
 <meta name="twitter:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
 
@@ -55,335 +54,371 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23EFF1F4'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23D9851A'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C77A2B'/%3E%3C/svg%3E">
 
 <style>
   :root{
-    --ink:#181B22; --soft:#414A5A; --paper:#EFF1F4; --card:#FFFFFF;
-    --hot:#D9851A; --hot-b:#F2AE38; --hot-w:#FBEED7;
-    --btn:#A85E0B; --btn-h:#8F4F09;            /* fundo do botão: passa no WCAG com texto branco */
-    --cold:#98A1B0; --cold-w:#E7E9ED; --line:#DCDFE6;
-    --navy:#1C2738; --ok:#2C8A78; --ok-w:#DCEEEA;
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --soft:#574F45;
+    --mut:#6B6357; --oat:#9A9488; --oat2:#A89F90; --line:#E3DBCB; --line2:#EDE6D8;
+    --navy:#15212B; --ochre:#A65D1E; --ochre2:#C77A2B; --ochre-w:#F0E6D4;
+    --green:#3A7A5C; --green-w:#E3EEE8;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:74px}
-  .wrap{max-width:780px;margin:0 auto;padding:0 20px}
-  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
-  h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-.015em;line-height:1.12}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:#11171C;color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .page{max-width:760px;margin:0 auto;background:var(--paper);padding-bottom:78px;box-shadow:0 0 80px rgba(0,0,0,.35);overflow:hidden}
+  .pad{padding-left:26px;padding-right:26px}
+  .mono{font-family:'Space Mono',monospace}
+  .serif{font-family:'Spectral',serif}
+  .kk{font-family:'Space Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--oat)}
+  h1,h2,h3{font-family:'Spectral',serif;font-weight:600;letter-spacing:-.01em;line-height:1.14}
+  .em{font-style:italic;color:var(--ochre)}
+  p{text-wrap:pretty}
 
-  .btn{display:inline-flex;align-items:center;gap:9px;justify-content:center;background:var(--btn);color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:16px;text-decoration:none;padding:15px 28px;border-radius:12px;transition:background .15s,transform .15s;border:0;cursor:pointer;box-shadow:0 8px 22px -10px rgba(168,94,11,.8)}
-  .btn:hover{background:var(--btn-h)}
+  .btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--navy);color:#fff;font-family:'Hanken Grotesk';font-weight:600;font-size:17px;text-decoration:none;padding:18px 28px;border-radius:13px;box-shadow:0 14px 30px -14px rgba(21,33,43,.9);transition:transform .12s,background .15s;border:0;cursor:pointer}
+  .btn:hover{background:#1d2e3c}
   .btn:active{transform:translateY(1px)}
-  .btn svg{width:18px;height:18px;flex-shrink:0}
-  .safe{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--soft);margin-top:11px}
-  .safe svg{width:14px;height:14px;color:var(--ok)}
+  .btn svg{width:18px;height:18px;flex-shrink:0;stroke:var(--ochre2)}
+  .trust{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--mut)}
+  .trust span{display:inline-flex;align-items:center;gap:6px}
+  .trust svg{width:14px;height:14px;stroke:var(--green)}
 
-  header.top{padding:20px 0 0}
-  .mark{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .mark .dot{width:8px;height:8px;border-radius:50%;background:var(--hot);transform:translateY(-2px)}
-  .mark .name{font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:-.02em}
-  .mark .tag{font-size:12px;color:var(--soft);font-weight:500;letter-spacing:.02em;text-transform:uppercase}
+  /* HEADER */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:18px 26px 0}
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand .ic{width:30px;height:30px;border-radius:8px;background:var(--navy);display:grid;place-items:center}
+  .brand .ic i{width:9px;height:9px;border-radius:50%;background:var(--ochre2);display:block}
+  .brand .nm{font-family:'Spectral',serif;font-weight:600;font-size:18px}
+  .tag{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8A8378}
 
-  .hero{padding:42px 0 8px}
-  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--hot);margin-bottom:16px}
-  .hero h1{font-size:clamp(30px,5.9vw,49px);font-weight:700;max-width:16ch}
-  .hero h1 em{font-style:normal;color:var(--hot);box-shadow:inset 0 -.28em 0 var(--hot-w)}
-  .lede{margin-top:20px;font-size:17.5px;color:var(--soft);max-width:54ch}
-  .cta-row{margin-top:26px;display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap}
-  .price-line{font-size:13.5px;color:var(--soft);line-height:1.5}
-  .price-line b{color:var(--ink)}
+  /* HERO */
+  .hero{padding:40px 26px 8px}
+  .hero h1{font-size:clamp(33px,7.4vw,52px);line-height:1.06;letter-spacing:-.02em;margin:18px 0 0;max-width:15ch}
+  .lede{font-size:17px;color:var(--soft);margin:22px 0 0;max-width:50ch}
+  .lede b{color:var(--ink);font-weight:600}
+  .deliver{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 18px;margin-top:26px}
+  .deliver .row{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--line2)}
+  .deliver .row:last-child{border-bottom:0}
+  .deliver .chk{width:23px;height:23px;border-radius:50%;background:var(--ochre-w);display:grid;place-items:center;flex-shrink:0}
+  .deliver .chk svg{width:13px;height:13px;stroke:var(--ochre)}
+  .deliver .row span{font-size:14.5px;color:#3A342C;font-weight:500}
+  .hero .btn{margin-top:24px}
+  .count{margin-top:22px;display:flex;align-items:center;gap:14px;justify-content:center;padding:13px 18px;background:#ECE4D5;border-radius:11px;flex-wrap:wrap}
+  .count .lbl{font-size:13px;color:var(--mut);max-width:30ch;text-align:center}
+  .count .clk{font-family:'Space Mono',monospace;font-weight:700;font-size:16px;color:var(--navy);white-space:nowrap}
 
-  .count{margin-top:28px;background:var(--navy);color:#fff;border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-  .count .lbl{font-size:13px;color:#AEB6C4;max-width:24ch}
-  .clock{display:flex;gap:12px}
-  .clock div{text-align:center}
-  .clock .n{font-family:'JetBrains Mono';font-weight:700;font-size:25px;line-height:1}
-  .clock .u{font-size:10px;color:#8C97A8;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+  section{padding:8px 0 48px}
+  .h2{font-size:clamp(25px,5vw,33px);margin:10px 0 0;max-width:20ch}
+  .lead{font-size:16.5px;color:var(--soft);margin:18px 0 0;max-width:60ch}
+  .lead b{color:var(--ink);font-weight:600}
 
-  section{padding:40px 0}
-  .kk{font-family:'JetBrains Mono';font-size:12px;color:var(--cold);font-weight:700;letter-spacing:.05em}
-  h2.big{font-size:clamp(23px,4.2vw,32px);font-weight:600;margin-top:8px;max-width:21ch}
-  .p{margin-top:16px;font-size:16px;color:var(--soft);max-width:62ch}
-  .p strong{color:var(--ink);font-weight:600}
+  /* INIMIGO */
+  .enemy-wrap{padding:48px 26px}
+  .enemy{background:var(--navy);color:#D7DBDF;border-radius:20px;padding:36px 30px}
+  .enemy .kk{color:#D89A4E}
+  .enemy h2{color:#fff;font-size:clamp(24px,5vw,32px);line-height:1.16;margin:14px 0 0;max-width:22ch}
+  .enemy p{font-size:16px;color:#AEB4BB;margin-top:16px;max-width:58ch}
+  .enemy p.first{margin-top:20px}
+  .enemy p b{color:#fff;font-weight:600}
+  .enemy .punch{border-left:2px solid var(--ochre2);padding-left:18px;margin-top:24px}
+  .enemy .punch p{font-family:'Spectral',serif;font-style:italic;font-weight:500;font-size:19px;color:#E9C79A;max-width:38ch;line-height:1.4;margin:0}
 
-  .enemy{background:var(--navy);color:#E7E9ED;border-radius:18px;padding:30px 26px}
-  .enemy .kk{color:var(--hot-b)}
-  .enemy h2{color:#fff;font-size:clamp(21px,3.8vw,28px);font-weight:600;margin-top:8px;max-width:24ch}
-  .enemy .p{color:#B9C0CC}
-  .enemy .p strong{color:#fff}
-  .enemy .punch{font-family:'Space Grotesk';font-weight:600;font-size:18px;color:var(--hot-b);margin-top:20px;max-width:36ch}
+  /* RELATÓRIO 2 EIXOS */
+  .report{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 22px 18px;margin-top:26px;box-shadow:0 18px 40px -28px rgba(21,33,43,.5)}
+  .report .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+  .report .hd .t{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ochre)}
+  .report .hd .ex{font-family:'Space Mono',monospace;font-size:10px;color:var(--oat2);background:#F0E9DB;padding:3px 8px;border-radius:5px}
+  .plot-row{display:flex;gap:10px}
+  .ylab{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oat);display:flex;align-items:center;justify-content:center}
+  .plot{position:relative;width:100%;height:280px;background:#F4EEE2;border:1px solid #E6DECF;border-radius:12px;overflow:hidden}
+  .plot .q-tl{position:absolute;left:0;top:0;width:50%;height:50%;background:#FBE9D2;opacity:.6}
+  .plot .q-br{position:absolute;left:50%;right:0;top:50%;bottom:0;background:#E1EEE7;opacity:.7}
+  .plot .vline{position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #D8CFBE}
+  .plot .hline{position:absolute;top:50%;left:0;right:0;border-top:1px dashed #D8CFBE}
+  .plot .ql{position:absolute;font-size:11px;max-width:13ch;line-height:1.25}
+  .plot .ql.a{left:11px;top:9px;font-weight:600;color:var(--ochre)}
+  .plot .ql.b{right:11px;bottom:9px;font-weight:600;color:var(--green);text-align:right}
+  .plot .ql.c{left:11px;bottom:9px;font-weight:500;color:var(--oat)}
+  .plot .ql.d{right:11px;top:9px;font-weight:500;color:var(--oat);text-align:right}
+  .plot .you{position:absolute;left:32%;top:30%;transform:translate(-50%,-50%)}
+  .plot .you .dot{width:18px;height:18px;border-radius:50%;background:var(--ochre2);border:3px solid var(--card);box-shadow:0 3px 9px -2px rgba(199,122,43,.8)}
+  .plot .you .lab{position:absolute;left:24px;top:-2px;white-space:nowrap;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);padding:2px 7px;border-radius:6px}
+  .xlab{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oat);text-align:center;margin-top:9px}
+  .report .cap{font-size:13px;color:var(--mut);margin-top:16px;line-height:1.5}
 
-  .axes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
-  .axis{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-  .axis .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;margin-bottom:12px}
-  .axis.know .ic{background:var(--hot-w)} .axis.perf .ic{background:var(--ok-w)}
-  .axis .ic svg{width:21px;height:21px}
-  .axis h3{font-size:16px;font-weight:600}
-  .axis p{font-size:13.5px;color:var(--soft);margin-top:7px}
-  @media(max-width:560px){.axes{grid-template-columns:1fr}}
-
-  .steps{margin-top:22px;counter-reset:s}
-  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+  /* PASSOS */
+  .step{display:grid;grid-template-columns:46px 1fr;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--line)}
   .step:last-child{border-bottom:0}
-  .step .num{counter-increment:s;font-family:'JetBrains Mono';font-weight:700;font-size:15px;color:#fff;background:var(--navy);width:44px;height:44px;border-radius:12px;display:grid;place-items:center}
-  .step .num::before{content:counter(s)}
-  .step h3{font-size:16.5px;font-weight:600}
-  .step p{font-size:14.5px;color:var(--soft);margin-top:5px}
+  .step .n{font-family:'Space Mono',monospace;font-weight:700;font-size:15px;color:var(--ochre);width:46px;height:46px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);display:grid;place-items:center}
+  .step h3{font-size:18px;line-height:1.2}
+  .step p{font-size:14.5px;color:var(--soft);margin-top:6px;max-width:54ch}
 
-  .inside{margin-top:20px;display:grid;gap:10px}
-  .item{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--hot);border-radius:11px;padding:14px 16px}
-  .item h3{font-size:15.5px;font-weight:600}
+  /* RECEBE */
+  .grid{display:grid;gap:11px;margin-top:22px}
+  .item{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:grid;grid-template-columns:24px 1fr;gap:14px;align-items:flex-start}
+  .item .chk{width:24px;height:24px;border-radius:7px;background:var(--ochre-w);display:grid;place-items:center;margin-top:2px}
+  .item .chk svg{width:13px;height:13px;stroke:var(--ochre)}
+  .item h3{font-size:16.5px;line-height:1.25}
   .item p{font-size:13.5px;color:var(--soft);margin-top:4px}
 
-  .founder{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;gap:20px;align-items:flex-start}
-  .founder img{width:92px;height:110px;border-radius:12px;object-fit:cover;flex-shrink:0;background:var(--cold-w)}
-  .founder .kk{margin-bottom:6px}
-  .founder p{font-size:15px;color:var(--soft);margin-top:8px}
-  .founder .sig{font-family:'Space Grotesk';font-weight:600;color:var(--ink);font-size:14px;margin-top:10px}
-  @media(max-width:560px){.founder{flex-direction:column;gap:14px}.founder img{width:104px;height:124px}}
+  /* FUNDADOR */
+  .founder{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+  .founder img{width:96px;height:116px;border-radius:13px;object-fit:cover;background:#E6DECF;flex-shrink:0}
+  .founder .ph{width:96px;height:116px;border-radius:13px;background:#E6DECF;flex-shrink:0;display:grid;place-items:center;color:var(--oat2);font-size:11px;font-family:'Space Mono',monospace;text-align:center;line-height:1.4}
+  .founder .bd{flex:1;min-width:240px}
+  .founder p{font-size:15px;color:var(--soft);margin-top:10px}
+  .founder .sig{font-family:'Spectral',serif;font-weight:600;font-style:italic;color:var(--ink);font-size:15px;margin-top:12px}
 
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
-  .st{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .st .n{font-family:'JetBrains Mono';font-weight:700;font-size:26px;color:var(--navy);line-height:1}
-  .st .n small{font-size:13px;color:var(--cold)}
-  .st .l{font-size:12.5px;color:var(--soft);margin-top:8px;line-height:1.35}
-  .barwrap{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
-  .barwrap .lab{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;margin-bottom:6px}
-  .barwrap .lab.cold{color:var(--soft);font-weight:500;margin-top:14px}
-  .bbar{height:13px;border-radius:7px;overflow:hidden;background:var(--cold-w)}
-  .bbar i{display:block;height:100%;border-radius:7px}
-  .note{font-size:12px;color:var(--cold);margin-top:14px}
-  @media(max-width:560px){.stats{grid-template-columns:1fr}}
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:22px}
+  .st{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px}
+  .st .n{font-family:'Space Mono',monospace;font-weight:700;font-size:27px;color:var(--navy);line-height:1}
+  .st .n small{font-size:13px;color:var(--oat2)}
+  .st .l{font-size:12.5px;color:var(--soft);margin-top:9px}
+  .barwrap{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:20px;margin-top:11px}
+  .barwrap .lab{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;margin-bottom:7px}
+  .barwrap .lab.b2{color:var(--soft);font-weight:500;margin:14px 0 7px}
+  .barwrap .lab .mono{color:var(--ochre)}
+  .barwrap .lab.b2 .mono{color:var(--soft)}
+  .bar{height:12px;border-radius:6px;background:#ECE4D5;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:6px}
+  .note{font-size:12px;color:var(--oat2);margin-top:14px}
 
-  .quotes{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .quote{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:18px}
-  .quote p{font-size:14.5px;color:var(--soft);font-style:italic}
-  .quote .who{font-family:'Space Grotesk';font-weight:600;font-size:13px;color:var(--ink);margin-top:10px;font-style:normal}
-  .quotes + .note{text-align:left}
-  @media(max-width:560px){.quotes{grid-template-columns:1fr}}
+  /* DEPOIMENTOS */
+  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .quote{background:var(--card);border:1px dashed #D8CFBE;border-radius:13px;padding:20px}
+  .quote p{font-family:'Spectral',serif;font-style:italic;font-size:14.5px;color:var(--soft);line-height:1.5}
+  .quote .who{font-size:12.5px;font-weight:600;color:var(--ink);margin-top:12px}
 
-  .offer{background:var(--card);border:2px solid var(--hot);border-radius:18px;padding:28px;text-align:center}
-  .anchor{display:flex;align-items:stretch;justify-content:center;margin:6px 0 18px;flex-wrap:wrap}
-  .anchor .col{flex:1;min-width:180px;padding:16px}
-  .anchor .col.bad .h,.anchor .col.good .h{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);margin-bottom:8px}
-  .anchor .col.bad .v{font-family:'Space Grotesk';font-weight:600;font-size:19px;text-decoration:line-through;text-decoration-color:var(--cold);color:var(--soft)}
-  .anchor .col .sub{font-size:12px;color:var(--cold);margin-top:6px;line-height:1.4}
-  .anchor .col.good{border-left:1px solid var(--line)}
-  .anchor .col.good .v{font-family:'Space Grotesk';font-weight:700;font-size:36px;color:var(--hot)}
-  .anchor .col.good .sub{color:var(--soft)}
-  .guar{display:inline-flex;align-items:center;gap:9px;background:var(--ok-w);color:#1c5c50;font-size:13px;font-weight:600;padding:9px 15px;border-radius:30px;margin-top:16px}
-  .guar svg{width:16px;height:16px}
+  /* OFERTA */
+  .offer{background:var(--card);border:1.5px solid var(--ochre2);border-radius:20px;padding:32px 28px;text-align:center;box-shadow:0 24px 50px -34px rgba(199,122,43,.6)}
+  .offer .kk{color:var(--ochre)}
+  .offer h2{font-size:clamp(22px,4.5vw,29px);line-height:1.18;margin:12px auto 0;max-width:24ch}
+  .anchor{display:flex;justify-content:center;align-items:stretch;margin:24px 0 8px;flex-wrap:wrap}
+  .anchor .col{flex:1;min-width:170px;padding:14px}
+  .anchor .h{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--oat);margin-bottom:8px}
+  .anchor .bad .v{font-family:'Spectral',serif;font-weight:600;font-size:21px;color:var(--oat);text-decoration:line-through;text-decoration-color:#C9BFAE}
+  .anchor .bad .sub{font-size:12px;color:var(--oat2);margin-top:7px;line-height:1.4}
+  .anchor .good{border-left:1px solid var(--line)}
+  .anchor .good .v{font-family:'Spectral',serif;font-weight:600;font-size:42px;color:var(--ochre);line-height:1}
+  .anchor .good .sub{font-size:12px;color:var(--soft);margin-top:7px;line-height:1.4}
+  .offer .btn{margin-top:14px}
+  .pix{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);margin-top:14px}
+  .pix svg{width:14px;height:14px;stroke:var(--green)}
+  .guar{display:inline-flex;align-items:center;gap:8px;background:var(--green-w);color:#1E5C4A;font-size:13px;font-weight:600;padding:9px 16px;border-radius:30px;margin-top:14px}
+  .guar svg{width:15px;height:15px;stroke:#1E5C4A}
 
-  .faq{margin-top:14px}
-  details.q{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
-  details.q summary{padding:15px 17px;cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:10px;font-family:'Space Grotesk'}
+  /* FAQ */
+  .faq{display:grid;gap:9px;margin-top:18px}
+  details.q{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  details.q summary{padding:16px 18px;cursor:pointer;font-family:'Spectral',serif;font-weight:600;font-size:15.5px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
   details.q summary::-webkit-details-marker{display:none}
-  details.q summary::after{content:"+";color:var(--hot);font-family:'JetBrains Mono';font-size:18px}
+  details.q summary::after{content:"+";font-family:'Space Mono',monospace;color:var(--ochre);font-size:18px;flex-shrink:0}
   details.q[open] summary::after{content:"\2013"}
-  details.q .a{padding:0 17px 16px;font-size:14px;color:var(--soft)}
+  details.q .a{padding:0 18px 16px;font-size:14px;color:var(--soft)}
 
-  .final{text-align:center;padding:48px 0 30px}
-  .final h2{font-size:clamp(24px,4.6vw,34px);font-weight:700;max-width:18ch;margin:0 auto}
-  .final h2 em{font-style:normal;color:var(--hot)}
-  .final .btn{margin-top:22px}
+  /* CTA FINAL */
+  .final{text-align:center;padding:20px 26px 40px}
+  .final h2{font-size:clamp(26px,5.2vw,38px);line-height:1.12;letter-spacing:-.02em;max-width:16ch;margin:0 auto}
+  .final .btn{display:inline-flex;margin-top:24px}
+  .final .sub{font-size:13px;color:var(--mut);margin-top:14px}
 
-  footer{padding:26px 0 40px;color:var(--cold);font-size:12px;text-align:center;line-height:1.7}
+  footer{padding:24px 26px 36px;text-align:center;font-size:11.5px;color:var(--oat2);line-height:1.8;border-top:1px solid var(--line)}
 
-  .sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50;padding-bottom:max(11px,env(safe-area-inset-bottom))}
-  .sticky .pl{font-size:12px;color:var(--soft)}
-  .sticky .pl b{font-family:'Space Grotesk';color:var(--ink);font-size:16px}
-  .sticky .btn{padding:12px 18px;font-size:14px}
+  /* STICKY */
+  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(243,238,228,.94);backdrop-filter:blur(10px);border-top:1px solid #DDD4C3;padding:11px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:760px;margin:0 auto;padding-bottom:max(11px,env(safe-area-inset-bottom))}
+  .sticky .pl{font-size:12px;color:var(--mut);line-height:1.3}
+  .sticky .pl b{font-family:'Spectral',serif;color:var(--ink);font-size:17px}
+  .sticky .btn{padding:13px 20px;font-size:14.5px;box-shadow:none}
+  .sticky .btn svg{width:15px;height:15px}
+
+  @media(max-width:560px){
+    .stats{grid-template-columns:1fr}
+    .quotes{grid-template-columns:1fr}
+    .founder .ph,.founder img{width:104px;height:124px}
+  }
   @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<div class="page">
 
-<!-- 1. HEADER -->
-<header class="top"><div class="wrap"><div class="mark">
-  <span class="dot"></span><span class="name">Só o que Cai</span><span class="tag">Diagnóstico · 1ª fase OAB</span>
-</div></div></header>
-
-<div class="wrap">
+  <!-- 1. HEADER -->
+  <header class="top">
+    <div class="brand"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span></div>
+    <span class="tag">1ª fase · OAB</span>
+  </header>
 
   <!-- 2. HERO -->
   <div class="hero">
-    <div class="eyebrow">Diagnóstico de aprovação · 1ª fase da OAB</div>
-    <h1>Em 20 minutos, descubra exatamente o que está entre você e a <em>aprovação</em>.</h1>
-    <p class="lede">Não é mais um cursinho com centenas de horas de aula. É um diagnóstico que te testa só no que mais cai, mostra onde você perde ponto, revela como você se sabota na hora da prova, e te entrega o caminho mais curto até os 40 acertos.</p>
-    <div class="cta-row">
-      <div>
-        <a class="btn js-buy" href="#">Quero meu diagnóstico
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <div class="safe">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          Pix ou cartão · compra 100% segura
-        </div>
-      </div>
-      <div class="price-line"><b>R$ 47</b> uma vez, sem mensalidade.<br>Resultado na hora. 7 dias de garantia.</div>
+    <div class="kk" style="color:var(--ochre)">Diagnóstico de aprovação</div>
+    <h1>Em 20 minutos, descubra <span class="em">onde</span> você perde ponto na 1ª fase.</h1>
+    <p class="lede">Você responde 24 questões só do que mais cai, conta como reage sob pressão, e recebe na hora um relatório que separa duas coisas: <b>o que você não sabe</b> e <b>o que sabe mas trava na prova</b>. Com a prescrição do que estudar primeiro.</p>
+
+    <div class="deliver">
+      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Simulado-diagnóstico de 24 questões, só do que mais cai</span></div>
+      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Raio-x de como você se comporta sob pressão</span></div>
+      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Relatório de dois eixos, com o seu nome, na hora</span></div>
+      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Fichas do que mais cai e folha de tática de prova</span></div>
+      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>3 simulados para medir sua evolução até o exame</span></div>
     </div>
+
+    <a class="btn js-buy" href="#oferta">Quero meu diagnóstico · R$ 47
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="trust">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pix ou cartão, compra segura</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>7 dias de garantia</span>
+    </div>
+
     <div class="count">
-      <div class="lbl">Cada semana estudando a coisa errada não volta. Falta para o próximo Exame de Ordem:</div>
-      <div class="clock" id="clock">
-        <div><div class="n" id="cd">--</div><div class="u">dias</div></div>
-        <div><div class="n" id="ch">--</div><div class="u">horas</div></div>
-        <div><div class="n" id="cm">--</div><div class="u">min</div></div>
-      </div>
+      <span class="lbl">Cada semana estudando a coisa errada não volta. Falta para o próximo Exame de Ordem:</span>
+      <span class="clk" id="clk">-- d -- h -- m</span>
     </div>
   </div>
 
   <!-- 3. INIMIGO -->
-  <section>
+  <div class="enemy-wrap">
     <div class="enemy">
-      <div class="kk">POR QUE ISSO CONTINUA ACONTECENDO</div>
+      <div class="kk">Por que isso continua acontecendo</div>
       <h2>O cursinho caro não vive de você passar. Vive de você voltar.</h2>
-      <p class="p">Você lembra do peso de fechar o caderno sem ter aprendido nada, com a casa inteira já dormindo. O passeio que seu filho pediu e você trocou por apostila. O almoço de família comido com pressa para voltar a estudar. E, mesmo assim, a reprovação. De novo.</p>
-      <p class="p">Eles cobram <strong>mais de mil reais, mais mensalidade sem data para acabar</strong>, e mandam você estudar tudo, todo dia, como se você não trabalhasse e não tivesse uma casa para tocar. Quanto mais aula empilham, mais parece que a culpa de reprovar é sua. E a solução que oferecem é sempre a mesma: recomeçar, pagando de novo.</p>
-      <div class="punch">Mandar estudar tudo é o conselho perfeito para quem ganha enquanto você continua matriculada.</div>
+      <p class="first">Você lembra do peso de fechar o caderno sem ter aprendido nada, com a casa inteira já dormindo. O passeio que seu filho pediu e você trocou por apostila. E, mesmo assim, a reprovação. De novo.</p>
+      <p>Eles cobram <b>mais de mil reais, mais mensalidade sem data para acabar</b>, e mandam você estudar tudo, todo dia, como se você não trabalhasse e não tivesse uma casa para tocar. Quanto mais aula empilham, mais parece que a culpa de reprovar é sua.</p>
+      <div class="punch"><p>Mandar estudar tudo é o conselho perfeito para quem ganha enquanto você continua matriculada.</p></div>
     </div>
-  </section>
+  </div>
 
-  <!-- 4. A VIRADA / DOIS EIXOS -->
-  <section>
-    <div class="kk">A VIRADA</div>
-    <h2 class="big">Talvez o seu problema não seja estudar mais.</h2>
-    <p class="p">Existem dois jeitos de reprovar na 1ª fase. Um todo mundo conhece: não saber o conteúdo. O outro, que ninguém te conta, é <strong>saber e errar mesmo assim</strong>: travar na questão difícil, ficar sem tempo, trocar a resposta certa por insegurança no último segundo. Você pode estar perdendo pontos nos dois lados ao mesmo tempo, e estudar mais horas não conserta o segundo.</p>
-    <p class="p">O Só o que Cai mede os dois. Por isso ele te diz mais do que "estude isto". Ele te diz <strong>o que você não sabe</strong> e <strong>como você se sabota</strong>, que são problemas diferentes, com soluções diferentes.</p>
-    <div class="axes">
-      <div class="axis know">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#D9851A" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-        <h3>Eixo do conteúdo</h3>
-        <p>Em quais das matérias que decidem a prova você está furado, e quais já estão garantidas.</p>
+  <!-- 4. A VIRADA + RELATÓRIO -->
+  <section class="pad">
+    <div class="kk">A virada</div>
+    <h2 class="h2">Talvez o seu problema não seja estudar mais.</h2>
+    <p class="lead">Existem dois jeitos de reprovar. Um todo mundo conhece: não saber o conteúdo. O outro, que ninguém te conta, é <b>saber e errar mesmo assim</b>: travar na questão difícil, ficar sem tempo, trocar a resposta certa por insegurança no último segundo. Estudar mais horas não conserta o segundo.</p>
+
+    <div class="report">
+      <div class="hd"><span class="t">Seu relatório, em dois eixos</span><span class="ex">exemplo</span></div>
+      <div class="plot-row">
+        <div class="ylab">Desempenho na prova</div>
+        <div style="flex:1">
+          <div class="plot">
+            <div class="q-tl"></div><div class="q-br"></div>
+            <div class="vline"></div><div class="hline"></div>
+            <div class="ql a">Sabe, mas trava sob pressão</div>
+            <div class="ql b">Pronta de verdade</div>
+            <div class="ql c">Lacuna de conteúdo</div>
+            <div class="ql d">Sabe e executa, falta tática</div>
+            <div class="you"><div class="dot"></div><div class="lab">você</div></div>
+          </div>
+          <div class="xlab">Domínio do conteúdo</div>
+        </div>
       </div>
-      <div class="axis perf">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2C8A78" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3>Eixo da prova</h3>
-        <p>Como você age sob pressão, e a tática certa para a sua cabeça não te derrubar no dia.</p>
-      </div>
+      <p class="cap">No exemplo: a aprovação não está travada por falta de estudo, e sim por desempenho sob pressão. São problemas diferentes, com soluções diferentes, e é isso que o relatório aponta com o seu nome.</p>
     </div>
   </section>
 
   <!-- 5. COMO FUNCIONA -->
-  <section>
-    <div class="kk">COMO FUNCIONA</div>
-    <h2 class="big">Da compra ao seu plano, em poucos minutos.</h2>
-    <div class="steps">
-      <div class="step"><div class="num"></div><div><h3>Você responde 24 questões</h3><p>Só das 6 matérias que decidem a prova, no estilo da banca. Nada de questão que quase não cai.</p></div></div>
-      <div class="step"><div class="num"></div><div><h3>Faz o raio-x de como você prova</h3><p>Um questionário rápido sobre o que acontece com você na hora: tempo, travada, insegurança, pânico.</p></div></div>
-      <div class="step"><div class="num"></div><div><h3>Recebe o relatório na hora</h3><p>Em dois eixos, com o seu nome: onde está a lacuna de conteúdo e onde está a lacuna de desempenho.</p></div></div>
-      <div class="step"><div class="num"></div><div><h3>Recebe a prescrição e treina</h3><p>O que estudar primeiro, as fichas do que mais cai, a tática para o seu perfil, e simulados para medir se você melhorou.</p></div></div>
-    </div>
+  <section class="pad">
+    <div class="kk">Como funciona</div>
+    <h2 class="h2" style="margin-bottom:22px">Da compra ao seu plano, em poucos minutos.</h2>
+    <div class="step"><div class="n">1</div><div><h3>Você responde 24 questões</h3><p>Só das 6 matérias que decidem a prova, no estilo da banca. Nada de questão que quase não cai.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h3>Faz o raio-x de como você prova</h3><p>Um questionário rápido sobre o que acontece com você na hora: tempo, travada, insegurança, pânico.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h3>Recebe o relatório na hora</h3><p>Em dois eixos, com o seu nome: onde está a lacuna de conteúdo e onde está a de desempenho.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h3>Recebe a prescrição e treina</h3><p>O que estudar primeiro, as fichas do que mais cai, a tática para o seu perfil, e os simulados.</p></div></div>
   </section>
 
   <!-- 6. O QUE VOCÊ RECEBE -->
-  <section>
-    <div class="kk">O QUE VOCÊ RECEBE</div>
-    <h2 class="big">Tudo voltado para uma coisa: passar.</h2>
-    <div class="inside">
-      <div class="item"><h3>O diagnóstico das 6 matérias do núcleo duro</h3><p>As que sozinhas valem quase metade da prova. É onde a aprovação se decide.</p></div>
-      <div class="item"><h3>Seu relatório de dois eixos, personalizado</h3><p>Conteúdo e desempenho lado a lado, para você parar de tratar como falta de estudo o que é nervosismo, e o contrário.</p></div>
-      <div class="item"><h3>As fichas do que mais cai</h3><p>A revisão condensada dos pontos quentes das suas matérias fracas. Lei seca, súmula e a pegadinha clássica. Sem apostila de mil páginas.</p></div>
-      <div class="item"><h3>A folha de tática de prova para o seu perfil</h3><p>Gestão de tempo, a regra de pular e voltar, como cortar a espiral de pânico. O que ninguém te ensina e decide o dia.</p></div>
-      <div class="item"><h3>3 simulados focados para medir sua evolução</h3><p>Liberados como checkpoints rumo ao exame, para você ver, em número, que está melhorando.</p></div>
+  <section class="pad">
+    <div class="kk">O que você recebe</div>
+    <h2 class="h2">Tudo voltado para uma coisa: passar.</h2>
+    <div class="grid">
+      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>O diagnóstico das 6 matérias do núcleo duro</h3><p>As que sozinhas valem quase metade da prova. É onde a aprovação se decide.</p></div></div>
+      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Seu relatório de dois eixos, personalizado</h3><p>Conteúdo e desempenho lado a lado, para parar de tratar nervosismo como falta de estudo, e o contrário.</p></div></div>
+      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>As fichas do que mais cai</h3><p>Revisão condensada dos pontos quentes das suas matérias fracas. Lei seca, súmula e a pegadinha clássica.</p></div></div>
+      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>A folha de tática de prova para o seu perfil</h3><p>Gestão de tempo, a regra de pular e voltar, como cortar a espiral de pânico. O que decide o dia.</p></div></div>
+      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>3 simulados focados para medir sua evolução</h3><p>Liberados como checkpoints rumo ao exame, para você ver, em número, que está melhorando.</p></div></div>
     </div>
   </section>
 
   <!-- 7. FUNDADOR -->
-  <section>
+  <section class="pad">
     <div class="founder">
-      <img src="assets/gustavo.webp" width="92" height="110" loading="lazy" alt="Gustavo, advogado">
-      <div>
-        <div class="kk">QUEM ESTÁ FALANDO COM VOCÊ</div>
-        <p>Sou Gustavo, advogado. Passei pela 1ª fase e, de lá pra cá, vi gente capaz demais reprovar não por saber menos, mas por gastar as poucas horas que tinha na matéria errada, ou por travar bem na hora. O Só o que Cai é o diagnóstico que eu queria ter tido: o que a banca realmente cobra, levantado das provas recentes, cruzado com como você se comporta na prova, para você mirar onde estão os pontos e parar de se sabotar.</p>
-        <div class="sig">Gustavo · Só o que Cai</div>
+      <img src="assets/gustavo.webp" width="96" height="116" loading="lazy" alt="Gustavo, advogado" style="object-position:center 6%">
+      <div class="bd">
+        <div class="kk">Quem está falando com você</div>
+        <p>Sou Gustavo, advogado. Passei pela 1ª fase e vi gente capaz demais reprovar não por saber menos, mas por gastar as poucas horas que tinha na matéria errada, ou por travar bem na hora. O Só o que Cai é o diagnóstico que eu queria ter tido.</p>
+        <div class="sig">Gustavo, idealizador</div>
       </div>
     </div>
   </section>
 
   <!-- 8. NÃO É ACHISMO -->
-  <section>
-    <div class="kk">NÃO É ACHISMO</div>
-    <h2 class="big">A prova não cai espalhada por igual.</h2>
-    <p class="p">Coloque as provas recentes lado a lado e o desenho aparece sozinho. Poucas matérias decidem quase tudo, e é exatamente nelas que o diagnóstico te testa, para não desperdiçar um minuto seu.</p>
+  <section class="pad">
+    <div class="kk">Não é achismo</div>
+    <h2 class="h2">A prova não cai espalhada por igual.</h2>
+    <p class="lead">Coloque as provas recentes lado a lado e o desenho aparece sozinho. Poucas matérias decidem quase tudo, e é exatamente nelas que o diagnóstico te testa.</p>
     <div class="stats">
-      <div class="st"><div class="n">80<small> q</small></div><div class="l">Questões na prova. Você precisa de 40, metade.</div></div>
-      <div class="st"><div class="n">~48<small>%</small></div><div class="l">Da prova em 6 matérias: Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal.</div></div>
-      <div class="st"><div class="n">~8</div><div class="l">Questões de Ética por edição, o maior peso individual da prova.</div></div>
+      <div class="st"><div class="n">80<small> q</small></div><div class="l">na prova. Você precisa de 40, metade.</div></div>
+      <div class="st"><div class="n">~48<small>%</small></div><div class="l">da prova em 6 matérias do núcleo duro.</div></div>
+      <div class="st"><div class="n">~8</div><div class="l">questões de Ética, o maior peso individual.</div></div>
     </div>
     <div class="barwrap">
-      <div class="lab"><span>As 11 matérias principais concentram cerca de 78% dos pontos</span><span class="mono">~78%</span></div>
-      <div class="bbar"><i style="width:78%;background:linear-gradient(90deg,var(--hot),var(--hot-b))"></i></div>
-      <div class="lab cold"><span>As outras valem juntas só cerca de 22%</span><span class="mono">~22%</span></div>
-      <div class="bbar"><i style="width:22%;background:var(--cold)"></i></div>
-      <div class="note">Distribuição aproximada com base no edital e nas provas recentes do exame. Varia um pouco de uma edição para outra.</div>
+      <div class="lab"><span>As 11 matérias principais concentram cerca de 78% dos pontos</span><span class="mono">78%</span></div>
+      <div class="bar"><i style="width:78%;background:var(--ochre2)"></i></div>
+      <div class="lab b2"><span>As outras valem juntas só cerca de 22%</span><span class="mono">22%</span></div>
+      <div class="bar"><i style="width:22%;background:#B6AE9F"></i></div>
+      <div class="note">Distribuição aproximada com base no edital e nas provas recentes. Varia de uma edição para outra.</div>
     </div>
   </section>
 
-  <!-- 9. PROVA SOCIAL (preencher com depoimentos REAIS; remova o bloco se não tiver) -->
-  <section>
-    <div class="kk">QUEM JÁ FEZ</div>
-    <h2 class="big">O que dizem quem já se diagnosticou.</h2>
-    <!-- TODO: troque pelos depoimentos REAIS (print de WhatsApp, nome, cidade). Não invente. -->
-    <div class="quotes">
-      <div class="quote"><p>[DEPOIMENTO 1: cole aqui o relato real de quem usou o diagnóstico.]</p><div class="who">[Nome] · [cidade]</div></div>
-      <div class="quote"><p>[DEPOIMENTO 2: de preferência de quem já tinha reprovado antes.]</p><div class="who">[Nome] · [cidade]</div></div>
+  <!-- 9. PROVA SOCIAL (use só depoimentos REAIS; sem nenhum, apague o bloco) -->
+  <section class="pad">
+    <div class="kk">Quem já fez</div>
+    <h2 class="h2">O que dizem quem já se diagnosticou.</h2>
+    <div class="quotes" style="margin-top:20px">
+      <div class="quote"><p>[DEPOIMENTO real: cole aqui o relato de quem usou o diagnóstico]</p><div class="who">[Nome] · [cidade]</div></div>
+      <div class="quote"><p>[DEPOIMENTO de preferência de quem já tinha reprovado antes]</p><div class="who">[Nome] · [cidade]</div></div>
     </div>
-    <div class="note">Seção opcional. Sem depoimento real ainda, basta apagar este bloco inteiro.</div>
+    <div class="note">Use só depoimentos reais (print de WhatsApp, nome, cidade). Sem nenhum ainda, apague este bloco inteiro.</div>
   </section>
 
   <!-- 10. OFERTA -->
-  <section>
-    <div class="kk" style="text-align:center">A OFERTA</div>
+  <section class="pad" id="oferta" style="scroll-margin-top:20px">
     <div class="offer">
-      <h2 class="big" style="margin:6px auto 4px">Saber onde você perde ponto custa menos que a sua taxa de inscrição.</h2>
+      <div class="kk">A oferta</div>
+      <h2>Antes de gastar mais um ano e mais mil reais, gaste R$ 47 para saber onde você perde ponto.</h2>
       <div class="anchor">
-        <div class="col bad">
-          <div class="h">O cursinho</div>
-          <div class="v">+ R$ 1.000</div>
-          <div class="sub">mais mensalidade sem fim, mais um ano da sua vida, mais a chance de recomeçar do zero.</div>
-        </div>
-        <div class="col good">
-          <div class="h">Só o que Cai</div>
-          <div class="v">R$ 47</div>
-          <div class="sub">uma vez, sem mensalidade, com o seu diagnóstico pronto na hora.</div>
-        </div>
+        <div class="col bad"><div class="h">O cursinho</div><div class="v">+ R$ 1.000</div><div class="sub">mais mensalidade sem fim, mais um ano da sua vida</div></div>
+        <div class="col good"><div class="h">Só o que Cai</div><div class="v">R$ 47</div><div class="sub">uma vez, sem mensalidade, relatório na hora</div></div>
       </div>
-      <a class="btn js-buy" href="#">Quero meu diagnóstico
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <div class="safe" style="justify-content:center;width:100%">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        Pix ou cartão · compra 100% segura
-      </div>
-      <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke="#1c5c50" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 7 dias de garantia. Não gostou, devolvemos.</span></div>
+      <a class="btn js-buy" href="#">Quero meu diagnóstico · R$ 47
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div><span class="pix"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pix ou cartão, compra 100% segura</span></div>
+      <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>7 dias de garantia. Não gostou, devolvemos.</span></div>
     </div>
   </section>
 
   <!-- 11. FAQ -->
-  <section>
-    <div class="kk">PERGUNTAS</div>
-    <h2 class="big">O que costumam perguntar.</h2>
+  <section class="pad">
+    <div class="kk">Perguntas</div>
+    <h2 class="h2">O que costumam perguntar.</h2>
     <div class="faq">
       <details class="q"><summary>Serve para quem já reprovou?</summary><div class="a">É feito exatamente para você. Quem já reprovou costuma ter base, o que falta é direção e desempenho na hora. O diagnóstico aponta os dois.</div></details>
-      <details class="q"><summary>Preciso ter estudado muito antes?</summary><div class="a">Você não precisa aprender Direito de novo, isso você já fez na faculdade. O Só o que Cai serve para quem tem base e está mal direcionado, não para começar do zero.</div></details>
+      <details class="q"><summary>E se eu não usar, como o curso que não assisti?</summary><div class="a">Não é mais um curso de 200 horas para você não assistir. São 20 minutos hoje, e o relatório é seu para sempre.</div></details>
+      <details class="q"><summary>Tenho medo de descobrir que estou pior do que pensava.</summary><div class="a">O relatório não é para te julgar. É para mostrar que o problema tem nome, e que dá para resolver com direção.</div></details>
+      <details class="q"><summary>Preciso ter estudado muito antes?</summary><div class="a">Você não precisa aprender Direito de novo, isso você já fez na faculdade. Serve para quem tem base e está mal direcionado, não para começar do zero.</div></details>
       <details class="q"><summary>Quanto tempo leva?</summary><div class="a">O diagnóstico leva de 15 a 20 minutos, e o relatório sai na hora. Os simulados você faz quando quiser, rumo ao exame.</div></details>
       <details class="q"><summary>É atualizado para o próximo exame?</summary><div class="a">Sim. Esta edição é montada para o próximo Exame de Ordem, com base nas provas mais recentes da banca.</div></details>
-      <details class="q"><summary>É seguro pagar?</summary><div class="a">É. O pagamento é processado pela plataforma de checkout, em ambiente seguro e com seus dados protegidos. Você escolhe pagar no Pix ou no cartão.</div></details>
-      <details class="q"><summary>Serve para o exame de qualquer estado?</summary><div class="a">Serve. A prova da 1ª fase é da FGV e é a mesma no país inteiro, então o diagnóstico vale para você onde quer que vá prestar o exame.</div></details>
-      <details class="q"><summary>Por quanto tempo eu tenho acesso?</summary><div class="a">O acesso fica liberado para você usar no seu ritmo até o próximo Exame de Ordem, quantas vezes quiser. <!-- confirme a política de acesso real com a sua plataforma --></div></details>
+      <details class="q"><summary>É seguro pagar?</summary><div class="a">É. O pagamento é processado pela plataforma de checkout, em ambiente seguro. Você escolhe pagar no Pix ou no cartão.</div></details>
+      <details class="q"><summary>Serve para o exame de qualquer estado?</summary><div class="a">Serve. A prova da 1ª fase é da FGV e é a mesma no país inteiro, então o diagnóstico vale onde quer que você preste o exame.</div></details>
       <details class="q"><summary>E se eu não gostar?</summary><div class="a">Você tem 7 dias de garantia. Não serviu para você, devolvemos o valor, sem discussão.</div></details>
     </div>
   </section>
 
   <!-- 12. CTA FINAL -->
   <div class="final">
-    <h2>Pare de estudar tudo. Comece a estudar <em>só o que cai</em>.</h2>
-    <a class="btn js-buy" href="#">Quero meu diagnóstico · R$ 47
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <div class="safe" style="justify-content:center;width:100%">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-      Resultado na hora, no celular. 7 dias de garantia.
-    </div>
+    <h2>Pare de estudar tudo. Comece a estudar <span class="em">só o que cai</span>.</h2>
+    <a class="btn js-buy" href="#oferta">Quero meu diagnóstico · R$ 47
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="sub">Resultado na hora, no celular. 7 dias de garantia.</div>
   </div>
 
   <!-- 13. RODAPÉ -->
@@ -396,19 +431,20 @@
 
 <!-- CTA FIXO MOBILE -->
 <div class="sticky">
-  <div class="pl"><b>R$ 47</b> uma vez · resultado na hora</div>
-  <a class="btn js-buy" href="#">Quero meu diagnóstico</a>
+  <div class="pl"><b>R$ 47</b><br>resultado na hora</div>
+  <a class="btn js-buy" href="#oferta">Meu diagnóstico
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </div>
 
 <script>
   // ======================= CONFIGURAR ANTES DE PUBLICAR =======================
-  // 1) Link do seu checkout (Kiwify, Hotmart, Cakto...). Vai em TODOS os botões.
+  // 1) Link do seu checkout (Kiwify, Hotmart, Cakto...). Vai em TODOS os botões de compra.
   var CHECKOUT_URL = "https://COLE-SEU-CHECKOUT-AQUI.com";
   // 2) Data e hora reais do próximo Exame de Ordem (confira no edital oficial da FGV).
   var DATA_PROVA = new Date("2026-09-13T13:00:00-03:00");
   // ===========================================================================
 
-  // aplica o link em todos os botões de compra + dispara evento de pixel ao clicar
+  // Aplica o link do checkout em todos os botões e dispara o evento do Pixel ao clicar.
   document.querySelectorAll('.js-buy').forEach(function(a){
     a.setAttribute('href', CHECKOUT_URL);
     a.addEventListener('click', function(){
@@ -416,14 +452,13 @@
     });
   });
 
-  // contador regressivo (dias, horas, minutos)
+  // Contador regressivo (dias, horas, minutos).
   function tick(){
+    var el = document.getElementById('clk');
     var diff = DATA_PROVA - new Date();
-    if (diff < 0){ document.getElementById('clock').innerHTML = '<div class="lbl" style="color:#AEB6C4">o exame está chegando</div>'; return; }
+    if (diff < 0){ el.textContent = 'o exame está chegando'; return; }
     var d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4);
-    document.getElementById('cd').textContent = d;
-    document.getElementById('ch').textContent = String(h).padStart(2,'0');
-    document.getElementById('cm').textContent = String(m).padStart(2,'0');
+    el.textContent = d + 'd ' + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm';
   }
   tick(); setInterval(tick, 20000);
 </script>
