@@ -66,8 +66,8 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:#11171C;color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
-  .page{max-width:760px;margin:0 auto;background:var(--paper);padding-bottom:78px;box-shadow:0 0 80px rgba(0,0,0,.35);overflow:hidden}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .page{max-width:760px;margin:0 auto;background:var(--paper);padding-bottom:78px;overflow:hidden}
   .pad{padding-left:26px;padding-right:26px}
   .mono{font-family:'Space Mono',monospace}
   .serif{font-family:'Spectral',serif}
@@ -233,6 +233,46 @@
   .sticky .btn{padding:13px 20px;font-size:14.5px;box-shadow:none}
   .sticky .btn svg{width:15px;height:15px}
 
+  /* ===== DESKTOP: vira site de tela cheia, não coluna de celular ===== */
+  @media(min-width:900px){
+    .page{max-width:1140px;padding-bottom:0}
+    .top{padding:30px 56px 0}
+    .pad{padding-left:56px;padding-right:56px}
+    .enemy-wrap{padding:64px 56px}
+    section{padding:18px 0 72px}
+
+    /* HERO em 2 colunas: copy à esquerda, checklist de entregáveis à direita */
+    .hero{display:grid;grid-template-columns:1fr .86fr;column-gap:56px;align-items:center;padding:60px 56px 28px}
+    .hero>.kk{grid-column:1;grid-row:1}
+    .hero>h1{grid-column:1;grid-row:2}
+    .hero>.lede{grid-column:1;grid-row:3}
+    .hero>.btn{grid-column:1;grid-row:4;justify-self:start}
+    .hero>.trust{grid-column:1;grid-row:5;justify-content:flex-start}
+    .hero>.count{grid-column:1;grid-row:6}
+    .hero>.deliver{grid-column:2;grid-row:1 / 7;align-self:center;margin-top:0}
+
+    /* A VIRADA: texto e gráfico de quadrante lado a lado */
+    .virada{display:grid;grid-template-columns:1fr 1fr;column-gap:52px;align-items:center}
+    .virada>.kk{grid-column:1;grid-row:1}
+    .virada>.h2{grid-column:1;grid-row:2}
+    .virada>.lead{grid-column:1;grid-row:3}
+    .virada>.report{grid-column:2;grid-row:1 / 4;align-self:center;margin-top:0}
+
+    /* grades em 2 colunas */
+    .steps{display:grid;grid-template-columns:1fr 1fr;gap:4px 44px}
+    .steps .step{border-bottom:0}
+    .grid{grid-template-columns:1fr 1fr}
+    .faq{grid-template-columns:1fr 1fr;align-items:start}
+
+    /* cartões de prosa/único centralizados para leitura confortável */
+    .enemy{max-width:900px;margin:0 auto}
+    .founder{max-width:840px;margin:0 auto}
+    .offer{max-width:780px;margin:0 auto}
+
+    /* barra fixa vira faixa cheia centralizada */
+    .sticky{max-width:none;justify-content:center;gap:34px}
+  }
+
   @media(max-width:560px){
     .stats{grid-template-columns:1fr}
     .quotes{grid-template-columns:1fr}
@@ -289,7 +329,7 @@
   </div>
 
   <!-- 4. A VIRADA + RELATÓRIO -->
-  <section class="pad">
+  <section class="pad virada">
     <div class="kk">A virada</div>
     <h2 class="h2">Talvez o seu problema não seja estudar mais.</h2>
     <p class="lead">Existem dois jeitos de reprovar. Um todo mundo conhece: não saber o conteúdo. O outro, que ninguém te conta, é <b>saber e errar mesmo assim</b>: travar na questão difícil, ficar sem tempo, trocar a resposta certa por insegurança no último segundo. Estudar mais horas não conserta o segundo.</p>
@@ -319,10 +359,12 @@
   <section class="pad">
     <div class="kk">Como funciona</div>
     <h2 class="h2" style="margin-bottom:22px">Da compra ao seu plano, em poucos minutos.</h2>
+    <div class="steps">
     <div class="step"><div class="n">1</div><div><h3>Você responde 24 questões</h3><p>Só das 6 matérias que decidem a prova, no estilo da banca. Nada de questão que quase não cai.</p></div></div>
     <div class="step"><div class="n">2</div><div><h3>Faz o raio-x de como você prova</h3><p>Um questionário rápido sobre o que acontece com você na hora: tempo, travada, insegurança, pânico.</p></div></div>
     <div class="step"><div class="n">3</div><div><h3>Recebe o relatório na hora</h3><p>Em dois eixos, com o seu nome: onde está a lacuna de conteúdo e onde está a de desempenho.</p></div></div>
     <div class="step"><div class="n">4</div><div><h3>Recebe a prescrição e treina</h3><p>O que estudar primeiro, as fichas do que mais cai, a tática para o seu perfil, e os simulados.</p></div></div>
+    </div>
   </section>
 
   <!-- 6. O QUE VOCÊ RECEBE -->
