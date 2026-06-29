@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Só o que Cai · Diagnóstico (protótipo de teste)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C77A2B'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --soft:#574F45; --mut:#6B6357;
+    --oat:#9A9488; --oat2:#A89F90; --line:#E3DBCB; --line2:#EDE6D8;
+    --navy:#15212B; --ochre:#A65D1E; --ochre2:#C77A2B; --ochre-w:#F0E6D4;
+    --green:#3A7A5C; --green-w:#E3EEE8; --btn:#15212B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+  h1,h2,h3{font-family:'Spectral',serif;font-weight:600;letter-spacing:-.01em;line-height:1.14}
+  .mono{font-family:'Space Mono',monospace}
+  .em{font-style:italic;color:var(--ochre)}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px}
+
+  /* faixa de teste */
+  .ribbon{background:var(--navy);color:#E7DFCF;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-align:center;padding:7px 12px;text-transform:uppercase}
+  .ribbon b{color:var(--ochre2)}
+
+  .top{display:flex;align-items:center;gap:10px;padding:18px 0 6px}
+  .top .ic{width:28px;height:28px;border-radius:8px;background:var(--navy);display:grid;place-items:center}
+  .top .ic i{width:8px;height:8px;border-radius:50%;background:var(--ochre2);display:block}
+  .top .nm{font-family:'Spectral',serif;font-weight:600;font-size:17px}
+  .top .tg{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--oat);margin-left:auto}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:var(--btn);color:#fff;font-family:'Hanken Grotesk';font-weight:600;font-size:16px;text-decoration:none;padding:15px 26px;border-radius:12px;border:0;cursor:pointer;box-shadow:0 12px 26px -16px rgba(21,33,43,.9);transition:background .15s,transform .1s;width:100%}
+  .btn:hover{background:#1d2e3c}.btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--soft);box-shadow:none;font-weight:500;font-size:14px;padding:10px;width:auto}
+  .btn svg{width:18px;height:18px;stroke:var(--ochre2)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 22px;box-shadow:0 18px 50px -36px rgba(21,33,43,.5)}
+
+  /* INTRO */
+  .intro h1{font-size:clamp(28px,6.4vw,38px);margin-top:8px}
+  .intro p{color:var(--soft);font-size:16px;margin-top:14px}
+  .intro .feats{margin-top:18px;display:grid;gap:8px}
+  .intro .feats div{display:flex;gap:10px;align-items:center;font-size:14.5px;color:#3A342C}
+  .intro .feats svg{width:16px;height:16px;stroke:var(--ochre);flex-shrink:0}
+  label.fld{display:block;margin-top:22px;font-size:13px;font-weight:600;color:var(--mut)}
+  input.nome{width:100%;margin-top:8px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:'Hanken Grotesk';font-size:16px;color:var(--ink)}
+  input.nome:focus{outline:2px solid var(--ochre2);outline-offset:1px;border-color:transparent}
+  .intro .btn{margin-top:18px}
+  .mini{font-size:12px;color:var(--oat);margin-top:14px;text-align:center}
+
+  /* PROGRESSO */
+  .prog{padding:16px 0 4px}
+  .prog .meta{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--oat);margin-bottom:8px}
+  .prog .bar{height:7px;background:#E6DECF;border-radius:5px;overflow:hidden}
+  .prog .bar i{display:block;height:100%;background:var(--ochre2);border-radius:5px;transition:width .25s}
+
+  /* QUESTÃO */
+  .qmat{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ochre)}
+  .qtext{font-family:'Spectral',serif;font-weight:600;font-size:20px;line-height:1.3;margin-top:10px}
+  .opts{display:grid;gap:10px;margin-top:20px}
+  .opt{display:flex;gap:13px;align-items:flex-start;text-align:left;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px 16px;cursor:pointer;font-family:'Hanken Grotesk';font-size:15px;color:var(--ink);transition:border-color .12s,background .12s}
+  .opt:hover{border-color:var(--ochre2)}
+  .opt .k{font-family:'Space Mono',monospace;font-weight:700;font-size:13px;color:var(--ochre);width:18px;flex-shrink:0;margin-top:1px}
+  .opt.sel{border-color:var(--ochre2);background:var(--ochre-w)}
+  .navrow{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+
+  /* RELATÓRIO */
+  .rep h1{font-size:clamp(26px,6vw,34px);margin-top:6px}
+  .rep .sub{color:var(--soft);font-size:15.5px;margin-top:10px}
+  .verdict{margin-top:20px;border-radius:16px;padding:20px;border:1px solid var(--line)}
+  .verdict .lab{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+  .verdict h2{font-size:21px}
+  .verdict p{font-size:15px;color:var(--soft);margin-top:8px}
+  .verdict.ochre{background:var(--ochre-w);border-color:#E7C9A4}.verdict.ochre .lab{color:var(--ochre)}
+  .verdict.green{background:var(--green-w);border-color:#BFE0D2}.verdict.green .lab{color:var(--green)}
+  .verdict.mixed{background:#F1ECE1}.verdict.mixed .lab{color:var(--mut)}
+
+  .plotcard{margin-top:16px}
+  .plot-row{display:flex;gap:10px}
+  .ylab{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--oat);display:flex;align-items:center;justify-content:center}
+  .plot{position:relative;width:100%;height:300px;background:#F4EEE2;border:1px solid #E6DECF;border-radius:12px;overflow:hidden}
+  .plot .q1{position:absolute;left:50%;right:0;top:0;height:50%;background:#E1EEE7;opacity:.65}      /* alto/alto = pronta */
+  .plot .q2{position:absolute;left:50%;right:0;top:50%;bottom:0;background:#FBE9D2;opacity:.7}        /* alto domínio/baixo desemp = trava */
+  .plot .vline{position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #D8CFBE}
+  .plot .hline{position:absolute;top:50%;left:0;right:0;border-top:1px dashed #D8CFBE}
+  .plot .ql{position:absolute;font-size:10.5px;max-width:13ch;line-height:1.25;font-weight:600}
+  .plot .ql.tr{right:10px;top:9px;color:var(--green);text-align:right}
+  .plot .ql.br{right:10px;bottom:9px;color:var(--ochre);text-align:right}
+  .plot .ql.tl{left:10px;top:9px;color:var(--oat)}
+  .plot .ql.bl{left:10px;bottom:9px;color:var(--oat)}
+  .plot .you{position:absolute;transform:translate(-50%,-50%);transition:left .6s ease,top .6s ease}
+  .plot .you .dot{width:20px;height:20px;border-radius:50%;background:var(--ochre2);border:3px solid var(--card);box-shadow:0 3px 10px -2px rgba(199,122,43,.9)}
+  .plot .you .lab{position:absolute;left:26px;top:-3px;white-space:nowrap;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);padding:2px 8px;border-radius:6px}
+  .plot .you.right .lab{left:auto;right:26px}
+  .xlab{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--oat);text-align:center;margin-top:9px}
+
+  .blk{margin-top:22px}
+  .blk .kk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oat)}
+  .blk h3{font-size:19px;margin-top:6px}
+  .mbar{margin-top:12px}
+  .mbar .row{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+  .mbar .nm{font-size:14px;width:130px;flex-shrink:0}
+  .mbar .tr{flex:1;height:9px;background:#E6DECF;border-radius:5px;overflow:hidden}
+  .mbar .tr i{display:block;height:100%;border-radius:5px}
+  .mbar .pc{font-family:'Space Mono',monospace;font-size:12px;color:var(--mut);width:42px;text-align:right}
+  .tag{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;margin-left:7px}
+  .tag.weak{background:var(--ochre-w);color:var(--ochre)}
+  .tag.ok{background:var(--green-w);color:var(--green)}
+
+  .presc{margin-top:14px;display:grid;gap:10px}
+  .presc .p{background:#fff;border:1px solid var(--line);border-left:3px solid var(--ochre);border-radius:11px;padding:14px 16px}
+  .presc .p .h{font-weight:600;font-size:15px}
+  .presc .p .d{font-size:13.5px;color:var(--soft);margin-top:4px}
+
+  .next{margin-top:22px;background:var(--navy);color:#D7DBDF;border-radius:16px;padding:22px}
+  .next .kk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ochre2)}
+  .next h3{color:#fff;font-size:20px;margin-top:8px}
+  .next p{font-size:14.5px;color:#AEB4BB;margin-top:10px}
+  .next ul{list-style:none;margin-top:12px;display:grid;gap:7px}
+  .next li{display:flex;gap:9px;font-size:14px;color:#CBD0D6}
+  .next li svg{width:15px;height:15px;stroke:var(--ochre2);flex-shrink:0;margin-top:3px}
+
+  footer{padding:26px 0 50px;text-align:center;font-size:11.5px;color:var(--oat2);line-height:1.8}
+  .center{text-align:center}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="ribbon"><b>VERSÃO DE TESTE</b> &nbsp;·&nbsp; questões são exemplos, o que importa aqui é o fluxo e o relatório</div>
+
+<div class="wrap">
+  <div class="top"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span><span class="tg">Diagnóstico</span></div>
+  <div id="app"></div>
+</div>
+
+<footer>Só o que Cai · protótipo do diagnóstico da 1ª fase · uso de teste</footer>
+
+<script>
+/* ====================== DADOS ====================== */
+const MATERIAS = ['Ética','Constitucional','Civil','Processo Civil','Penal','Processo Penal'];
+
+// 24 questões de CONTEÚDO (4 por matéria). EXEMPLOS para teste, revisar antes de vender.
+const CONTENT = [
+  {mat:'Ética', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
+  {mat:'Ética', q:'O advogado em situação de impedimento:', o:['Está proibido de advogar de forma total e permanente.','Tem proibição parcial, podendo advogar fora das hipóteses vedadas.','Perde a inscrição na OAB.','Pode advogar livremente, sem qualquer restrição.'], c:1},
+  {mat:'Ética', q:'A sociedade de advogados deve:', o:['Adotar nome de fantasia comercial.','Ter denominação com o nome de, ao menos, um advogado responsável e registro na OAB.','Incluir obrigatoriamente um sócio não advogado.','Dispensar registro no Conselho.'], c:1},
+  {mat:'Ética', q:'Revogado o mandato sem justa causa, o advogado:', o:['Nada recebe pelo que já havia feito.','Faz jus aos honorários proporcionais ao serviço já prestado.','Recebe o dobro a título de multa.','Deve devolver tudo o que recebeu.'], c:1},
+
+  {mat:'Constitucional', q:'O habeas corpus é cabível quando:', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
+  {mat:'Constitucional', q:'Assinale o que NÃO é direito social na Constituição:', o:['Educação.','Saúde.','Propriedade privada.','Moradia.'], c:2},
+  {mat:'Constitucional', q:'Os direitos e garantias fundamentais têm aplicação:', o:['Mediata, dependente de lei posterior.','Imediata.','Condicionada a decreto do Executivo.','Restrita aos brasileiros natos.'], c:1},
+  {mat:'Constitucional', q:'O mandado de segurança coletivo pode ser impetrado por:', o:['Qualquer cidadão isoladamente.','Partido político com representação no Congresso, organização sindical, entidade de classe ou associação legalmente constituída.','Somente pela Defensoria Pública.','Apenas pelo Ministério Público.'], c:1},
+
+  {mat:'Civil', q:'Sobre prescrição e decadência, é correto que:', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
+  {mat:'Civil', q:'A capacidade civil plena, em regra, adquire-se aos:', o:['16 anos.','18 anos.','21 anos.','Somente com o casamento.'], c:1},
+  {mat:'Civil', q:'A responsabilidade civil objetiva:', o:['Depende sempre de prova de culpa.','Independe de culpa, fundada no risco ou em previsão legal.','Só existe em matéria penal.','Foi extinta pelo Código Civil.'], c:1},
+  {mat:'Civil', q:'Não havendo prazo menor fixado em lei, a prescrição ocorre em:', o:['3 anos.','5 anos.','10 anos.','20 anos.'], c:2},
+
+  {mat:'Processo Civil', q:'No procedimento comum, o prazo geral de contestação é de:', o:['5 dias úteis.','15 dias úteis.','30 dias corridos.','10 dias corridos.'], c:1},
+  {mat:'Processo Civil', q:'A tutela de urgência exige:', o:['Apenas a probabilidade do direito.','Probabilidade do direito e perigo de dano ou risco ao resultado útil do processo.','Apenas o perigo de dano.','Caução em dinheiro, sempre.'], c:1},
+  {mat:'Processo Civil', q:'No CPC, os prazos processuais, em regra, contam-se em:', o:['Dias corridos.','Dias úteis.','Horas.','Meses.'], c:1},
+  {mat:'Processo Civil', q:'O recurso cabível, em regra, contra a sentença é:', o:['Agravo de instrumento.','Apelação.','Recurso ordinário.','Embargos de divergência.'], c:1},
+
+  {mat:'Penal', q:'Quanto ao elemento subjetivo, o crime, em regra, é punível na forma:', o:['Culposa, salvo previsão dolosa.','Dolosa, salvo expressa previsão da forma culposa.','Apenas preterdolosa.','Sempre dolosa e culposa ao mesmo tempo.'], c:1},
+  {mat:'Penal', q:'NÃO é causa de exclusão da ilicitude:', o:['Legítima defesa.','Estado de necessidade.','Coação moral irresistível.','Estrito cumprimento do dever legal.'], c:2},
+  {mat:'Penal', q:'A tentativa, em regra, é punida:', o:['Com a mesma pena do crime consumado.','Com a pena do crime, reduzida de um a dois terços.','Com o dobro da pena.','Não é punida no Brasil.'], c:1},
+  {mat:'Penal', q:'O princípio da insignificância afasta:', o:['A culpabilidade.','A tipicidade material.','A ilicitude.','A punibilidade apenas.'], c:1},
+
+  {mat:'Processo Penal', q:'A prisão em flagrante deve ser comunicada, em até 24 horas:', o:['Somente ao Ministério Público.','Ao juiz competente, ao MP e à família do preso ou pessoa por ele indicada.','Apenas ao delegado plantonista.','Somente ao advogado.'], c:1},
+  {mat:'Processo Penal', q:'A ação penal pública incondicionada é promovida por:', o:['Querelante.','Ministério Público.','Delegado de polícia.','Juiz, de ofício.'], c:1},
+  {mat:'Processo Penal', q:'É prova ilícita aquela:', o:['Obtida em violação a normas constitucionais ou legais.','Produzida em audiência.','Submetida ao contraditório.','Repetida em juízo.'], c:0},
+  {mat:'Processo Penal', q:'O prazo para oferecimento da denúncia, estando o réu preso, é de:', o:['5 dias.','15 dias.','10 dias.','30 dias.'], c:0},
+];
+
+// 7 perguntas de COMPORTAMENTO. Resposta: Nunca(2) / Às vezes(1) / Quase sempre(0). Quanto maior, melhor o desempenho.
+const BEHAVIOR = [
+  'Você chega ao fim da prova sem tempo e deixa questões em branco ou chuta na correria?',
+  'Quando trava numa questão difícil, perde o ritmo e isso atrapalha as próximas?',
+  'Você troca uma resposta certa por insegurança no último segundo?',
+  'Dá aquele branco ou bate um nervosismo que te tira do foco durante a prova?',
+  'Você relê a mesma questão várias vezes e mesmo assim continua na dúvida?',
+  'Você chuta cedo demais, sem usar a eliminação de alternativas?',
+  'Na véspera e no dia, a ansiedade atrapalha o seu sono e a sua concentração?'
+];
+const BEH_OPTS = [['Nunca',2],['Às vezes',1],['Quase sempre',0]];
+
+/* ====================== ESTADO ====================== */
+const KEY='soqc_diag_v1';
+let S = load() || { nome:'', screen:'intro', ci:0, bi:0, ans:{}, beh:{} };
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } }
+function reset(){ S={ nome:'', screen:'intro', ci:0, bi:0, ans:{}, beh:{} }; save(); render(); window.scrollTo(0,0); }
+
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ====================== RENDER ====================== */
+function render(){
+  if(S.screen==='intro') return intro();
+  if(S.screen==='content') return content();
+  if(S.screen==='behavior') return behavior();
+  if(S.screen==='report') return report();
+}
+
+function intro(){
+  app.innerHTML = `
+  <div class="card intro">
+    <div class="qmat">Diagnóstico · 1ª fase</div>
+    <h1>Vamos descobrir <span class="em">onde</span> você perde ponto.</h1>
+    <p>São duas partes rápidas. Primeiro, ${CONTENT.length} questões só das matérias que mais caem. Depois, ${BEHAVIOR.length} perguntas sobre como você se comporta na hora da prova. No fim, seu relatório de dois eixos sai na hora.</p>
+    <div class="feats">
+      <div><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg> Leva de 10 a 15 minutos</div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg> Mede conteúdo e desempenho, separados</div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg> Resultado com o seu nome, com prescrição</div>
+    </div>
+    <label class="fld" for="nome">Como podemos te chamar?</label>
+    <input class="nome" id="nome" type="text" placeholder="Seu primeiro nome" value="${esc(S.nome)}" maxlength="40" autocomplete="given-name">
+    <button class="btn" id="start">Começar o diagnóstico
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <div class="mini">Versão de teste. Suas respostas ficam só no seu navegador.</div>
+  </div>`;
+  const inp=document.getElementById('nome');
+  inp.addEventListener('input', e=>{ S.nome=e.target.value; save(); });
+  document.getElementById('start').addEventListener('click', ()=>{
+    if(!S.nome.trim()){ inp.focus(); inp.style.borderColor='var(--ochre2)'; return; }
+    S.screen='content'; S.ci=Math.min(S.ci, CONTENT.length-1); save(); render(); window.scrollTo(0,0);
+  });
+}
+
+function progress(done,total,label){
+  const pc=Math.round(done/total*100);
+  return `<div class="prog"><div class="meta"><span>${label}</span><span class="mono">${done}/${total}</span></div><div class="bar"><i style="width:${pc}%"></i></div></div>`;
+}
+
+function content(){
+  const i=S.ci, Q=CONTENT[i];
+  app.innerHTML = progress(i+1, CONTENT.length, 'Parte 1 · Conteúdo') + `
+  <div class="card">
+    <div class="qmat">${esc(Q.mat)}</div>
+    <div class="qtext">${esc(Q.q)}</div>
+    <div class="opts">${Q.o.map((op,j)=>`
+      <button class="opt ${S.ans[i]===j?'sel':''}" data-j="${j}">
+        <span class="k">${String.fromCharCode(65+j)}</span><span>${esc(op)}</span></button>`).join('')}
+    </div>
+    <div class="navrow">
+      <button class="btn ghost" id="back">${i===0?'':'&larr; Voltar'}</button>
+      <span class="mini" style="margin:0">selecione para avançar</span>
+    </div>
+  </div>`;
+  app.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+    S.ans[i]=+b.dataset.j; save();
+    setTimeout(()=>{
+      if(i+1<CONTENT.length){ S.ci=i+1; save(); render(); window.scrollTo(0,0); }
+      else { S.screen='behavior'; S.bi=0; save(); render(); window.scrollTo(0,0); }
+    },180);
+  }));
+  const back=document.getElementById('back');
+  if(i>0) back.addEventListener('click',()=>{ S.ci=i-1; save(); render(); window.scrollTo(0,0); });
+}
+
+function behavior(){
+  const i=S.bi, total=BEHAVIOR.length;
+  app.innerHTML = progress(i+1, total, 'Parte 2 · Como você prova') + `
+  <div class="card">
+    <div class="qmat">Sobre a hora da prova</div>
+    <div class="qtext">${esc(BEHAVIOR[i])}</div>
+    <div class="opts">${BEH_OPTS.map((op,j)=>`
+      <button class="opt ${S.beh[i]===op[1]?'sel':''}" data-v="${op[1]}">
+        <span class="k">${String.fromCharCode(65+j)}</span><span>${op[0]}</span></button>`).join('')}
+    </div>
+    <div class="navrow">
+      <button class="btn ghost" id="back">&larr; Voltar</button>
+      <span class="mini" style="margin:0">selecione para avançar</span>
+    </div>
+  </div>`;
+  app.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+    S.beh[i]=+b.dataset.v; save();
+    setTimeout(()=>{
+      if(i+1<total){ S.bi=i+1; save(); render(); window.scrollTo(0,0); }
+      else { S.screen='report'; save(); render(); window.scrollTo(0,0); }
+    },180);
+  }));
+  document.getElementById('back').addEventListener('click',()=>{
+    if(i>0){ S.bi=i-1; save(); render(); }
+    else { S.screen='content'; S.ci=CONTENT.length-1; save(); render(); }
+    window.scrollTo(0,0);
+  });
+}
+
+/* ====================== CÁLCULO ====================== */
+function compute(){
+  // conteúdo por matéria
+  const per={}; MATERIAS.forEach(m=>per[m]={c:0,t:0});
+  CONTENT.forEach((Q,i)=>{ per[Q.mat].t++; if(S.ans[i]===Q.c) per[Q.mat].c++; });
+  let totC=0,totT=0; MATERIAS.forEach(m=>{ totC+=per[m].c; totT+=per[m].t; });
+  const X=Math.round(totC/totT*100);                  // domínio do conteúdo 0-100
+  // desempenho
+  let bp=0; const bmax=BEHAVIOR.length*2;
+  BEHAVIOR.forEach((_,i)=> bp += (S.beh[i]??0));
+  const Y=Math.round(bp/bmax*100);                     // desempenho na prova 0-100
+  // matérias fracas (<=50%), ordenadas da pior p/ melhor
+  const mats=MATERIAS.map(m=>({m,pc:Math.round(per[m].c/per[m].t*100),c:per[m].c,t:per[m].t}))
+    .sort((a,b)=>a.pc-b.pc);
+  const weak=mats.filter(x=>x.pc<=50).map(x=>x.m);
+  // comportamentos problemáticos (resposta 0 = quase sempre, 1 = às vezes)
+  const flags=[]; BEHAVIOR.forEach((t,i)=>{ if((S.beh[i]??2)<=1) flags.push({t, sev:S.beh[i]}); });
+  flags.sort((a,b)=>a.sev-b.sev);
+  return {X,Y,mats,weak,flags,per};
+}
+
+function quadrant(X,Y){
+  const hiX=X>=50, hiY=Y>=50;
+  if(hiX&&hiY)  return {key:'pronta', cls:'green', lab:'Pronta de verdade',
+    txt:'Você está bem nos dois eixos: domina o conteúdo do núcleo duro e se segura na hora da prova. Sua missão agora é manter o ritmo, revisar os pontos quentes e treinar com simulados cronometrados.'};
+  if(hiX&&!hiY) return {key:'trava', cls:'ochre', lab:'Sabe, mas trava na prova',
+    txt:'O conteúdo não é o seu maior problema. O que está te derrubando é o desempenho na hora: tempo, travada, insegurança. Sua prioridade é a folha de tática de prova, não estudar mais matéria.'};
+  if(!hiX&&hiY) return {key:'falta', cls:'mixed', lab:'Falta conteúdo',
+    txt:'Você se segura bem na prova, mas ainda tem lacuna de conteúdo. Sua prioridade é estudar as matérias fracas, começando pelas de maior peso, sem se perder no que quase não cai.'};
+  return {key:'ambos', cls:'mixed', lab:'Conteúdo e tática',
+    txt:'Você está perdendo ponto nos dois lados. A boa notícia: dá para atacar os dois com método. Comece pelo conteúdo das matérias de maior peso e, em paralelo, trabalhe a tática para a prova não te derrubar.'};
+}
+
+/* ====================== RELATÓRIO ====================== */
+function report(){
+  const r=compute(); const q=quadrant(r.X,r.Y);
+  const nome=esc(S.nome.trim().split(' ')[0]||'você');
+  const dotLeft=Math.max(6,Math.min(94,r.X));
+  const dotTop=Math.max(6,Math.min(94,100-r.Y));
+  const youRight = dotLeft>62 ? 'right' : '';
+
+  // prescrição
+  const presc=[];
+  if(r.weak.length){
+    presc.push({h:'Comece o estudo por: '+r.weak.slice(0,3).join(', '), d:'São as suas matérias mais fracas dentro do núcleo duro, que é onde a prova se decide. Foque nelas antes de qualquer outra coisa.'});
+  } else {
+    presc.push({h:'Conteúdo sob controle', d:'Nenhuma matéria do núcleo duro ficou abaixo da linha. Mantenha com revisão dos pontos quentes e não largue o que já domina.'});
+  }
+  if(r.Y<50){
+    const top=r.flags.slice(0,2).map(f=>'"'+f.t.replace(/\?$/,'').toLowerCase()+'"');
+    presc.push({h:'Trabalhe a tática de prova', d:'Seu desempenho sob pressão está custando ponto'+(top.length?', principalmente em: '+top.join(' e ')+'.':'. ')+' É exatamente o que a folha de tática ataca: gestão de tempo, regra de pular e voltar, e cortar a espiral de pânico.'});
+  } else {
+    presc.push({h:'Mantenha a sua tática', d:'Você se comporta bem na hora da prova. Continue treinando com simulados cronometrados para não perder esse ponto forte.'});
+  }
+  presc.push({h:'Meça a evolução com simulados', d:'Refaça o diagnóstico e os simulados como checkpoints rumo ao exame, para ver em número que está melhorando.'});
+
+  app.innerHTML = `
+  <div class="rep">
+    <div class="qmat">Seu relatório</div>
+    <h1>${nome}, aqui está o seu mapa.</h1>
+    <p class="sub">Dois eixos, medidos separadamente: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora da prova.</p>
+
+    <div class="verdict ${q.cls}">
+      <div class="lab">Onde você está</div>
+      <h2>${q.lab}</h2>
+      <p>${q.txt}</p>
+    </div>
+
+    <div class="card plotcard">
+      <div class="plot-row">
+        <div class="ylab">Desempenho na prova</div>
+        <div style="flex:1">
+          <div class="plot">
+            <div class="q1"></div><div class="q2"></div>
+            <div class="vline"></div><div class="hline"></div>
+            <div class="ql tr">Pronta de verdade</div>
+            <div class="ql br">Sabe, mas trava</div>
+            <div class="ql tl">Falta conteúdo</div>
+            <div class="ql bl">Conteúdo e tática</div>
+            <div class="you ${youRight}" style="left:${dotLeft}%;top:${dotTop}%">
+              <div class="dot"></div><div class="lab">${nome}</div></div>
+          </div>
+          <div class="xlab">Domínio do conteúdo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="kk">Eixo do conteúdo</div>
+      <h3>Como você foi em cada matéria do núcleo duro</h3>
+      <div class="mbar">
+        ${r.mats.map(m=>{const weak=m.pc<=50;return `<div class="row">
+          <span class="nm">${esc(m.m)}${weak?'<span class="tag weak">focar</span>':'<span class="tag ok">ok</span>'}</span>
+          <span class="tr"><i style="width:${Math.max(6,m.pc)}%;background:${weak?'var(--ochre2)':'var(--green)'}"></i></span>
+          <span class="pc">${m.c}/${m.t}</span></div>`;}).join('')}
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="kk">Sua prescrição</div>
+      <h3>O que fazer primeiro</h3>
+      <div class="presc">
+        ${presc.map(p=>`<div class="p"><div class="h">${esc(p.h)}</div><div class="d">${esc(p.d)}</div></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="next">
+      <div class="kk">No produto final, aqui entram</div>
+      <h3>As suas ferramentas para fechar a lacuna</h3>
+      <p>Com base neste resultado, o Só o que Cai libera para o seu caso:</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg> As fichas do que mais cai das suas matérias fracas</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg> A folha de tática de prova para o seu perfil</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg> 3 simulados focados para medir a sua evolução</li>
+      </ul>
+    </div>
+
+    <div class="center" style="margin-top:22px">
+      <button class="btn ghost" id="redo">Refazer o diagnóstico</button>
+    </div>
+  </div>`;
+  document.getElementById('redo').addEventListener('click', ()=>{ if(confirm('Refazer do zero? Suas respostas atuais serão apagadas.')) reset(); });
+}
+
+render();
+</script>
+</body>
+</html>
