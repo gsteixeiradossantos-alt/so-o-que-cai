@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini-diagnóstico grátis · Só o que Cai · 1ª fase da OAB</title>
+<meta name="description" content="Em 3 minutos, descubra se o que te derruba na 1ª fase da OAB é conteúdo ou desempenho na hora da prova.">
+<meta property="og:title" content="Descubra em 3 minutos onde você perde ponto na 1ª fase da OAB">
+<meta property="og:description" content="Um mini-diagnóstico gratuito que separa o que você não sabe do que você sabe mas trava na hora.">
+<meta property="og:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
+    --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E; --ocre2:#C77A2B; --green:#3A7A5C;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;padding:40px 22px 64px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+  .logo{width:28px;height:28px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+  .logo span{width:10px;height:10px;border-radius:50%;background:var(--ocre2)}
+  .word{font-family:'Spectral',serif;font-weight:600;font-size:21px}
+  .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
+  h1 em{font-style:italic;color:var(--ocre)}
+  .lead{font-size:16px;color:var(--muted2);margin-bottom:8px}
+  .prog{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+  .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+  .qmat{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
+  .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.12s}
+  .opt:hover{border-color:var(--ocre2)}
+  .opt.sel{border-color:var(--ocre);background:#FBF1E6}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:14px 22px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s}
+  .btn:hover{background:#0d161d}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .btn.full{width:100%}
+  .back{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;margin-top:14px;padding:4px}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:13.5px;color:var(--muted2);margin-bottom:5px}
+  .field input{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 14px;font:inherit;font-size:16px;color:var(--ink)}
+  .field input:focus{outline:none;border-color:var(--ocre)}
+  .small{font-size:12.5px;color:var(--muted);margin-top:10px}
+  /* resultado */
+  .verdict{border-radius:16px;padding:20px;margin:6px 0 18px;border:1px solid var(--line)}
+  .verdict.ochre{background:#FBF1E6;border-color:#E7CFA8}
+  .verdict.mixed{background:#F1ECE0}
+  .verdict.green{background:#E9F1EA;border-color:#BFD8C4}
+  .verdict .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+  .verdict h2{font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px}
+  .verdict p{font-size:15px;color:var(--muted2)}
+  .plot{position:relative;width:100%;max-width:280px;margin:0 auto 18px;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  .plot .vline,.plot .hline{position:absolute;background:var(--line)}
+  .plot .vline{left:50%;top:8%;bottom:8%;width:1.5px}
+  .plot .hline{top:50%;left:8%;right:8%;height:1.5px}
+  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:.03em;max-width:42%}
+  .plot .tl{top:8px;left:10px}.plot .tr{top:8px;right:10px;text-align:right}
+  .plot .bl{bottom:8px;left:10px}.plot .br{bottom:8px;right:10px;text-align:right}
+  .plot .you{position:absolute;transform:translate(-50%,-50%)}
+  .plot .dot{width:15px;height:15px;border-radius:50%;background:var(--ocre);box-shadow:0 0 0 5px rgba(166,93,30,.18)}
+  .plot .ylab{font-size:9.5px}
+  .center{text-align:center}
+  .offer{background:var(--navy);color:#fff;border-radius:16px;padding:24px 20px;margin-top:8px;text-align:center}
+  .offer h3{font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
+  .offer p{font-size:14.5px;color:#C9C1B4;margin-bottom:16px}
+  .offer .price{font-family:'Space Mono',monospace;font-size:13px;color:#E7CFA8;margin-top:12px}
+  .offer .btn{background:var(--ocre);}
+  .offer .btn:hover{background:#8c4d18}
+  .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <span class="logo"><span></span></span>
+    <span class="word">Só o que Cai</span>
+    <span class="tag">1ª fase · OAB</span>
+  </div>
+  <div id="app"></div>
+  <div class="foot">Mini-diagnóstico gratuito. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>
+</div>
+
+<script>
+  // ===== CONFIGURAR =====
+  var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I"; // diagnóstico completo R$47
+  // Para onde enviar os leads (nome/e-mail/WhatsApp). Cole aqui um endpoint de formulário
+  // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
+  // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
+  // mas você precisa ligar isto para receber os contatos de verdade.
+  var CAPTURE_URL = "";
+  // ======================
+
+  // 3 questões rápidas (amostra do núcleo duro) + 2 de comportamento.
+  var CONTENT = [
+    {mat:'Ética', q:'Sobre o sigilo profissional do advogado, é correto que:', o:['Cede sempre que o cliente pedir.','É direito e dever e abrange os fatos conhecidos no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros.'], c:1},
+    {mat:'Constitucional', q:'O habeas corpus é cabível quando:', o:['Há coação ilegal à liberdade de locomoção.','Se protege direito líquido e certo não amparado por HC.','Se busca informação pessoal do impetrante.','Falta norma que regulamente um direito.'], c:0},
+    {mat:'Civil', q:'Sobre prescrição e decadência:', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','São sinônimos.'], c:1}
+  ];
+  var BEHAVIOR = [
+    'Você costuma travar ou dar branco numa questão e perder o ritmo nas próximas?',
+    'Você chega ao fim da prova sem tempo e chuta na correria?'
+  ];
+  var BEH_OPTS = [['Nunca',2],['Às vezes',1],['Quase sempre',0]];
+
+  var S = { screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
+  var app = document.getElementById('app');
+  var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];}); };
+
+  function render(){
+    if(S.screen==='intro') return intro();
+    if(S.screen==='content') return content();
+    if(S.screen==='behavior') return behavior();
+    if(S.screen==='form') return form();
+    if(S.screen==='result') return result();
+  }
+
+  function intro(){
+    app.innerHTML =
+      '<h1>Em 3 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
+      '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
+      '<p class="lead" style="margin-bottom:22px">São 3 questões do que mais cai e 2 perguntas sobre a hora da prova. No fim, seu resultado na tela.</p>'+
+      '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
+    document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
+  }
+
+  function content(){
+    var i=S.ci, Q=CONTENT[i];
+    var sel = S.ans[i];
+    app.innerHTML =
+      '<div class="prog">Parte 1 · questão '+(i+1)+' de '+CONTENT.length+'</div>'+
+      '<div class="qbox"><div class="qmat">'+esc(Q.mat)+'</div><div class="qtext">'+esc(Q.q)+'</div>'+
+      Q.o.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
+      '</div>'+
+      (i>0?'<button class="back" id="back">Voltar</button>':'');
+    Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
+      b.onclick = function(){
+        S.ans[i] = parseInt(b.getAttribute('data-j'),10);
+        setTimeout(function(){
+          if(i+1<CONTENT.length){ S.ci=i+1; } else { S.screen='behavior'; S.bi=0; }
+          render(); window.scrollTo(0,0);
+        }, 160);
+      };
+    });
+    if(i>0) document.getElementById('back').onclick = function(){ S.ci=i-1; render(); };
+  }
+
+  function behavior(){
+    var i=S.bi, sel=S.beh[i];
+    app.innerHTML =
+      '<div class="prog">Parte 2 · pergunta '+(i+1)+' de '+BEHAVIOR.length+'</div>'+
+      '<div class="qbox"><div class="qmat">Na hora da prova</div><div class="qtext">'+esc(BEHAVIOR[i])+'</div>'+
+      BEH_OPTS.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op[0])+'</button>'; }).join('')+
+      '</div><button class="back" id="back">Voltar</button>';
+    Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
+      b.onclick = function(){
+        S.beh[i] = parseInt(b.getAttribute('data-j'),10);
+        setTimeout(function(){
+          if(i+1<BEHAVIOR.length){ S.bi=i+1; render(); }
+          else { S.screen='form'; render(); }
+          window.scrollTo(0,0);
+        }, 160);
+      };
+    });
+    document.getElementById('back').onclick = function(){
+      if(i>0){ S.bi=i-1; render(); } else { S.screen='content'; S.ci=CONTENT.length-1; render(); }
+    };
+  }
+
+  function form(){
+    app.innerHTML =
+      '<div class="prog">Quase lá</div>'+
+      '<h1 style="font-size:23px">Pra onde mando o seu resultado?</h1>'+
+      '<p class="lead" style="margin-bottom:18px">O seu mapa aparece já na próxima tela. Deixo também por e-mail, com o passo a passo de onde começar a estudar.</p>'+
+      '<div class="field"><label>Seu nome</label><input id="f_nome" type="text" placeholder="Como você se chama" value="'+esc(S.nome)+'"></div>'+
+      '<div class="field"><label>Seu e-mail</label><input id="f_email" type="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
+      '<div class="field"><label>Seu WhatsApp</label><input id="f_tel" type="tel" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"></div>'+
+      '<button class="btn full" id="see">Ver o meu resultado</button>'+
+      '<div class="small">É grátis e sem spam. Você pode sair quando quiser.</div>';
+    document.getElementById('see').onclick = function(){
+      var nome=document.getElementById('f_nome').value.trim();
+      var email=document.getElementById('f_email').value.trim();
+      var tel=document.getElementById('f_tel').value.trim();
+      if(!nome || !/.+@.+\..+/.test(email)){ alert('Preencha o nome e um e-mail válido para ver o resultado.'); return; }
+      S.nome=nome; S.email=email; S.tel=tel;
+      saveLead();
+      S.screen='result'; render(); window.scrollTo(0,0);
+    };
+  }
+
+  function saveLead(){
+    var lead={ nome:S.nome, email:S.email, tel:S.tel, ans:S.ans, beh:S.beh, ts:new Date().toISOString() };
+    try{ var all=JSON.parse(localStorage.getItem('soqc_leads')||'[]'); all.push(lead); localStorage.setItem('soqc_leads', JSON.stringify(all)); }catch(e){}
+    if(CAPTURE_URL){
+      try{ fetch(CAPTURE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)}); }catch(e){}
+    }
+    if(typeof fbq!=='undefined'){ try{ fbq('track','Lead'); }catch(e){} }
+  }
+
+  function compute(){
+    var c=0; CONTENT.forEach(function(Q,i){ if(S.ans[i]===Q.c) c++; });
+    var X=Math.round(c/CONTENT.length*100);
+    var bp=0; BEHAVIOR.forEach(function(_,i){ bp += (S.beh[i]!=null?BEH_OPTS[S.beh[i]][1]:0); });
+    var Y=Math.round(bp/(BEHAVIOR.length*2)*100);
+    return {X:X,Y:Y,c:c};
+  }
+  function quadrant(X,Y){
+    var hiX=X>=50, hiY=Y>=50;
+    if(hiX&&hiY) return {cls:'green',lab:'Você chega bem nos dois',txt:'Na amostra, você foi bem no conteúdo e se segura na hora. O diagnóstico completo confirma isso nas 6 matérias que decidem a prova e te mostra onde afinar.'};
+    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas trava',txt:'O conteúdo não parece ser o seu maior problema. O que te derruba é o desempenho na hora: tempo, travada, insegurança. Isso se trata com tática de prova, não com mais matéria.'};
+    if(!hiX&&hiY) return {cls:'mixed',lab:'Falta conteúdo',txt:'Você se segura bem na prova, mas ainda tem lacuna de conteúdo. O caminho é focar nas matérias certas, começando pelas de maior peso, sem se perder no que quase não cai.'};
+    return {cls:'mixed',lab:'Conteúdo e tática',txt:'Você está perdendo ponto nos dois lados. A boa notícia: dá para atacar os dois com método, começando pelo conteúdo de maior peso e trabalhando a tática em paralelo.'};
+  }
+
+  function result(){
+    var r=compute(), q=quadrant(r.X,r.Y);
+    var nome=esc((S.nome.split(' ')[0])||'você');
+    var left=Math.max(10,Math.min(90,r.X)), top=Math.max(10,Math.min(90,100-r.Y));
+    app.innerHTML =
+      '<div class="prog">Seu resultado</div>'+
+      '<h1 style="font-size:24px">'+nome+', aqui está o seu mapa.</h1>'+
+      '<p class="lead" style="margin-bottom:16px">Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora da prova.</p>'+
+      '<div class="plot"><div class="vline"></div><div class="hline"></div>'+
+        '<div class="ql tr">Pronto de verdade</div><div class="ql br">Sabe, mas trava</div>'+
+        '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
+        '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
+      '</div>'+
+      '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
+      '<div class="offer">'+
+        '<h3>Esse foi só o raio-x de 3 questões.</h3>'+
+        '<p>O diagnóstico completo testa você nas 6 matérias do núcleo duro, mede o seu desempenho de verdade e entrega a prescrição: o que estudar primeiro, as fichas do que mais cai, a folha de tática para o seu perfil e simulados.</p>'+
+        '<a class="btn full" href="'+CHECKOUT_URL+'" id="buy">Quero meu diagnóstico completo</a>'+
+        '<div class="price">R$ 47 · pagamento único · 7 dias de garantia</div>'+
+      '</div>'+
+      '<div class="center"><button class="back" id="redo">Refazer o mini-diagnóstico</button></div>';
+    var buy=document.getElementById('buy');
+    if(buy) buy.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); }catch(e){} } };
+    document.getElementById('redo').onclick=function(){ S={ screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel }; render(); window.scrollTo(0,0); };
+  }
+
+  render();
+</script>
+</body>
+</html>
