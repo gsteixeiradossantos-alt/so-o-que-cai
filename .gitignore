@@ -1,2 +1,5 @@
-node_modules/
-.DS_Store
+# Material interno e de produto: vive no repositório PRIVADO so-o-que-cai-produto.
+# Nunca versionar nem publicar aqui (este repo é público).
+produto/
+PLANO-LANCAMENTO.md
+assets/capa-hotmart.png

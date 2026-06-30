@@ -145,12 +145,30 @@
 /* ====================== DADOS ====================== */
 const MATERIAS = ['Ética','Constitucional','Civil','Processo Civil','Penal','Processo Penal'];
 
-// 24 questões de CONTEÚDO (4 por matéria). EXEMPLOS para teste, revisar antes de vender.
+/* ============ ÁREA DE EDIÇÃO DAS QUESTÕES (Gustavo) ============
+   Escreva questões ORIGINAIS suas (não copie a FGV ao pé da letra).
+   Recomendado: 8 a 10 por matéria, para alimentar também os simulados.
+
+   Formato de cada questão:
+     { mat:'Ética', sub:'sigilo profissional',
+       q:'<enunciado no estilo FGV>',
+       o:['alternativa A','alternativa B','alternativa C','alternativa D'],
+       c:1,                 // posição da CORRETA: 0=A, 1=B, 2=C, 3=D
+       j:'<1 a 2 linhas com a base legal>' }
+
+   - mat: exatamente um dos nomes em MATERIAS (acima).
+   - sub: o tema fino (ex.: 'honorários'). É o que o relatório usa para dizer
+          ONDE a pessoa perde ponto. Use o mesmo rótulo nas questões do mesmo tema.
+   - o:  sempre 4 alternativas, na ordem A, B, C, D.
+   - c:  índice 0 a 3 da alternativa correta.
+   - j:  justificativa curta; vira a explicação na ficha (opcional, recomendado).
+   As de baixo são EXEMPLOS para teste, troque pelas suas antes de vender.
+   ============================================================== */
 const CONTENT = [
-  {mat:'Ética', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
-  {mat:'Ética', q:'O advogado em situação de impedimento:', o:['Está proibido de advogar de forma total e permanente.','Tem proibição parcial, podendo advogar fora das hipóteses vedadas.','Perde a inscrição na OAB.','Pode advogar livremente, sem qualquer restrição.'], c:1},
-  {mat:'Ética', q:'A sociedade de advogados deve:', o:['Adotar nome de fantasia comercial.','Ter denominação com o nome de, ao menos, um advogado responsável e registro na OAB.','Incluir obrigatoriamente um sócio não advogado.','Dispensar registro no Conselho.'], c:1},
-  {mat:'Ética', q:'Revogado o mandato sem justa causa, o advogado:', o:['Nada recebe pelo que já havia feito.','Faz jus aos honorários proporcionais ao serviço já prestado.','Recebe o dobro a título de multa.','Deve devolver tudo o que recebeu.'], c:1},
+  {mat:'Ética', sub:'sigilo profissional', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1, j:'O sigilo é direito e dever do advogado e abrange os fatos conhecidos no exercício da profissão.'},
+  {mat:'Ética', sub:'impedimentos e incompatibilidades', q:'O advogado em situação de impedimento:', o:['Está proibido de advogar de forma total e permanente.','Tem proibição parcial, podendo advogar fora das hipóteses vedadas.','Perde a inscrição na OAB.','Pode advogar livremente, sem qualquer restrição.'], c:1, j:'O impedimento é proibição parcial; a incompatibilidade é que veda totalmente a advocacia (Estatuto da OAB).'},
+  {mat:'Ética', sub:'sociedade de advogados', q:'A sociedade de advogados deve:', o:['Adotar nome de fantasia comercial.','Ter denominação com o nome de, ao menos, um advogado responsável e registro na OAB.','Incluir obrigatoriamente um sócio não advogado.','Dispensar registro no Conselho.'], c:1, j:'A sociedade tem denominação com o nome de ao menos um advogado responsável e registro na OAB.'},
+  {mat:'Ética', sub:'honorários', q:'Revogado o mandato sem justa causa, o advogado:', o:['Nada recebe pelo que já havia feito.','Faz jus aos honorários proporcionais ao serviço já prestado.','Recebe o dobro a título de multa.','Deve devolver tudo o que recebeu.'], c:1, j:'Revogado o mandato, o advogado faz jus aos honorários proporcionais ao serviço já prestado.'},
 
   {mat:'Constitucional', q:'O habeas corpus é cabível quando:', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
   {mat:'Constitucional', q:'Assinale o que NÃO é direito social na Constituição:', o:['Educação.','Saúde.','Propriedade privada.','Moradia.'], c:2},
@@ -311,7 +329,10 @@ function compute(){
   // comportamentos problemáticos (resposta 0 = quase sempre, 1 = às vezes)
   const flags=[]; BEHAVIOR.forEach((t,i)=>{ if((S.beh[i]??2)<=1) flags.push({t, sev:S.beh[i]}); });
   flags.sort((a,b)=>a.sev-b.sev);
-  return {X,Y,mats,weak,flags,per};
+  // sub-temas onde a pessoa errou (usa o campo opcional Q.sub das questões)
+  const subMiss={}; CONTENT.forEach((Q,i)=>{ if(Q.sub && S.ans[i]!==Q.c){ subMiss[Q.sub]=(subMiss[Q.sub]||0)+1; } });
+  const weakSubs=Object.keys(subMiss).sort((a,b)=>subMiss[b]-subMiss[a]);
+  return {X,Y,mats,weak,weakSubs,flags,per};
 }
 
 function quadrant(X,Y){
@@ -337,7 +358,9 @@ function report(){
   // prescrição
   const presc=[];
   if(r.weak.length){
-    presc.push({h:'Comece o estudo por: '+r.weak.slice(0,3).join(', '), d:'São as suas matérias mais fracas dentro do núcleo duro, que é onde a prova se decide. Foque nelas antes de qualquer outra coisa.'});
+    let dd='São as suas matérias mais fracas dentro do núcleo duro, que é onde a prova se decide. Foque nelas antes de qualquer outra coisa.';
+    if(r.weakSubs && r.weakSubs.length) dd+=' Os temas onde você mais perdeu ponto: '+r.weakSubs.slice(0,4).join(', ')+'.';
+    presc.push({h:'Comece o estudo por: '+r.weak.slice(0,3).join(', '), d:dd});
   } else {
     presc.push({h:'Conteúdo sob controle', d:'Nenhuma matéria do núcleo duro ficou abaixo da linha. Mantenha com revisão dos pontos quentes e não largue o que já domina.'});
   }
