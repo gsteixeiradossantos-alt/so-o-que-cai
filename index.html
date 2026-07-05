@@ -312,8 +312,9 @@
     </div>
 
     <div class="count">
-      <span class="lbl">Cada semana estudando a coisa errada não volta. Falta para o próximo Exame de Ordem:</span>
+      <span class="lbl">Falta para a 1ª fase do 47º Exame (06/09):</span>
       <span class="clk" id="clk">-- d -- h -- m</span>
+      <span class="lbl" id="clkmath" style="max-width:52ch;flex-basis:100%"></span>
     </div>
   </div>
 
@@ -494,13 +495,23 @@
     });
   });
 
-  // Contador regressivo (dias, horas, minutos).
+  // Contador regressivo (dias, horas, minutos) + a matemática que o dia não conta sozinho:
+  // as últimas 3 semanas são reta final (revisão), então o prazo real para fechar lacunas
+  // é menor, e em horas úteis (1h/dia) é menor ainda.
   function tick(){
-    var el = document.getElementById('clk');
+    var el = document.getElementById('clk'), sub = document.getElementById('clkmath');
     var diff = DATA_PROVA - new Date();
-    if (diff < 0){ el.textContent = 'o exame está chegando'; return; }
+    if (diff < 0){ el.textContent = 'o exame está chegando'; if (sub) sub.textContent = ''; return; }
     var d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4);
     el.textContent = d + 'd ' + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm';
+    if (sub){
+      if (d > 21){
+        var uteis = d - 21, semanas = Math.max(1, Math.round(uteis / 7));
+        sub.textContent = 'Descontando as 3 semanas de reta final, você tem ' + semanas + ' semana' + (semanas > 1 ? 's' : '') + ' para fechar as suas lacunas. A 1 hora por dia, são cerca de ' + uteis + ' horas úteis. Estudar tudo não cabe. Estudar o certo, cabe.';
+      } else {
+        sub.textContent = 'Você já está na reta final: agora é revisão certeira e simulado, não matéria nova.';
+      }
+    }
   }
   tick(); setInterval(tick, 20000);
 </script>
