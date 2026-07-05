@@ -102,7 +102,7 @@
   // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
   // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
   // mas você precisa ligar isto para receber os contatos de verdade.
-  var CAPTURE_URL = "";
+  var CAPTURE_URL = "https://formspree.io/f/mlgyzdwj"; // Formspree: leads do mini-diagnostico
   // ======================
 
   // 3 questões rápidas (amostra do núcleo duro, alinhadas ao banco do produto) + 2 de comportamento.
@@ -206,7 +206,9 @@
     var lead={ nome:S.nome, email:S.email, tel:S.tel, ans:S.ans, beh:S.beh, ts:new Date().toISOString() };
     try{ var all=JSON.parse(localStorage.getItem('soqc_leads')||'[]'); all.push(lead); localStorage.setItem('soqc_leads', JSON.stringify(all)); }catch(e){}
     if(CAPTURE_URL){
-      try{ fetch(CAPTURE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)}); }catch(e){}
+      // Formspree: campos planos + Accept JSON (para responder em JSON, sem redirecionar)
+      var envio={ nome:S.nome, email:S.email, telefone:S.tel, quando:lead.ts, _subject:'Novo lead do mini-diagnostico Só o que Cai' };
+      try{ fetch(CAPTURE_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(envio)}); }catch(e){}
     }
     if(typeof fbq!=='undefined'){ try{ fbq('track','Lead'); }catch(e){} }
   }
