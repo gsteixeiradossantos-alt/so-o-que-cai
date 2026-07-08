@@ -193,17 +193,19 @@
     app.innerHTML =
       '<div class="prog">Quase lá</div>'+
       '<h1 style="font-size:23px">Pra onde mando o seu resultado?</h1>'+
-      '<p class="lead" style="margin-bottom:18px">O seu mapa aparece já na próxima tela. Deixo também por e-mail, com o passo a passo de onde começar a estudar.</p>'+
+      '<p class="lead" style="margin-bottom:18px">O seu mapa aparece já na próxima tela. Mando também o passo a passo no seu WhatsApp, de onde começar a estudar.</p>'+
       '<div class="field"><label>Seu nome</label><input id="f_nome" type="text" placeholder="Como você se chama" value="'+esc(S.nome)+'"></div>'+
-      '<div class="field"><label>Seu e-mail</label><input id="f_email" type="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
-      '<div class="field"><label>Seu WhatsApp</label><input id="f_tel" type="tel" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"></div>'+
+      '<div class="field"><label>Seu WhatsApp (com DDD)</label><input id="f_tel" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"></div>'+
+      '<div class="field"><label>Seu e-mail (opcional)</label><input id="f_email" type="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
       '<button class="btn full" id="see">Ver o meu resultado</button>'+
       '<div class="small">É grátis e sem spam. Você pode sair quando quiser.</div>';
     document.getElementById('see').onclick = function(){
       var nome=document.getElementById('f_nome').value.trim();
       var email=document.getElementById('f_email').value.trim();
       var tel=document.getElementById('f_tel').value.trim();
-      if(!nome || !/.+@.+\..+/.test(email)){ alert('Preencha o nome e um e-mail válido para ver o resultado.'); return; }
+      var digits=tel.replace(/\D/g,'');
+      if(!nome || digits.length<10){ alert('Preencha o nome e um WhatsApp válido com DDD para ver o resultado.'); return; }
+      if(email && !/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido — corrija ou deixe em branco.'); return; }
       S.nome=nome; S.email=email; S.tel=tel;
       saveLead();
       S.screen='result'; render(); window.scrollTo(0,0);
