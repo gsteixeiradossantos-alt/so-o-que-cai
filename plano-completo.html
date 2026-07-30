@@ -36,6 +36,31 @@
   .ok li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--green-d);line-height:1.4}
   .ok li svg{width:13px;height:13px;stroke:var(--green-d);flex-shrink:0;margin-top:4px}
 
+  /* bloco de oferta: deixa explícito que esta página é uma proposta de compra,
+     não a continuação do que a pessoa acabou de adquirir */
+  .oferta{background:linear-gradient(180deg,#FBF1E2,#F6E8D2);border:2px solid var(--ochre2);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 20px 44px -32px rgba(199,122,43,.85)}
+  .oferta .tagline{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--ochre);border-radius:6px;padding:5px 10px}
+  .oferta .tagline svg{width:12px;height:12px;stroke:#fff}
+  .oferta h2{font-size:clamp(19px,4.6vw,25px);margin-top:13px;color:#4A2C0B;line-height:1.18}
+  .oferta p{font-size:15px;color:#6B4A1E;margin-top:10px;line-height:1.5}
+  .oferta p b{color:#4A2C0B;font-weight:700}
+  .oferta .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:17px;padding-top:16px;border-top:1px solid #E5CDA6}
+  .oferta .pv{font-family:'Spectral',serif;font-weight:600;font-size:36px;color:var(--ochre);line-height:1;letter-spacing:-.02em}
+  .oferta .pv small{font-size:16px;vertical-align:.42em;margin-right:2px}
+  .oferta .pv em{display:block;font-family:'Hanken Grotesk',sans-serif;font-style:normal;font-size:12.5px;font-weight:500;color:#6B4A1E;letter-spacing:0;margin-top:5px}
+  .oferta .go{margin-left:auto;display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-weight:600;font-size:15px;text-decoration:none;padding:13px 20px;border-radius:11px}
+  .oferta .go:hover{background:#1d2e3c;color:#fff}
+  @media(max-width:460px){.oferta .go{margin-left:0;width:100%;justify-content:center}}
+
+  /* barra fixa: o preço e o caminho para os botões seguem a pessoa na rolagem */
+  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(21,33,43,.975);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 -8px 28px rgba(0,0,0,.24);transform:translateY(115%);transition:transform .22s ease}
+  .sticky.on{transform:none}
+  .sticky .txt b{font-family:'Spectral',serif;font-weight:600;font-size:16.5px;display:block;line-height:1.1}
+  .sticky .txt small{display:block;font-size:11.5px;color:#AEB4BB;margin-top:3px}
+  .sticky a{margin-left:auto;background:var(--ochre2);color:var(--navy);font-weight:700;font-size:14px;text-decoration:none;padding:11px 17px;border-radius:10px;white-space:nowrap}
+  .sticky a:hover{background:#D98A38;color:var(--navy)}
+  @media(prefers-reduced-motion:reduce){.sticky{transition:none}}
+
   h1{font-size:clamp(26px,6.2vw,39px);margin:22px 0 0}
   .lede{font-size:16.5px;color:var(--soft);margin-top:14px}
   .lede b{color:var(--ink);font-weight:600}
@@ -92,7 +117,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span><span class="tg">Oferta única</span></div>
+  <div class="top"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span><span class="tg">Proposta de upgrade</span></div>
 
   <div class="ok">
     <div class="hd">
@@ -106,7 +131,19 @@
     </ul>
   </div>
 
-  <div class="kk" style="margin-top:26px">Só nesta página</div>
+  <div class="oferta">
+    <span class="tagline"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>Leia antes de sair</span>
+    <h2>Esta página é uma oferta de compra. Ela não faz parte do que você já pagou.</h2>
+    <p>Aqui, e só aqui, você pode <b>acrescentar o Plano Completo à compra que acabou de fazer</b>, em um clique, no mesmo pagamento. É opcional. Se você fechar esta página, nada acontece com o seu material.</p>
+    <div class="row">
+      <div class="pv"><small>R$</small>127<em>pagamento único, adicionado agora</em></div>
+      <a class="go" href="#oferta">Ver a oferta
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="kk" style="margin-top:26px">O que é o Plano Completo</div>
   <h1>O diagnóstico mostra <span class="em">onde</span> você perde ponto. Isto mostra <span class="em">o que fazer</span> em cada dia até a prova.</h1>
   <p class="lede">Saber o problema é metade. A outra metade é ter um plano que caiba no tempo que sobrou. É isso que o <b>Plano Completo</b> entrega.</p>
 
@@ -129,8 +166,8 @@
     <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Tudo que já vem no diagnóstico</h3><p>O relatório de dois eixos, a folha de tática de prova e o guia de leitura da banca continuam com você.</p></div></div>
   </div>
 
-  <div class="price">
-    <div class="kk">Acesso completo</div>
+  <div class="price" id="oferta">
+    <div class="kk">Adicionar à sua compra</div>
     <div class="v" style="margin-top:12px"><small>R$</small>127</div>
     <div class="sub">pagamento único, sem mensalidade, acesso na hora</div>
     <p style="font-size:13.5px;color:var(--soft);max-width:44ch;margin:14px auto 0;line-height:1.55">Para comparar com honestidade: um cursinho de reta final passa de R$ 1.000, e a inscrição do exame que você já pagou custou R$ 350. O plano que organiza as suas semanas até a prova custa menos que qualquer um dos dois.</p>
@@ -162,6 +199,11 @@
   </footer>
 </div>
 
+<div class="sticky" id="barra">
+  <div class="txt"><b>Plano Completo por R$ 127</b><small>oferta opcional, adicionada à compra de agora</small></div>
+  <a href="#oferta">Ver a oferta</a>
+</div>
+
 <script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
 <script>
   checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
@@ -180,6 +222,24 @@
     if(checa()) return;
     var t = setInterval(function(){ if(checa()) clearInterval(t); }, 400);
     setTimeout(function(){ clearInterval(t); if(!checa()) espera.classList.add('late'); }, 7000);
+  })();
+</script>
+<script>
+  // Barra fixa com o preço: aparece assim que o bloco de oferta do topo sai da
+  // tela e some quando a pessoa chega no bloco de compra, para não competir com ele.
+  (function(){
+    var barra = document.getElementById('barra');
+    var alvo  = document.getElementById('oferta');
+    var topo  = document.querySelector('.oferta');
+    if(!barra || !alvo || !topo) return;
+    function ajusta(){
+      var fimDoTopo = topo.getBoundingClientRect().bottom < 0;
+      var compraNaTela = alvo.getBoundingClientRect().top < window.innerHeight - 80;
+      barra.classList.toggle('on', fimDoTopo && !compraNaTela);
+    }
+    ajusta();
+    window.addEventListener('scroll', ajusta, {passive:true});
+    window.addEventListener('resize', ajusta);
   })();
 </script>
 </body>
