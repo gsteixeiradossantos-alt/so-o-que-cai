@@ -10,56 +10,84 @@
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500;1,600&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C77A2B'/%3E%3C/svg%3E">
 <style>
-  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--soft:#574F45;--mut:#6B6357;--oat:#9A9488;--oat2:#A89F90;--line:#E3DBCB;--navy:#15212B;--ochre:#A65D1E;--ochre2:#C77A2B;--ochre-w:#F0E6D4;--green:#3A7A5C;--green-w:#E3EEE8}
+  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--soft:#574F45;--mut:#6B6357;--oat:#9A9488;--oat2:#A89F90;--line:#E3DBCB;--navy:#15212B;--ochre:#A65D1E;--ochre2:#C77A2B;--ochre-w:#F0E6D4;--green:#3A7A5C;--green-w:#E3EEE8;--green-d:#1E5C4A}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
   h1,h2,h3{font-family:'Spectral',serif;font-weight:600;letter-spacing:-.01em;line-height:1.14}
   .em{font-style:italic;color:var(--ochre)}
-  .wrap{max-width:660px;margin:0 auto;padding:0 20px 60px}
+  .wrap{max-width:660px;margin:0 auto;padding:0 20px 56px}
   .kk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre)}
-  .top{display:flex;align-items:center;gap:10px;padding:20px 0 6px}
+  a{color:var(--ochre)}
+  a:hover{color:var(--ochre2)}
+  .top{display:flex;align-items:center;gap:10px;padding:18px 0 6px}
   .top .ic{width:28px;height:28px;border-radius:8px;background:var(--navy);display:grid;place-items:center}
   .top .ic i{width:8px;height:8px;border-radius:50%;background:var(--ochre2);display:block}
   .top .nm{font-family:'Spectral',serif;font-weight:600;font-size:17px}
   .top .tg{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--oat);margin-left:auto}
 
-  .ok{display:flex;gap:11px;align-items:flex-start;background:var(--green-w);border:1px solid #BFD8C4;border-radius:13px;padding:13px 15px;margin-top:14px}
-  .ok svg{width:18px;height:18px;stroke:#1E5C4A;flex-shrink:0;margin-top:2px}
-  .ok p{font-size:14.5px;color:#1E5C4A}
+  /* confirmação da compra anterior, bem visível (ansiedade pós-compra) */
+  .ok{background:var(--green-w);border:1.5px solid #BFD8C4;border-radius:16px;padding:18px;margin-top:14px}
+  .ok .hd{display:flex;gap:12px;align-items:center}
+  .ok .badge{width:34px;height:34px;border-radius:10px;background:#fff;border:1px solid #BFD8C4;display:grid;place-items:center;flex-shrink:0}
+  .ok .badge svg{width:18px;height:18px;stroke:var(--green-d)}
+  .ok .t{font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#174437;line-height:1.15}
+  .ok p{font-size:14px;color:var(--green-d);margin-top:10px}
+  .ok ul{list-style:none;display:grid;gap:7px;margin-top:12px;padding-top:12px;border-top:1px solid #C9DED0}
+  .ok li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--green-d);line-height:1.4}
+  .ok li svg{width:13px;height:13px;stroke:var(--green-d);flex-shrink:0;margin-top:4px}
 
-  h1{font-size:clamp(27px,6.2vw,39px);margin:22px 0 0}
-  .lede{font-size:17px;color:var(--soft);margin-top:16px}
+  h1{font-size:clamp(26px,6.2vw,39px);margin:22px 0 0}
+  .lede{font-size:16.5px;color:var(--soft);margin-top:14px}
   .lede b{color:var(--ink);font-weight:600}
 
-  .hero-card{background:var(--navy);border-radius:20px;padding:28px 24px;margin-top:24px;color:#fff}
+  /* o cartão navy é o herói da página */
+  .hero-card{background:var(--navy);border-radius:22px;padding:34px 26px;margin-top:26px;color:#fff;box-shadow:0 34px 64px -34px rgba(21,33,43,.95);position:relative;overflow:hidden}
+  .hero-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--ochre),var(--ochre2))}
   .hero-card .kk{color:var(--ochre2)}
-  .hero-card h2{color:#fff;font-size:clamp(21px,4.6vw,27px);margin-top:12px}
+  .hero-card h2{color:#fff;font-size:clamp(23px,5.4vw,31px);margin-top:12px;line-height:1.14}
   .hero-card p{color:#AEB4BB;font-size:15.5px;margin-top:12px}
-  .hero-card .mini{display:flex;gap:9px;align-items:flex-start;margin-top:14px}
+  .hero-card .minis{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:12px}
+  .hero-card .mini{display:flex;gap:10px;align-items:flex-start}
   .hero-card .mini svg{width:16px;height:16px;stroke:var(--ochre2);flex-shrink:0;margin-top:3px}
-  .hero-card .mini span{font-size:14.5px;color:#D7DBDF}
+  .hero-card .mini span{font-size:14.5px;color:#D7DBDF;line-height:1.45}
+  .hero-card .stamp{display:inline-block;font-family:'Space Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);background:var(--ochre2);border-radius:6px;padding:4px 9px;margin-top:20px}
 
-  .list{margin-top:26px;display:grid;gap:11px}
+  .list{margin-top:24px;display:grid;gap:11px}
   .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px 19px;display:grid;grid-template-columns:24px 1fr;gap:14px;align-items:flex-start}
   .item .chk{width:24px;height:24px;border-radius:7px;background:var(--ochre-w);display:grid;place-items:center;margin-top:2px}
   .item .chk svg{width:13px;height:13px;stroke:var(--ochre)}
   .item h3{font-size:16.5px;line-height:1.25}
   .item p{font-size:14px;color:var(--soft);margin-top:5px}
-  .item .novo{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ochre);border-radius:5px;padding:2px 7px;margin-left:7px;vertical-align:2px}
+  .item .novo{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ochre);border-radius:5px;padding:2px 7px;margin-left:7px;vertical-align:2px;white-space:nowrap}
 
-  .price{background:var(--card);border:1.5px solid var(--ochre2);border-radius:20px;padding:28px 24px;margin-top:28px;text-align:center;box-shadow:0 24px 50px -34px rgba(199,122,43,.6)}
-  .price .v{font-family:'Spectral',serif;font-weight:600;font-size:46px;color:var(--ochre);line-height:1}
+  .price{background:var(--card);border:1.5px solid var(--ochre2);border-radius:20px;padding:28px 20px;margin-top:26px;text-align:center;box-shadow:0 24px 50px -34px rgba(199,122,43,.6)}
+  .price .v{font-family:'Spectral',serif;font-weight:600;font-size:52px;color:var(--ochre);line-height:1;letter-spacing:-.02em}
+  .price .v small{font-size:20px;vertical-align:.42em;margin-right:2px}
   .price .sub{font-size:13.5px;color:var(--soft);margin-top:8px}
   .price .warn{font-size:13px;color:var(--mut);margin-top:14px;line-height:1.5}
+  .price .keep{font-size:13px;color:var(--soft);background:#F4EFE4;border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin-top:16px;line-height:1.45}
+
+  /* área do widget da Hotmart: nunca fica um buraco na página */
+  .funnel{min-height:150px;margin-top:20px}
+  #hotmart-sales-funnel:empty{display:none}
+  .fb{border:1px dashed #D8CFBE;background:#F6F1E6;border-radius:14px;padding:18px 16px;text-align:center}
+  .fb .sk{height:52px;border-radius:12px;background:linear-gradient(90deg,#E7E0D2,#F1EBDE,#E7E0D2);background-size:200% 100%;animation:sh 1.4s linear infinite}
+  .fb .sk2{height:44px;margin-top:10px;opacity:.6}
+  .fb .msg{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--oat);margin-top:14px}
+  .fb .late{font-size:13px;color:var(--mut);line-height:1.5;margin-top:12px;display:none}
+  .fb.late .sk,.fb.late .msg{display:none}
+  .fb.late .late{display:block}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  @media(prefers-reduced-motion:reduce){.fb .sk{animation:none}}
 
   #botao-compra{margin-top:20px}
   .fallback{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--navy);color:#fff;font-weight:600;font-size:17px;text-decoration:none;padding:17px 26px;border-radius:13px;border:0;cursor:pointer;width:100%}
   .fallback:hover{background:#1d2e3c}
 
   .no{display:block;text-align:center;margin-top:20px;font-size:14px;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
-  .guar{display:inline-flex;align-items:center;gap:8px;background:var(--green-w);color:#1E5C4A;font-size:13px;font-weight:600;padding:9px 16px;border-radius:30px;margin-top:16px}
-  .guar svg{width:15px;height:15px;stroke:#1E5C4A}
-  footer{margin-top:34px;text-align:center;font-size:11.5px;color:var(--oat2);line-height:1.7}
+  .guar{display:inline-flex;align-items:center;gap:8px;background:var(--green-w);color:var(--green-d);font-size:13px;font-weight:600;padding:10px 16px;border-radius:30px;margin-top:16px}
+  .guar svg{width:15px;height:15px;stroke:var(--green-d)}
+  footer{margin-top:32px;text-align:center;font-size:11.5px;color:var(--oat2);line-height:1.7}
 </style>
 </head>
 <body>
@@ -67,8 +95,15 @@
   <div class="top"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span><span class="tg">Oferta única</span></div>
 
   <div class="ok">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>
-    <p><b>Compra confirmada.</b> O seu acesso ao diagnóstico já está garantido, e chega no seu e-mail em instantes. Antes de você sair, leia isto.</p>
+    <div class="hd">
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span>
+      <span class="t">Compra confirmada. O seu diagnóstico já é seu.</span>
+    </div>
+    <ul>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>O acesso ao diagnóstico está garantido e chega no seu e-mail em instantes.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Nada nesta página muda ou substitui o que você acabou de comprar.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Leia com calma. Se disser não, o seu material continua liberado do mesmo jeito.</span></li>
+    </ul>
   </div>
 
   <div class="kk" style="margin-top:26px">Só nesta página</div>
@@ -79,9 +114,12 @@
     <div class="kk">O que muda</div>
     <h2>O seu cronograma, dia a dia, montado pelo seu resultado.</h2>
     <p>Assim que você termina o diagnóstico, o sistema lê as suas matérias fracas e o seu eixo, pergunta quanto tempo você tem por dia, e monta o calendário até a data da prova.</p>
-    <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M5 12l5 5L20 6"/></svg><span>Começa pelas matérias que você errou, não por uma ordem genérica.</span></div>
-    <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M5 12l5 5L20 6"/></svg><span>Se você trava na hora, ele te dá questões cronometradas. Se falta conteúdo, te dá ficha e teoria.</span></div>
-    <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M5 12l5 5L20 6"/></svg><span>Faltando 60 dias ou 20, ele recalcula sozinho e ajusta a reta final.</span></div>
+    <div class="minis">
+      <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Começa pelas matérias que você errou, não por uma ordem genérica.</span></div>
+      <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Se você trava na hora, ele te dá questões cronometradas. Se falta conteúdo, te dá ficha e teoria.</span></div>
+      <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Faltando 60 dias ou 20, ele recalcula sozinho e ajusta a reta final.</span></div>
+    </div>
+    <span class="stamp">O coração do Plano Completo</span>
   </div>
 
   <div class="list">
@@ -93,17 +131,27 @@
 
   <div class="price">
     <div class="kk">Acesso completo</div>
-    <div class="v" style="margin-top:12px">R$ 127</div>
+    <div class="v" style="margin-top:12px"><small>R$</small>127</div>
     <div class="sub">pagamento único, sem mensalidade, acesso na hora</div>
 
     <!-- BOTÕES DE COMPRA · widget de funil da Hotmart (1 clique).
          Ele renderiza sozinho o "Quero adquirir" e o "Perder a oportunidade".
          Só funciona quando a pessoa chega aqui pelo fluxo do funil, logo após a
-         compra do diagnóstico; aberta solta, a área fica vazia (é esperado). -->
-    <div id="hotmart-sales-funnel" style="margin-top:20px"></div>
+         compra do diagnóstico; aberta solta, a área fica vazia (é esperado), então
+         o bloco .fb abaixo segura o layout até o widget aparecer. -->
+    <div class="funnel">
+      <div id="hotmart-sales-funnel"></div>
+      <div class="fb" id="funnel-fallback">
+        <div class="sk"></div>
+        <div class="sk sk2"></div>
+        <div class="msg">Carregando as opções de compra</div>
+        <p class="late">As opções de compra em um clique aparecem aqui quando você chega por dentro do fluxo da sua compra. Se elas não carregarem, o link do Plano Completo também está no e-mail de confirmação e na sua área de compras da Hotmart.</p>
+      </div>
+    </div>
     <noscript><p class="warn">Ative o JavaScript para concluir a sua compra em um clique.</p></noscript>
 
-    <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>7 dias de garantia, igual ao diagnóstico</span></div>
+    <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>7 dias de garantia, igual ao diagnóstico</span></div>
+    <p class="keep">Dizer não aqui não mexe em nada: o diagnóstico que você acabou de comprar continua liberado, com garantia de 7 dias.</p>
     <p class="warn">Esta oferta aparece uma única vez, agora. Depois, o Plano Completo volta ao valor cheio na página de vendas.</p>
   </div>
 
@@ -116,6 +164,22 @@
 <script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
 <script>
   checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
+</script>
+<script>
+  // Segura o layout enquanto o widget da Hotmart não renderiza:
+  // quando ele aparece, o bloco de espera sai; se demorar, vira uma explicação calma.
+  (function(){
+    var alvo = document.getElementById('hotmart-sales-funnel');
+    var espera = document.getElementById('funnel-fallback');
+    if(!alvo || !espera) return;
+    function checa(){
+      if(alvo.childElementCount > 0){ espera.style.display = 'none'; return true; }
+      return false;
+    }
+    if(checa()) return;
+    var t = setInterval(function(){ if(checa()) clearInterval(t); }, 400);
+    setTimeout(function(){ clearInterval(t); if(!checa()) espera.classList.add('late'); }, 7000);
+  })();
 </script>
 </body>
 </html>

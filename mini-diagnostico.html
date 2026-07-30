@@ -27,61 +27,107 @@
   :root{
     --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
     --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E; --ocre2:#C77A2B; --green:#3A7A5C;
+    --green-w:#E3EEE8; --green-d:#1E5C4A;
   }
   *{box-sizing:border-box;margin:0}
   body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:560px;margin:0 auto;padding:40px 22px 64px}
-  .brand{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+  .wrap{max-width:560px;margin:0 auto;padding:32px 20px 56px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
   .logo{width:28px;height:28px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center}
   .logo span{width:10px;height:10px;border-radius:50%;background:var(--ocre2)}
-  .word{font-family:'Spectral',serif;font-weight:600;font-size:21px}
-  .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
+  .word{font-family:'Spectral',serif;font-weight:600;font-size:20px}
+  .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.16;letter-spacing:-.015em;margin-bottom:12px}
   h1 em{font-style:italic;color:var(--ocre)}
   .lead{font-size:16px;color:var(--muted2);margin-bottom:8px}
+  a{color:var(--ocre)}
+  a:hover{color:var(--ocre2)}
+
+  /* ===== progresso: rótulo + barra em etapas ===== */
   .prog{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
-  .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+  .progress{margin-bottom:16px}
+  .progress .pt{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .progress .pt .a{color:var(--ocre);font-weight:700}
+  .progress .pt .b{color:var(--muted)}
+  .progress .segs{display:flex;gap:5px}
+  .progress .segs i{flex:1;height:6px;border-radius:3px;background:#E4DBC9;transition:background .2s}
+  .progress .segs i.on{background:var(--ocre2)}
+  .progress .segs i.now{background:var(--ocre)}
+
+  .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px}
   .qmat{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
-  .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
-  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.12s}
+  .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:16px}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;line-height:1.4;color:var(--ink);cursor:pointer;transition:.12s;min-height:48px}
   .opt:hover{border-color:var(--ocre2)}
   .opt.sel{border-color:var(--ocre);background:#FBF1E6}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:14px 22px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s}
-  .btn:hover{background:#0d161d}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:15px 22px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s;min-height:52px}
+  .btn:hover{background:#0d161d;color:#fff}
   .btn[disabled]{opacity:.4;cursor:not-allowed}
   .btn.full{width:100%}
-  .back{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;margin-top:14px;padding:4px}
-  .field{margin-bottom:13px}
-  .field label{display:block;font-size:13.5px;color:var(--muted2);margin-bottom:5px}
-  .field input{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 14px;font:inherit;font-size:16px;color:var(--ink)}
+  .btn svg{width:17px;height:17px;flex-shrink:0;stroke:var(--ocre2)}
+  .back{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;margin-top:14px;padding:6px 2px}
+
+  /* ===== tela de captura: menos fricção, mais confiança ===== */
+  .formcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 18px;box-shadow:0 18px 46px -34px rgba(21,33,43,.55)}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--muted2);margin-bottom:5px}
+  .field .opt-tag{font-weight:400;color:var(--muted)}
+  .field input{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:14px;font:inherit;font-size:16px;color:var(--ink);min-height:50px}
   .field input:focus{outline:none;border-color:var(--ocre)}
+  .field input.bad{border-color:#C4552F;background:#FDF3EF}
+  .field .hint{font-size:12px;color:var(--muted);margin-top:5px}
+  .err{display:none;margin-top:12px;background:#F7E4D7;border:1px solid #E2A98C;border-radius:11px;padding:11px 13px;font-size:13.5px;color:#6b3423}
+  .trustrow{display:grid;gap:8px;margin-top:14px}
+  .trustrow span{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--muted2);line-height:1.4}
+  .trustrow svg{width:14px;height:14px;stroke:var(--green);flex-shrink:0;margin-top:3px}
   .small{font-size:12.5px;color:var(--muted);margin-top:10px}
-  /* resultado */
-  .verdict{border-radius:16px;padding:20px;margin:6px 0 18px;border:1px solid var(--line)}
+
+  /* ===== resultado ===== */
+  .verdict{border-radius:16px;padding:20px;margin:6px 0 16px;border:1px solid var(--line)}
   .verdict.ochre{background:#FBF1E6;border-color:#E7CFA8}
   .verdict.mixed{background:#F1ECE0}
   .verdict.green{background:#E9F1EA;border-color:#BFD8C4}
   .verdict .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
-  .verdict h2{font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px}
+  .verdict h2{font-family:'Spectral',serif;font-weight:600;font-size:23px;margin-bottom:8px;line-height:1.15}
   .verdict p{font-size:15px;color:var(--muted2)}
-  .plot{position:relative;width:100%;max-width:280px;margin:0 auto 18px;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:14px}
-  .plot .vline,.plot .hline{position:absolute;background:var(--line)}
-  .plot .vline{left:50%;top:8%;bottom:8%;width:1.5px}
-  .plot .hline{top:50%;left:8%;right:8%;height:1.5px}
-  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:.03em;max-width:42%}
-  .plot .tl{top:8px;left:10px}.plot .tr{top:8px;right:10px;text-align:right}
-  .plot .bl{bottom:8px;left:10px}.plot .br{bottom:8px;right:10px;text-align:right}
+  .plotcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 16px 12px;margin-bottom:16px;box-shadow:0 18px 40px -30px rgba(21,33,43,.5)}
+  .plotcard .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+  .plotcard .ph .t{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre)}
+  .plotcard .ph .n{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);background:#F0E9DB;border-radius:5px;padding:3px 8px}
+  .plot{position:relative;width:100%;max-width:300px;margin:0 auto;aspect-ratio:1;background:#F4EEE2;border:1px solid #E6DECF;border-radius:14px;overflow:hidden}
+  .plot .q-tr{position:absolute;left:50%;right:0;top:0;bottom:50%;background:#E1EEE7;opacity:.75}
+  .plot .q-bl{position:absolute;left:0;right:50%;top:50%;bottom:0;background:#F1E7D6;opacity:.65}
+  .plot .vline,.plot .hline{position:absolute;background:#D8CFBE}
+  .plot .vline{left:50%;top:0;bottom:0;width:1px}
+  .plot .hline{top:50%;left:0;right:0;height:1px}
+  .plot .ql{position:absolute;font-size:10px;color:var(--muted2);font-family:'Space Mono',monospace;letter-spacing:.02em;max-width:44%;line-height:1.3}
+  .plot .tl{top:9px;left:10px}.plot .tr{top:9px;right:10px;text-align:right;color:var(--green);font-weight:700}
+  .plot .bl{bottom:9px;left:10px}.plot .br{bottom:9px;right:10px;text-align:right;color:var(--ocre);font-weight:700}
   .plot .you{position:absolute;transform:translate(-50%,-50%)}
-  .plot .dot{width:15px;height:15px;border-radius:50%;background:var(--ocre);box-shadow:0 0 0 5px rgba(166,93,30,.18)}
-  .plot .ylab{font-size:9.5px}
+  .plot .dot{width:17px;height:17px;border-radius:50%;background:var(--ocre);border:3px solid var(--card);box-shadow:0 0 0 6px rgba(166,93,30,.16)}
+  .plot .youlab.flip{left:auto;right:22px;text-align:right}
+  .plot .youlab{position:absolute;left:22px;top:-3px;white-space:nowrap;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);padding:2px 6px;border-radius:6px}
+  .axes{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:10px}
   .center{text-align:center}
-  .offer{background:var(--navy);color:#fff;border-radius:16px;padding:24px 20px;margin-top:8px;text-align:center}
-  .offer h3{font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
-  .offer p{font-size:14.5px;color:#C9C1B4;margin-bottom:16px}
-  .offer .price{font-family:'Space Mono',monospace;font-size:13px;color:#E7CFA8;margin-top:12px}
-  .offer .btn{background:var(--ocre);}
+
+  /* oferta do fim: o CTA mais quente da página */
+  .offer{background:var(--navy);color:#fff;border-radius:18px;padding:26px 20px;margin-top:8px;text-align:left;box-shadow:0 26px 54px -32px rgba(21,33,43,.9)}
+  .offer .kk{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ocre2)}
+  .offer h3{font-family:'Spectral',serif;font-weight:600;font-size:23px;line-height:1.15;margin:10px 0 8px;color:#fff}
+  .offer p{font-size:14.5px;color:#B9C0C7;margin-bottom:16px}
+  .offer .li{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:#D7DBDF;margin-bottom:8px}
+  .offer .li svg{width:14px;height:14px;stroke:var(--ocre2);flex-shrink:0;margin-top:4px}
+  .offer .pricebar{display:flex;align-items:baseline;gap:10px;margin:18px 0 14px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+  .offer .pricebar .v{font-family:'Spectral',serif;font-weight:600;font-size:42px;line-height:1;color:#fff}
+  .offer .pricebar .v small{font-size:17px;vertical-align:.4em;margin-right:2px;color:#E7CFA8}
+  .offer .pricebar .u{font-size:13px;color:#AEB4BB;line-height:1.3}
+  .offer .btn{background:var(--ocre);width:100%;font-size:17px;padding:17px 20px;box-shadow:0 16px 30px -16px rgba(166,93,30,.9)}
   .offer .btn:hover{background:#8c4d18}
-  .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
+  .offer .btn svg{stroke:#fff}
+  .offer .seal{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:14px;font-size:12px;color:#AEB4BB}
+  .offer .seal span{display:inline-flex;align-items:center;gap:6px}
+  .offer .seal svg{width:13px;height:13px;stroke:#7FB79E}
+  .foot{margin-top:26px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
 </style>
 <script id="hotmart_launcher_script">
 	(function(l,a,u,n,c,h,e,r){l['HotmartLauncherObject']=c;l[c]=l[c]||function(){
@@ -125,9 +171,23 @@
   ];
   var BEH_OPTS = [['Nunca',2],['Às vezes',1],['Quase sempre',0]];
 
+  var TOTAL = CONTENT.length + BEHAVIOR.length; // etapas respondidas antes do resultado
+
   var S = { screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
   var app = document.getElementById('app');
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];}); };
+
+  // Barra de progresso em etapas: mostra "etapa 3 de 5" e o quanto já andou.
+  function progress(step, label){
+    var segs = '';
+    var done = step > TOTAL; // tela de captura: tudo respondido
+    for(var i=1;i<=TOTAL;i++){
+      segs += '<i class="'+(done||i<step?'on':(i===step?'now':''))+'"></i>';
+    }
+    return '<div class="progress">'+
+      '<div class="pt"><span class="a">'+(done?'As '+TOTAL+' etapas, respondidas':'Etapa '+step+' de '+TOTAL)+'</span><span class="b">'+esc(label)+'</span></div>'+
+      '<div class="segs">'+segs+'</div></div>';
+  }
 
   function render(){
     if(S.screen==='intro') return intro();
@@ -142,7 +202,8 @@
       '<h1>Em 3 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
       '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
       '<p class="lead" style="margin-bottom:22px">São 3 questões do que mais cai e 2 perguntas sobre a hora da prova. No fim, seu resultado na tela.</p>'+
-      '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
+      '<button class="btn full" id="go">Começar o mini-diagnóstico'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
 
@@ -150,7 +211,7 @@
     var i=S.ci, Q=CONTENT[i];
     var sel = S.ans[i];
     app.innerHTML =
-      '<div class="prog">Parte 1 · questão '+(i+1)+' de '+CONTENT.length+'</div>'+
+      progress(i+1, 'Questões do que mais cai')+
       '<div class="qbox"><div class="qmat">'+esc(Q.mat)+'</div><div class="qtext">'+esc(Q.q)+'</div>'+
       Q.o.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
       '</div>'+
@@ -170,7 +231,7 @@
   function behavior(){
     var i=S.bi, sel=S.beh[i];
     app.innerHTML =
-      '<div class="prog">Parte 2 · pergunta '+(i+1)+' de '+BEHAVIOR.length+'</div>'+
+      progress(CONTENT.length+i+1, 'Na hora da prova')+
       '<div class="qbox"><div class="qmat">Na hora da prova</div><div class="qtext">'+esc(BEHAVIOR[i])+'</div>'+
       BEH_OPTS.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op[0])+'</button>'; }).join('')+
       '</div><button class="back" id="back">Voltar</button>';
@@ -190,22 +251,42 @@
   }
 
   function form(){
+    var check = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
     app.innerHTML =
-      '<div class="prog">Quase lá</div>'+
-      '<h1 style="font-size:23px">Pra onde mando o seu resultado?</h1>'+
-      '<p class="lead" style="margin-bottom:18px">O seu mapa aparece já na próxima tela. Mando também o passo a passo no seu WhatsApp, de onde começar a estudar.</p>'+
-      '<div class="field"><label>Seu nome</label><input id="f_nome" type="text" placeholder="Como você se chama" value="'+esc(S.nome)+'"></div>'+
-      '<div class="field"><label>Seu WhatsApp (com DDD)</label><input id="f_tel" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"></div>'+
-      '<div class="field"><label>Seu e-mail (opcional)</label><input id="f_email" type="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
-      '<button class="btn full" id="see">Ver o meu resultado</button>'+
-      '<div class="small">É grátis e sem spam. Você pode sair quando quiser.</div>';
+      progress(TOTAL+1, 'Falta só isto')+
+      '<h1 style="font-size:24px;margin-bottom:10px">Pronto. Pra onde mando o seu resultado?</h1>'+
+      '<p class="lead" style="margin-bottom:16px">O seu mapa aparece já na próxima tela. Mando também no seu WhatsApp o passo a passo de onde começar a estudar.</p>'+
+      '<div class="formcard">'+
+        '<div class="field"><label for="f_nome">Seu nome</label><input id="f_nome" type="text" autocomplete="given-name" placeholder="Como você se chama" value="'+esc(S.nome)+'"></div>'+
+        '<div class="field"><label for="f_tel">Seu WhatsApp com DDD</label><input id="f_tel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"><div class="hint">É por aqui que mando o passo a passo. Nada de ligação.</div></div>'+
+        '<div class="field"><label for="f_email">Seu e-mail <span class="opt-tag">(opcional)</span></label><input id="f_email" type="email" autocomplete="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
+        '<div class="err" id="f_err"></div>'+
+        '<button class="btn full" id="see" style="margin-top:14px">Ver o meu resultado'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'+
+        '<div class="trustrow">'+
+          '<span>'+check+'Grátis, sem cadastro e sem pagamento.</span>'+
+          '<span>'+check+'Seus dados não são vendidos nem repassados.</span>'+
+          '<span>'+check+'Você pode pedir para sair da lista quando quiser.</span>'+
+        '</div>'+
+      '</div>';
+
+    var erro = document.getElementById('f_err');
+    var iNome = document.getElementById('f_nome'), iTel = document.getElementById('f_tel'), iEmail = document.getElementById('f_email');
+    function limpa(el){ el.classList.remove('bad'); }
+    iNome.oninput = function(){ limpa(iNome); }; iTel.oninput = function(){ limpa(iTel); }; iEmail.oninput = function(){ limpa(iEmail); };
+    function falha(msg, campo){
+      erro.textContent = msg; erro.style.display = 'block';
+      if(campo){ campo.classList.add('bad'); campo.focus(); }
+    }
     document.getElementById('see').onclick = function(){
-      var nome=document.getElementById('f_nome').value.trim();
-      var email=document.getElementById('f_email').value.trim();
-      var tel=document.getElementById('f_tel').value.trim();
+      erro.style.display = 'none';
+      var nome=iNome.value.trim();
+      var email=iEmail.value.trim();
+      var tel=iTel.value.trim();
       var digits=tel.replace(/\D/g,'');
-      if(!nome || digits.length<10){ alert('Preencha o nome e um WhatsApp válido com DDD para ver o resultado.'); return; }
-      if(email && !/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido — corrija ou deixe em branco.'); return; }
+      if(!nome){ falha('Só falta o seu nome para eu personalizar o resultado.', iNome); return; }
+      if(digits.length<10){ falha('O WhatsApp precisa do DDD e do número completo, por exemplo (11) 90000-0000.', iTel); return; }
+      if(email && !/.+@.+\..+/.test(email)){ falha('O e-mail parece incompleto, confira ou deixe o campo em branco.', iEmail); return; }
       S.nome=nome; S.email=email; S.tel=tel;
       saveLead();
       S.screen='result'; render(); window.scrollTo(0,0);
@@ -242,21 +323,36 @@
     var r=compute(), q=quadrant(r.X,r.Y);
     var nome=esc((S.nome.split(' ')[0])||'você');
     var left=Math.max(10,Math.min(90,r.X)), top=Math.max(10,Math.min(90,100-r.Y));
+    var tick='<svg viewBox="0 0 24 24" fill="none" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg>';
     app.innerHTML =
       '<div class="prog">Seu resultado</div>'+
-      '<h1 style="font-size:24px">'+nome+', aqui está o seu mapa.</h1>'+
+      '<h1 style="font-size:25px">'+nome+', aqui está o seu mapa.</h1>'+
       '<p class="lead" style="margin-bottom:16px">Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora da prova.</p>'+
-      '<div class="plot"><div class="vline"></div><div class="hline"></div>'+
-        '<div class="ql tr">Pronto de verdade</div><div class="ql br">Sabe, mas trava</div>'+
-        '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
-        '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
+      '<div class="plotcard">'+
+        '<div class="ph"><span class="t">Seu mapa de 2 eixos</span><span class="n">amostra de 3 questões</span></div>'+
+        '<div class="plot"><div class="q-tr"></div><div class="q-bl"></div><div class="vline"></div><div class="hline"></div>'+
+          '<div class="ql tr">Pronto de verdade</div><div class="ql br">Sabe, mas trava</div>'+
+          '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
+          '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div><div class="youlab'+(left>58?' flip':'')+'">'+nome+'</div></div>'+
+        '</div>'+
+        '<div class="axes"><span>menos conteúdo</span><span>mais conteúdo</span></div>'+
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
       '<div class="offer">'+
-        '<h3>Esse foi só o raio-x de 3 questões.</h3>'+
-        '<p>O diagnóstico completo testa você nas 6 matérias do núcleo duro, mede o seu desempenho de verdade e entrega a prescrição: o que estudar primeiro, as fichas do que mais cai, a folha de tática para o seu perfil e simulados.</p>'+
-        '<a class="btn full" href="'+CHECKOUT_URL+'" id="buy">Quero meu diagnóstico completo</a>'+
-        '<div class="price">R$ 47 · pagamento único · 7 dias de garantia</div>'+
+        '<div class="kk">O próximo passo</div>'+
+        '<h3>Esse foi o raio-x de 3 questões. O completo são 24.</h3>'+
+        '<p>O Diagnóstico dos 2 Eixos te testa nas 6 matérias do núcleo duro, mede o seu desempenho de verdade e entrega a prescrição, com o seu nome, na hora.</p>'+
+        '<div class="li">'+tick+'<span>O que estudar primeiro, na sua ordem</span></div>'+
+        '<div class="li">'+tick+'<span>As fichas do que mais cai: lei seca, súmula, pegadinha</span></div>'+
+        '<div class="li">'+tick+'<span>A folha de tática de prova para o seu perfil</span></div>'+
+        '<div class="li">'+tick+'<span>3 simulados para medir a sua evolução</span></div>'+
+        '<div class="pricebar"><span class="v"><small>R$</small>47</span><span class="u">pagamento único<br>sem mensalidade</span></div>'+
+        '<a class="btn full" href="'+CHECKOUT_URL+'" id="buy">Quero meu diagnóstico completo'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'+
+        '<div class="seal">'+
+          '<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pix ou cartão, ambiente seguro</span>'+
+          '<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>7 dias de garantia</span>'+
+        '</div>'+
       '</div>'+
       '<div class="center"><button class="back" id="redo">Refazer o mini-diagnóstico</button></div>';
     var buy=document.getElementById('buy');
