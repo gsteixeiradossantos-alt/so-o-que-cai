@@ -96,23 +96,26 @@
     <div class="v" style="margin-top:12px">R$ 127</div>
     <div class="sub">pagamento único, sem mensalidade, acesso na hora</div>
 
-    <!-- BOTÃO DE COMPRA (1 clique da Hotmart).
-         Cole aqui o "Código do Widget" que a Hotmart gera no funil.
-         Enquanto ele não estiver colado, aparece o botão de reserva abaixo. -->
-    <div id="botao-compra">
-      <a class="fallback" id="btnFallback" href="#">Quero o Plano Completo</a>
-    </div>
+    <!-- BOTÕES DE COMPRA · widget de funil da Hotmart (1 clique).
+         Ele renderiza sozinho o "Quero adquirir" e o "Perder a oportunidade".
+         Só funciona quando a pessoa chega aqui pelo fluxo do funil, logo após a
+         compra do diagnóstico; aberta solta, a área fica vazia (é esperado). -->
+    <div id="hotmart-sales-funnel" style="margin-top:20px"></div>
+    <noscript><p class="warn">Ative o JavaScript para concluir a sua compra em um clique.</p></noscript>
 
     <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>7 dias de garantia, igual ao diagnóstico</span></div>
     <p class="warn">Esta oferta aparece uma única vez, agora. Depois, o Plano Completo volta ao valor cheio na página de vendas.</p>
   </div>
-
-  <a class="no" href="#" id="btnNao">Não, quero seguir só com o diagnóstico</a>
 
   <footer>
     Só o que Cai · ferramenta de estudo por incidência para a 1ª fase da OAB<br>
     Não é vinculado à FGV nem à OAB · não promete aprovação, entrega direção
   </footer>
 </div>
+
+<script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
+<script>
+  checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
+</script>
 </body>
 </html>
