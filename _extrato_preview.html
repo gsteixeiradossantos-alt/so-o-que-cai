@@ -1,0 +1,390 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;} body{margin:0;}
+#portalCedente{
+  --paper:#EFEAD9; --paper-2:#E2DBC6; --card-warm:#FBF8EF; --cream:#EFEAD9;
+  --ink:#0A1530; --ink-2:#15224A; --pgold:#C9A961; --gold-2:#9C7F40;
+  --pline:rgba(10,21,48,.12); --mute:rgba(10,21,48,.55);
+  --st-judicial:#3A5288; --st-quitado:#5E7C58; --st-cobrar:#9C7F40; --st-semexito:#A65A4A;
+  /* display:flex só quando .active (regra #portalCedente.active) — senão o ID sobrescreve .screen{display:none} e a tela vaza embaixo do app do gestor */
+  height:100vh; background:var(--paper); color:var(--ink);
+  font-family:'Inter Tight',Inter,system-ui,sans-serif;
+}
+#portalCedente.screen{padding:0;}
+#portalCedente.active{flex-direction:row;}
+/* Sidebar */
+.cp-sidebar{width:256px;min-width:256px;background:var(--ink);background-image:linear-gradient(rgba(201,169,97,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,97,.05) 1px,transparent 1px);background-size:48px 48px;display:flex;flex-direction:column;height:100vh;border-right:1px solid rgba(201,169,97,.12);}
+.cp-sidebar-logo{padding:22px 20px 16px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.06);}
+.cp-logo-mark{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(201,169,97,.45);position:relative;flex-shrink:0;}
+.cp-logo-mark::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:var(--pgold);}
+.cp-logo-wm{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:23px;line-height:1;color:var(--cream);letter-spacing:.005em;}
+.cp-logo-wm .dot{color:var(--pgold);}
+.cp-logo-sub{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.22em;color:rgba(239,234,217,.42);margin-top:3px;}
+.cp-sidebar-user{margin:14px;padding:12px 14px;border:1px solid rgba(201,169,97,.18);border-radius:14px;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:11px;}
+.cp-sidebar-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--pgold),var(--gold-2));color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.cp-sidebar-uname{color:var(--cream);font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+.cp-sidebar-urole{font-family:'JetBrains Mono',monospace;color:rgba(239,234,217,.5);font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-top:3px;}
+.cp-nav{flex:1;padding:8px 12px;overflow-y:auto;}
+.cp-nav-sec{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(239,234,217,.38);padding:14px 10px 6px;}
+.cp-nav-item{display:flex;align-items:center;gap:11px;padding:9px 12px;margin:1px 0;border-radius:9px;color:rgba(239,234,217,.62);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;}
+.cp-nav-item:hover{color:var(--cream);background:rgba(255,255,255,.04);}
+.cp-nav-item.active{background:rgba(201,169,97,.13);color:var(--cream);box-shadow:inset 2.5px 0 0 var(--pgold);}
+.cp-nav-item svg{width:17px;height:17px;flex-shrink:0;opacity:.85;}
+.cp-nav-badge{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;color:rgba(239,234,217,.6);background:rgba(255,255,255,.06);border-radius:20px;padding:1px 7px;}
+.cp-nav-badge.gold{background:var(--pgold);color:var(--ink);font-weight:600;letter-spacing:.05em;}
+.cp-nav-item.locked{opacity:.8;cursor:pointer;}
+.cp-nav-item.locked:hover{opacity:1;}
+.cp-nav-item.locked svg{opacity:.65;}
+.cp-nav-item.locked .cp-nav-badge.gold{position:relative;overflow:hidden;}
+.cp-nav-item.locked .cp-nav-badge.gold::after{content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:cpShimmer 2.6s ease-in-out infinite;}
+@keyframes cpShimmer{0%,72%{left:-60%;}100%{left:130%;}}
+.cp-sidebar-footer{padding:12px;border-top:1px solid rgba(255,255,255,.06);}
+.cp-beatriz-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border-radius:12px;border:1px solid rgba(201,169,97,.25);background:linear-gradient(135deg,rgba(201,169,97,.14),rgba(201,169,97,.04));cursor:pointer;text-align:left;transition:all .15s;}
+.cp-beatriz-btn:hover{border-color:rgba(201,169,97,.5);}
+.cp-beatriz-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--pgold),var(--gold-2));color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:16px;flex-shrink:0;}
+.cp-beatriz-t{color:var(--cream);font-size:12.5px;font-weight:600;}
+.cp-beatriz-s{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(239,234,217,.5);}
+.cp-sair{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;margin-top:6px;border:0;background:none;color:rgba(239,234,217,.5);font-size:12.5px;cursor:pointer;border-radius:9px;font-family:inherit;}
+.cp-sair:hover{color:var(--cream);background:rgba(255,255,255,.04);}
+/* Main + topbar */
+.cp-main{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh;overflow:hidden;}
+.cp-topbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:16px;padding:14px 36px;background:rgba(239,234,217,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--pline);}
+.cp-topbar-tt{display:flex;flex-direction:column;gap:2px;}
+.cp-topbar-eyebrow{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--gold-2);}
+.cp-topbar-title{font-family:'Fraunces',Georgia,serif;font-size:21px;font-weight:400;color:var(--ink);letter-spacing:-.01em;}
+.cp-search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--card-warm);border:1px solid var(--pline);border-radius:99px;padding:8px 14px;min-width:260px;color:var(--mute);font-size:13px;}
+.cp-search input{border:0;background:none;outline:none;flex:1;font:inherit;color:var(--ink);min-width:0;}
+.cp-bell{width:38px;height:38px;border-radius:50%;border:1px solid var(--pline);background:var(--card-warm);display:flex;align-items:center;justify-content:center;color:var(--ink);position:relative;cursor:pointer;flex-shrink:0;}
+.cp-bell::after{content:"";position:absolute;top:9px;right:10px;width:6px;height:6px;border-radius:50%;background:var(--pgold);}
+.cp-body{flex:1;overflow-y:auto;padding:32px 36px 80px;}
+.cp-wrap{max-width:1800px;margin:0 auto;}
+.cp-wrap.narrow{max-width:980px;} .cp-wrap.mid{max-width:1120px;}
+/* Cards / type */
+.cp-card{background:var(--card-warm);border:1px solid var(--pline);border-radius:18px;padding:22px 24px;}
+.cp-h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:42px;letter-spacing:-.02em;color:var(--ink);line-height:1.05;}
+.cp-lead{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:19px;color:var(--mute);margin-top:4px;}
+.cp-lead em{color:var(--gold-2);font-style:italic;}
+.cp-num{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-.01em;}
+.cp-mono{font-family:'JetBrains Mono',monospace;}
+.cp-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);}
+.cp-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;padding:11px 18px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .15s;}
+.cp-btn-primary{background:var(--ink);color:var(--cream);box-shadow:0 8px 20px -10px rgba(10,21,48,.5);}
+.cp-btn-primary:hover{background:var(--ink-2);}
+.cp-btn-outline{background:transparent;border-color:var(--pgold);color:var(--gold-2);}
+.cp-btn-outline:hover{background:rgba(201,169,97,.08);}
+.cp-btn[disabled]{opacity:.5;cursor:not-allowed;box-shadow:none;}
+.cp-kpi-dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+/* Status pill */
+.cp-pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;border-radius:100px;padding:4px 11px;}
+.cp-pill .dot{width:6px;height:6px;border-radius:50%;}
+.cp-st-judicial{color:var(--st-judicial);background:color-mix(in srgb,var(--st-judicial) 14%,transparent);}
+.cp-st-judicial .dot{background:var(--st-judicial);}
+.cp-st-quitado{color:var(--st-quitado);background:color-mix(in srgb,var(--st-quitado) 14%,transparent);}
+.cp-st-quitado .dot{background:var(--st-quitado);}
+.cp-st-acordo{color:var(--gold-2);background:color-mix(in srgb,var(--gold-2) 14%,transparent);}
+.cp-st-acordo .dot{background:var(--gold-2);}
+.cp-st-cobrar{color:var(--st-cobrar);background:color-mix(in srgb,var(--st-cobrar) 14%,transparent);}
+.cp-st-cobrar .dot{background:var(--st-cobrar);}
+.cp-st-semexito{color:var(--st-semexito);background:color-mix(in srgb,var(--st-semexito) 14%,transparent);}
+.cp-st-semexito .dot{background:var(--st-semexito);}
+/* progress / chips / stepper / timeline / toggle */
+.cp-prog{height:7px;border-radius:99px;background:var(--paper-2);overflow:hidden;}
+.cp-prog>span{display:block;height:100%;border-radius:99px;background:var(--pgold);}
+.cp-chip{display:inline-flex;align-items:center;gap:6px;border-radius:100px;padding:7px 14px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid var(--pline);background:var(--card-warm);color:var(--mute);white-space:nowrap;}
+.cp-chip.on{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+.cp-chip .ct{font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7;}
+.cp-steps{display:flex;align-items:flex-start;}
+.cp-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;text-align:center;}
+.cp-step::before{content:"";position:absolute;top:17px;left:-50%;width:100%;height:2px;background:var(--paper-2);z-index:0;}
+.cp-step:first-child::before{display:none;}
+</style></head>
+<body>
+<div id="portalCedente" class="screen" style="display:block;height:auto;min-height:100vh;">
+  <div class="cp-body" style="height:auto;"><div id="portalCedenteBody"></div></div>
+</div>
+<script>
+function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtR(v){return 'R$ '+(Number(v)||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function _detData(s){ if(!s) return '—'; var d=String(s).slice(0,10).split('-'); return d.length===3?d[2]+'/'+d[1]+'/'+d[0]:String(s); }
+function showToast(){}
+var currentUser={clienteId:'cli1',nome:'Bidão Auto Mecânica'};
+var DB={clientes:[{id:'cli1',nome:'Bidão Auto Mecânica',nomeFantasia:'Bidão Auto Mecânica'}]};
+function cpExtratoPDF(){alert('PDF (mock)');}
+function baixarDocumentoDevedor(){}
+let _cpExtUI = { q:'', filter:'todos', sort:'orig', sel:{}, open:{}, bodyEl:null, focusSearch:false };
+async function cpComputeExtrato(){
+  const cid = currentUser.clienteId;
+  const supa = getSupabase();
+  let repasses=[];
+  if(supa){
+    try{ const { data } = await supa.from('repasses_cliente').select('*').order('data_pix',{ascending:false,nullsFirst:false}); repasses=data||[]; }catch(_){}
+  }
+  const repByCob={};
+  repasses.forEach(r=>{ (repByCob[r.cobranca_id]=repByCob[r.cobranca_id]||[]).push(r); });
+  const cobr=(typeof DB_cobrancas!=='undefined'?DB_cobrancas:[]||[]).filter(c=>c.cliente_id===cid);
+  const linhas=cobr.map(c=>{
+    const cap=(c.valor_capital!=null)?+c.valor_capital:((c.divida&&c.divida.valorCapital!=null)?+c.divida.valorCapital:null);
+    const reps=(repByCob[c.id]||[]).slice().sort((a,b)=>String(b.data_pix||'').localeCompare(String(a.data_pix||'')));
+    const recebido=reps.reduce((s,r)=>s+(+r.valor||0),0);
+    const saldo=(cap!=null)?(cap-recebido):null;
+    const principal=(c.cobranca_partes||[]).find(p=>p.principal)||(c.cobranca_partes||[])[0];
+    const devNome=(principal&&principal.devedores&&principal.devedores.nome)||(c.divida&&c.divida.descricao)||'Caso';
+    return { id:c.id, cap, reps, recebido, saldo, devNome, status:c.status, quitado:(saldo!=null&&cap>0&&saldo<=0.005), ultimo:(reps[0]&&reps[0].data_pix)||null };
+  }).filter(l=>l.cap!=null || l.reps.length);
+  linhas.sort((a,b)=>b.recebido-a.recebido);
+  linhas.forEach((l,i)=>{ l.origIdx=i; }); // índice de origem estável (seleção/expansão sobrevivem a filtro/ordenação)
+  const totCap=linhas.reduce((s,l)=>s+(l.cap||0),0);
+  const totRec=linhas.reduce((s,l)=>s+l.recebido,0);
+  const nQuit=linhas.filter(l=>l.quitado).length;
+  _cpExtrato={ linhas, totCap, totRec, totSaldo:Math.max(totCap-totRec,0), nRep:repasses.length, nQuit, pct: totCap>0?(totRec/totCap*100):0 };
+  return _cpExtrato;
+}
+// ── Extrato: view (filtra+ordena mantendo origIdx), contagens, helpers ──
+function _cpExtNorm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function _cpExtView(){
+  const ex=_cpExtrato; if(!ex) return [];
+  const u=_cpExtUI; let v=ex.linhas.slice();
+  const q=_cpExtNorm(u.q.trim());
+  if(q) v=v.filter(l=>_cpExtNorm(l.devNome).includes(q));
+  if(u.filter==='Quitado') v=v.filter(l=>l.quitado);
+  else if(u.filter==='andamento') v=v.filter(l=>!l.quitado);
+  else if(u.filter==='sem') v=v.filter(l=>l.recebido<=0.005);
+  const sk=u.sort;
+  if(sk==='saldo') v.sort((a,b)=>Math.max(b.saldo||0,0)-Math.max(a.saldo||0,0));
+  else if(sk==='recebido') v.sort((a,b)=>b.recebido-a.recebido);
+  else if(sk==='capital') v.sort((a,b)=>(b.cap||0)-(a.cap||0));
+  else if(sk==='nome') v.sort((a,b)=>(a.devNome||'').localeCompare(b.devNome||'','pt-BR'));
+  else if(sk==='recente') v.sort((a,b)=>String(b.ultimo||'').localeCompare(String(a.ultimo||'')));
+  return v; // 'orig' = ordem do extrato (sem reordenar)
+}
+function _cpExtCounts(){ const ls=(_cpExtrato&&_cpExtrato.linhas)||[]; return { todos:ls.length, Quitado:ls.filter(l=>l.quitado).length, andamento:ls.filter(l=>!l.quitado).length, sem:ls.filter(l=>l.recebido<=0.005).length }; }
+function _cpMoneyBig(v){ const s=fmtR(v||0); const i=s.lastIndexOf(','); return i<0?escHtml(s):(escHtml(s.slice(0,i))+'<span style="font-size:.6em;">'+escHtml(s.slice(i))+'</span>'); }
+function _cpCheck(on,partial){
+  if(partial) return '<span style="width:18px;height:18px;border-radius:5px;border:1px solid var(--gold-2);background:var(--pgold);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="width:9px;height:2px;background:var(--ink);border-radius:1px;"></span></span>';
+  if(on) return '<span style="width:18px;height:18px;border-radius:5px;border:1px solid var(--pgold);background:var(--pgold);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#0A1530" stroke-width="3"><path d="m5 12 5 5 9-10"/></svg></span>';
+  return '<span style="width:18px;height:18px;border-radius:5px;border:1px solid var(--mute);background:transparent;flex-shrink:0;display:block;"></span>';
+}
+function _cpBia(scope){
+  const n=scope.length, nq=scope.filter(l=>l.quitado).length, nand=n-nq;
+  const cap=scope.reduce((s,l)=>s+(l.cap||0),0), rec=scope.reduce((s,l)=>s+l.recebido,0);
+  const saldo=Math.max(cap-rec,0), pct=cap>0?(rec/cap*100):0, nsem=scope.filter(l=>l.recebido<=0.005).length;
+  let maior=null; scope.filter(l=>!l.quitado&&(l.saldo||0)>0).forEach(l=>{ if(!maior||(l.saldo||0)>(maior.saldo||0)) maior=l; });
+  let t=`Dos ${n} caso(s) da sua carteira, ${nq} ${nq===1?'já está quitado':'já estão quitados'} e ${nand} ${nand===1?'segue':'seguem'} em andamento. `;
+  t+=`Já ${rec>0?'foram recuperados':'foi recuperado'} ${fmtR(rec)} de ${fmtR(cap)} (${pct.toFixed(1).replace('.',',')}%), restando ${fmtR(saldo)} a recuperar.`;
+  if(maior) t+=` O maior valor em aberto é de ${maior.devNome} (${fmtR(Math.max(maior.saldo||0,0))}).`;
+  if(nsem>0) t+=` ${nsem} caso(s) ainda não tiveram entrada e seguem em fase de cobrança.`;
+  return t;
+}
+function _cpNarr(l){
+  if(l.quitado) return `Cobrança quitada — recuperação integral do capital.${l.ultimo?` Último repasse em ${_detData(l.ultimo)}.`:''} Nenhuma ação pendente.`;
+  if(l.recebido>0.005){ const pct=l.cap?(l.recebido/l.cap*100):0; return `Recuperação parcial: ${fmtR(l.recebido)} de ${fmtR(l.cap||0)} (${pct.toFixed(1).replace('.',',')}%). Saldo de ${fmtR(Math.max(l.saldo||0,0))} ainda em recuperação.`; }
+  return 'Sem repasses até o momento — caso em fase de cobrança.';
+}
+async function cpRenderRepasses(body){
+  if(!body) return;
+  _cpExtUI.bodyEl=body;
+  body.innerHTML=`<div style="padding:60px;text-align:center;color:var(--mute);">Carregando extrato…</div>`;
+  await cpComputeExtrato();
+  // estado de UI zera a cada entrada na tela
+  _cpExtUI.q=''; _cpExtUI.filter='todos'; _cpExtUI.sort='orig'; _cpExtUI.sel={}; _cpExtUI.open={}; _cpExtUI.focusSearch=false;
+  cpExtPaint();
+}
+// Interações (mutam _cpExtUI e repintam a folha sem refazer a query)
+function cpExtSearch(v){ _cpExtUI.q=v; _cpExtUI.focusSearch=true; cpExtPaint(); }
+function cpExtSetFilter(f){ _cpExtUI.filter=(_cpExtUI.filter===f?'todos':f); cpExtPaint(); }
+function cpExtSetSort(v){ _cpExtUI.sort=v; cpExtPaint(); }
+function cpExtClear(){ _cpExtUI.q=''; _cpExtUI.filter='todos'; _cpExtUI.sort='orig'; cpExtPaint(); }
+function cpExtToggle(idx){ idx=+idx; _cpExtUI.open[idx]=!_cpExtUI.open[idx]; cpExtPaint(); }
+function cpExtToggleAll(){ const v=_cpExtView().filter(l=>l.reps.length); const allOpen=v.length>0&&v.every(l=>_cpExtUI.open[l.origIdx]); v.forEach(l=>{ _cpExtUI.open[l.origIdx]=!allOpen; }); cpExtPaint(); }
+function cpExtSel(idx){ idx=+idx; _cpExtUI.sel[idx]=!_cpExtUI.sel[idx]; cpExtPaint(); }
+function cpExtSelAll(){ const v=_cpExtView(); const allSel=v.length>0&&v.every(l=>_cpExtUI.sel[l.origIdx]); v.forEach(l=>{ _cpExtUI.sel[l.origIdx]=!allSel; }); cpExtPaint(); }
+function cpExtPaint(){
+  const body=_cpExtUI.bodyEl, ex=_cpExtrato; if(!body||!ex) return;
+  const u=_cpExtUI, view=_cpExtView(), cnt=_cpExtCounts();
+  const active = !!u.q.trim() || u.filter!=='todos' || u.sort!=='orig';
+  const cli=(DB.clientes||[]).find(c=>c.id===currentUser.clienteId)||{};
+  const nomeCli=cli.nomeFantasia||cli.nome_fantasia||cli.nome||currentUser.nome||'Cliente';
+  const grid='grid-template-columns:22px minmax(0,1fr) 88px 88px 88px 96px;gap:8px;';
+  const filterLbl={todos:'Todos',Quitado:'Quitados',andamento:'Em andamento',sem:'Sem entrada'}[u.filter]||'Todos';
+  const sortLbl={orig:'ordem do extrato',saldo:'maior saldo',recebido:'mais recuperado',capital:'maior capital',nome:'nome',recente:'último repasse'}[u.sort]||'ordem do extrato';
+  // seleção / expansão (estado do cabeçalho)
+  const selN=view.filter(l=>u.sel[l.origIdx]).length;
+  const allSel=view.length>0&&selN===view.length, partialSel=selN>0&&selN<view.length;
+  const expandables=view.filter(l=>l.reps.length);
+  const allOpen=expandables.length>0&&expandables.every(l=>u.open[l.origIdx]);
+  const nSel=Object.keys(u.sel).filter(k=>u.sel[k]).length;
+  const btnLabel=nSel>0?`Gerar relatório (${nSel})`:'Gerar relatório (todos)';
+  // métricas do topo = extrato completo
+  const metric=(lbl,valHtml,color,extra)=>`<div style="padding:22px 18px;min-width:0;background:var(--card-warm);">
+      <div class="cp-label" style="font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${lbl}</div>
+      <div class="cp-num" style="font-size:clamp(17px,2.2vw,30px);color:${color};margin-top:8px;white-space:nowrap;">${valHtml}</div>${extra||''}</div>`;
+  const chip=(k,l,n)=>`<button onclick="cpExtSetFilter('${k}')" style="border:0;border-radius:100px;padding:6px 12px;font:inherit;font-size:12px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;${u.filter===k?'background:var(--ink);color:var(--cream);':'background:transparent;color:var(--mute);'}">${l}<span class="cp-mono" style="font-size:10.5px;opacity:.7;">${n}</span></button>`;
+  const sortOpt=(v,l)=>`<option value="${v}" ${u.sort===v?'selected':''}>${l}</option>`;
+  const pixRow=(r)=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:.5px solid rgba(10,21,48,.07);">
+      <div style="display:flex;align-items:center;gap:9px;min-width:0;"><span style="color:var(--gold-2);flex-shrink:0;">↳</span><span class="cp-mono" style="font-size:12px;color:var(--ink);flex-shrink:0;">${escHtml(r.data_pix?_detData(r.data_pix):'—')}</span><span class="cp-mono" style="font-size:10.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escHtml(r.transacao_id||'')}</span></div>
+      <span class="cp-mono" style="font-size:12.5px;color:var(--st-quitado);white-space:nowrap;flex-shrink:0;">${fmtR(+r.valor||0)}</span>
+    </div>`;
+  const row=(l)=>{
+    const has=l.reps.length>0, open=!!u.open[l.origIdx], seld=!!u.sel[l.origIdx];
+    const sit=l.quitado?'Quitado':'Em andamento', sclass=l.quitado?'cp-st-quitado':'cp-st-acordo';
+    return `<div>
+      <div style="display:grid;${grid}padding:12px 22px;align-items:center;border-bottom:.5px solid rgba(10,21,48,.07);${seld?'background:color-mix(in srgb,var(--pgold) 9%,transparent);':(open?'background:var(--paper-2);':'')}${has?'cursor:pointer;':''}" ${has?`onclick="cpExtToggle(${l.origIdx})"`:''}>
+        <button onclick="event.stopPropagation();cpExtSel(${l.origIdx})" style="border:0;background:none;cursor:pointer;padding:0;display:flex;">${_cpCheck(seld,false)}</button>
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+          ${has?`<span style="width:20px;height:20px;border-radius:6px;border:1px solid ${open?'var(--pgold)':'var(--pline)'};background:${open?'rgba(201,169,97,.15)':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold-2);transition:transform .15s;transform:rotate(${open?'90':'0'}deg);"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>`:'<span style="width:20px;flex-shrink:0;"></span>'}
+          <span style="font-size:14px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escHtml(l.devNome)}</span>
+          ${has?`<span class="cp-mono" style="font-size:9.5px;color:var(--mute);background:var(--paper);border:1px solid var(--pline);border-radius:100px;padding:2px 7px;flex-shrink:0;">${l.reps.length} PIX</span>`:''}
+        </div>
+        <div class="cp-mono" style="font-size:13px;text-align:right;color:${l.cap!=null?'var(--ink)':'var(--mute)'};">${l.cap!=null?fmtR(l.cap):'—'}</div>
+        <div class="cp-mono" style="font-size:13px;text-align:right;color:${l.recebido>0.005?'var(--st-quitado)':'var(--mute)'};">${fmtR(l.recebido)}</div>
+        <div class="cp-mono" style="font-size:13px;text-align:right;color:${(l.saldo!=null&&l.saldo>0.005)?'var(--ink)':'var(--mute)'};">${l.saldo!=null?fmtR(Math.max(l.saldo,0)):'—'}</div>
+        <div style="text-align:right;"><span class="cp-pill ${sclass}" style="font-size:9px;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;">${sit}</span></div>
+      </div>
+      ${(has&&open)?`<div style="background:var(--paper);padding:6px 40px 12px 64px;">${l.reps.map(pixRow).join('')}</div>`:''}
+    </div>`;
+  };
+  // total da faixa = recorte visível
+  const vCap=view.reduce((s,l)=>s+(l.cap||0),0), vRec=view.reduce((s,l)=>s+l.recebido,0), vSaldo=Math.max(vCap-vRec,0);
+  body.innerHTML=`<div style="max-width:1080px;margin:0 auto;">
+    <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+      <button class="cp-btn cp-btn-outline" onclick="cpExtToggleAll()">${allOpen?'Recolher tudo':'Expandir tudo'}</button>
+      <button class="cp-btn cp-btn-outline" onclick="cpExtratoPDF()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg> Baixar PDF</button>
+      <button class="cp-btn cp-btn-primary" onclick="cpExtReport()">${btnLabel}</button>
+    </div>
+    <div style="background:var(--card-warm);border:1px solid var(--pline);border-radius:18px;box-shadow:0 24px 60px -36px rgba(10,21,48,.4);overflow:hidden;">
+      <div style="position:relative;padding:34px 40px 28px;border-bottom:.5px solid var(--pline);overflow:hidden;">
+        <div style="position:absolute;top:-44px;right:-30px;width:150px;height:150px;border-radius:50%;border:1px solid rgba(201,169,97,.18);"></div>
+        <div style="position:absolute;top:-8px;right:34px;width:90px;height:90px;border-radius:50%;border:1px solid rgba(201,169,97,.14);"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;">
+          <div style="min-width:0;">
+            <div class="cp-mono" style="font-size:10px;letter-spacing:.18em;color:var(--gold-2);text-transform:uppercase;">Documento financeiro</div>
+            <div style="font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:38px;color:var(--ink);line-height:1.05;margin-top:8px;">Extrato de repasses</div>
+            <div style="font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:19px;color:var(--mute);margin-top:6px;">${escHtml(nomeCli)} · <span style="color:var(--gold-2);">COBRASQ — Recuperadora de Crédito</span></div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="display:inline-flex;align-items:center;gap:8px;"><span class="cp-logo-mark" style="width:26px;height:26px;"></span><span style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:var(--ink);">cobrasq<span style="color:var(--pgold);">.</span></span></div>
+            <div class="cp-mono" style="font-size:10px;color:var(--mute);margin-top:8px;">Emitido em ${escHtml(_detData(new Date().toISOString()))}</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--pline);border-bottom:.5px solid var(--pline);">
+        ${metric('Capital em cobrança',_cpMoneyBig(ex.totCap),'var(--ink)')}
+        ${metric('Recebido / repassado',_cpMoneyBig(ex.totRec),'var(--st-quitado)')}
+        ${metric('Saldo a recuperar',_cpMoneyBig(ex.totSaldo),'var(--gold-2)')}
+        ${metric('Recuperado',`${ex.pct.toFixed(1).replace('.',',')}% <span style="font-size:.42em;color:var(--mute);font-family:'Inter Tight',sans-serif;">${ex.nQuit} quitado${ex.nQuit!==1?'s':''}</span>`,'var(--ink)',`<div class="cp-prog" style="margin-top:12px;"><span style="width:${Math.min(100,ex.pct).toFixed(0)}%;background:var(--st-quitado);"></span></div>`)}
+      </div>
+      <div style="padding:14px 22px;border-bottom:.5px solid var(--pline);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--pline);border-radius:100px;padding:8px 14px;min-width:200px;flex:1;max-width:300px;">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--mute)" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="cpExtSearchInput" value="${escHtml(u.q)}" oninput="cpExtSearch(this.value)" placeholder="Buscar devedor…" style="border:0;background:none;outline:none;flex:1;font:inherit;font-size:13px;color:var(--ink);min-width:0;">
+          ${u.q?`<button onclick="cpExtSearch('')" style="border:0;background:none;cursor:pointer;color:var(--mute);font-size:13px;">✕</button>`:''}
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:2px;background:var(--paper);border:1px solid var(--pline);border-radius:100px;padding:3px;">
+          ${chip('todos','Todos',cnt.todos)}${chip('Quitado','Quitados',cnt.Quitado)}${chip('andamento','Em andamento',cnt.andamento)}${chip('sem','Sem entrada',cnt.sem)}
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+          <span class="cp-label">Ordenar</span>
+          <select onchange="cpExtSetSort(this.value)" style="padding:8px 11px;border:1px solid var(--pline);background:var(--paper);border-radius:10px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer;">
+            ${sortOpt('orig','Ordem do extrato')}${sortOpt('saldo','Maior saldo')}${sortOpt('recebido','Mais recuperado')}${sortOpt('capital','Maior capital')}${sortOpt('nome','Nome (A–Z)')}${sortOpt('recente','Último repasse')}
+          </select>
+        </div>
+      </div>
+      ${active?`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 22px;background:var(--paper-2);border-bottom:.5px solid var(--pline);">
+        <span class="cp-mono" style="font-size:11px;color:var(--gold-2);">${view.length} de ${ex.linhas.length} caso(s) · ${filterLbl} · ord. ${sortLbl}</span>
+        <button onclick="cpExtClear()" class="cp-mono" style="border:0;background:none;color:var(--gold-2);cursor:pointer;font-size:10px;text-transform:uppercase;letter-spacing:.12em;">Limpar</button></div>`:''}
+      <div style="display:grid;${grid}padding:12px 22px;align-items:center;border-bottom:.5px solid var(--pline);">
+        <button onclick="cpExtSelAll()" style="border:0;background:none;cursor:pointer;padding:0;display:flex;">${_cpCheck(allSel,partialSel)}</button>
+        <div class="cp-label">Caso / repasse</div>
+        <div class="cp-label" style="text-align:right;">Capital</div>
+        <div class="cp-label" style="text-align:right;">Recebido</div>
+        <div class="cp-label" style="text-align:right;">Saldo</div>
+        <div class="cp-label" style="text-align:right;">Situação</div>
+      </div>
+      ${view.length?view.map(row).join(''):'<div style="padding:56px;text-align:center;color:var(--mute);font-size:13px;">Nenhum caso encontrado.</div>'}
+      <div style="display:grid;${grid}padding:20px 22px;align-items:center;background:var(--ink);color:var(--cream);">
+        <span></span>
+        <span class="cp-mono" style="font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--pgold);">${active?`Total (${view.length})`:'Total'}</span>
+        <div class="cp-mono" style="font-size:13px;text-align:right;color:var(--cream);">${fmtR(vCap)}</div>
+        <div class="cp-mono" style="font-size:13px;text-align:right;color:#9CC18F;">${fmtR(vRec)}</div>
+        <div class="cp-mono" style="font-size:13px;text-align:right;color:var(--pgold);">${fmtR(vSaldo)}</div>
+        <span></span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:18px 22px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--gold-2)" stroke-width="1.8" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <span style="font-size:12.5px;color:var(--mute);line-height:1.5;">Cada repasse listado é um PIX da COBRASQ ao seu favor, com data e identificador da transação. Documento informativo gerado automaticamente a partir dos seus dados.</span>
+      </div>
+    </div></div>`;
+  if(u.focusSearch){ const si=document.getElementById('cpExtSearchInput'); if(si){ si.focus(); const val=si.value; si.value=''; si.value=val; } u.focusSearch=false; }
+}
+// Modal "Gerar relatório de andamento" (escopo = selecionados, ou todos)
+function cpExtReportClose(){ const o=document.getElementById('cpExtRepOv'); if(o) o.remove(); }
+function cpExtReport(){
+  const ex=_cpExtrato; if(!ex) return;
+  const selIdxs=Object.keys(_cpExtUI.sel).filter(k=>_cpExtUI.sel[k]).map(Number);
+  const scope=selIdxs.length?ex.linhas.filter(l=>selIdxs.includes(l.origIdx)):ex.linhas.slice();
+  const n=scope.length, nq=scope.filter(l=>l.quitado).length, nand=n-nq, nsem=scope.filter(l=>l.recebido<=0.005).length;
+  const cap=scope.reduce((s,l)=>s+(l.cap||0),0), rec=scope.reduce((s,l)=>s+l.recebido,0);
+  const saldo=Math.max(cap-rec,0), pct=cap>0?(rec/cap*100):0;
+  const cli=(DB.clientes||[]).find(c=>c.id===currentUser.clienteId)||{};
+  const nomeCli=cli.nomeFantasia||cli.nome_fantasia||cli.nome||currentUser.nome||'Cliente';
+  const metric=(lbl,valHtml,color)=>`<div style="padding:18px 16px;min-width:0;background:var(--card-warm);"><div class="cp-label" style="font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${lbl}</div><div class="cp-num" style="font-size:clamp(15px,2vw,24px);color:${color};margin-top:6px;white-space:nowrap;">${valHtml}</div></div>`;
+  const dot=(c,t)=>`<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink);"><span style="width:8px;height:8px;border-radius:50%;background:${c};"></span>${t}</span>`;
+  const caseItem=(l)=>{ const p=l.cap?Math.min(100,l.recebido/l.cap*100):0; const sclass=l.quitado?'cp-st-quitado':'cp-st-acordo';
+    return `<div style="padding:14px 24px;border-bottom:.5px solid var(--pline);">
+      <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:10px;min-width:0;"><span class="cp-pill ${sclass}" style="font-size:9px;text-transform:uppercase;padding:3px 9px;">${l.quitado?'Quitado':'Em andamento'}</span><span style="font-size:14px;font-weight:600;color:var(--ink);">${escHtml(l.devNome)}</span></div>
+        <span class="cp-mono" style="font-size:12px;color:var(--mute);">${fmtR(l.recebido)} / ${fmtR(l.cap||0)}</span>
+      </div>
+      <div class="cp-prog" style="margin:10px 0 8px;"><span style="width:${p.toFixed(0)}%;background:var(--st-quitado);"></span></div>
+      <div style="font-size:12.5px;color:var(--mute);line-height:1.5;">${escHtml(_cpNarr(l))}</div>
+    </div>`; };
+  const html=`<div id="cpExtRepOv" style="position:fixed;inset:0;z-index:9999;background:rgba(10,21,48,.55);display:flex;align-items:center;justify-content:center;padding:24px;" onclick="if(event.target===this)cpExtReportClose()">
+    <div style="background:var(--card-warm);border-radius:18px;max-width:680px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 40px 90px -40px rgba(10,21,48,.6);overflow:hidden;font-family:'Inter Tight',sans-serif;">
+      <div style="background:var(--ink);color:var(--cream);padding:22px 26px;position:relative;">
+        <button onclick="cpExtReportClose()" style="position:absolute;top:18px;right:20px;border:0;background:none;color:rgba(239,234,217,.7);font-size:20px;cursor:pointer;line-height:1;">✕</button>
+        <div class="cp-mono" style="font-size:10px;letter-spacing:.18em;color:var(--pgold);text-transform:uppercase;">Relatório de andamento</div>
+        <div style="font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:26px;margin-top:6px;">Status das cobranças</div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;"><span class="cp-mono" style="font-size:10px;background:rgba(201,169,97,.18);color:var(--pgold);border-radius:100px;padding:3px 10px;">${selIdxs.length?`${n} caso(s) selecionado(s)`:'Todos os casos'}</span><span style="font-size:12px;color:rgba(239,234,217,.7);">${escHtml(nomeCli)} · ${escHtml(_detData(new Date().toISOString()))}</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--pline);border-bottom:.5px solid var(--pline);">
+        ${metric('Capital',_cpMoneyBig(cap),'var(--ink)')}${metric('Recuperado',_cpMoneyBig(rec),'var(--st-quitado)')}${metric('Saldo',_cpMoneyBig(saldo),'var(--gold-2)')}${metric('Recuperado %',pct.toFixed(1).replace('.',',')+'%','var(--ink)')}
+      </div>
+      <div style="display:flex;gap:18px;align-items:center;padding:12px 26px;background:var(--paper-2);flex-wrap:wrap;">
+        ${dot('var(--st-quitado)',`<strong>${nq}</strong>&nbsp;quitado(s)`)}${dot('var(--gold-2)',`<strong>${nand}</strong>&nbsp;em andamento`)}${dot('var(--mute)',`<strong>${nsem}</strong>&nbsp;sem entrada`)}
+        <span class="cp-mono" style="margin-left:auto;font-size:10px;color:var(--mute);">${n} caso(s) no relatório</span>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px 26px;background:linear-gradient(120deg,rgba(201,169,97,.12),rgba(201,169,97,.02));border-bottom:.5px solid var(--pline);">
+        <span style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--pgold),var(--gold-2));color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-style:italic;font-size:17px;flex-shrink:0;">B</span>
+        <div><div class="cp-mono" style="font-size:9.5px;letter-spacing:.14em;color:var(--gold-2);text-transform:uppercase;margin-bottom:4px;">Resumo da Bia</div><div style="font-size:13px;color:var(--ink);line-height:1.55;">${escHtml(_cpBia(scope))}</div></div>
+      </div>
+      <div style="overflow-y:auto;max-height:46vh;">${scope.map(caseItem).join('')||'<div style="padding:40px;text-align:center;color:var(--mute);">Nenhum caso.</div>'}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 26px;border-top:1px solid var(--pline);flex-wrap:wrap;">
+        <span style="font-size:11.5px;font-style:italic;color:var(--mute);">Relatório informativo gerado a partir dos seus dados.</span>
+        <div style="display:flex;gap:10px;"><button class="cp-btn cp-btn-outline" onclick="cpExtReportClose()">Fechar</button><button class="cp-btn cp-btn-primary" onclick="cpExtratoPDF()">Baixar PDF</button></div>
+      </div>
+    </div></div>`;
+  const wrap=document.createElement('div'); wrap.innerHTML=html; document.body.appendChild(wrap.firstChild);
+}
+// ---- Mock data (Bidão) ----
+var _mock=[
+ {id:'1',cap:13398,reps:[],devNome:'Andressa Ramos de Oliveira'},
+ {id:'2',cap:5160,reps:[],devNome:'Robson Ribeiro da Silva'},
+ {id:'3',cap:4900,reps:[],devNome:'Paulo Cesar Mendes'},
+ {id:'4',cap:1480,reps:[{data_pix:'2023-06-14',transacao_id:'E180000012023061412345678901234',valor:740},{data_pix:'2023-05-10',transacao_id:'E18000001202305109999',valor:740},{data_pix:'2023-04-12',transacao_id:'E180000012023041288',valor:0}],devNome:'Mirian Carla de Oliveira Duarte'},
+ {id:'5',cap:1362,reps:[{data_pix:'2023-06-01',transacao_id:'E18ABC',valor:1362}],devNome:'Sheila Pereira'},
+ {id:'6',cap:774,reps:[{data_pix:'2023-05-20',transacao_id:'E18XYZ',valor:774}],devNome:'Vanderlei Souza'},
+ {id:'7',cap:822,reps:[{data_pix:'2023-06-20',transacao_id:'E18AAA',valor:204},{data_pix:'2023-06-22',transacao_id:'E18BBB',valor:206}],devNome:'Adão da Silva'},
+ {id:'8',cap:3200,reps:[],devNome:'Carla Mendonça'},
+ {id:'9',cap:2100,reps:[],devNome:'Eduardo Lima'}
+];
+_mock.forEach(function(l){ l.recebido=l.reps.reduce((s,r)=>s+(+r.valor||0),0); l.saldo=(l.cap!=null)?(l.cap-l.recebido):null; l.quitado=(l.saldo!=null&&l.cap>0&&l.saldo<=0.005); l.ultimo=(l.reps[0]&&l.reps[0].data_pix)||null; });
+_mock.sort((a,b)=>b.recebido-a.recebido);
+_mock.forEach((l,i)=>l.origIdx=i);
+var totCap=_mock.reduce((s,l)=>s+(l.cap||0),0), totRec=_mock.reduce((s,l)=>s+l.recebido,0);
+_cpExtrato={linhas:_mock,totCap:totCap,totRec:totRec,totSaldo:Math.max(totCap-totRec,0),nRep:_mock.reduce((s,l)=>s+l.reps.length,0),nQuit:_mock.filter(l=>l.quitado).length,pct:totCap>0?totRec/totCap*100:0};
+_cpExtUI.bodyEl=document.getElementById('portalCedenteBody');
+cpExtPaint();
+</script>
+</body></html>

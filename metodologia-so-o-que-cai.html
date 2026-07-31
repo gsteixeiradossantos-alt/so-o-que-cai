@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Metodologia e Roteiro — Diagnóstico da 1ª Fase da OAB · Só o que Cai</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @page{ size:A4; margin:16mm 15mm 14mm; }
+  :root{
+    --ink:#231F1A; --soft:#4A443B; --mut:#6B6357; --oat:#8A8378;
+    --line:#E3DBCB; --navy:#15212B; --ochre:#A65D1E; --ochre2:#C77A2B; --green:#3A7A5C;
+    --cream:#FBF7EF; --creamline:#EAE1D0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:var(--ink);line-height:1.5;font-size:11.2pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h1,h2,h3{font-family:'Spectral',serif;font-weight:600;line-height:1.16;letter-spacing:-.01em}
+  .mono{font-family:'Space Mono',monospace}
+  .em{font-style:italic;color:var(--ochre)}
+
+  /* cabeçalho */
+  .masthead{display:flex;align-items:center;gap:11px;padding-bottom:12px;border-bottom:2px solid var(--navy);margin-bottom:6px}
+  .logo{width:34px;height:34px;border-radius:9px;background:var(--navy);display:grid;place-items:center;flex-shrink:0}
+  .logo i{width:11px;height:11px;border-radius:50%;background:var(--ochre2);display:block}
+  .mh-name{font-family:'Spectral',serif;font-weight:600;font-size:16pt}
+  .mh-tag{margin-left:auto;font-family:'Space Mono',monospace;font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--oat);text-align:right;line-height:1.5}
+
+  .doctitle{margin-top:18px}
+  .doctitle .k{font-family:'Space Mono',monospace;font-size:9pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ochre)}
+  .doctitle h1{font-size:23pt;margin-top:5px}
+  .doctitle p{color:var(--soft);font-size:11.5pt;margin-top:8px;max-width:52em}
+
+  section{margin-top:17px;page-break-inside:avoid}
+  h2{font-size:14.5pt;margin-bottom:7px;padding-left:11px;border-left:3px solid var(--ochre)}
+  section p{color:var(--soft);margin-top:6px}
+  section p strong{color:var(--ink)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .box{border:1px solid var(--creamline);background:var(--cream);border-radius:11px;padding:12px 14px}
+  .box .bk{font-family:'Space Mono',monospace;font-size:8.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ochre);margin-bottom:4px}
+  .box h3{font-size:12pt}
+  .box p{font-size:10.2pt;margin-top:4px;color:var(--soft)}
+
+  ol.steps{margin:10px 0 0 0;counter-reset:s;list-style:none}
+  ol.steps li{position:relative;padding:8px 0 8px 34px;border-top:1px solid var(--line)}
+  ol.steps li:first-child{border-top:none}
+  ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:8px;width:23px;height:23px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Space Mono',monospace;font-size:10pt;font-weight:700;display:grid;place-items:center}
+  ol.steps li b{font-weight:600}
+  ol.steps li span{display:block;color:var(--soft);font-size:10.4pt;margin-top:1px}
+
+  ul.clean{list-style:none;margin-top:8px}
+  ul.clean li{position:relative;padding:4px 0 4px 20px;color:var(--soft)}
+  ul.clean li::before{content:'';position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--ochre2)}
+  ul.clean li b{color:var(--ink);font-weight:600}
+
+  .note{margin-top:10px;background:#F4EEE2;border:1px solid var(--creamline);border-left:3px solid var(--navy);border-radius:10px;padding:12px 14px;font-size:10.4pt;color:var(--soft)}
+  .note b{color:var(--ink)}
+
+  .price{margin-top:16px;background:var(--navy);color:#E8E2D6;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:16px;page-break-inside:avoid}
+  .price .v{font-family:'Spectral',serif;font-size:24pt;color:#fff;font-weight:600;line-height:1}
+  .price .t{font-size:10.5pt;color:#B9BEC4}
+  .price .t b{color:#E7CFA8}
+
+  footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-size:9.5pt;color:var(--mut);line-height:1.6}
+  footer b{color:var(--ink)}
+  .sig{font-family:'Spectral',serif;font-size:12pt;color:var(--ink);font-weight:600;margin-bottom:2px}
+</style>
+</head>
+<body>
+
+  <div class="masthead">
+    <span class="logo"><i></i></span>
+    <span class="mh-name">Só o que Cai</span>
+    <span class="mh-tag">1ª fase · Exame de Ordem<br>Documento informativo · jul/2026</span>
+  </div>
+
+  <div class="doctitle">
+    <div class="k">Metodologia e roteiro</div>
+    <h1>Diagnóstico de aprovação na 1ª fase da OAB</h1>
+    <p>Como o diagnóstico funciona, o que ele mede e o que você recebe. Documento preparado a pedido, para leitura e impressão.</p>
+  </div>
+
+  <section>
+    <h2>O que é — e o que não é</h2>
+    <p>O <strong>Só o que Cai</strong> não é um cursinho com dezenas de aulas. É um <strong>diagnóstico</strong>: uma ferramenta que mede, em cerca de 15 minutos, onde você está perdendo ponto na 1ª fase — e devolve, na hora e com o seu nome, um <strong>plano de estudo personalizado</strong> de por onde começar.</p>
+    <p>A premissa é simples e honesta: existem <strong>dois jeitos de reprovar</strong> na 1ª fase — não saber a matéria, e saber e travar na hora da prova. A maioria dos candidatos só enxerga o primeiro e estuda mais conteúdo, quando muitas vezes o problema é o segundo. O diagnóstico <strong>separa os dois</strong> e te diz qual está te derrubando.</p>
+  </section>
+
+  <section>
+    <h2>A metodologia: dois eixos, medidos separadamente</h2>
+    <div class="grid2">
+      <div class="box">
+        <div class="bk">Eixo 1 · Conteúdo</div>
+        <h3>O quanto você domina o que cai</h3>
+        <p>Mede o seu domínio nas matérias de maior peso do exame, para revelar exatamente quais estão te custando ponto.</p>
+      </div>
+      <div class="box">
+        <div class="bk">Eixo 2 · Desempenho</div>
+        <h3>O quanto você se segura na prova</h3>
+        <p>Mede como você se comporta sob pressão: gestão de tempo, travar numa questão, insegurança e ansiedade na hora H.</p>
+      </div>
+    </div>
+    <p>Cada eixo vira uma nota de 0 a 100. Cruzados, eles posicionam você em um <strong>mapa</strong> — e é esse cruzamento que mostra se o seu esforço deve ir para <em>estudar mais conteúdo</em> ou para <em>corrigir a tática de prova</em>. São coisas diferentes, com soluções diferentes.</p>
+  </section>
+
+  <section>
+    <h2>Como funciona — o roteiro, passo a passo</h2>
+    <ol class="steps">
+      <li><b>Parte 1 — Conteúdo.</b><span>Questões no estilo do exame, distribuídas pelas 6 matérias de maior peso: Ética e Estatuto da OAB, Direito Constitucional, Civil, Processo Civil, Penal e Processo Penal.</span></li>
+      <li><b>Parte 2 — Desempenho.</b><span>7 perguntas objetivas sobre a sua hora da prova — tempo, travadas, trocar resposta por insegurança, ansiedade, releitura.</span></li>
+      <li><b>Cálculo.</b><span>As respostas viram duas notas independentes (conteúdo e desempenho), de 0 a 100 cada.</span></li>
+      <li><b>Relatório na hora.</b><span>Ao terminar, o seu resultado aparece na tela imediatamente — sem espera.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>O que você recebe</h2>
+    <p>Ao concluir, você recebe um <strong>relatório personalizado</strong>, com o seu nome, contendo:</p>
+    <ul class="clean">
+      <li><b>O seu mapa de dois eixos</b> — onde você está entre os quatro perfis possíveis.</li>
+      <li><b>O seu desempenho por matéria</b> — quais precisam de foco e quais já estão sob controle.</li>
+      <li><b>A sua prescrição</b> — por onde começar a estudar, o que fazer sobre a tática de prova e como medir a sua evolução até o exame.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Os quatro perfis do mapa</h2>
+    <div class="grid2">
+      <div class="box"><div class="bk">Alto conteúdo · alto desempenho</div><h3>Pronto de verdade</h3><p>Você domina o núcleo duro e se segura na prova. Foco: manter o ritmo e revisar os pontos quentes.</p></div>
+      <div class="box"><div class="bk">Alto conteúdo · baixo desempenho</div><h3>Sabe, mas trava</h3><p>O conteúdo não é o problema. O que derruba é a hora da prova. Foco: tática, não mais matéria.</p></div>
+      <div class="box"><div class="bk">Baixo conteúdo · alto desempenho</div><h3>Falta conteúdo</h3><p>Você se segura bem, mas tem lacuna de matéria. Foco: as disciplinas de maior peso, primeiro.</p></div>
+      <div class="box"><div class="bk">Baixo conteúdo · baixo desempenho</div><h3>Conteúdo e tática</h3><p>Há ponto a recuperar dos dois lados. Foco: atacar os dois com método, na ordem certa.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Transparência — o que o diagnóstico não faz</h2>
+    <ul class="clean">
+      <li><b>Não promete aprovação.</b> Mostra direção: onde a sua energia rende mais.</li>
+      <li><b>Não substitui o estudo.</b> Ele organiza e prioriza o seu estudo, para você não gastar tempo no que quase não cai.</li>
+      <li><b>É uma leitura honesta</b> do seu momento, para orientar a reta final com base em dado, não em achismo.</li>
+    </ul>
+    <div class="note"><b>Em desenvolvimento (próximas entregas):</b> materiais de apoio dirigidos ao seu resultado — fichas do que mais cai nas suas matérias fracas, folha de tática de prova e simulados de acompanhamento. Serão liberados de forma gradual e, quando forem, entram sem custo adicional para quem já é cliente.</div>
+  </section>
+
+  <div class="price">
+    <div class="v">R$ 47</div>
+    <div class="t">Pagamento único, sem mensalidade. <b>7 dias de garantia</b> — se não fizer sentido para você, devolvemos o valor. Resultado na hora, no seu celular.</div>
+  </div>
+
+  <footer>
+    <div class="sig">Dr. Gustavo Souza Teixeira dos Santos</div>
+    Advogado · idealizador do <b>Só o que Cai</b><br>
+    Contato: [preencher: seu WhatsApp / e-mail] · gsteixeiradossantos-alt.github.io/so-o-que-cai
+  </footer>
+
+</body>
+</html>
