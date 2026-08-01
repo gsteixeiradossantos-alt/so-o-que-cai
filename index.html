@@ -623,39 +623,6 @@
     });
   });
 
-  // Checkout em overlay no DESKTOP (widget oficial da Hotmart): abre por cima da
-  // landing, sem levar a pessoa para a página branca do pay.hotmart.com. No celular
-  // o próprio widget da Hotmart não tem modal (só devolve o clique ao link), então
-  // lá nem carregamos os scripts: o botão segue como link direto. O bloqueio de
-  // navegação só arma DEPOIS que o modal (fancybox) está de pé; se qualquer script
-  // da Hotmart falhar, os botões continuam redirecionando como antes. Nunca há
-  // botão morto.
-  (function(){
-    var mobile = screen.width <= 600 ||
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
-    if (mobile) return;
-    document.querySelectorAll('.js-buy').forEach(function(a){ a.classList.add('hotmart-fb'); });
-    var css = document.createElement('link');
-    css.rel = 'stylesheet';
-    css.href = 'https://static.hotmart.com/css/hotmart-fb.min.css';
-    document.head.appendChild(css);
-    var s = document.createElement('script');
-    s.src = 'https://static.hotmart.com/checkout/widget.min.js';
-    document.head.appendChild(s);
-    // O modal usa checkoutMode=2 (formato de widget); o link direto continua no 10.
-    var tentativas = 0;
-    var t = setInterval(function(){
-      var pronto = window.jQuery && jQuery.fn && jQuery.fn.fancybox;
-      if (pronto){
-        document.querySelectorAll('.js-buy').forEach(function(a){
-          a.setAttribute('href', CHECKOUT_URL.replace('checkoutMode=10','checkoutMode=2'));
-          a.onclick = function(){ return false; };
-        });
-      }
-      if (pronto || ++tentativas > 100) clearInterval(t);
-    }, 100);
-  })();
-
   // Contador regressivo (dias, horas, minutos) + a matemática que o dia não conta sozinho:
   // as últimas 3 semanas são reta final (revisão), então o prazo real para fechar lacunas
   // é menor, e em horas úteis (1h/dia) é menor ainda.
