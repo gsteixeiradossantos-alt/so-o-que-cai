@@ -40,7 +40,10 @@
   h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
   h1 em{font-style:italic;color:var(--ocre)}
   .lead{font-size:16px;color:var(--muted2);margin-bottom:8px}
-  .prog{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+  .prog{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+  .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2)}
+  .clock i{width:7px;height:7px;border-radius:50%;background:var(--ocre);animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
   .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
   .qmat{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
   .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
@@ -155,7 +158,7 @@
      leit:{0:'O dado que você sabe de cor não saiu na hora, na frente dos outros. É o branco clássico: o problema não é saber, é acessar sob observação. E a prova inteira é sob observação.',1:'Você pediu um segundo e a resposta veio: você acessa a memória sob pressão, pagando um pequeno preço em tempo.',2:'A resposta veio na hora, mesmo com plateia: memória estável sob observação.'}}
   ];
 
-  var S = { screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
+  var S = { screen:'intro', ci:0, ans:{}, times:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
   var app = document.getElementById('app');
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];}); };
 
@@ -171,7 +174,7 @@
     app.innerHTML =
       '<h1>Em 3 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
       '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
-      '<p class="lead" style="margin-bottom:22px">São 5 questões do que mais cai e 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
+      '<p class="lead" style="margin-bottom:22px">São 5 questões do que mais cai, com o relógio correndo como na prova, e 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
       '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
@@ -180,14 +183,19 @@
     var i=S.ci, Q=CONTENT[i];
     var sel = S.ans[i];
     app.innerHTML =
-      '<div class="prog">Parte 1 · questão '+(i+1)+' de '+CONTENT.length+'</div>'+
+      '<div class="prog"><span>Parte 1 · questão '+(i+1)+' de '+CONTENT.length+'</span><span class="clock"><i></i><span id="clk">0s</span></span></div>'+
       '<div class="qbox"><div class="qmat">'+esc(Q.mat)+'</div><div class="qtext">'+esc(Q.q)+'</div>'+
       Q.o.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
       '</div>'+
       (i>0?'<button class="back" id="back">Voltar</button>':'');
+    // Cronômetro: mede o tempo real de decisão por questão. Voltar reinicia a contagem.
+    S.qStart=Date.now();
+    if(window._clk) clearInterval(window._clk);
+    window._clk=setInterval(function(){ var el=document.getElementById('clk'); if(el) el.textContent=Math.floor((Date.now()-S.qStart)/1000)+'s'; },250);
     Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
       b.onclick = function(){
         S.ans[i] = parseInt(b.getAttribute('data-j'),10);
+        S.times[i] = Math.max(1, Math.round((Date.now()-S.qStart)/1000));
         setTimeout(function(){
           if(i+1<CONTENT.length){ S.ci=i+1; } else { S.screen='behavior'; S.bi=0; }
           render(); window.scrollTo(0,0);
@@ -198,6 +206,7 @@
   }
 
   function behavior(){
+    if(window._clk){ clearInterval(window._clk); window._clk=null; }
     var i=S.bi, sel=S.beh[i], B=BEHAVIOR[i];
     app.innerHTML =
       '<div class="prog">Parte 2 · situação '+(i+1)+' de '+BEHAVIOR.length+'</div>'+
@@ -310,6 +319,30 @@
     return '<div class="verdict '+cls+'"><div class="k">Como você funcionou sob pressão</div>'+linhas+ponte+'</div>';
   }
 
+  function tempo(){
+    // O relógio é o sensor que a pessoa não controla. Três sinais, por prioridade:
+    // erro rápido (convicção errada), hesitação máxima, ritmo lento demais.
+    var ts=[]; CONTENT.forEach(function(_,i){ if(S.times[i]!=null) ts.push({i:i,t:S.times[i]}); });
+    if(ts.length<CONTENT.length) return '';
+    var soma=0; ts.forEach(function(x){ soma+=x.t; });
+    var avg=soma/ts.length;
+    var lin=[], ruim=false;
+    var rapErr=null;
+    ts.forEach(function(x){ if(S.ans[x.i]!==CONTENT[x.i].c && x.t<=Math.max(15,avg*0.6) && (rapErr===null||x.t<rapErr.t)) rapErr=x; });
+    if(rapErr){ ruim=true; lin.push('Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+' segundos, sem hesitar. Erro com convicção é o mais caro da prova: você não desconfia dele, não revisa, e ele passa.'); }
+    var mx=ts[0]; ts.forEach(function(x){ if(x.t>mx.t) mx=x; });
+    if(mx.t>=40 && mx.t>=2*avg){
+      ruim=true;
+      var acertou=S.ans[mx.i]===CONTENT[mx.i].c;
+      lin.push('Onde você mais parou: <b>'+esc(CONTENT[mx.i].mat)+'</b>, '+mx.t+' segundos'+(acertou?'. Acertou, mas hesitou: conteúdo mal assentado hesita antes de acertar, e na prova a hesitação cobra em tempo.':', e ainda saiu errada.'));
+    }
+    if(avg>=120){ ruim=true; lin.push('Ritmo médio de '+Math.round(avg)+' segundos em questões curtas. Na prova são 80 seguidas, com enunciados bem mais longos: esse ritmo cobra pedágio nas dez últimas.'); }
+    if(!lin.length) lin.push('Ritmo firme: você decidiu em média em '+Math.round(avg)+' segundos e não hesitou além da conta em nenhuma.');
+    var corpo=''; lin.forEach(function(l){ corpo+='<p style="margin-bottom:6px">'+l+'</p>'; });
+    return '<div class="verdict '+(ruim?'ochre':'green')+'"><div class="k">O que o relógio mostrou</div>'+corpo+
+      '<p>O raio-x de pressão do diagnóstico completo cronometra as 24 questões e mostra em que ponto o seu rendimento cai.</p></div>';
+  }
+
   function custoErros(){
     // Converte cada erro em preço real na prova: "errou Ética, que são 8 das 80".
     // É o argumento de fato, não de opinião. Sem erro, não aparece.
@@ -349,6 +382,7 @@
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
       pressao()+
+      tempo()+
       custoErros()+
       gabarito()+
       (forte
