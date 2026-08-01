@@ -128,17 +128,24 @@
   var CAPTURE_URL = "https://formspree.io/f/mlgyzdwj"; // Formspree: leads do mini-diagnostico
   // ======================
 
-  // 3 questões rápidas (amostra do núcleo duro, alinhadas ao banco do produto) + 2 de comportamento.
+  // 5 questões de conteúdo (3 do padrão da prova + 2 DIFÍCEIS de Ética, para o
+  // resultado ter erro de verdade para mostrar) + 3 cenários psicotécnicos.
+  // 'fatia' = peso real da matéria na prova, usado no bloco "o que o erro custa".
   var CONTENT = [
-    {mat:'Ética', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
-    {mat:'Constitucional', q:'O habeas corpus é cabível quando:', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
-    {mat:'Civil', q:'Sobre prescrição e decadência, é correto que:', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1}
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
+    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', q:'O habeas corpus é cabível quando:', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
+    {mat:'Civil', fatia:'7 das 80 questões', q:'Sobre prescrição e decadência, é correto que:', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Um militar da ativa foi aprovado no Exame de Ordem. Sobre o exercício da advocacia, ele:', o:['Pode advogar livremente, desde que fora do horário de serviço.','Está impedido: só não pode advogar contra a Fazenda Pública que o remunera.','Está incompatibilizado: não pode exercer a advocacia enquanto estiver na ativa, nem em causa própria.','Pode advogar apenas em causas da Justiça Militar.'], c:2},
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'No contrato de honorários com cláusula quota litis (percentual sobre o resultado da causa), é correto que:', o:['É vedado em qualquer hipótese pelo Código de Ética.','Os honorários podem superar as vantagens obtidas pelo cliente, se houver pacto expresso.','Os honorários, somados aos de sucumbência, não podem ser superiores às vantagens advindas em favor do cliente.','Dispensa contrato escrito, por decorrer do êxito.'], c:2}
   ];
+  // Parte 2: psicotécnico indireto. Cenários de OUTRO domínio (trânsito, prazo,
+  // memória em público) que revelam congelamento/afobação/controle sem perguntar
+  // "você é ansioso?" — ninguém se declara ansioso. Cada opção carrega a pontuação.
   var BEHAVIOR = [
-    'Você costuma travar ou dar branco numa questão e perder o ritmo nas próximas?',
-    'Você chega ao fim da prova sem tempo e chuta na correria?'
+    {q:'Você está dirigindo num trevo desconhecido, o GPS trava e os carros atrás começam a buzinar. O que acontece primeiro?', o:[['Sigo por qualquer saída, só para não ficar parado ali',1],['Dou uma travada de alguns segundos antes de conseguir decidir',0],['Encosto onde dá e decido o caminho com calma',2]]},
+    {q:'Faltando 20 minutos para entregar algo importante, você percebe um erro numa parte que já estava pronta.', o:[['Corrijo o essencial e entrego no prazo',2],['Tento refazer tudo e por pouco não estouro o prazo',0],['Entrego como está e passo o resto do dia remoendo',1]]},
+    {q:'Na frente de outras pessoas, te pedem um dado que você sabe de cor.', o:[['Vem na hora, normal',2],['Às vezes dá branco na hora, e a resposta aparece depois, sozinho',0],['Peço um segundo e a resposta vem',1]]}
   ];
-  var BEH_OPTS = [['Nunca',2],['Às vezes',1],['Quase sempre',0]];
 
   var S = { screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
   var app = document.getElementById('app');
@@ -156,7 +163,7 @@
     app.innerHTML =
       '<h1>Em 3 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
       '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
-      '<p class="lead" style="margin-bottom:22px">São 3 questões do que mais cai e 2 perguntas sobre a hora da prova. No fim, seu resultado na tela.</p>'+
+      '<p class="lead" style="margin-bottom:22px">São 5 questões do que mais cai e 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
       '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
@@ -183,11 +190,11 @@
   }
 
   function behavior(){
-    var i=S.bi, sel=S.beh[i];
+    var i=S.bi, sel=S.beh[i], B=BEHAVIOR[i];
     app.innerHTML =
-      '<div class="prog">Parte 2 · pergunta '+(i+1)+' de '+BEHAVIOR.length+'</div>'+
-      '<div class="qbox"><div class="qmat">Na hora da prova</div><div class="qtext">'+esc(BEHAVIOR[i])+'</div>'+
-      BEH_OPTS.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op[0])+'</button>'; }).join('')+
+      '<div class="prog">Parte 2 · situação '+(i+1)+' de '+BEHAVIOR.length+'</div>'+
+      '<div class="qbox"><div class="qmat">No dia a dia</div><div class="qtext">'+esc(B.q)+'</div>'+
+      B.o.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op[0])+'</button>'; }).join('')+
       '</div><button class="back" id="back">Voltar</button>';
     Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
       b.onclick = function(){
@@ -248,13 +255,13 @@
   function compute(){
     var c=0; CONTENT.forEach(function(Q,i){ if(S.ans[i]===Q.c) c++; });
     var X=Math.round(c/CONTENT.length*100);
-    var bp=0; BEHAVIOR.forEach(function(_,i){ bp += (S.beh[i]!=null?BEH_OPTS[S.beh[i]][1]:0); });
+    var bp=0; BEHAVIOR.forEach(function(B,i){ bp += (S.beh[i]!=null?B.o[S.beh[i]][1]:0); });
     var Y=Math.round(bp/(BEHAVIOR.length*2)*100);
     return {X:X,Y:Y,c:c};
   }
   function quadrant(X,Y){
     var hiX=X>=50, hiY=Y>=50;
-    if(hiX&&hiY) return {cls:'green',lab:'Você chega bem nos dois',txt:'Você foi bem na amostra, e isso é um sinal, não um veredito: acertar 3 questões não aprova ninguém. A OAB reprova quem acerta as fáceis e sangra nas matérias de peso. O diagnóstico mostra se esse resultado se sustenta em 24 questões, nas 6 matérias que decidem a prova.'};
+    if(hiX&&hiY) return {cls:'green',lab:'Você chega bem nos dois',txt:'Você foi bem na amostra, e isso é um sinal, não um veredito: acertar 5 questões não aprova ninguém. A OAB reprova quem acerta as fáceis e sangra nas matérias de peso. O diagnóstico mostra se esse resultado se sustenta em 24 questões, nas 6 matérias que decidem a prova.'};
     if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas trava',txt:'O conteúdo não parece ser o seu maior problema. O que te derruba é o desempenho na hora: tempo, travada, insegurança. Isso se trata com tática de prova, não com mais matéria.'};
     if(!hiX&&hiY) return {cls:'mixed',lab:'Falta conteúdo',txt:'Você se segura bem na prova, mas ainda tem lacuna de conteúdo. O caminho é focar nas matérias certas, começando pelas de maior peso, sem se perder no que quase não cai.'};
     return {cls:'mixed',lab:'Conteúdo e tática',txt:'Você está perdendo ponto nos dois lados. A boa notícia: dá para atacar os dois com método, começando pelo conteúdo de maior peso e trabalhando a tática em paralelo.'};
@@ -272,6 +279,19 @@
     return '<div class="gab"><div class="k">Gabarito comentado · amostra do relatório</div>'+
       '<div class="q">'+esc(Q.mat)+' · '+esc(Q.q)+'</div>'+alts+
       '<div class="exp"><b>Por que a B é a certa:</b> o sigilo profissional é, ao mesmo tempo, direito e dever do advogado, e alcança os fatos de que ele toma conhecimento no exercício da profissão (Código de Ética e Disciplina da OAB, arts. 35 a 37). As outras caem uma a uma: o sigilo não cede por simples pedido do cliente nem de terceiro, e cobre também fatos anteriores ao mandato, quando conhecidos em razão do ofício. <b>No diagnóstico completo, cada uma das 24 questões vem com um comentário assim.</b></div></div>';
+  }
+
+  function custoErros(){
+    // Converte cada erro em preço real na prova: "errou Ética, que são 8 das 80".
+    // É o argumento de fato, não de opinião. Sem erro, não aparece.
+    var erradas=[]; CONTENT.forEach(function(Q,i){ if(S.ans[i]!==Q.c) erradas.push(Q); });
+    if(!erradas.length) return '';
+    var mats={}; erradas.forEach(function(Q){ if(!mats[Q.mat]) mats[Q.mat]=Q; });
+    var linhas=Object.keys(mats).map(function(m){
+      return '<p style="margin-bottom:6px">Você errou <b>'+esc(m)+'</b>. '+esc(m)+' são '+esc(mats[m].fatia)+'. Errar aí no dia custa mais do que em quase qualquer outro lugar.</p>';
+    }).join('');
+    return '<div class="verdict ochre"><div class="k">O que esses erros custam na prova real</div>'+linhas+
+      '<p>Foi assim numa amostra pequena. O diagnóstico completo mede isso em 24 questões e mostra o tamanho real de cada buraco.</p></div>';
   }
 
   function result(){
@@ -299,6 +319,7 @@
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
+      custoErros()+
       gabarito()+
       (forte
         ? '<div class="lockbox">'+
@@ -331,7 +352,7 @@
             '<a class="alt" href="'+buyUrl+'" id="buy2" data-v="47">Prefere começar só pelo raio-x? Diagnóstico por R$ 47</a>'+
           '</div>'
         : '<div class="offer">'+
-            '<h3>Esse foi só o raio-x de 3 questões. A prova tem 80.</h3>'+
+            '<h3>Esse foi só o raio-x de 5 questões. A prova tem 80.</h3>'+
             '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>'+
             '<p>O diagnóstico completo acende a luz. 24 questões depois, você sabe a sua porcentagem em cada matéria do núcleo, qual delas te derruba, se o seu problema é conteúdo ou pressão, e por onde começar amanhã. E leva junto o kit para agir: fichas do que mais cai, folha de tática para o seu perfil e simulados para medir se está subindo.</p>'+
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
