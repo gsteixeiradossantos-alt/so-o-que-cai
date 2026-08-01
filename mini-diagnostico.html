@@ -158,7 +158,18 @@
      leit:{0:'O dado que você sabe de cor não saiu na hora, na frente dos outros. É o branco clássico: o problema não é saber, é acessar sob observação. E a prova inteira é sob observação.',1:'Você pediu um segundo e a resposta veio: você acessa a memória sob pressão, pagando um pequeno preço em tempo.',2:'A resposta veio na hora, mesmo com plateia: memória estável sob observação.'}}
   ];
 
-  var S = { screen:'intro', ci:0, ans:{}, times:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
+  var S = { screen:'intro', ci:0, ans:{}, times:{}, bi:0, beh:{}, nome:'', email:'', tel:'', momento:'' };
+
+  // Em que ponto da caminhada a pessoa está. Serve para saber quem o anúncio traz
+  // (bacharel de primeira prova, reprovado, quem ainda está na faculdade) e para
+  // calibrar a leitura do resultado. Uma escolha só, obrigatória.
+  var MOMENTO = [
+    'Ainda estou na faculdade',
+    'Já me formei e vou fazer a minha primeira prova',
+    'Já fiz a prova uma vez e não passei',
+    'Já fiz duas ou mais vezes e não passei',
+    'Só estou olhando, por curiosidade'
+  ];
   var app = document.getElementById('app');
   var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];}); };
 
@@ -233,16 +244,29 @@
       '<div class="prog">Quase lá</div>'+
       '<h1 style="font-size:23px">Pra onde mando o seu resultado?</h1>'+
       '<p class="lead" style="margin-bottom:18px">O seu mapa aparece já na próxima tela.</p>'+
+      '<div class="field"><label>Onde você está hoje</label>'+
+        MOMENTO.map(function(op){ return '<button class="opt'+(S.momento===op?' sel':'')+'" data-m="'+esc(op)+'">'+esc(op)+'</button>'; }).join('')+
+      '</div>'+
       '<div class="field"><label>Seu nome</label><input id="f_nome" type="text" placeholder="Como você se chama" value="'+esc(S.nome)+'"></div>'+
       '<div class="field"><label>Seu WhatsApp (com DDD)</label><input id="f_tel" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"></div>'+
       '<div class="field"><label>Seu e-mail (opcional)</label><input id="f_email" type="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
       '<button class="btn full" id="see">Ver o meu resultado</button>'+
       '<div class="small">É grátis e sem spam. Você pode sair quando quiser.</div>';
+    Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
+      b.onclick = function(){
+        S.momento = b.getAttribute('data-m');
+        S.nome = document.getElementById('f_nome').value;
+        S.tel = document.getElementById('f_tel').value;
+        S.email = document.getElementById('f_email').value;
+        render();
+      };
+    });
     document.getElementById('see').onclick = function(){
       var nome=document.getElementById('f_nome').value.trim();
       var email=document.getElementById('f_email').value.trim();
       var tel=document.getElementById('f_tel').value.trim();
       var digits=tel.replace(/\D/g,'');
+      if(!S.momento){ alert('Marque onde você está hoje para ver o resultado.'); return; }
       if(!nome || digits.length<10){ alert('Preencha o nome e um WhatsApp válido com DDD para ver o resultado.'); return; }
       if(email && !/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido — corrija ou deixe em branco.'); return; }
       S.nome=nome; S.email=email; S.tel=tel;
@@ -252,11 +276,31 @@
   }
 
   function saveLead(){
-    var lead={ nome:S.nome, email:S.email, tel:S.tel, ans:S.ans, beh:S.beh, ts:new Date().toISOString() };
+    var lead={ nome:S.nome, email:S.email, tel:S.tel, momento:S.momento, ans:S.ans, beh:S.beh, ts:new Date().toISOString() };
     try{ var all=JSON.parse(localStorage.getItem('soqc_leads')||'[]'); all.push(lead); localStorage.setItem('soqc_leads', JSON.stringify(all)); }catch(e){}
+
+    // O mesmo resultado que a pessoa vê vai junto no e-mail do lead. Sem isso
+    // chega só um nome e um telefone, e não dá para saber quem o anúncio trouxe.
+    var R = compute();
+    var Q = quadrant(R.X, R.Y);
+    var conta = {}, ordem = [];
+    CONTENT.forEach(function(qq,i){
+      if(S.ans[i]!==qq.c){ if(!conta[qq.mat]){ conta[qq.mat]=0; ordem.push(qq.mat); } conta[qq.mat]++; }
+    });
+    var erradas = ordem.map(function(m){ return conta[m]>1 ? m+' ('+conta[m]+')' : m; });
+    var tsoma = 0, tn = 0;
+    CONTENT.forEach(function(_,i){ if(S.times[i]!=null){ tsoma += S.times[i]; tn++; } });
+
     if(CAPTURE_URL){
       // Formspree: campos planos + Accept JSON (para responder em JSON, sem redirecionar)
-      var envio={ nome:S.nome, email:S.email, telefone:S.tel, quando:lead.ts, _subject:'Novo lead do mini-diagnostico Só o que Cai' };
+      var envio={ nome:S.nome, email:S.email, telefone:S.tel, momento:S.momento,
+        acertos: R.c + ' de ' + CONTENT.length,
+        eixo_conteudo: R.X + '%',
+        eixo_pressao: R.Y + '%',
+        perfil: Q.lab,
+        errou_em: erradas.length ? erradas.join(', ') : 'nenhuma',
+        tempo_medio: tn ? Math.round(tsoma/tn) + 's por questão' : 'sem registro',
+        quando:lead.ts, _subject:'Novo lead do mini-diagnostico Só o que Cai' };
       try{ fetch(CAPTURE_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(envio)}); }catch(e){}
     }
     if(typeof fbq!=='undefined'){ try{
@@ -428,7 +472,7 @@
       var el=document.getElementById(id);
       if(el) el.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:parseInt(el.getAttribute('data-v'),10),currency:'BRL'}); }catch(e){} } };
     });
-    document.getElementById('redo').onclick=function(){ S={ screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel }; render(); window.scrollTo(0,0); };
+    document.getElementById('redo').onclick=function(){ S={ screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel, momento:S.momento }; render(); window.scrollTo(0,0); };
   }
 
   render();
