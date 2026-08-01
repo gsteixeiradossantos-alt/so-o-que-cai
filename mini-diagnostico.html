@@ -8,6 +8,7 @@
 <meta property="og:title" content="Descubra em 3 minutos onde você perde ponto na 1ª fase da OAB">
 <meta property="og:description" content="Um mini-diagnóstico gratuito que separa o que você não sabe do que você sabe mas trava na hora.">
 <meta property="og:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
@@ -32,8 +33,8 @@
   body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
   .wrap{max-width:560px;margin:0 auto;padding:40px 22px 64px}
   .brand{display:flex;align-items:center;gap:10px;margin-bottom:28px}
-  .logo{width:28px;height:28px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center}
-  .logo span{width:10px;height:10px;border-radius:50%;background:var(--ocre2)}
+  .logo{display:flex;align-items:center}
+  .logo svg{display:block;border-radius:8px}
   .word{font-family:'Spectral',serif;font-weight:600;font-size:21px}
   .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
@@ -81,6 +82,8 @@
   .offer .price{font-family:'Space Mono',monospace;font-size:13px;color:#E7CFA8;margin-top:12px}
   .offer .btn{background:var(--ocre);}
   .offer .btn:hover{background:#8c4d18}
+  .offer .alt{display:inline-block;margin-top:14px;font-size:13px;color:#C9C1B4;text-decoration:underline;cursor:pointer}
+  .offer .alt:hover{color:#fff}
   .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
   /* gabarito comentado (amostra do relatório pago) */
   .gab{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 18px}
@@ -106,7 +109,7 @@
 <body>
 <div class="wrap">
   <div class="brand">
-    <span class="logo"><span></span></span>
+    <span class="logo"><svg width="28" height="28" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#15212B"/><g stroke="#F3EEE4" stroke-width="2.4" fill="none"><circle cx="16" cy="16" r="7.2"/><path d="M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4"/></g><circle cx="16" cy="16" r="3" fill="#C77A2B"/></svg></span>
     <span class="word">Só o que Cai</span>
     <span class="tag">1ª fase · OAB</span>
   </div>
@@ -117,6 +120,7 @@
 <script>
   // ===== CONFIGURAR =====
   var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I?checkoutMode=10"; // diagnóstico completo R$47 + Order Bump Kit Reta Final
+  var CHECKOUT_COMPLETO = "https://pay.hotmart.com/O106944368L?checkoutMode=10"; // Plano Completo R$127 (inclui o diagnóstico)
   // Para onde enviar os leads (nome/e-mail/WhatsApp). Cole aqui um endpoint de formulário
   // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
   // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
@@ -277,9 +281,13 @@
     // Checkout pré-preenchido com o que a pessoa já digitou: ela não encara
     // o formulário vazio de novo (é onde o funil perde gente).
     var digits=S.tel.replace(/\D/g,'');
-    var buyUrl=CHECKOUT_URL+'&name='+encodeURIComponent(S.nome)+
+    var fill='&name='+encodeURIComponent(S.nome)+
       (S.email?'&email='+encodeURIComponent(S.email):'')+
       (digits?'&phoneNumber='+encodeURIComponent(digits):'');
+    var buyUrl=CHECKOUT_URL+fill, buyUrlC=CHECKOUT_COMPLETO+fill;
+    // Quem chega forte (quadrante verde) não compra "descobrir fraqueza":
+    // recebe o Plano Completo como oferta principal. Os demais, o R$47.
+    var forte=(q.cls==='green');
     app.innerHTML =
       '<div class="prog">Seu resultado</div>'+
       '<h1 style="font-size:24px">'+nome+', aqui está o seu sinal.</h1>'+
@@ -292,26 +300,49 @@
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
       gabarito()+
-      '<div class="lockbox">'+
-        '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
-        '<div class="inner">'+
-        '<div class="row"><span class="t">A matéria que mais te derruba</span><span class="val">Processo Civil · 45%</span></div>'+
-        '<div class="row"><span class="t">Sua porcentagem em cada uma das 6 matérias</span><span class="val">62 · 45 · 71 · 58</span></div>'+
-        '<div class="row"><span class="t">Onde você perde ponto por pressão, não por conteúdo</span><span class="val">2ª metade da prova</span></div>'+
-        '<div class="row"><span class="t">Por onde começar a estudar amanhã</span><span class="val">Súmulas de Ética</span></div>'+
-        '</div>'+
-        '<div class="cta">Rasurado porque depende das suas 24 respostas. Sai na hora, com o seu nome.</div>'+
-      '</div>'+
-      '<div class="offer">'+
-        '<h3>Esse foi só o raio-x de 3 questões. A prova tem 80.</h3>'+
-        '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>'+
-        '<p>O diagnóstico completo acende a luz. 24 questões depois, você sabe a sua porcentagem em cada matéria do núcleo, qual delas te derruba, se o seu problema é conteúdo ou pressão, e por onde começar amanhã. E leva junto o kit para agir: fichas do que mais cai, folha de tática para o seu perfil e simulados para medir se está subindo.</p>'+
-        '<a class="btn full" href="'+buyUrl+'" id="buy">Quero meu diagnóstico completo</a>'+
-        '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
-      '</div>'+
+      (forte
+        ? '<div class="lockbox">'+
+            '<div class="head">O que as 24 questões ainda revelam sobre você</div>'+
+            '<div class="inner">'+
+            '<div class="row"><span class="t">Se o seu '+r.c+' de '+CONTENT.length+' se sustenta em 24 questões</span><span class="val">confirma ou expõe</span></div>'+
+            '<div class="row"><span class="t">A matéria do núcleo em que você ainda oscila</span><span class="val">Processo Penal · 66%</span></div>'+
+            '<div class="row"><span class="t">Sua margem de segurança para o dia da prova</span><span class="val">apertada · 8 pontos</span></div>'+
+            '<div class="row"><span class="t">Por onde fechar os últimos pontos</span><span class="val">Súmulas e tática</span></div>'+
+            '</div>'+
+            '<div class="cta">Rasurado porque depende das suas 24 respostas. Sai na hora, com o seu nome.</div>'+
+          '</div>'
+        : '<div class="lockbox">'+
+            '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
+            '<div class="inner">'+
+            '<div class="row"><span class="t">A matéria que mais te derruba</span><span class="val">Processo Civil · 45%</span></div>'+
+            '<div class="row"><span class="t">Sua porcentagem em cada uma das 6 matérias</span><span class="val">62 · 45 · 71 · 58</span></div>'+
+            '<div class="row"><span class="t">Onde você perde ponto por pressão, não por conteúdo</span><span class="val">2ª metade da prova</span></div>'+
+            '<div class="row"><span class="t">Por onde começar a estudar amanhã</span><span class="val">Súmulas de Ética</span></div>'+
+            '</div>'+
+            '<div class="cta">Rasurado porque depende das suas 24 respostas. Sai na hora, com o seu nome.</div>'+
+          '</div>')+
+      (forte
+        ? '<div class="offer">'+
+            '<h3>Você não precisa descobrir fraqueza. Precisa de amplitude.</h3>'+
+            '<p>Quem chega forte no núcleo raramente reprova por ele. Reprova pelas 11 matérias de fora, pelo ritmo nas 80 questões e pelo detalhe que só aparece sob pressão.</p>'+
+            '<p>O Plano Completo cobre esse resto do caminho: o diagnóstico de 24 questões para confirmar se este resultado se sustenta, as fichas das 17 disciplinas, dois simulados completos de 80 questões e o cronograma dia a dia até a prova.</p>'+
+            '<a class="btn full" href="'+buyUrlC+'" id="buy" data-v="127">Quero o Plano Completo</a>'+
+            '<div class="price">R$ 127 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+            '<a class="alt" href="'+buyUrl+'" id="buy2" data-v="47">Prefere começar só pelo raio-x? Diagnóstico por R$ 47</a>'+
+          '</div>'
+        : '<div class="offer">'+
+            '<h3>Esse foi só o raio-x de 3 questões. A prova tem 80.</h3>'+
+            '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>'+
+            '<p>O diagnóstico completo acende a luz. 24 questões depois, você sabe a sua porcentagem em cada matéria do núcleo, qual delas te derruba, se o seu problema é conteúdo ou pressão, e por onde começar amanhã. E leva junto o kit para agir: fichas do que mais cai, folha de tática para o seu perfil e simulados para medir se está subindo.</p>'+
+            '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
+            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+            '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
+          '</div>')+
       '<div class="center"><button class="back" id="redo">Refazer o mini-diagnóstico</button></div>';
-    var buy=document.getElementById('buy');
-    if(buy) buy.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); }catch(e){} } };
+    ['buy','buy2'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el) el.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:parseInt(el.getAttribute('data-v'),10),currency:'BRL'}); }catch(e){} } };
+    });
     document.getElementById('redo').onclick=function(){ S={ screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel }; render(); window.scrollTo(0,0); };
   }
 
