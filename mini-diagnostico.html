@@ -91,13 +91,16 @@
   .gab .alt.sua{border-color:#D9A05B;background:#FBF1E6}
   .gab .exp{font-size:14px;color:var(--muted2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
   .gab .exp b{color:var(--ink)}
-  /* bloco trancado (teaser do diagnóstico completo) */
-  .lockbox{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px}
-  .lockbox .inner{padding:18px 20px;filter:blur(5px);user-select:none;pointer-events:none}
-  .lockbox .row{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px solid var(--line)}
+  /* bloco trancado (teaser do diagnóstico completo): o TÓPICO fica legível
+     para dar curiosidade; só a RESPOSTA é rasurada. */
+  .lockbox{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;background:var(--card)}
+  .lockbox .head{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 20px 4px}
+  .lockbox .inner{padding:6px 20px 16px}
+  .lockbox .row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line)}
   .lockbox .row:last-child{border-bottom:none}
-  .lockbox .cover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(243,238,228,.35)}
-  .lockbox .cover span{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:var(--navy);color:#fff;padding:9px 14px;border-radius:9px}
+  .lockbox .row .t{color:var(--ink)}
+  .lockbox .val{filter:blur(6px);user-select:none;pointer-events:none;color:var(--muted2);white-space:nowrap}
+  .lockbox .cta{font-size:12px;color:var(--muted);padding:0 20px 14px}
 </style>
 </head>
 <body>
@@ -289,15 +292,20 @@
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
       gabarito()+
-      '<div class="lockbox"><div class="inner">'+
-        '<div class="row"><span>Ética</span><span>62% · prioridade 1</span></div>'+
-        '<div class="row"><span>Processo Civil</span><span>45% · prioridade 2</span></div>'+
-        '<div class="row"><span>Constitucional</span><span>71% · manter</span></div>'+
-        '<div class="row"><span>Plano: comece por</span><span>súmulas de Ética</span></div>'+
-      '</div><div class="cover"><span>Isto sai do diagnóstico completo</span></div></div>'+
+      '<div class="lockbox">'+
+        '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
+        '<div class="inner">'+
+        '<div class="row"><span class="t">A matéria que mais te derruba</span><span class="val">Processo Civil · 45%</span></div>'+
+        '<div class="row"><span class="t">Sua porcentagem em cada uma das 6 matérias</span><span class="val">62 · 45 · 71 · 58</span></div>'+
+        '<div class="row"><span class="t">Onde você perde ponto por pressão, não por conteúdo</span><span class="val">2ª metade da prova</span></div>'+
+        '<div class="row"><span class="t">Por onde começar a estudar amanhã</span><span class="val">Súmulas de Ética</span></div>'+
+        '</div>'+
+        '<div class="cta">Rasurado porque depende das suas 24 respostas. Sai na hora, com o seu nome.</div>'+
+      '</div>'+
       '<div class="offer">'+
         '<h3>Esse foi só o raio-x de 3 questões. A prova tem 80.</h3>'+
-        '<p>O diagnóstico completo testa você em 24 questões das 6 matérias do núcleo duro, cruza os dois eixos com o seu nome e entrega a prescrição: o que estudar primeiro, as fichas do que mais cai, a folha de tática para o seu perfil e simulados.</p>'+
+        '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>'+
+        '<p>O diagnóstico completo acende a luz. 24 questões depois, você sabe a sua porcentagem em cada matéria do núcleo, qual delas te derruba, se o seu problema é conteúdo ou pressão, e por onde começar amanhã. E leva junto o kit para agir: fichas do que mais cai, folha de tática para o seu perfil e simulados para medir se está subindo.</p>'+
         '<a class="btn full" href="'+buyUrl+'" id="buy">Quero meu diagnóstico completo</a>'+
         '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
       '</div>'+
