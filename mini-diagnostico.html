@@ -141,10 +141,18 @@
   // Parte 2: psicotécnico indireto. Cenários de OUTRO domínio (trânsito, prazo,
   // memória em público) que revelam congelamento/afobação/controle sem perguntar
   // "você é ansioso?" — ninguém se declara ansioso. Cada opção carrega a pontuação.
+  // 'leit' = leitura do resultado por pontuação (0/1/2): traduz o cenário de
+  // volta para a prova, sem rotular ninguém de "ansioso" — mostra o comportamento.
   var BEHAVIOR = [
-    {q:'Você está dirigindo num trevo desconhecido, o GPS trava e os carros atrás começam a buzinar. O que acontece primeiro?', o:[['Sigo por qualquer saída, só para não ficar parado ali',1],['Dou uma travada de alguns segundos antes de conseguir decidir',0],['Encosto onde dá e decido o caminho com calma',2]]},
-    {q:'Faltando 20 minutos para entregar algo importante, você percebe um erro numa parte que já estava pronta.', o:[['Corrijo o essencial e entrego no prazo',2],['Tento refazer tudo e por pouco não estouro o prazo',0],['Entrego como está e passo o resto do dia remoendo',1]]},
-    {q:'Na frente de outras pessoas, te pedem um dado que você sabe de cor.', o:[['Vem na hora, normal',2],['Às vezes dá branco na hora, e a resposta aparece depois, sozinho',0],['Peço um segundo e a resposta vem',1]]}
+    {q:'Você está dirigindo num trevo desconhecido, o GPS trava e os carros atrás começam a buzinar. O que acontece primeiro?',
+     o:[['Sigo por qualquer saída, só para não ficar parado ali',1],['Dou uma travada de alguns segundos antes de conseguir decidir',0],['Encosto onde dá e decido o caminho com calma',2]],
+     leit:{0:'No trevo, você travou antes de decidir. Na prova, esse é o perfil que dá branco numa questão difícil e perde o ritmo nas três seguintes.',1:'No trevo, você seguiu por qualquer saída para escapar da pressão. Na prova, é quem marca sem reler o enunciado e cai na pegadinha.',2:'No trevo, você parou e escolheu com calma: você decide bem debaixo de buzina.'}},
+    {q:'Faltando 20 minutos para entregar algo importante, você percebe um erro numa parte que já estava pronta.',
+     o:[['Corrijo o essencial e entrego no prazo',2],['Tento refazer tudo e por pouco não estouro o prazo',0],['Entrego como está e passo o resto do dia remoendo',1]],
+     leit:{0:'Com o prazo estourando, você tentou refazer tudo. Na prova, é quem empaca numa questão e chega sem tempo nas dez últimas.',1:'Você entregou, mas ficou remoendo. Na prova, é quem carrega a questão anterior na cabeça e erra a seguinte por distração.',2:'Com o prazo apertado, você priorizou e entregou: sua gestão de tempo funciona sob pressão.'}},
+    {q:'Na frente de outras pessoas, te pedem um dado que você sabe de cor.',
+     o:[['Vem na hora, normal',2],['Às vezes dá branco na hora, e a resposta aparece depois, sozinho',0],['Peço um segundo e a resposta vem',1]],
+     leit:{0:'O dado que você sabe de cor não saiu na hora, na frente dos outros. É o branco clássico: o problema não é saber, é acessar sob observação. E a prova inteira é sob observação.',1:'Você pediu um segundo e a resposta veio: você acessa a memória sob pressão, pagando um pequeno preço em tempo.',2:'A resposta veio na hora, mesmo com plateia: memória estável sob observação.'}}
   ];
 
   var S = { screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:'', email:'', tel:'' };
@@ -281,6 +289,27 @@
       '<div class="exp"><b>Por que a B é a certa:</b> o sigilo profissional é, ao mesmo tempo, direito e dever do advogado, e alcança os fatos de que ele toma conhecimento no exercício da profissão (Código de Ética e Disciplina da OAB, arts. 35 a 37). As outras caem uma a uma: o sigilo não cede por simples pedido do cliente nem de terceiro, e cobre também fatos anteriores ao mandato, quando conhecidos em razão do ofício. <b>No diagnóstico completo, cada uma das 24 questões vem com um comentário assim.</b></div></div>';
   }
 
+  function pressao(){
+    // Devolve a leitura dos 3 cenários psicotécnicos e a ponte para o produto:
+    // o R$47 inclui o raio-x de pressão e a folha de tática de prova.
+    var scores=[], linhas='';
+    BEHAVIOR.forEach(function(B,i){
+      var sel=S.beh[i]; if(sel==null) return;
+      var sc=B.o[sel][1]; scores.push(sc);
+      linhas+='<p style="margin-bottom:6px">'+esc(B.leit[sc])+'</p>';
+    });
+    if(!scores.length) return '';
+    var tem0=scores.indexOf(0)>=0, tem1=scores.indexOf(1)>=0;
+    var cls=tem0?'ochre':(tem1?'mixed':'green');
+    var ponte;
+    if(tem0||tem1){
+      ponte='<p><b>O que o diagnóstico faz com isso:</b> o raio-x de pressão mostra em que ponto das 24 questões o seu rendimento cai, e a folha de tática de prova monta a ordem das três passadas para o seu perfil. Nervosismo não se resolve com mais matéria; se resolve com método na hora da prova.'+(tem0?' E no Plano Completo existe ainda o módulo Cabeça para a prova, feito exatamente para quem trava.':'')+'</p>';
+    } else {
+      ponte='<p><b>O que o diagnóstico faz com isso:</b> confirma se esse controle se sustenta por 24 questões seguidas, e a folha de tática de prova transforma esse sangue frio em pontos.</p>';
+    }
+    return '<div class="verdict '+cls+'"><div class="k">Como você funcionou sob pressão</div>'+linhas+ponte+'</div>';
+  }
+
   function custoErros(){
     // Converte cada erro em preço real na prova: "errou Ética, que são 8 das 80".
     // É o argumento de fato, não de opinião. Sem erro, não aparece.
@@ -319,6 +348,7 @@
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
+      pressao()+
       custoErros()+
       gabarito()+
       (forte
