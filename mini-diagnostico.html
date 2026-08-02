@@ -664,25 +664,35 @@
   // A comparação de custo, em duas colunas. Esquerda longa e cara, direita curta e
   // barata: a assimetria é o argumento inteiro. Muda pelo MOMENTO da pessoa, porque o
   // que ela perde ao não agir é completamente diferente em cada um.
-  function tabelaCusto(){
+  // Recebe 'forte' porque a tabela não pode desmentir o veredito de quem acertou as 7:
+  // para essa pessoa não existe "buraco de hoje" nem "saber se é a matéria" — o veredito
+  // acabou de dizer que matéria ela tem. A linha que contradiz troca pela dúvida que as
+  // 7 deixam em aberto, que é o único argumento honesto para esse perfil.
+  function tabelaCusto(forte){
     var linhas;
     if(jaReprovou()){
       linhas=[
         ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
         [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
-        ['Repetir a mesma preparação, sem saber o que corrigir','Saber se o que te derruba é a matéria ou a hora da prova']
+        forte
+          ? ['Repetir a mesma preparação, sem saber o que corrigir','Ver em que ponto o seu rendimento cede, com número']
+          : ['Repetir a mesma preparação, sem saber o que corrigir','Saber se o que te derruba é a matéria ou a hora da prova']
       ];
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
       linhas=[
-        ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo onde você perde ponto'],
+        forte
+          ? ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo que o seu acerto se sustenta']
+          : ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo onde você perde ponto'],
         [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' esperando a próxima chance','20 minutos'],
         ['Ver quem passou seguir para a 2ª fase sem você','Corrigir a rota enquanto dá tempo']
       ];
     } else if(S.momento==='Ainda estou na faculdade'){
       linhas=[
-        ['Chegar na prova com o mesmo buraco de hoje','Chegar com ele fechado'],
+        forte
+          ? ['Descobrir só no dia o que as 7 não alcançam','Medir isso antes, em 24 questões']
+          : ['Chegar na prova com o mesmo buraco de hoje','Chegar com ele fechado'],
         [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
         ['A turma se preparando para a 2ª fase sem você','Sair da faculdade já advogado']
@@ -773,10 +783,20 @@
         : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o mesmo resultado reapareceu num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. Repetir a mesma preparação costuma devolver a mesma nota.';
       p += '</p><p><b>O que corrige:</b> trocar suposição por número. '+DIAG+' Se o que te derrubou está entre essas 6 matérias, ele aparece ali com nome.';
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
-      p = '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.'+
+      // O ramo 'forte' existe porque o texto padrão fala de "esse resultado" como se
+      // fosse ruim, e quem gabaritou leria a página desmentindo o próprio veredito.
+      p = forte
+        ? '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez e acabou de ver o melhor resultado que este teste dá. O que ele não mede é o que acontece com esse acerto na questão 40, com três horas de prova nas costas. É na primeira prova que isso pega quem sabe a matéria, justamente porque nunca foi medido.'+
+          '</p><p><b>O que corrige:</b> medir antes do dia. '+faltam()+DIAG
+        : '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.'+
           '</p><p><b>O que corrige:</b> olhar antes, e não depois. '+faltam()+DIAG;
     } else if(S.momento==='Ainda estou na faculdade'){
-      p = '<b>E aqui está o ponto.</b> Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.'+
+      // Mesmo motivo do ramo acima: "a faculdade não te protegeu disso" é falso para
+      // quem acabou de acertar as sete.
+      p = forte
+        ? '<b>E aqui está o ponto.</b> A OAB cobra um pedaço pequeno do Direito, em cinco horas, e nesse pedaço, nestas 7, você não cedeu. O que ninguém mediu ainda é se isso se sustenta por 80 questões seguidas, porque a faculdade não cronometra ninguém.'+
+          '</p><p><b>O que corrige:</b> medir isso antes do dia. '+faltam()+DIAG
+        : '<b>E aqui está o ponto.</b> Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.'+
           // A esperança fica ancorada no que dá para SABER, nunca no tempo que resta.
           // Quem está na faculdade pode estar a três semanas da prova, e "você está
           // cedo" faz essa pessoa desconectar na hora.
@@ -957,6 +977,10 @@
     // oferta principal. Os demais, o R$47. A flag vem do PRÓPRIO desfecho e não mais da
     // cor, porque o quinto desfecho (quem já reprovou e gabaritou) é forte e NÃO é verde.
     var forte=!!q.forte;
+    // Erros de verdade, fora os estouros. Sem isso, quem acerta 5 e estoura 2 lia
+    // "Errou 0 e estourou o tempo em 2" e ganhava "são dois problemas diferentes"
+    // quando só existe um.
+    var erroN=CONTENT.length-r.c-r.estourou;
     app.innerHTML =
       '<div class="prog">Seu resultado</div>'+
       '<h1 style="font-size:24px">'+nome+', aqui está o seu sinal.</h1>'+
@@ -964,12 +988,16 @@
       // e essa separação é a tese que a landing afirma e que aqui o quiz demonstra com
       // o número da própria pessoa.
       '<p class="lead" style="margin-bottom:6px">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b>.'+
-        (r.estourou? ' Errou '+(CONTENT.length-r.c-r.estourou)+' e estourou o tempo em '+r.estourou+'.' : '')+'</p>'+
+        (r.estourou? (erroN>0? ' Errou '+erroN+' e estourou o tempo em '+r.estourou+'.'
+                             : (r.estourou>1? ' Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
+                                            : ' Na outra o tempo acabou antes de você marcar.')) : '')+'</p>'+
       '<p class="lead" style="margin-bottom:16px">'+
-        (r.estourou? 'São dois problemas diferentes, com soluções diferentes, e é por isso que estudar mais matéria não resolve o segundo.'
+        (r.estourou && erroN>0? 'São dois problemas diferentes, com soluções diferentes, e é por isso que estudar mais matéria não resolve o segundo.'
                    : 'Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora.')+'</p>'+
       '<div class="plot"><div class="vline"></div><div class="hline"></div>'+
-        '<div class="ql tr">Pronto de verdade</div><div class="ql br">Sabe, mas trava</div>'+
+        // Para quem já reprovou e gabaritou, "Pronto de verdade" no gráfico é o mesmo
+        // selo de "apto" que o quinto desfecho existe para impedir.
+        '<div class="ql tr">'+(forte&&jaReprovou()?'Pronto nestas 7':'Pronto de verdade')+'</div><div class="ql br">Sabe, mas trava</div>'+
         '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
@@ -977,7 +1005,7 @@
       // A comparação de custo vem logo depois do gancho e ANTES do botão: é ela que
       // transforma o diagnóstico em decisão. Sem ela o botão pede dinheiro sem ter
       // colocado nada na outra ponta da balança.
-      tabelaCusto()+
+      tabelaCusto(forte)+
       // CTA logo depois. Antes o primeiro preço só aparecia no sexto bloco de sete, o
       // que no celular é muito rolar para quem já decidiu. Agora TODOS pedem R$47,
       // inclusive quem gabaritou: menor pedido para quem tem menos dor.
