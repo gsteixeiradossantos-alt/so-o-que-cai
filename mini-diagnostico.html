@@ -174,34 +174,113 @@
   .lockbox .val{color:var(--ink);white-space:nowrap;font-weight:600;font-size:13.5px;text-align:right}
   .lockbox .val.trava{display:inline-block;width:88px;height:10px;border-radius:5px;background:var(--muted2);opacity:.3;font-size:0}
   .lockbox .cta{font-size:12px;color:var(--muted);padding:0 20px 14px}
-  /* ===== Resultado v2 (02/08): linguagem visual da landing. Só casca: o texto e a
-     ordem dos blocos não mudam. O que muda: o veredito vira o painel navy (a seção
-     escura da landing), os blocos de leitura perdem a moldura de cartão e viram
-     linhas com filete, cada grupo ganha um kicker de seção, e o CTA ganha o peso
-     (sombra, tamanho) do botão da landing. A tela deixa de ser uma pilha de caixas
-     iguais e passa a ter uma manchete, seções e um pedido. ===== */
-  .rkk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
-  .rsec{margin-top:38px}
-  .r-h1{font-size:clamp(26px,6.4vw,33px);line-height:1.1;letter-spacing:-.018em}
-  .verd-hero{background:var(--navy);color:#C9C1B4;border-radius:20px;padding:28px 24px;margin-top:10px}
-  .verd-hero .k{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
-  .verd-hero.ochre .k{color:var(--ocre2)}
-  .verd-hero.green .k{color:#7FB99A}
-  .verd-hero.mixed .k{color:#A89F90}
-  .verd-hero h2{font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,5.8vw,29px);line-height:1.16;letter-spacing:-.01em;color:#fff;margin-bottom:10px}
-  .verd-hero p{font-size:15px;line-height:1.62;color:#C9C1B4;margin-bottom:10px}
-  .verd-hero p:last-child{margin-bottom:0}
-  .verd-hero b{color:#fff}
-  .ctaslim .btn{box-shadow:0 14px 30px -14px rgba(21,33,43,.9);font-size:17px;padding:18px 26px}
-  .viu .verdict{background:none;border:0;border-left:3px solid var(--line);border-radius:0;padding:2px 0 2px 16px;margin:0 0 18px}
-  .viu .verdict:last-child{margin-bottom:0}
-  .viu .verdict.ochre{border-left-color:var(--ocre)}
-  .viu .verdict.green{border-left-color:var(--green)}
-  .viu .verdict.mixed{border-left-color:var(--muted)}
-  .viu .verdict .k{margin-bottom:4px}
-  .viu .verdict h2{font-size:19px}
-  .offer h3{font-size:clamp(21px,5.4vw,26px);line-height:1.18}
-  .offer .btn{box-shadow:0 14px 30px -14px rgba(0,0,0,.7)}
+  /* ===== Resultado v3 (02/08/2026) · layout de página de vendas =====
+     Vem do handoff de design "Pagina de Venda - Resultado". Regra do ritmo: a página
+     inteira é papel, com EXATAMENTE dois blocos navy (o hero e a oferta final). Cada
+     navy é um momento; três seriam ruído. O texto e a ordem dos argumentos não mudaram:
+     mudou onde cada um respira. A tela de resultado sai do .wrap (que é estreito e tem
+     padding) para o hero poder sangrar de borda a borda. ===== */
+  body.res .wrap{max-width:none;margin:0;padding:0}
+  body.res .wrap>.brand{display:none}
+  body.res .wrap>.foot{display:none}
+  body.res{padding-bottom:96px}
+  .rhero{background:var(--navy);color:#fff;padding:20px 22px 34px}
+  .rhero .in{max-width:600px;margin:0 auto}
+  .rbrand{display:flex;align-items:center;gap:10px;margin-bottom:30px}
+  .rbrand .nm{font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#fff}
+  .rbrand .tg{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  .rkick{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
+  .rh1{font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .rh1 em{font-style:italic;color:#E7A85B}
+  .rlead{font-size:16.5px;line-height:1.6;color:#C9C1B4;margin-bottom:26px;max-width:44ch;text-wrap:pretty}
+  .rlead b{color:#fff}
+  .bars{display:flex;flex-direction:column;gap:16px;padding:20px 18px;border:1px solid #2C3B48;border-radius:16px;background:#1B2934}
+  .bars .b{display:flex;flex-direction:column;gap:7px}
+  .bars .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .bars .hd span:first-child{font-size:13.5px;color:#C9C1B4}
+  .bars .v{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .bars .v.ok{color:#7FB99A}
+  .bars .v.no{color:#E7A85B}
+  .bars .tr{height:8px;border-radius:4px;background:#2C3B48;overflow:hidden}
+  .bars .tr i{display:block;height:100%;border-radius:4px;transform-origin:left center;animation:fillbar .9s cubic-bezier(.2,.7,.3,1) both}
+  .bars .b:nth-child(2) .tr i{animation-delay:.15s}
+  .bars .tr i.ok{background:var(--green)}
+  .bars .tr i.no{background:var(--ocre2)}
+  .bars .ft{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+  @keyframes fillbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @media (prefers-reduced-motion: reduce){ .bars .tr i{animation:none} }
+  .rbody{max-width:600px;margin:0 auto;padding:0 22px}
+  .rsec{margin-top:44px}
+  .rkk{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .rkk.v{color:var(--green)}
+  .rh3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(22px,5.6vw,27px);line-height:1.18;letter-spacing:-.015em;margin-bottom:14px;text-wrap:pretty}
+  .rp{font-size:16px;line-height:1.62;color:var(--muted2);margin-bottom:20px;text-wrap:pretty}
+  .rp.forte{font-size:17.5px;color:var(--ink);margin-bottom:16px}
+  .rp b{color:var(--ink)}
+  .pull{border-left:3px solid var(--ocre);padding:4px 0 4px 18px;margin-bottom:4px}
+  .pull p{font-family:'Spectral',serif;font-size:19px;line-height:1.42;color:var(--ink);text-wrap:pretty}
+  .stack{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .stack .hd{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .stack .it{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px}
+  .stack .it:last-of-type{margin-bottom:0}
+  .stack .it svg{flex-shrink:0;margin-top:2px}
+  .stack .it div{font-size:14.5px;line-height:1.45;color:var(--muted2)}
+  .stack .it b{color:var(--ink)}
+  .stack .tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+  .stack .tot span:first-child{font-size:14px;color:var(--muted2)}
+  .stack .tot .p{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .rbtn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:20px;background:var(--ocre);color:#fff;border:none;border-radius:13px;padding:19px 22px;font:inherit;font-size:17.5px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 14px 30px -14px rgba(166,93,30,.85);transition:background .15s}
+  .rbtn:hover{background:#8c4d18;color:#fff}
+  .rmicro{font-family:'Space Mono',monospace;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
+  .viu{display:flex;flex-direction:column;gap:16px}
+  .viu .it{border-left:3px solid var(--muted);padding:2px 0 2px 16px}
+  .viu .it.ochre{border-left-color:var(--ocre)}
+  .viu .it.green{border-left-color:var(--green)}
+  .viu .it .k{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .viu .it p{font-size:15px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
+  .deps{display:flex;flex-direction:column;gap:14px}
+  .dep2{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+  .dep2 .asp{font-family:'Spectral',serif;font-size:34px;line-height:.6;color:var(--ocre2);height:18px}
+  .dep2 p{font-family:'Spectral',serif;font-size:17.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+  .dep2 p b{font-weight:600;background:#F5E4CE;box-shadow:0 0 0 3px #F5E4CE}
+  .dep2 .quem{display:flex;align-items:center;gap:11px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:#E9E0CE;color:var(--muted2);font-family:'Spectral',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dep2 .nm{font-size:14.5px;font-weight:600;line-height:1.3}
+  .dep2 .cid{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .vid{position:relative;width:min(300px,78%);margin:0 auto;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--navy)}
+  .vid video{width:100%;height:100%;object-fit:cover;display:block}
+  .vidleg{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
+  .autor2{display:flex;align-items:flex-start;gap:16px}
+  .autor2 img{width:76px;height:76px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex-shrink:0;border:2px solid var(--line)}
+  .autor2 .k{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .autor2 p{font-size:15px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
+  .gar2{border-top:1px solid var(--line);margin-top:20px;padding-top:18px;font-size:14.5px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
+  .gar2 b{color:var(--green)}
+  .ofim{margin-top:44px;background:var(--navy);border-radius:20px;padding:30px 24px;text-align:center}
+  .ofim .k{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:12px}
+  .ofim h3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,6vw,29px);line-height:1.16;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .ofim p{font-size:15px;line-height:1.6;color:#C9C1B4;margin-bottom:22px;text-wrap:pretty}
+  .ofim .rbtn{box-shadow:0 14px 30px -14px rgba(0,0,0,.8)}
+  .ofim .rbtn:hover{background:var(--ocre2)}
+  .ofim .rmicro{color:#E7CFA8;margin-top:12px}
+  .selo{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:11px 14px;border:1px solid #2C3B48;border-radius:11px;background:#1B2934}
+  .selo svg{flex-shrink:0}
+  .selo span{font-size:13px;line-height:1.4;color:#C9C1B4;text-align:left}
+  .selo b{color:#7FB99A}
+  .upsell{display:inline-block;margin-top:18px;font-size:13.5px;color:#C9C1B4;text-decoration:underline}
+  .upsell:hover{color:#fff}
+  .rfoot{margin-top:28px;font-size:11.5px;line-height:1.5;color:var(--muted);text-align:center}
+  /* Barra fixa de compra. Só aparece depois de 1,2 tela de rolagem: antes disso o
+     primeiro CTA ainda está visível e a barra seria redundante e agressiva. */
+  .sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(243,238,228,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:20;transform:translateY(110%);transition:transform .28s cubic-bezier(.2,.7,.3,1)}
+  .sticky.on{transform:none}
+  .sticky .in{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  .sticky .t{flex:1;min-width:0}
+  .sticky .t .a{font-size:14px;font-weight:600;line-height:1.25}
+  .sticky .t .b{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted)}
+  .sticky a{background:var(--ocre);color:#fff;border-radius:11px;padding:14px 20px;font-size:15.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+  .sticky a:hover{background:#8c4d18;color:#fff}
+  @media (prefers-reduced-motion: reduce){ .sticky{transition:none} }
 </style>
 </head>
 <body>
@@ -778,9 +857,26 @@
     // Cada desfecho termina numa CURIOSIDADE ESPECÍFICA, e ela não é enfeite: é o que
     // entrega o leitor para o bloco rasurado logo abaixo. A frase final aponta para uma
     // linha trancada do lockbox, então os dois respiram juntos em vez de repetir.
-    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,lab:'O seu problema não está no que estas 7 medem',txt:'Você acertou as sete, no tempo, sem consultar. E já prestou o exame sem passar. As duas coisas juntas dizem uma coisa só: a matéria das 6 que decidem a prova você tem. O que te derrubou estava fora do alcance destas 7 questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
-    if(hiX&&hiY) return {cls:'green',forte:true,lab:'Você acertou as sete',txt:'Sete questões difíceis, todas certas, dentro do tempo. Você sabe a matéria que decide a prova. O que estas 7 não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar. E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
-    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe a matéria. O problema é a hora da prova',txt:'Você acertou o que precisava acertar, e mesmo assim '+causaPressao(r)+'. Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta. Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
+    // 02/08 · v3: o veredito virou CAMPOS em vez de um blob de texto, porque o layout
+    // novo distribui a mesma copy em três lugares (manchete com trecho em itálico,
+    // lead do hero, dois parágrafos do diagnóstico). Nenhuma frase foi reescrita: só
+    // repartida. 'hl' é o trecho que sai em itálico ocre dentro do título, e precisa
+    // existir DENTRO de 'lab', senão a substituição não acha nada e o título sai reto.
+    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,
+      lab:'O seu problema não está no que estas 7 medem', hl:'no que estas 7 medem',
+      lead:'Tudo no tempo, sem consultar. E já prestou o exame sem passar.',
+      p1:'As duas coisas juntas dizem uma coisa só: a matéria das 6 que decidem a prova você tem.',
+      p2:'O que te derrubou estava fora do alcance destas 7 questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
+    if(hiX&&hiY) return {cls:'green',forte:true,
+      lab:'Você acertou as sete', hl:'as sete',
+      lead:'Todas difíceis, todas dentro do tempo. Você sabe a matéria que decide a prova.',
+      p1:'O que estas 7 não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar.',
+      p2:'E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
+    if(hiX&&!hiY) return {cls:'ochre',
+      lab:'Você sabe a matéria. O problema é a hora da prova', hl:'a hora da prova',
+      lead:'O que cedeu não foi o conteúdo: '+causaPressao(r)+'.',
+      p1:'Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta.',
+      p2:'Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
     // Estouro puro: acertou tudo o que respondeu e o que perdeu foi inteiro para o
     // relógio. Sem este desfecho a pessoa caía em "perdeu ponto dos dois lados" com o
     // conselho invertido (fechar matéria primeiro), violando a regra de que estouro
@@ -789,18 +885,28 @@
     // O X continua contando estouro como ponto perdido (decisão registrada no compute);
     // é o texto que separa, não a régua.
     if(errosReais()===0 && estourouQuantas()>0){
-      var est=estourouQuantas();
-      return {cls:'ochre',lab:'O que te derrubou não foi a matéria. Foi o relógio',txt:'Tudo o que você marcou estava certo. O ponto que você perdeu foi inteiro para o relógio, e na prova questão em branco vale o mesmo que questão errada. Estudar mais matéria não muda isso: matéria você mostrou que tem. O que falta saber é para onde o seu tempo vai: em qual matéria você trava, e em que ponto da prova isso começa.'};
+      return {cls:'ochre',
+        lab:'O que te derrubou não foi a matéria. Foi o relógio', hl:'Foi o relógio',
+        lead:'Tudo o que você marcou estava certo.',
+        p1:'Na prova, questão em branco vale o mesmo que questão errada.',
+        p2:'Estudar mais matéria não muda isso: matéria você mostrou que tem. O que falta saber é para onde o seu tempo vai: em qual matéria você trava, e em que ponto da prova isso começa.'};
     }
-    if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas a matéria não respondeu',txt:'Sob pressão você funcionou, e isso é metade do caminho. A outra metade: você perdeu '+perdeu+' das 7, e estas 7 são uma de cada matéria do núcleo, com Ética entrando duas vezes porque sozinha ela vale 8 das 80 questões da prova. Ponto perdido aí não se compensa nas 11 matérias de fora: elas valem menos, e é justamente por isso que são de fora. O que falta é o número. Em qual das 6 está o buraco, e de que tamanho ele é.'};
+    if(!hiX&&hiY) return {cls:'mixed',
+      lab:'Você se segura bem, mas a matéria não respondeu', hl:'a matéria não respondeu',
+      lead:'Sob pressão você funcionou, e isso é metade do caminho.',
+      p1:'A outra metade: você perdeu '+perdeu+' das 7, e estas 7 são uma de cada matéria do núcleo, com Ética entrando duas vezes porque sozinha ela vale 8 das 80 questões da prova.',
+      p2:'Ponto perdido aí não se compensa nas 11 matérias de fora: elas valem menos, e é justamente por isso que são de fora. O que falta é o número. Em qual das 6 está o buraco, e de que tamanho ele é.'};
     // O Y cai junto com os erros (a nota de decisão pune errar), então dá para chegar
     // aqui com o relógio limpo. Nesse caso a abertura não pode acusar o relógio: o bloco
     // "O que o relógio mostrou", três blocos abaixo, sai verde e desmentiria o veredito.
     var abriu = relogioAcusou(r)
-      ? 'Você perdeu '+perdeu+' das 7 e o relógio ainda te cobrou.'
-      : 'Você perdeu '+perdeu+' das 7. O relógio, desta vez, não foi o problema: o que pesou foi a matéria.';
+      ? 'Os dois eixos cederam ao mesmo tempo.'
+      : 'O relógio, desta vez, não foi o problema: o que pesou foi a matéria.';
     var labm = relogioAcusou(r) ? 'Você perdeu ponto dos dois lados' : 'Foi a matéria que não respondeu';
-    return {cls:'mixed',lab:labm,txt:abriu+' É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo. O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha. O que falta você saber é qual das 6 matérias entra primeiro nessa ordem, e quanto você tem em cada uma delas hoje.'};
+    return {cls:'mixed', lab:labm, hl:(relogioAcusou(r)?'dos dois lados':'a matéria'),
+      lead:abriu,
+      p1:'É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo.',
+      p2:'O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha. O que falta você saber é qual das 6 matérias entra primeiro nessa ordem, e quanto você tem em cada uma delas hoje.'};
   }
 
   // A frase que o placar sozinho não diz. O 'momento' era o dado mais pesado do
@@ -817,84 +923,74 @@
   //    no primeiro contato. Dizer o que a pessoa recebe: 24 questões cronometradas, a
   //    porcentagem em cada uma das 6, o nome da que derruba.
   // A urgência aqui é sempre REAL: a data da prova e o próprio placar dela.
+  // 02/08 · v3: devolve CAMPOS, não HTML. O layout novo usa os dois tempos em lugares
+  // diferentes da página: o "ponto" vira pull-quote logo abaixo do diagnóstico, e o
+  // "o que corrige" vira TÍTULO de seção (Spectral) mais parágrafo. Nenhuma frase foi
+  // reescrita: o que era "<b>O que corrige:</b> trocar suposição por número. DIAG"
+  // virou {titulo:'Trocar suposição por número', texto:DIAG}.
+  // Devolve null para "Só estou olhando" (esse momento não tem leitura).
   function leituraMomento(q, r){
-    var forte=!!q.forte, p='';
+    var forte=!!q.forte;
     // Terceiro perfil, descoberto na revisão de 02/08: acertou as 7 mas o eixo da hora
     // não fechou. O ramo padrão mandava essa pessoa ler "a matéria que te derruba seguiu
     // intocada" logo depois de o veredito dizer "Você sabe a matéria". O discriminador
-    // de matéria não é 'forte', é não ter errado conteúdo: X cheio OU estouro puro
-    // (zero erros reais com estouro), que recebe o mesmo tratamento de "a matéria não
-    // é o problema".
+    // de matéria não é 'forte', é não ter errado conteúdo: X cheio OU estouro puro.
     var sabe = !forte && r && (r.X>=CORTE_X || (errosReais()===0 && estourouQuantas()>0));
-    // O NÚMERO é do quadrante. Aqui não se repete, senão saem duas frases seguidas
-    // dizendo "você perdeu 4 de 7" e o texto vira eco.
-    // DIAG NÃO enumera o que o relatório mostra. O bloco rasurado faz isso logo abaixo,
-    // e melhor, porque é visual. Enumerar aqui matava a curiosidade que o quadrante
-    // acabou de criar, antes de o lockbox poder usá-la. Aqui fica só formato e preço.
-    // O R$47 NÃO é só o relatório: inclui as fichas, a folha de tática e 3 simulados.
-    // A versão anterior vendia só o diagnóstico, e diagnóstico é informação, que é a coisa
-    // mais difícil de vender que existe, porque o comprador não sabe o que fazer com ela.
-    // Isso não repete o bloco rasurado: lá é o que o RELATÓRIO revela, aqui é o kit.
-    var DIAG='São 24 questões cronometradas nas 6 matérias que decidem a prova, e o relatório sai na hora, com o seu nome. Junto vêm as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados para medir se você está subindo. Tudo por R$47.';
-    // Para quem acertou as sete, a oferta não pode prometer "descubra onde você perde
-    // ponto": ela acabou de não perder nenhum. Mas também não pode NEGAR isso, porque em
-    // parte dos textos o gancho promete exatamente achar a matéria, e uma frase desmentia
-    // a outra. Aqui só se responde a pergunta que o veredito acabou de deixar no ar.
-    var DIAG_F='São 24 questões cronometradas nas mesmas 6 matérias, e o relatório responde isso com número: onde o seu rendimento começa a cair, e em qual matéria. Junto vêm as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados. Tudo por R$47.';
+    // DIAG NÃO enumera o que o relatório mostra: o bloco rasurado faz isso logo abaixo,
+    // e melhor, porque é visual. Aqui fica só formato e preço. O R$47 NÃO é só o
+    // relatório: inclui as fichas, a folha de tática e 3 simulados.
+    var DIAG='São 24 questões cronometradas nas 6 matérias que decidem a prova, e o relatório sai na hora, com o seu nome. Junto vêm as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados para medir se você está subindo.';
+    // Para quem não perdeu matéria, a oferta não pode prometer "descubra onde você perde
+    // ponto": ela acabou de não perder nenhum. Responde a pergunta que o veredito deixou.
+    var DIAG_F='São 24 questões cronometradas nas mesmas 6 matérias, e o relatório responde isso com número: onde o seu rendimento começa a cair, e em qual matéria. Junto vêm as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados.';
     if(forte||sabe) DIAG=DIAG_F;
+    var ponto, titulo, texto;
     if(reprovouMais()){
-      p = forte
-        ? '<b>E aqui está o ponto.</b> Duas provas ou mais sem passar, e a matéria do núcleo você tem. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
+      ponto = forte
+        ? 'Duas provas ou mais sem passar, e a matéria do núcleo você tem. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
         : sabe
-        ? '<b>E aqui está o ponto.</b> Duas provas ou mais sem passar, e o que te derrubou aqui não foi a matéria. O que cedeu foi a hora, e agora isso tem registro: aconteceu de novo, num teste de quatro minutos. Duas reprovações e este resultado apontam para o mesmo lugar, e não é o caderno.'
-        : '<b>E aqui está o ponto.</b> O padrão acabou de se repetir na sua frente, em quatro minutos. Isso não é falta de esforço, e é bem provável que você tenha estudado mais do que muita gente que passou. O esforço é que foi para o lugar errado: mais um ano na matéria que você já sabia, enquanto a que te derruba seguiu intocada, porque ninguém nunca te disse qual era.';
-      p += forte
-        ? '</p><p><b>O que corrige:</b> medir o que ainda não foi medido. '+DIAG+' E o Plano Completo cobre justamente o pedaço que as suas provas apontaram: as fichas das 17 disciplinas, dois simulados de 80 questões para ver onde o rendimento cai, e o cronograma dia a dia até a prova, por R$127.'
-        : sabe
-        ? '</p><p><b>O que corrige:</b> parar de estudar de novo o que você já tem, e medir onde o rendimento cai. '+DIAG
-        : '</p><p><b>O que corrige:</b> saber o nome dessa matéria antes de abrir o próximo caderno. '+DIAG;
+        ? 'Duas provas ou mais sem passar, e o que te derrubou aqui não foi a matéria. O que cedeu foi a hora, e agora isso tem registro: aconteceu de novo, num teste de quatro minutos. Duas reprovações e este resultado apontam para o mesmo lugar, e não é o caderno.'
+        : 'O padrão acabou de se repetir na sua frente, em quatro minutos. Isso não é falta de esforço, e é bem provável que você tenha estudado mais do que muita gente que passou. O esforço é que foi para o lugar errado: mais um ano na matéria que você já sabia, enquanto a que te derruba seguiu intocada, porque ninguém nunca te disse qual era.';
+      titulo = forte? 'Medir o que ainda não foi medido'
+        : sabe? 'Parar de estudar de novo o que você já tem'
+        : 'Saber o nome dessa matéria antes de abrir o próximo caderno';
+      texto = DIAG + (forte? ' E o Plano Completo cobre justamente o pedaço que as suas provas apontaram: as fichas das 17 disciplinas, dois simulados de 80 questões para ver onde o rendimento cai, e o cronograma dia a dia até a prova, por R$127.' : '');
     } else if(jaReprovou()){
-      p = forte
-        ? '<b>E aqui está o ponto.</b> Você acertou tudo aqui e mesmo assim prestou e não passou. Entre o que você sabe e a nota que saiu tem alguma coisa se perdendo, e não é a matéria do núcleo. Enquanto ela não tiver nome, a segunda tentativa é a primeira de novo.'
+      ponto = forte
+        ? 'Você acertou tudo aqui e mesmo assim prestou e não passou. Entre o que você sabe e a nota que saiu tem alguma coisa se perdendo, e não é a matéria do núcleo. Enquanto ela não tiver nome, a segunda tentativa é a primeira de novo.'
         : sabe
-        ? '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e aqui a matéria não foi o problema. O que cedeu foi a hora, num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. No dia, isso só aumenta.'
-        : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o mesmo resultado reapareceu num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. Repetir a mesma preparação costuma devolver a mesma nota.';
-      // O rabo "se o que te derrubou está entre essas 6 matérias, ele aparece ali com
-      // nome" só para quem de fato perdeu matéria: para X cheio o veredito acabou de
-      // dizer que matéria não é o problema, e a frase desmentiria.
-      p += '</p><p><b>O que corrige:</b> trocar suposição por número. '+DIAG+
-        ((forte||sabe)? '' : ' Se o que te derrubou está entre essas 6 matérias, ele aparece ali com nome.');
+        ? 'Você já prestou uma vez e não passou, e aqui a matéria não foi o problema. O que cedeu foi a hora, num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. No dia, isso só aumenta.'
+        : 'Você já prestou uma vez e não passou, e o mesmo resultado reapareceu num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. Repetir a mesma preparação costuma devolver a mesma nota.';
+      titulo = 'Trocar suposição por número';
+      // O rabo "aparece ali com nome" só para quem de fato perdeu matéria: para X cheio
+      // o veredito acabou de dizer que matéria não é o problema, e a frase desmentiria.
+      texto = DIAG + ((forte||sabe)? '' : ' Se o que te derrubou está entre essas 6 matérias, ele aparece ali com nome.');
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
-      // O ramo 'forte' existe porque o texto padrão fala de "esse resultado" como se
-      // fosse ruim, e quem gabaritou leria a página desmentindo o próprio veredito.
-      p = forte
-        ? '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez e acabou de ver o melhor resultado que este teste dá. O que ele não mede é o que acontece com esse acerto na questão 40, com três horas de prova nas costas. É na primeira prova que isso pega quem sabe a matéria, justamente porque nunca foi medido.'+
-          '</p><p><b>O que corrige:</b> medir antes do dia. '+faltam()+DIAG
+      ponto = forte
+        ? 'Você vai prestar pela primeira vez e acabou de ver o melhor resultado que este teste dá. O que ele não mede é o que acontece com esse acerto na questão 40, com três horas de prova nas costas. É na primeira prova que isso pega quem sabe a matéria, justamente porque nunca foi medido.'
         : sabe
-        ? '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e o que te cobrou aqui não foi a matéria: foi a hora, no conforto de casa. No dia são 80 questões, cinco horas e a sala cheia.'+
-          '</p><p><b>O que corrige:</b> medir em que ponto o seu rendimento cai, antes do dia. '+faltam()+DIAG
-        : '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.'+
-          '</p><p><b>O que corrige:</b> olhar antes, e não depois. '+faltam()+DIAG;
+        ? 'Você vai prestar pela primeira vez, e o que te cobrou aqui não foi a matéria: foi a hora, no conforto de casa. No dia são 80 questões, cinco horas e a sala cheia.'
+        : 'Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.';
+      titulo = forte? 'Medir antes do dia'
+        : sabe? 'Medir em que ponto o seu rendimento cai, antes do dia'
+        : 'Olhar antes, e não depois';
+      texto = faltam() + DIAG;
     } else if(S.momento==='Ainda estou na faculdade'){
-      // Mesmo motivo do ramo acima: "a faculdade não te protegeu disso" é falso para
-      // quem acabou de acertar as sete.
-      p = forte
-        ? '<b>E aqui está o ponto.</b> A OAB cobra um pedaço pequeno do Direito, em cinco horas, e nesse pedaço, nestas 7, você não cedeu. O que ninguém mediu ainda é se isso se sustenta por 80 questões seguidas, porque a faculdade não cronometra ninguém.'+
-          '</p><p><b>O que corrige:</b> medir isso antes do dia. '+faltam()+DIAG
+      ponto = forte
+        ? 'A OAB cobra um pedaço pequeno do Direito, em cinco horas, e nesse pedaço, nestas 7, você não cedeu. O que ninguém mediu ainda é se isso se sustenta por 80 questões seguidas, porque a faculdade não cronometra ninguém.'
         : sabe
-        ? '<b>E aqui está o ponto.</b> Ainda na faculdade, e a matéria não foi o que te derrubou aqui. O que apareceu foi a hora, e isso a faculdade não mede nunca: prova de faculdade não cronometra ninguém.'+
-          '</p><p><b>O que corrige:</b> medir isso antes do dia. '+faltam()+DIAG
-        : '<b>E aqui está o ponto.</b> Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.'+
-          // A esperança fica ancorada no que dá para SABER, nunca no tempo que resta.
-          // Quem está na faculdade pode estar a três semanas da prova, e "você está
-          // cedo" faz essa pessoa desconectar na hora.
-          // "quais são as 6 matérias" saiu daqui: o DIAG logo adiante já diz "nas 6
-          // matérias que decidem a prova" e a frase virava eco triplo do mesmo número.
-          '</p><p><b>O que corrige:</b> saber desde já em qual matéria você perde ponto, em vez de descobrir isso no dia. '+DIAG+' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.';
+        ? 'Ainda na faculdade, e a matéria não foi o que te derrubou aqui. O que apareceu foi a hora, e isso a faculdade não mede nunca: prova de faculdade não cronometra ninguém.'
+        // A esperança fica ancorada no que dá para SABER, nunca no tempo que resta: quem
+        // está na faculdade pode estar a três semanas da prova, e "você está cedo" faz
+        // essa pessoa desconectar na hora.
+        : 'Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.';
+      titulo = (forte||sabe)? 'Medir isso antes do dia' : 'Saber desde já em qual matéria você perde ponto';
+      texto = (forte||sabe)? (faltam()+DIAG)
+        : (DIAG + ' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.');
     } else {
-      return '';
+      return null;
     }
-    return '<p>'+p+'</p>';
+    return {ponto:ponto, titulo:titulo, texto:texto};
   }
 
   // Matérias em que a pessoa ERROU (respondeu e errou), sem repetir. Questão em que
@@ -938,8 +1034,7 @@
       trava('Em que ponto das 24 questões o seu rendimento cai')+
       trava('Por onde começar a estudar amanhã');
     return '<div class="lockbox">'+
-      '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
-      '<div class="inner">'+linhas+'</div>'+
+      '<div class="inner" style="padding-top:14px">'+linhas+'</div>'+
       '<div class="cta">O que está legível saiu das suas '+CONTENT.length+' respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
     '</div>';
   }
@@ -964,39 +1059,36 @@
       return '<div class="'+cls+'">'+pre+esc(op)+suf+'</div>';
     }).join('');
     var nota = S.estourou[idx] ? '<p style="margin-bottom:8px"><b>Nesta o tempo acabou antes de você marcar.</b></p>' : '';
-    return '<div class="gab"><div class="k">Gabarito comentado · amostra do relatório</div>'+
+    return '<div class="gab">'+
       '<div class="q">'+esc(Q.mat)+' · '+esc(Q.q)+'</div>'+alts+nota+
       '<div class="exp">'+Q.exp+' <b>No diagnóstico completo, cada uma das 24 questões vem com um comentário assim.</b></div></div>';
   }
 
   function pressao(){
-    // ENCOLHIDO em 02/08/2026. Antes imprimia a leitura dos TRÊS cenários, o que era a
-    // folha de tática de prova entregue de graça e tirava a urgência de comprar. Agora
-    // nomeia só o pior, em uma frase, sem dizer o que fazer com aquilo.
-    // Regra da tela inteira: nomear sem dimensionar e sem prescrever.
+    // v3: devolve OBJETO. Nomeia só o pior cenário, em uma frase, sem dizer o que fazer
+    // com aquilo. Regra da tela inteira: nomear sem dimensionar e sem prescrever.
     var pior=null;
     BEHAVIOR.forEach(function(B,i){
       var sel=S.beh[i]; if(sel==null) return;
       var sc=B.o[sel][1];
       if(pior===null || sc<pior.sc) pior={sc:sc, txt:B.leit[sc]};
     });
-    if(!pior) return '';
-    // Só a primeira frase do 'leit': ela nomeia o comportamento. O resto do texto
-    // original traduzia aquilo de volta para a prova, que é a parte que ensina.
+    if(!pior) return null;
+    // Só a primeira frase do 'leit': ela nomeia o comportamento. O resto traduzia aquilo
+    // de volta para a prova, que é a parte que ensina, e ensinar de graça é o produto.
     var frase=String(pior.txt).split('. ')[0];
     if(frase.slice(-1)!=='.') frase+='.';
-    var cls=pior.sc===0?'ochre':(pior.sc===1?'mixed':'green');
     var fecho=pior.sc===2
       ? ' O diagnóstico mede se isso se sustenta por 24 questões seguidas.'
       : ' O tamanho disso está no diagnóstico.';
-    return '<div class="verdict '+cls+'"><div class="k">Sob pressão</div><p style="margin-bottom:0">'+esc(frase)+fecho+'</p></div>';
+    return {k:'Sob pressão', p:esc(frase)+fecho, cls:(pior.sc===0?'ochre':(pior.sc===1?'':'green'))};
   }
 
   function tempo(){
-    // ENCOLHIDO em 02/08/2026: eram até três achados analisados, que é o raio-x de
-    // pressão de graça. Agora sai UM, o mais forte, por prioridade: estouro, erro com
-    // convicção, ritmo. Reporta o fato e para. Não defende a regra do relógio: página
-    // que argumenta soa insegura e abre a porta para "na prova eu teria mais tempo".
+    // v3: devolve OBJETO. Sai UM achado, o mais forte, por prioridade: estouro, queda no
+    // fim, oscilação, erro com convicção, ritmo. Reporta o fato e para. Não defende a
+    // regra do relógio: página que argumenta soa insegura e abre a porta para "na prova
+    // eu teria mais tempo".
     var est=estourouQuantas(), fora=segundosFora(), lin=null, ruim=false;
     var cons=notaConstancia(), res=notaResistencia(), tm=tempoMedio();
     var rapErr=null;
@@ -1008,8 +1100,8 @@
       ruim=true;
       lin='O tempo acabou antes de você marcar em <b>'+est+'</b> '+(est>1?'questões':'questão')+'. Na prova, questão não respondida vale o mesmo que questão errada.';
     } else if(res!=null && res<=55){
-      // A queda ao longo do teste é o achado mais vendável que existe aqui: é a prova,
-      // com o número da própria pessoa, de que o problema aparece com o tempo de prova.
+      // A queda ao longo do teste é o achado mais vendável daqui: é a prova, com o número
+      // da própria pessoa, de que o problema aparece com o tempo de prova.
       ruim=true;
       lin='Você foi pior nas três últimas do que nas três primeiras. E aqui foram sete questões, não oitenta.';
     } else if(cons!=null && cons<=55){
@@ -1025,147 +1117,217 @@
     } else if(tm!=null){
       lin='Ritmo firme e parelho: '+tm+' segundos por questão, sem oscilar e sem cair no fim.';
     }
-    if(lin===null) return '';
-    var extra = fora>=3
-      ? '<p style="margin-bottom:0">Você ficou '+fora+' segundos fora desta aba durante a Parte 1, e fora da aba o relógio corre em dobro.</p>'
-      : '';
-    return '<div class="verdict '+(ruim?'ochre':'green')+'"><div class="k">O que o relógio mostrou</div>'+
-      '<p'+(extra?'':' style="margin-bottom:0"')+'>'+lin+'</p>'+extra+'</div>';
+    if(lin===null) return null;
+    if(fora>=3) lin+=' Você ficou '+fora+' segundos fora desta aba durante a Parte 1, e fora da aba o relógio corre em dobro.';
+    return {k:'O que o relógio mostrou', p:lin, cls:(ruim?'ochre':'green')};
   }
 
-  // custoErros() foi REMOVIDO em 02/08/2026. Ele listava, matéria por matéria, quanto
-  // cada erro vale na prova, que é literalmente o "por onde começar a estudar" que o
-  // R$47 vende. Era o bloco que mais canibalizava o produto. A matéria em que a pessoa
-  // tropeçou continua aparecendo, uma vez só, na linha legível do lockbox.
-  // O campo 'fatia' segue no CONTENT porque é dado verdadeiro e barato de manter.
+  // Rótulo e largura de cada barra do hero. A barra substituiu o gráfico de quadrante:
+  // o quadrante exigia leitura de eixo e um rótulo por canto, e no celular virava
+  // enfeite. Duas barras dizem a mesma coisa sem precisar de legenda.
+  // Teto de 96%: barra cheia encostando na borda lê como "completo", e nada aqui é
+  // completo — o produto inteiro é sobre o que ainda não foi medido.
+  function barraConteudo(r){
+    var n=r.c, alto=r.X>=CORTE_X;
+    var txt = alto? 'Alto · '+n+'/'+CONTENT.length
+            : (r.X>=50? 'Parcial · '+n+'/'+CONTENT.length : 'Baixo · '+n+'/'+CONTENT.length);
+    return {rot:'Domínio do conteúdo que cai', v:txt, cls:(alto?'ok':'no'), w:Math.max(6,Math.round(r.X*0.96))};
+  }
+  function barraPressao(r){
+    var alto=r.Y>=CORTE_Y;
+    var txt = alto? 'Firme' : (r.Y>=55? 'Irregular' : 'Instável');
+    return {rot:'Firmeza sob o relógio', v:txt, cls:(alto?'ok':'no'), w:Math.max(6,Math.round(r.Y*0.96))};
+  }
 
-  // Depoimentos REAIS, autorizados por escrito, os mesmos três da landing. O do resultado
-  // fraco é o da Luciana porque ela descreve exatamente o que essa pessoa acabou de viver;
-  // o do resultado forte é o do Luiz Henrique, que fala do método e não da dificuldade.
-  // Nunca inventar depoimento, nunca editar a frase de quem autorizou.
-  function confianca(forte){
-    var d = forte
-      ? {t:'É diferente do que eu tinha visto para a OAB. Antes de te apresentar conteúdo, ele te faz entender o que é preciso corrigir, e isso muda a forma de estudar.', q:'Luiz Henrique Wrublack, advogado · Francisco Beltrão/PR'}
-      : {t:'Eu passava horas lendo e continuava com dificuldade nas questões, e o diagnóstico expõe exatamente esse tipo de problema. Fui, devagarinho, me sentindo mais confiante e segura para fazer a prova.', q:'Luciana Maria, advogada · Nova Prata do Iguaçu/PR'};
-    return '<div class="confia">'+
-      '<div class="autor">'+
-        '<img src="assets/gustavo.webp" alt="Gustavo" width="48" height="48">'+
-        '<p>Quem fez isto é o <b>Gustavo, advogado</b>. Passei pela 1ª fase enchendo a mesa de apostila e quase me enrolei, não por não saber, mas por gastar as poucas horas que tinha na matéria errada.</p>'+
-      '</div>'+
-      '<div class="dep">"'+esc(d.t)+'"<span class="quem">'+esc(d.q)+'</span></div>'+
-      '<div class="gar"><b>7 dias de garantia.</b> Faça o diagnóstico inteiro. Se você não achar que valeu, é só pedir: eu devolvo, sem discussão. O risco é meu, não seu.</div>'+
-    '</div>';
+  // Depoimentos REAIS, autorizados por escrito em 30/07/2026, os mesmos três da landing.
+  // O trecho grifado de cada um é o que responde à objeção da tela: "isso funciona para
+  // quem está exatamente onde eu estou?". Nunca inventar depoimento, nunca editar a
+  // frase de quem autorizou.
+  function depoimentos(){
+    var D=[
+      {ini:'LM', nome:'Luciana Maria', cid:'Advogada · Nova Prata do Iguaçu/PR',
+       a:'Eu passava horas lendo e continuava com dificuldade nas questões, e ', g:'o diagnóstico expõe exatamente esse tipo de problema',
+       b:'. As fichas de revisão e os simulados comentados são objetivos e facilitam muito a revisão. Fui, devagarinho, me sentindo mais confiante e segura para fazer a prova. Para quem não está conseguindo avançar, a proposta vale muito a pena.'},
+      {ini:'AP', nome:'Ana Paula', cid:'Advogada · Dois Vizinhos/PR',
+       a:'A parte que eu preferi é que ', g:'ele indica o caminho a seguir e ajuda a aproveitar melhor o tempo de estudo',
+       b:'. Em vez de tentar revisar tudo de novo, decidi ser mais metódica nos estudos. Isso fez muita diferença para mim e tornou minha preparação bem mais leve.'},
+      {ini:'LH', nome:'Luiz Henrique Wrublack', cid:'Advogado · Francisco Beltrão/PR',
+       a:'É diferente do que eu tinha visto para a OAB. ', g:'Antes de te apresentar conteúdo, ele te faz entender o que é preciso corrigir',
+       b:', e isso muda a forma de estudar. A navegação é fácil, as informações são objetivas e os simulados ajudam a entender como as questões cobram.'}
+    ];
+    return '<div class="deps">'+D.map(function(d){
+      return '<div class="dep2"><div class="asp">&ldquo;</div>'+
+        '<p>'+esc(d.a)+'<b>'+esc(d.g)+'</b>'+esc(d.b)+'</p>'+
+        '<div class="quem"><span class="ini">'+esc(d.ini)+'</span><div>'+
+          '<div class="nm">'+esc(d.nome)+'</div><div class="cid">'+esc(d.cid)+'</div>'+
+        '</div></div></div>';
+    }).join('')+'</div>';
+  }
+
+  var CHECK='<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#E9F1EA" stroke="#BFD8C4"/><path d="M5.5 9.2l2.3 2.3 4.7-4.8" stroke="#3A7A5C" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>';
+
+  // O que a pessoa recebe, item a item. Existe porque "diagnóstico" sozinho é
+  // informação, e informação é a coisa mais difícil de vender que existe: o comprador
+  // não sabe o que fazer com ela. A lista transforma o R$47 em cinco coisas na mão.
+  function stackOferta(){
+    var itens=[
+      ['Diagnóstico de 24 questões cronometradas',' — o número de cada matéria e o ponto onde seu rendimento cai, com o seu nome'],
+      ['Gabarito comentado das 24',' — cada questão com um comentário como o da amostra abaixo'],
+      ['Fichas do que mais cai',' nas 6 matérias do núcleo'],
+      ['Folha de tática para o seu perfil',' — com ordem de prova e regra de pulo'],
+      ['3 simulados',' para medir se está subindo']
+    ];
+    return '<div class="stack"><div class="hd">O que chega na sua mão, na hora</div>'+
+      itens.map(function(it){ return '<div class="it">'+CHECK+'<div><b>'+esc(it[0])+'</b>'+esc(it[1])+'</div></div>'; }).join('')+
+      '<div class="tot"><span>Tudo, uma vez, sem mensalidade</span><span class="p">R$ 47</span></div></div>';
   }
 
   function result(){
-    var r=compute(), q=quadrant(r.X,r.Y,r);
+    var r=compute(), q=quadrant(r.X,r.Y,r), L=leituraMomento(q,r);
     var nome=esc((S.nome.split(' ')[0])||'você');
-    // O ponto era plotado com o placar cru, mas as linhas do gráfico cruzam em 50% e os
-    // cortes são 100/80: X=57 caía DENTRO de "Pronto de verdade" com veredito de quem
-    // perdeu ponto dos dois lados. Cada eixo é reescalado para o corte cair exatamente
-    // na linha: o lado em que o ponto aparece é sempre o lado que o veredito afirma.
-    function posEixo(v,corte){
-      if(v>=corte) return corte>=100? 75 : 50+(v-corte)/(100-corte)*50;
-      return v/corte*50;
-    }
-    var left=Math.max(10,Math.min(90,posEixo(r.X,CORTE_X)));
-    var top=Math.max(10,Math.min(90,100-posEixo(r.Y,CORTE_Y)));
-    // Checkout pré-preenchido com o que a pessoa já digitou: ela não encara
-    // o formulário vazio de novo (é onde o funil perde gente).
+    // Checkout pré-preenchido com o que a pessoa já digitou: ela não encara o formulário
+    // vazio de novo (é onde o funil perde gente).
     var digits=S.tel.replace(/\D/g,'');
     var fill='&name='+encodeURIComponent(S.nome)+
       (S.email?'&email='+encodeURIComponent(S.email):'')+
       (digits?'&phoneNumber='+encodeURIComponent(digits):'');
     var buyUrl=CHECKOUT_URL+fill, buyUrlC=CHECKOUT_COMPLETO+fill;
-    // Quem chega forte não compra "descobrir fraqueza": recebe o Plano Completo como
-    // oferta principal. Os demais, o R$47. A flag vem do PRÓPRIO desfecho e não mais da
-    // cor, porque o quinto desfecho (quem já reprovou e gabaritou) é forte e NÃO é verde.
     var forte=!!q.forte;
-    // Erros de verdade, fora os estouros. Sem isso, quem acerta 5 e estoura 2 lia
-    // "Errou 0 e estourou o tempo em 2" e ganhava "são dois problemas diferentes"
-    // quando só existe um.
     var erroN=CONTENT.length-r.c-r.estourou;
-    // Pré-montados porque viram seções com kicker, e kicker sem conteúdo embaixo
-    // (curiosidade não tem tabela; relógio e pressão podem sair vazios) fica órfão.
-    var tc=tabelaCusto(forte);
-    var viu=tempo()+pressao();
-    var cta='<div class="ctaslim">'+
-        '<a class="btn full" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
-        '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
-      '</div>';
-    app.innerHTML =
-      '<div class="rkk">Seu resultado</div>'+
-      '<h1 class="r-h1">'+nome+', aqui está o seu sinal.</h1>'+
-      // Erro e estouro nunca se misturam na mesma frase: são dois problemas diferentes,
-      // e essa separação é a tese que a landing afirma e que aqui o quiz demonstra com
-      // o número da própria pessoa.
-      '<p class="lead" style="margin-bottom:6px">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b>.'+
-        (r.estourou? (erroN>0? ' Errou '+erroN+' e estourou o tempo em '+r.estourou+'.'
-                             : (r.estourou>1? ' Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
-                                            : ' Na outra o tempo acabou antes de você marcar.')) : '')+'</p>'+
-      '<p class="lead" style="margin-bottom:16px">'+
-        (r.estourou && erroN>0? 'São dois problemas diferentes, com soluções diferentes, e é por isso que estudar mais matéria não resolve o segundo.'
-                   : 'Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora.')+'</p>'+
-      '<div class="plot"><div class="vline"></div><div class="hline"></div>'+
-        // "Pronto nestas 7" para TODO mundo (02/08): "Pronto de verdade" era o selo de
-        // apto que o quinto desfecho mata, e para o gabaritado comum desmentia a oferta
-        // inteira, que vende exatamente a dúvida sobre o que as 7 não medem.
-        '<div class="ql tr">Pronto nestas 7</div><div class="ql br">Sabe, mas trava</div>'+
-        '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
-        '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
+    var bx=barraConteudo(r), by=barraPressao(r);
+    // A tabela não pode prometer "descobrir a matéria" para quem não perdeu matéria:
+    // vale para quem gabaritou (forte) E para quem tem X cheio ou estouro puro, que é
+    // o mesmo caso do 'sabe' da leitura do momento.
+    var semFalhaDeMateria = forte || r.X>=CORTE_X || (errosReais()===0 && estourouQuantas()>0);
+    var tc=tabelaCusto(semFalhaDeMateria), vt=tempo(), vp=pressao();
+    // O trecho em itálico do título. Se 'hl' não estiver dentro de 'lab', o título sai
+    // reto em vez de quebrar: substituição só acontece quando encontra.
+    var h1=esc(q.lab);
+    if(q.hl && q.lab.indexOf(q.hl)>=0) h1=h1.replace(esc(q.hl),'<em>'+esc(q.hl)+'</em>');
+    if(!/[.!?]$/.test(q.lab)) h1+='.';
+    var MICRO='R$ 47 à vista, no Pix ou no cartão · ou em até '+PARCELA+'<br>acesso imediato · sem mensalidade · 7 dias de garantia';
+
+    // A tela de resultado sai da casca estreita do quiz e vira página de vendas.
+    document.body.className='res';
+
+    var html =
+      '<div class="rhero"><div class="in">'+
+        '<div class="rbrand">'+
+          '<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F3EEE4"/><g stroke="#15212B" stroke-width="2.4" fill="none"><circle cx="16" cy="16" r="7.2"/><path d="M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4"/></g><circle cx="16" cy="16" r="3" fill="#C77A2B"/></svg>'+
+          '<span class="nm">Só o que Cai</span><span class="tg">1ª fase · OAB</span>'+
+        '</div>'+
+        '<div class="rkick">'+nome+' · seu resultado</div>'+
+        '<h1 class="rh1">'+h1+'</h1>'+
+        '<p class="rlead">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b>'+
+          (r.estourou? (erroN>0? ', errou '+erroN+' e estourou o tempo em '+r.estourou+'.'
+                               : (r.estourou>1? '. Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
+                                              : '. Na outra o tempo acabou antes de você marcar.'))
+                     : '.')+' '+esc(q.lead)+'</p>'+
+        '<div class="bars">'+
+          '<div class="b"><div class="hd"><span>'+esc(bx.rot)+'</span><span class="v '+bx.cls+'">'+esc(bx.v)+'</span></div>'+
+            '<div class="tr"><i class="'+bx.cls+'" style="width:'+bx.w+'%"></i></div></div>'+
+          '<div class="b"><div class="hd"><span>'+esc(by.rot)+'</span><span class="v '+by.cls+'">'+esc(by.v)+'</span></div>'+
+            '<div class="tr"><i class="'+by.cls+'" style="width:'+by.w+'%"></i></div></div>'+
+          '<div class="ft">Dois eixos, medidos separados</div>'+
+        '</div>'+
+      '</div></div>'+
+
+      '<div class="rbody">'+
+        '<div style="margin-top:38px">'+
+          '<p class="rp forte">'+esc(q.p1)+'</p>'+
+          '<p class="rp">'+esc(q.p2)+'</p>'+
+          (L? '<div class="pull"><p>'+esc(L.ponto)+'</p></div>' : '')+
+        '</div>'+
+
+        // A comparação de custo e a lista do que chega vêm ANTES do botão: é o que
+        // coloca alguma coisa na outra ponta da balança antes de pedir dinheiro.
+        (L? '<div class="rsec"><div class="rkk">O que corrige</div>'+
+            '<h3 class="rh3">'+esc(L.titulo)+'</h3>'+
+            '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+
+            '<a class="rbtn" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+            '<div class="rmicro">'+MICRO+'</div></div>'
+          : '<div class="rsec">'+tc+stackOferta()+
+            '<a class="rbtn" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+            '<div class="rmicro">'+MICRO+'</div></div>')+
+
+        ((vt||vp)? '<div class="rsec"><div class="rkk">Leitura do teste</div>'+
+          '<h3 class="rh3">O que o teste viu em você</h3><div class="viu">'+
+          (vt? '<div class="it '+vt.cls+'"><div class="k">'+esc(vt.k)+'</div><p>'+vt.p+'</p></div>' : '')+
+          (vp? '<div class="it '+vp.cls+'"><div class="k">'+esc(vp.k)+'</div><p>'+vp.p+'</p></div>' : '')+
+          '</div></div>' : '')+
+
+        '<div class="rsec"><div class="rkk v">Amostra do relatório</div>'+
+          '<h3 class="rh3">Uma questão comentada, do jeito que vem no completo</h3>'+gabarito()+'</div>'+
+
+        '<div class="rsec"><div class="rkk">Diagnóstico completo</div>'+
+          '<h3 class="rh3">O que ainda está fechado para você</h3>'+lockbox()+'</div>'+
+
+        '<div class="rsec"><div class="rkk">Quem já fez</div>'+
+          '<h3 class="rh3">Três pessoas que estavam onde você está agora</h3>'+depoimentos()+'</div>'+
+
+        '<div class="rsec"><div class="rkk">Direto do criador</div>'+
+          '<h3 class="rh3">Antes de decidir, me escute por 49 segundos</h3>'+
+          // preload="none": 5 MB não podem sair do ar antes de a pessoa pedir. O poster
+          // é o primeiro quadro, então o bloco já diz alguma coisa parado.
+          '<div class="vid"><video controls playsinline preload="none" poster="assets/video/carteira-350.jpg">'+
+            '<source src="assets/video/carteira-350.mp4" type="video/mp4">'+
+          '</video></div>'+
+          '<div class="vidleg">Vídeo · 49 segundos · com som</div></div>'+
+
+        '<div class="rsec">'+
+          '<div class="autor2"><img src="assets/gustavo.webp" alt="Gustavo, advogado" width="76" height="76" loading="lazy">'+
+            '<div><div class="k">Quem fez isto</div>'+
+            '<p><b>Gustavo, advogado.</b> Passei pela 1ª fase enchendo a mesa de apostila e quase me enrolei, não por não saber, mas por gastar as poucas horas que tinha na matéria errada.</p></div>'+
+          '</div>'+
+          '<div class="gar2"><b>7 dias de garantia.</b> Faça o diagnóstico inteiro. Se você não achar que valeu, é só pedir: eu devolvo, sem discussão. O risco é meu, não seu.</div>'+
+        '</div>'+
+
+        '<div class="ofim">'+
+          '<div class="k">Última coisa</div>'+
+          (forte
+            // Para quem acertou tudo o pedido continua sendo o MENOR (R$47), e o
+            // argumento é o único honesto que existe: sete questões não acharem nada
+            // não é o mesmo que não existir nada.
+            ? '<h3>Sete questões não acharam nada.<br>Vinte e quatro podem.</h3>'+
+              '<p>Com uma questão por matéria, tudo o que dá para afirmar é que naquela você acertou. O diagnóstico completo mede 24, cronometradas, nas mesmas 6 matérias. Você quer entrar na prova com essa dúvida em aberto, ou prefere fechá-la em 20 minutos?</p>'
+            : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
+              '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada. O diagnóstico completo troca isso pelo número de cada matéria.</p>')+
+          '<a class="rbtn" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
+          '<div class="rmicro">'+MICRO+'</div>'+
+          '<div class="selo">'+
+            '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
+            '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
+          '</div>'+
+          '<a class="upsell" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
+        '</div>'+
+
+        '<div class="rfoot">Mini-diagnóstico gratuito. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
       '</div>'+
-      // O veredito é o painel navy, no papel da seção escura da landing: é a manchete
-      // do resultado, não mais um cartão entre cartões.
-      '<div class="verd-hero '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q,r)+'</div>'+
-      // A comparação de custo vem logo depois do gancho e ANTES do botão: é ela que
-      // transforma o diagnóstico em decisão. CTA na mesma seção. Todos pedem R$47,
-      // inclusive quem gabaritou: menor pedido para quem tem menos dor.
-      (tc? '<div class="rsec"><div class="rkk">O que está em jogo</div>'+tc+cta+'</div>'
-         : '<div class="rsec">'+cta+'</div>')+
-      (viu? '<div class="rsec viu"><div class="rkk">O que o teste viu em você</div>'+viu+'</div>' : '')+
-      '<div class="rsec">'+gabarito()+'</div>'+
-      '<div class="rsec">'+lockbox()+'</div>'+
-      '<div class="rsec">'+confianca(forte)+'</div>'+
-      '<div class="rsec">'+
-      (forte
-        // Oferta de quem acertou tudo. Refeita em 02/08: a versão anterior empurrava o
-        // produto de R$127 para quem acabou de provar que não precisa de diagnóstico, e
-        // isso faz o teste inteiro parecer funil de venda. Agora o pedido é o MENOR, e o
-        // argumento é o único honesto que existe para essa pessoa: sete questões não
-        // acharem nada não é o mesmo que não existir nada.
-        ? '<div class="offer">'+
-            '<h3>Sete questões não acharam nada. Vinte e quatro podem.</h3>'+
-            '<p>Este teste mediu 7 questões, uma por matéria. Não achou buraco em você, e isso é bom. Mas com uma questão por matéria, tudo o que dá para afirmar é que naquela você acertou.</p>'+
-            '<p><b>O diagnóstico completo mede 24, cronometradas, nas mesmas 6 matérias.</b> É a partir dali que aparece o que 7 não alcançam: em qual delas o seu acerto oscila, em que ponto o seu rendimento começa a cair, e a diferença entre saber a resposta e sustentar isso por 80 questões seguidas. O que ele encontrar é exatamente o tipo de coisa que decide uma reprovação, e que ninguém descobre estudando mais matéria.</p>'+
-            '<p>E ele não vem sozinho: junto vão as fichas do que mais cai, a folha de tática de prova para o seu perfil e 3 simulados. Para você eles servem menos para achar fraqueza e mais para o que importa agora, que é chegar no dia aquecido em vez de parado.</p>'+
-            // Pergunta direta, e é o fecho certo para quem gabaritou: essa pessoa não tem
-            // dor para empurrar, tem uma dúvida em aberto. O trabalho da oferta é fazer
-            // ela olhar para essa dúvida e decidir se quer levá-la para a sala de prova.
-            '<p><b>Então a pergunta é essa: você quer entrar na prova com essa dúvida em aberto, ou prefere fechá-la em 20 minutos?</b></p>'+
-            '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero o diagnóstico completo</a>'+
-            '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
-            '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer as 17 disciplinas, 2 simulados de 80 questões e o cronograma até a prova? Plano Completo por R$ 127</a>'+
-          '</div>'
-        : '<div class="offer">'+
-            '<h3>Esse foi o raio-x de '+CONTENT.length+' questões. A prova tem 80.</h3>'+
-            '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>'+
-            // A enumeração do que o relatório revela saiu daqui: era a QUARTA vez que os
-            // mesmos itens apareciam na tela (gancho do veredito, bloco rasurado, e aqui).
-            '<p>O diagnóstico completo acende a luz: 24 questões cronometradas, e no fim você tem o número de cada matéria em vez de suposição. E leva junto o kit para agir: as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados para medir se está subindo.</p>'+
-            '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-            '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
-            '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
-          '</div>')+
-      '</div>';
-      // O bloco do autor saiu daqui e virou parte do bloco de confiança, ACIMA da oferta.
-      // Confiança depois do pedido de dinheiro chega tarde para quem já decidiu não pagar.
-    // Não existe "refazer": a tela de resultado é a tela de decisão, e uma
-    // terceira saída ao lado do botão de compra só serve para quem estava
-    // hesitando desistir sem custo. Quem quiser repetir recarrega a página.
-    ['buy0','buy','buy2'].forEach(function(id){
+
+      '<div class="sticky" id="stk"><div class="in">'+
+        '<div class="t"><div class="a">Diagnóstico completo</div><div class="b">R$ 47 · ou '+PARCELA+'</div></div>'+
+        '<a href="'+buyUrl+'" id="buy3" data-v="47">Quero agora</a>'+
+      '</div></div>';
+
+    app.innerHTML = html;
+
+    // Não existe "refazer": a tela de resultado é a tela de decisão, e uma terceira
+    // saída ao lado do botão de compra só serve para quem hesita desistir sem custo.
+    ['buy0','buy','buy2','buy3'].forEach(function(id){
       var el=document.getElementById(id);
       if(el) el.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:parseInt(el.getAttribute('data-v'),10),currency:'BRL'}); }catch(e){} } };
     });
+
+    // Barra fixa: só depois de 1,2 tela rolada, quando o primeiro CTA já saiu de vista.
+    var stk=document.getElementById('stk'), visivel=false;
+    function checarBarra(){
+      var deve = window.scrollY > window.innerHeight*1.2;
+      if(deve!==visivel){ visivel=deve; stk.className='sticky'+(deve?' on':''); }
+    }
+    if(window._stk) window.removeEventListener('scroll', window._stk);
+    window._stk=checarBarra;
+    window.addEventListener('scroll', checarBarra, {passive:true});
+    checarBarra();
   }
 
   render();
