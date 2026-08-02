@@ -55,7 +55,6 @@
   .btn[disabled]{opacity:.4;cursor:not-allowed}
   .btn.full{width:100%}
   .back{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;margin-top:14px;padding:4px}
-  .back.mini{font-size:12.5px;text-decoration:underline;margin-top:22px;opacity:.75}
   .autor{display:flex;align-items:flex-start;gap:13px;margin-top:20px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px}
   .autor img{border-radius:50%;flex-shrink:0;object-fit:cover}
   .autor p{font-size:13.5px;color:var(--muted2);line-height:1.5}
@@ -534,15 +533,14 @@
       '<div class="autor">'+
         '<img src="assets/gustavo.webp" alt="Gustavo" width="48" height="48">'+
         '<p>Quem fez isto é o <b>Gustavo, advogado</b>. Passei pela 1ª fase enchendo a mesa de apostila e quase me enrolei, não por não saber, mas por gastar as poucas horas que tinha na matéria errada. O Só o que Cai faz essa separação em 20 minutos.</p>'+
-      '</div>'+
-      '<div class="center"><button class="back mini" id="redo">Refazer o teste</button></div>';
+      '</div>';
+    // Não existe "refazer": a tela de resultado é a tela de decisão, e uma
+    // terceira saída ao lado do botão de compra só serve para quem estava
+    // hesitando desistir sem custo. Quem quiser repetir recarrega a página.
     ['buy','buy2'].forEach(function(id){
       var el=document.getElementById(id);
       if(el) el.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:parseInt(el.getAttribute('data-v'),10),currency:'BRL'}); }catch(e){} } };
     });
-    document.getElementById('redo').onclick=function(){ // times:{} tem que voltar aqui. Sem ele, S.times fica undefined e a primeira
-// resposta estoura em S.times[i], deixando o quiz morto na questao 1.
-S={ screen:'intro', ci:0, ans:{}, times:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel, momento:S.momento }; render(); window.scrollTo(0,0); };
   }
 
   render();
