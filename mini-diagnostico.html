@@ -4,9 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini-diagnóstico grátis · Só o que Cai · 1ª fase da OAB</title>
-<meta name="description" content="Em 4 minutos, descubra se o que te derruba na 1ª fase da OAB é conteúdo ou desempenho na hora da prova.">
-<meta property="og:title" content="Descubra em 4 minutos onde você perde ponto na 1ª fase da OAB">
-<meta property="og:description" content="Um mini-diagnóstico gratuito que separa o que você não sabe do que você sabe mas trava na hora.">
+<!-- 02/08/2026: as metas falavam de "conteúdo ou desempenho", que é a tese dos dois
+     eixos. Ela virou MECANISMO, não promessa. A promessa agora é a margem, que é a
+     única linguagem que este público usa sozinho: "fico nos 38/39", "por uma maldita
+     questão". Anúncio, entrada e veredito passam a dizer a mesma coisa. -->
+<meta name="description" content="38, 39, e faltaram duas questões. Em 4 minutos, descubra quais matérias custaram os pontos que faltaram na 1ª fase da OAB.">
+<meta property="og:title" content="Faltaram duas questões. E ninguém te diz quais.">
+<meta property="og:description" content="Mini-diagnóstico gratuito de 7 questões cronometradas: mostra quanto você perdeu e onde, se foi a palavra que a banca trocou ou a hora de decidir.">
 <meta property="og:image" content="https://gsteixeiradossantos-alt.github.io/so-o-que-cai/assets/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -494,8 +498,16 @@
 
   function intro(){
     app.innerHTML =
-      '<h1>Em 4 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
-      '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
+      // A entrada dizia "existem dois jeitos de reprovar: não saber a matéria, e saber e
+      // travar na hora". Era a tese dos dois eixos, e ela criava um funil que dizia três
+      // coisas diferentes em três degraus: o anúncio prometia a margem, a entrada
+      // prometia os eixos, o veredito voltava para a margem.
+      // Agora a entrada abre pela margem, com os dois culpados nomeados. Os eixos
+      // continuam sendo o que o teste MEDE, mas param de ser o que a página PROMETE.
+      // Os dois culpados vieram da varredura de relatos reais: "a FGV ama a
+      // literalidade" e "tava com tanto medo de errar que acabei errando mais".
+      '<h1>Faltaram <em>duas questões</em>. E ninguém te diz quais.</h1>'+
+      '<p class="lead">38, 39, e são mais quatro meses. Raramente é a matéria toda: ou a banca decidiu tudo numa palavra trocada que você não viu, ou você sabia, travou e mudou a resposta certa. Este mini-diagnóstico mostra qual dos dois é o seu.</p>'+
       // A regra aparece uma vez, seca, e SÓ a regra. A versão anterior empilhava sete
       // informações antes do botão, todas de restrição, no exato segundo em que a pessoa
       // decide se começa. Saiu também o "todas são pegadinha": tempo é regra de jogo e
@@ -1296,10 +1308,16 @@
     // DIAG NÃO enumera o que o relatório mostra: o bloco rasurado faz isso logo abaixo,
     // e melhor, porque é visual. Aqui fica só formato e preço. O R$47 NÃO é só o
     // relatório: inclui as fichas, a folha de tática e 3 simulados.
-    var DIAG='São 24 questões cronometradas nas 6 matérias que decidem a prova, e o relatório sai na hora, com o seu nome. Junto vêm as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados para medir se você está subindo.';
+    // A prosa parou de enumerar fichas, folha de tática e simulados: a lista "O que
+    // chega na sua mão" está logo abaixo e faz isso melhor. Duas enumerações iguais na
+    // mesma dobra fazem a oferta parecer menor, não maior.
+    // Começa em "Elas" porque o título da seção acabou de dizer "As 24 questões".
+    // Antes o número aparecia três vezes na mesma altura de tela: no título, aqui, e no
+    // primeiro item da lista. A terceira repetição não aumenta desejo nenhum.
+    var DIAG='Elas são cronometradas, nas 6 matérias que decidem a prova, e o relatório sai na hora, com o seu nome.';
     // Para quem não perdeu matéria, a oferta não pode prometer "descubra onde você perde
     // ponto": ela acabou de não perder nenhum. Responde a pergunta que o veredito deixou.
-    var DIAG_F='São 24 questões cronometradas nas mesmas 6 matérias, e o relatório responde isso com número: onde o seu rendimento começa a cair, e em qual matéria. Junto vêm as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados.';
+    var DIAG_F='Elas são cronometradas, nas mesmas 6 matérias, e o relatório responde isso com número: onde o seu rendimento começa a cair, e em qual matéria.';
     if(forte||sabe) DIAG=DIAG_F;
     var ponto, titulo, texto;
     if(reprovouMais()){
@@ -1307,7 +1325,11 @@
         ? 'Duas provas ou mais sem passar, e a matéria do núcleo você tem. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
         : sabe
         ? 'Duas provas ou mais sem passar, e o que te derrubou aqui não foi a matéria. O que cedeu foi a hora, e agora isso tem registro: aconteceu de novo, num teste de quatro minutos. Duas reprovações e este resultado apontam para o mesmo lugar, e não é o caderno.'
-        : 'O padrão acabou de se repetir na sua frente, em quatro minutos. Isso não é falta de esforço, e é bem provável que você tenha estudado mais do que muita gente que passou. O esforço é que foi para o lugar errado: mais um ano na matéria que você já sabia, enquanto a que te derruba seguiu intocada, porque ninguém nunca te disse qual era.';
+        // Encurtado em 02/08: eram cinco linhas no ponto em que a pessoa já aceitou o
+        // diagnóstico e quer saber "e agora". A absolvição ("não é falta de esforço")
+        // fica, porque num público em que a regra é o autoflagelo ela é o que segura a
+        // leitura. O que saiu foi a repetição do argumento, não o argumento.
+        : 'O padrão acabou de se repetir na sua frente, em quatro minutos. Não é falta de esforço: é esforço na matéria errada, porque ninguém nunca te disse qual era.';
       titulo = forte? 'Medir o que ainda não foi medido'
         : sabe? 'Parar de estudar de novo o que você já tem'
         : 'Saber o nome dessa matéria antes de abrir o próximo caderno';
@@ -1651,7 +1673,7 @@
       MICRO:'pagamento único, sem mensalidade · acesso na hora, por 12 meses<br>7 dias de garantia',
       // No bloco final a garantia já está no selo, 20 pixels abaixo. Repetir ali era a
       // quarta aparição da mesma frase na mesma tela.
-      MICRO_FIM:'pagamento único, sem mensalidade · acesso na hora, por 12 meses'
+      MICRO_FIM:'pagamento único · acesso na hora'
     };
   }
 
@@ -1742,8 +1764,12 @@
           (vp? '<div class="it '+vp.cls+'"><div class="k">'+esc(vp.k)+'</div><p>'+vp.p+'</p></div>' : '')+
           '</div></div>' : '')+
 
+        // O título desta seção era "Uma questão comentada, do jeito que vem no completo",
+        // que descreve o produto. Agora nomeia o vilão, e a seção PROVA o vilão na hora:
+        // cada comentário do gabarito nomeia a palavra que a banca trocou. É a única
+        // acusação da página que o próprio conteúdo grátis demonstra.
         '<div class="rsec"><div class="rkk v">Amostra do relatório</div>'+
-          '<h3 class="rh3">Uma questão comentada, do jeito que vem no completo</h3>'+gabarito()+'</div>'+
+          '<h3 class="rh3">A palavra que a banca trocou nesta questão</h3>'+gabarito()+'</div>'+
 
         '<div class="rsec"><div class="rkk">Diagnóstico completo</div>'+
           '<h3 class="rh3">O que ainda está fechado para você</h3>'+lockbox()+'</div>'+
@@ -1755,8 +1781,12 @@
         '<div class="ponte">'+
           '<div class="k">O que fazer com isso</div>'+
           '<h3>'+esc(L? L.titulo : 'Trocar suposição por número')+'</h3>'+
-          '<p>Você já sabe o tamanho do buraco. O que vem agora é o que fecha ele, e quanto custa.</p>'+
-          '<a class="rbtn" href="#" id="versol" style="margin-top:0">Ver minha solução</a>'+
+          // "Ver minha solução" era palavra de vendedor, e "solução" promete mais do que
+          // o produto entrega. O botão passa a falar do que a pessoa vai fazer, não do
+          // que eu tenho para vender. O "e quanto custa" fica: avisar no parágrafo e não
+          // no botão é a dose certa, o clique continua grátis e ninguém se sente pego.
+          '<p>Você já descobriu onde está o problema. Agora veja o que corrige, e quanto custa.</p>'+
+          '<a class="rbtn" href="#" id="versol" style="margin-top:0">Ver como corrigir isso</a>'+
         '</div>'+
 
         '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
@@ -1785,6 +1815,13 @@
     var tituloSol = C.semFalhaDeMateria
       ? 'As 24 questões que medem o que estas '+CONTENT.length+' não alcançam'
       : 'As 24 questões que dão nome ao que estas '+CONTENT.length+' só apontaram';
+    // A tela de oferta abria descrevendo o produto. As duas revisoes independentes
+    // apontaram o mesmo: a oferta tem que REACENDER o problema antes de virar catalogo,
+    // senao ela le como pagina de vendas generica colada num diagnostico.
+    // Esta linha entra ANTES do titulo e devolve a pessoa para a pergunta que ficou.
+    var reacende = C.semFalhaDeMateria
+      ? 'Você acabou de descobrir que a matéria não é o que te derruba. Falta o resto da resposta: em que ponto o seu rendimento cede, e o que fazer com isso no dia da prova.'
+      : 'Você acabou de descobrir que perdeu ponto por matéria. Falta o resto da resposta: quais matérias são, quanto falta em cada uma, e por onde começar amanhã.';
 
     document.body.className='res';
 
@@ -1797,6 +1834,7 @@
 
       '<div class="rbody">'+
         (L? '<div class="rsec" style="margin-top:34px"><div class="rkk">O que corrige</div>'+
+            '<p class="rp forte" style="margin-bottom:20px">'+esc(reacende)+'</p>'+
             '<h3 class="rh3">'+esc(tituloSol)+'</h3>'+
             '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+bonusKit()+
             '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
@@ -1815,7 +1853,14 @@
           // O título termina no meio da frase de propósito: o vídeo abre com "Pensando
           // nisso" e completa. A repetição das duas palavras é o que costura os dois,
           // então o parágrafo de apoio saiu daqui para não separar um do outro.
-          '<h3 class="rh3" style="margin-bottom:18px">Saber a matéria e saber fazer a prova são duas coisas diferentes e, pensando nisso...</h3>'+
+          // O título era "saber a matéria e saber fazer a prova são duas coisas
+          // diferentes", ou seja, a tese dos dois eixos anunciada como promessa, no meio
+          // de uma página cuja promessa passou a ser a margem.
+          // O vídeo NÃO mudou e não precisava: ele explica os dois eixos, e isso agora é
+          // MECANISMO, que é exatamente o que cabe neste ponto, depois de a oferta já ter
+          // sido feita. Só o antecedente mudou, e continua terminando no meio da frase
+          // porque o vídeo abre falando "pensando nisso".
+          '<h3 class="rh3" style="margin-bottom:18px">Duas questões decidem a prova, e elas não se perdem sempre pelo mesmo motivo. E, pensando nisso...</h3>'+
           // 02/08: era o anúncio inteiro do R$350, que abre apresentando o problema
           // ("essa carteira custou 350 reais") para quem nunca ouviu falar do produto.
           // Aqui a pessoa acabou de fazer o teste: recomeçar do zero joga a temperatura
