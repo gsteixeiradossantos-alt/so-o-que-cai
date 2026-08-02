@@ -174,6 +174,34 @@
   .lockbox .val{color:var(--ink);white-space:nowrap;font-weight:600;font-size:13.5px;text-align:right}
   .lockbox .val.trava{display:inline-block;width:88px;height:10px;border-radius:5px;background:var(--muted2);opacity:.3;font-size:0}
   .lockbox .cta{font-size:12px;color:var(--muted);padding:0 20px 14px}
+  /* ===== Resultado v2 (02/08): linguagem visual da landing. Só casca: o texto e a
+     ordem dos blocos não mudam. O que muda: o veredito vira o painel navy (a seção
+     escura da landing), os blocos de leitura perdem a moldura de cartão e viram
+     linhas com filete, cada grupo ganha um kicker de seção, e o CTA ganha o peso
+     (sombra, tamanho) do botão da landing. A tela deixa de ser uma pilha de caixas
+     iguais e passa a ter uma manchete, seções e um pedido. ===== */
+  .rkk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  .rsec{margin-top:38px}
+  .r-h1{font-size:clamp(26px,6.4vw,33px);line-height:1.1;letter-spacing:-.018em}
+  .verd-hero{background:var(--navy);color:#C9C1B4;border-radius:20px;padding:28px 24px;margin-top:10px}
+  .verd-hero .k{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+  .verd-hero.ochre .k{color:var(--ocre2)}
+  .verd-hero.green .k{color:#7FB99A}
+  .verd-hero.mixed .k{color:#A89F90}
+  .verd-hero h2{font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,5.8vw,29px);line-height:1.16;letter-spacing:-.01em;color:#fff;margin-bottom:10px}
+  .verd-hero p{font-size:15px;line-height:1.62;color:#C9C1B4;margin-bottom:10px}
+  .verd-hero p:last-child{margin-bottom:0}
+  .verd-hero b{color:#fff}
+  .ctaslim .btn{box-shadow:0 14px 30px -14px rgba(21,33,43,.9);font-size:17px;padding:18px 26px}
+  .viu .verdict{background:none;border:0;border-left:3px solid var(--line);border-radius:0;padding:2px 0 2px 16px;margin:0 0 18px}
+  .viu .verdict:last-child{margin-bottom:0}
+  .viu .verdict.ochre{border-left-color:var(--ocre)}
+  .viu .verdict.green{border-left-color:var(--green)}
+  .viu .verdict.mixed{border-left-color:var(--muted)}
+  .viu .verdict .k{margin-bottom:4px}
+  .viu .verdict h2{font-size:19px}
+  .offer h3{font-size:clamp(21px,5.4vw,26px);line-height:1.18}
+  .offer .btn{box-shadow:0 14px 30px -14px rgba(0,0,0,.7)}
 </style>
 </head>
 <body>
@@ -1053,9 +1081,17 @@
     // "Errou 0 e estourou o tempo em 2" e ganhava "são dois problemas diferentes"
     // quando só existe um.
     var erroN=CONTENT.length-r.c-r.estourou;
+    // Pré-montados porque viram seções com kicker, e kicker sem conteúdo embaixo
+    // (curiosidade não tem tabela; relógio e pressão podem sair vazios) fica órfão.
+    var tc=tabelaCusto(forte);
+    var viu=tempo()+pressao();
+    var cta='<div class="ctaslim">'+
+        '<a class="btn full" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+        '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
+      '</div>';
     app.innerHTML =
-      '<div class="prog">Seu resultado</div>'+
-      '<h1 style="font-size:24px">'+nome+', aqui está o seu sinal.</h1>'+
+      '<div class="rkk">Seu resultado</div>'+
+      '<h1 class="r-h1">'+nome+', aqui está o seu sinal.</h1>'+
       // Erro e estouro nunca se misturam na mesma frase: são dois problemas diferentes,
       // e essa separação é a tese que a landing afirma e que aqui o quiz demonstra com
       // o número da própria pessoa.
@@ -1074,23 +1110,19 @@
         '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
-      '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q,r)+'</div>'+
+      // O veredito é o painel navy, no papel da seção escura da landing: é a manchete
+      // do resultado, não mais um cartão entre cartões.
+      '<div class="verd-hero '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q,r)+'</div>'+
       // A comparação de custo vem logo depois do gancho e ANTES do botão: é ela que
-      // transforma o diagnóstico em decisão. Sem ela o botão pede dinheiro sem ter
-      // colocado nada na outra ponta da balança.
-      tabelaCusto(forte)+
-      // CTA logo depois. Antes o primeiro preço só aparecia no sexto bloco de sete, o
-      // que no celular é muito rolar para quem já decidiu. Agora TODOS pedem R$47,
+      // transforma o diagnóstico em decisão. CTA na mesma seção. Todos pedem R$47,
       // inclusive quem gabaritou: menor pedido para quem tem menos dor.
-      '<div class="ctaslim">'+
-        '<a class="btn full" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
-        '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
-      '</div>'+
-      tempo()+
-      pressao()+
-      gabarito()+
-      lockbox()+
-      confianca(forte)+
+      (tc? '<div class="rsec"><div class="rkk">O que está em jogo</div>'+tc+cta+'</div>'
+         : '<div class="rsec">'+cta+'</div>')+
+      (viu? '<div class="rsec viu"><div class="rkk">O que o teste viu em você</div>'+viu+'</div>' : '')+
+      '<div class="rsec">'+gabarito()+'</div>'+
+      '<div class="rsec">'+lockbox()+'</div>'+
+      '<div class="rsec">'+confianca(forte)+'</div>'+
+      '<div class="rsec">'+
       (forte
         // Oferta de quem acertou tudo. Refeita em 02/08: a versão anterior empurrava o
         // produto de R$127 para quem acabou de provar que não precisa de diagnóstico, e
@@ -1119,7 +1151,8 @@
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
             '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
             '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
-          '</div>');
+          '</div>')+
+      '</div>';
       // O bloco do autor saiu daqui e virou parte do bloco de confiança, ACIMA da oferta.
       // Confiança depois do pedido de dinheiro chega tarde para quem já decidiu não pagar.
     // Não existe "refazer": a tela de resultado é a tela de decisão, e uma
