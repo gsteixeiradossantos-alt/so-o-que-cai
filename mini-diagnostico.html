@@ -267,6 +267,7 @@
   .bonus .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.11em;
             text-transform:uppercase;color:var(--ocre);margin-bottom:11px}
   .bonus .row{display:flex;gap:11px;align-items:flex-start}
+  .bonus .row + .row{margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
   .bonus .row svg{flex:none;margin-top:2px}
   .bonus .tl{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
   .bonus .tl b{font-size:15.5px;font-weight:600}
@@ -1559,13 +1560,26 @@
   }
   function hojeExtenso(){ return porExtenso(new Date()); }
 
-  // O Kit Reta Final: era bump de R$19 e virou bônus incluído em 02/08/2026.
-  // A descrição é o que o arquivo kit-reta-final.html realmente entrega, conferido
-  // no repo do app. Nunca prometer aqui coisa que não esteja lá dentro.
+  // Os dois bônus do R$47, ambos com origem e ambos conferidos contra os arquivos do
+  // app. Nunca prometer aqui coisa que não esteja lá dentro.
+  //
+  // O Kit Reta Final era bump de R$19 e virou bônus em 02/08/2026.
+  // O Guia de leitura da FGV desceu do Plano Completo no mesmo dia, e é o mais
+  // importante dos dois para a tese da página: a dor tem dois culpados, a palavra que
+  // a banca troca e a trava na hora, e este guia é a única peça do produto inteiro que
+  // ataca os dois. As regras de leitura contra a literalidade da FGV, e "a resposta
+  // que você não deve trocar" contra a trava.
+  //
+  // O valor de cada um é dito com a origem REAL, nunca com preço inventado: o Kit tem
+  // preço próprio porque era vendido; o Guia não tem, então diz de onde veio.
   function bonusKit(){
     var d=diasParaProva();
     return '<div class="bonus">'+
-      '<div class="k">Quem entrar hoje, '+hojeExtenso()+'</div>'+
+      '<div class="k">Quem entrar hoje, '+hojeExtenso()+', leva os dois</div>'+
+      '<div class="row">'+CHECK+'<div>'+
+        '<div class="tl"><b>Guia de leitura da FGV</b><span class="val">vinha só no Plano Completo</span></div>'+
+        '<p>As seis regras contra o erro de leitura da banca: ler a última linha primeiro, caçar as negativas, eliminar duas alternativas antes de decidir, e a resposta que você não deve trocar depois de ter marcado.</p>'+
+      '</div></div>'+
       '<div class="row">'+CHECK+'<div>'+
         '<div class="tl"><b>Kit Reta Final</b><span class="val">vendido por R$ 19</span></div>'+
         '<p>O plano das últimas três semanas, semana a semana. O checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
@@ -1577,8 +1591,8 @@
       // Delzuita, que chegou ao checkout e disse "só terei dinheiro dia 6". A pressão
       // fica, mas só sobre o Kit, e por um motivo verdadeiro: ele cobre a reta final,
       // então vale menos a cada dia. O preço fica garantido porque nunca foi outro.
-      (d? '<div class="pe">Faltam '+d+' dias para a prova, e é exatamente esse o período que o Kit cobre. Ele está incluído hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro. O Kit eu não garanto, e ele cobre menos prova a cada dia que passa.</div>'
-        : '<div class="pe">O Kit está incluído hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro.</div>')+
+      (d? '<div class="pe">Faltam '+d+' dias para a prova, e é exatamente esse o período que o Kit cobre. Os dois estão incluídos hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro. Os bônus eu não garanto, e o Kit cobre menos prova a cada dia que passa.</div>'
+        : '<div class="pe">Os dois estão incluídos hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro.</div>')+
     '</div>';
   }
 
@@ -1842,7 +1856,7 @@
               : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
                 '<p>A única decisão que importa é em quais matérias as suas horas de estudo vão cair. O diagnóstico completo devolve o número de cada uma.</p>'))+
           '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-          C.PAGA+'<div class="rmicro">Com o Kit Reta Final junto, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO_FIM+'</div>'+
+          C.PAGA+'<div class="rmicro">Com o Guia da FGV e o Kit Reta Final juntos, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO_FIM+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
             '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
