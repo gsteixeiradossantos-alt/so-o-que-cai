@@ -1145,7 +1145,11 @@
           ? ['Sair daqui sabendo só que acertou 7 questões','Saber o que as 7 não alcançaram']
           : ['Sair daqui sabendo que tem um buraco, sem saber onde','O nome dele, e o tamanho'],
         [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
-        [TAXA_EXAME+' na inscrição, quando você decidir prestar','R$47, uma vez, ou '+PARCELA]
+        [TAXA_EXAME+' na inscrição, quando você decidir prestar','R$47, uma vez, ou '+PARCELA],
+        // Quarta linha acrescentada em 02/08: com três linhas e o dinheiro movido para
+        // depois do tempo, esta tabela passou a FECHAR no preço, enquanto as outras
+        // três variantes fecham num ganho. Última linha é a que fica na cabeça.
+        ['Continuar sem saber o tamanho disso', promessa]
       ];
     }
     var html='<div class="custo"><div class="lin cab"><div>Se você não fizer nada</div><div>Se você olhar agora</div></div>';
