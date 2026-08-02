@@ -28,6 +28,7 @@
   :root{
     --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
     --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E; --ocre2:#C77A2B; --green:#3A7A5C;
+    --red:#C0271A; --red2:#E8B4AE; --red3:#8E1A10;
   }
   *{box-sizing:border-box;margin:0}
   body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -44,6 +45,32 @@
   .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2)}
   .clock i{width:7px;height:7px;border-radius:50%;background:var(--ocre);animation:pulse 1s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+  /* Cronômetro regressivo. Era um relógio crescente de 11px escondido na barra de
+     progresso: sumia na tela. Agora é o elemento mais visível da questão, porque a
+     pressão do relógio é metade do que este teste mede. */
+  .timer{text-align:center;margin-bottom:16px}
+  .timer .num{font-family:'Space Mono',monospace;font-weight:700;font-size:40px;line-height:1;
+    color:var(--red);font-variant-numeric:tabular-nums;display:inline-block;
+    transition:transform .18s ease}
+  .timer .bar{height:6px;border-radius:3px;background:var(--red2);overflow:hidden;margin-top:10px}
+  .timer .bar i{display:block;height:100%;background:var(--red);border-radius:3px;
+    width:100%;transform-origin:left center}
+  /* Últimos 10s. Escala por transform e NÃO por font-size, para não empurrar o layout
+     e fazer a questão pular embaixo do dedo da pessoa.
+     Batida própria, e não o @keyframes pulse do pontinho: aquele vai a opacidade .2,
+     e num número de 40px isso lê como "apagando", que é o oposto de urgência. Aqui a
+     opacidade fica cheia e quem pulsa é a escala, como batimento. */
+  @keyframes tictac{0%,100%{transform:scale(1.08)}50%{transform:scale(1.26)}}
+  .timer.urgente .num{transform:scale(1.15);animation:tictac .9s infinite}
+  .timer.urgente .bar i{background:var(--red3)}
+  .timer .rule{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--muted);margin-top:8px}
+  /* Cor sozinha não pode carregar o sinal, por daltonismo: o tamanho, a barra drenando
+     e o próprio número já carregam em paralelo. Aqui só se desliga o movimento. */
+  @media (prefers-reduced-motion: reduce){
+    .timer.urgente .num{animation:none}
+    .clock i{animation:none}
+  }
   .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
   .qmat{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
   .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
@@ -147,18 +174,24 @@
   // caíram no mesmo quadrante verde, incluindo quem já reprovou duas vezes. Uma
   // amostra que não consegue reprovar ninguém não mede nada e ainda alivia quem
   // deveria sair incomodado.
-  // Critério de escolha: pegadinha clássica ou norma recente. Cada uma separa
-  // quem sabe de quem decorou, e as quatro novas vêm do banco do produto,
-  // revisado contra fontes primárias em 04/07/2026.
-  // 'fatia' = peso aproximado da matéria na prova, usado no bloco "o que o erro custa".
+  // Critério de escolha, e agora é um só: TODAS são pegadinha de troca de palavra,
+  // aquelas em que uma palavra vira o sentido inteiro. Saíram as que dependiam de
+  // norma recente (EC 131/2023 e pacote anticrime), porque ali o erro é material
+  // desatualizado, não a distinção que separa quem sabe de quem decorou.
+  // O mapa das palavras: incompatibilidade x impedimento · voto direto x obrigatório ·
+  // pretensão x direito · interrompe x suspende · culpabilidade x dolo · depois x antes
+  // da denúncia · mesmo autorizado pelo cliente.
+  // As questões vindas do banco do produto foram revisadas contra fontes primárias
+  // em 04/07/2026. Cada 'exp' NOMEIA a palavra trocada, porque é ela que vende.
+  // 'fatia' = peso aproximado da matéria na prova.
   var CONTENT = [
     {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Um militar da ativa foi aprovado no Exame de Ordem. Sobre o exercício da advocacia, ele:', exp:'<b>Por que a C é a certa:</b> militar da ativa é caso de incompatibilidade, não de impedimento (art. 28, V, do Estatuto da Advocacia). A diferença cai muito: impedimento proíbe advogar contra certas partes, incompatibilidade proíbe advogar em qualquer hipótese, inclusive em causa própria e fora do horário de serviço.', o:['Pode advogar livremente, desde que fora do horário de serviço.','Está impedido: só não pode advogar contra a Fazenda Pública que o remunera.','Está incompatibilizado: não pode exercer a advocacia enquanto estiver na ativa, nem em causa própria.','Pode advogar apenas em causas da Justiça Militar.'], c:2},
-    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', dif:true, q:'Larissa, brasileira nata, naturalizou-se italiana em 2025 para trabalhar na Europa, sem qualquer requerimento ao Brasil. Quanto à nacionalidade brasileira, Larissa:', exp:'<b>Por que a C é a certa:</b> a EC 131/2023 mudou o art. 12, § 4º, da Constituição. Adquirir outra nacionalidade deixou de causar perda automática: hoje a perda depende de pedido expresso do próprio brasileiro ou de cancelamento judicial da naturalização por fraude. Quem marcou a A não errou por não saber Constitucional, errou porque estudou por material anterior a 2023.', o:['Perdeu-a automaticamente ao adquirir voluntariamente outra nacionalidade.','Perdeu-a, salvo se provar que a naturalização foi imposta para permanência no território.','Conservou-a, pois após a EC 131/2023 a perda depende de pedido expresso ao Estado brasileiro, ressalvadas as hipóteses de apatridia, ou de cancelamento judicial da naturalização por fraude.','Conservou-a, mas ficou automaticamente suspensa enquanto mantiver a nacionalidade italiana.'], c:2},
+    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', dif:true, q:'Proposta de emenda constitucional pretende tornar o voto facultativo no Brasil. A proposta:', exp:'<b>Por que a C é a certa:</b> a cláusula pétrea do art. 60, § 4º, II, protege o voto <b>direto, secreto, universal e periódico</b>. A obrigatoriedade não está nessa lista: ela mora no art. 14, § 1º, e pode ser suprimida por emenda. A alternativa A troca uma palavra da lista por outra que não está nela, e é só isso que separa quem sabe de quem decorou.', o:['É inconstitucional, pois o voto obrigatório é cláusula pétrea.','É inconstitucional, pois matéria eleitoral não admite emenda.','É constitucional, pois a cláusula pétrea protege o voto direto, secreto, universal e periódico, e não a sua obrigatoriedade.','Só seria válida se aprovada também por referendo popular.'], c:2},
     {mat:'Civil', fatia:'7 das 80 questões', dif:true, q:'Sobre prescrição e decadência, é correto que:', exp:'<b>Por que a B é a certa:</b> violado o direito, nasce a pretensão, e é ela que a prescrição extingue (art. 189 do Código Civil). O direito em si continua existindo, tanto que a dívida prescrita paga não se repete. A decadência é outra coisa: atinge o próprio direito potestativo, aquele que se exerce por prazo certo.', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
     {mat:'Processo Civil', fatia:'6 a 7 das 80 questões', dif:true, q:'Publicada sentença omissa quanto a um dos pedidos, General Cargas opôs embargos de declaração. Quanto ao prazo dos demais recursos:', exp:'<b>Por que a D é a certa:</b> os embargos de declaração <b>interrompem</b> o prazo recursal para as duas partes, e interromper significa que o prazo recomeça do zero depois do julgamento (CPC, arts. 1.023 e 1.026). A alternativa A troca interromper por suspender, que devolveria só o saldo. Essa troca é uma das que mais derruba gente, e derruba advogado também: é perda de prazo real.', o:['Fica suspenso, voltando a correr pelo restante após o julgamento.','Continua correndo, pois os embargos não interferem em outros prazos.','Fica suspenso apenas para a parte embargante.','Fica interrompido para ambas as partes, reiniciando por inteiro após a publicação do julgamento dos embargos.'], c:3},
     {mat:'Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Criado em comunidade isolada onde a prática era tida como lícita, Josué praticou conduta típica sem qualquer possibilidade de conhecer sua ilicitude, o que ficou provado. Josué:', exp:'<b>Por que a A é a certa:</b> erro de proibição inevitável isenta de pena; se fosse evitável, apenas diminuiria de um sexto a um terço (CP, art. 21). A pegadinha está na D: erro de proibição atua na <b>culpabilidade</b> e o dolo permanece inteiro. Quem exclui o dolo está confundindo com erro de tipo (art. 20), que é outra figura.', o:['Fica isento de pena, pois o erro de proibição inevitável exclui a culpabilidade.','Responde pelo crime com pena reduzida de um sexto a um terço.','Responde normalmente, pois ninguém se escusa de cumprir a lei.','Tem excluído o dolo, respondendo por culpa.'], c:0},
-    {mat:'Processo Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Durante a instrução, o juiz entendeu presente risco à ordem pública e, sem qualquer provocação, decretou de ofício a prisão preventiva do réu. A decisão é:', exp:'<b>Por que a C é a certa:</b> depois da Lei 13.964/2019, o pacote anticrime, a preventiva exige requerimento do Ministério Público, do querelante ou do assistente, ou representação da autoridade policial. Não cabe de ofício <b>em nenhuma fase</b> (CPP, arts. 311 e 312). A alternativa A era a resposta certa antes de 2019, e é por isso que ela continua sendo a mais marcada.', o:['Válida, pois na fase judicial o juiz pode agir de ofício.','Válida, se fundamentada em fatos concretos.','Ilegal, pois após a Lei 13.964/2019 a preventiva exige requerimento do Ministério Público, do querelante ou do assistente, ou representação da autoridade policial, vedada a decretação de ofício.','Ilegal apenas na fase de inquérito.'], c:2},
-    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'No contrato de honorários com cláusula quota litis (percentual sobre o resultado da causa), é correto que:', exp:'<b>Por que a C é a certa:</b> a cláusula quota litis é permitida, mas com trava: somados aos honorários de sucumbência, os honorários não podem superar as vantagens que o cliente obteve na causa. Por isso a A erra ao proibir de vez e a B erra ao autorizar que o advogado leve mais que o cliente. E o contrato escrito é exigido, não dispensado.', o:['É vedado em qualquer hipótese pelo Código de Ética.','Os honorários podem superar as vantagens obtidas pelo cliente, se houver pacto expresso.','Os honorários, somados aos de sucumbência, não podem ser superiores às vantagens advindas em favor do cliente.','Dispensa contrato escrito, por decorrer do êxito.'], c:2}
+    {mat:'Processo Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Vítima de crime de ação penal pública condicionada, Sula ofereceu representação, mas se arrependeu. Quanto à retratação:', exp:'<b>Por que a D é a certa:</b> a representação só se torna irretratável <b>depois de oferecida a denúncia</b> (CPP, art. 25). Antes desse marco a vítima pode se retratar validamente. A alternativa A troca "denúncia" por "boletim de ocorrência" e a B por "trânsito em julgado". Um marco temporal trocado e a questão inteira cai.', o:['É vedada após o registro do boletim de ocorrência.','É possível a qualquer tempo, até o trânsito em julgado.','Depende de homologação judicial com oitiva do investigado.','É admitida somente até o oferecimento da denúncia.'], c:3},
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Em ação penal contra Túlio, seu ex-cliente, o advogado Fábio é arrolado como testemunha. Túlio, interessado no depoimento, autoriza expressamente que Fábio revele o que souber. Fábio:', exp:'<b>Por que a D é a certa:</b> o advogado pode recusar-se a depor sobre fato ligado a quem foi seu cliente <b>mesmo autorizado</b> por ele (EOAB, art. 7º, XIX; CED, art. 38). A palavra que derruba é "autoriza": o sigilo é dever do profissional, não disposição do cliente, então a autorização não libera coisa alguma.', o:['Deve depor, pois a autorização do cliente afasta o dever de sigilo.','Deve depor, pois o sigilo não alcança processos de natureza penal.','Só pode recusar o depoimento se demonstrar prejuízo próprio.','Pode recusar-se a depor sobre fatos ligados ao antigo patrocínio, mesmo com a autorização do cliente.'], c:3}
   ];
   // Parte 2: psicotécnico indireto. Cenários de OUTRO domínio (trânsito, prazo,
   // memória em público) que revelam congelamento/afobação/controle sem perguntar
@@ -177,7 +210,13 @@
      leit:{0:'O dado que você sabe de cor não saiu na hora, na frente dos outros. É o branco clássico: o problema não é saber, é acessar sob observação. E a prova inteira é sob observação.',1:'Você pediu um segundo e a resposta veio: você acessa a memória sob pressão, pagando um pequeno preço em tempo.',2:'A resposta veio na hora, mesmo com plateia: memória estável sob observação.'}}
   ];
 
-  var S = { screen:'intro', ci:0, ans:{}, times:{}, bi:0, beh:{}, nome:'', email:'', tel:'', momento:'' };
+  // Segundos por questão. Único lugar para mexer. 40 porque ler quatro alternativas
+  // de pegadinha com atenção consome 25 a 30, e o que sobra é a hesitação, que é
+  // justamente o que este teste quer medir.
+  var LIMITE = 40;
+
+  var S = { screen:'intro', ci:0, ans:{}, times:{}, estourou:{}, fora:{}, bi:0, beh:{},
+            nome:'', email:'', tel:'', momento:'' };
 
   // Em que ponto da caminhada a pessoa está. Serve para saber quem o anúncio traz
   // (bacharel de primeira prova, reprovado, quem ainda está na faculdade) e para
@@ -204,45 +243,116 @@
     app.innerHTML =
       '<h1>Em 3 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
       '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
-      '<p class="lead" style="margin-bottom:22px">São '+CONTENT.length+' questões, uma de cada matéria que decide a prova, e são as difíceis de propósito: questão fácil não mostra buraco nenhum. O relógio corre como na prova. Depois, 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
+      // A regra aparece uma vez, seca. A página não explica e não defende o relógio:
+      // justificar abre a porta para "na prova eu teria mais tempo", que anula a dor.
+      '<p class="lead" style="margin-bottom:22px">São '+CONTENT.length+' questões, uma de cada matéria que decide a prova, e todas são pegadinha: as que mudam uma palavra e viram outra coisa. <b style="color:var(--red)">Você tem '+LIMITE+' segundos em cada uma.</b> Passou o tempo, a questão passa. Fora desta aba, o relógio corre em dobro. Depois, 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
       '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
 
+  // Desliga relógio e ouvintes de aba. Chamada em toda saída da Parte 1, senão o
+  // ouvinte da questão anterior continua vivo e debita tempo na questão errada.
+  function pararRelogio(){
+    if(window._clk){ clearInterval(window._clk); window._clk=null; }
+    if(window._vis){ document.removeEventListener('visibilitychange', window._vis); window._vis=null; }
+    if(window._sai){ window.removeEventListener('blur', window._sai); window._sai=null; }
+    if(window._volta){ window.removeEventListener('focus', window._volta); window._volta=null; }
+  }
+
   function content(){
+    pararRelogio();
     var i=S.ci, Q=CONTENT[i];
-    var sel = S.ans[i];
     app.innerHTML =
-      '<div class="prog"><span>Parte 1 · questão '+(i+1)+' de '+CONTENT.length+'</span><span class="clock"><i></i><span id="clk">0s</span></span></div>'+
-      '<div class="qbox"><div class="qmat">'+esc(Q.mat)+'</div><div class="qtext">'+esc(Q.q)+'</div>'+
-      Q.o.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
+      '<div class="timer" id="tmr">'+
+        '<div class="num" id="clk">'+LIMITE+'</div>'+
+        '<div class="bar"><i id="clkbar"></i></div>'+
+        '<div class="rule">questão '+(i+1)+' de '+CONTENT.length+' · '+esc(Q.mat)+'</div>'+
       '</div>'+
-      (i>0?'<button class="back" id="back">Voltar</button>':'');
-    // Cronômetro: mede o tempo real de decisão por questão. Voltar reinicia a contagem.
+      '<div class="qbox"><div class="qtext">'+esc(Q.q)+'</div>'+
+      Q.o.map(function(op,j){ return '<button class="opt" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
+      '</div>';
+    // NÃO existe "Voltar" na Parte 1. Com questão cronometrada, voltar seria a brecha:
+    // deixa estourar, volta e responde com 40 segundos novos.
+
     S.qStart=Date.now();
-    if(window._clk) clearInterval(window._clk);
-    window._clk=setInterval(function(){ var el=document.getElementById('clk'); if(el) el.textContent=Math.floor((Date.now()-S.qStart)/1000)+'s'; },250);
+    S.qGasto=0;          // segundos debitados a mais por ausência (a 2ª contagem do dobro)
+    S.foraDesde=null;
+    if(S.fora[i]==null) S.fora[i]=0;
+    var encerrada=false;
+
+    // O tempo consumido SEMPRE sai de Date.now(), nunca de acumulador de tique.
+    // Navegador de celular suspende setInterval em aba de fundo, então um contador
+    // por tique congelaria justamente para quem saiu da aba para pesquisar: a defesa
+    // viraria a brecha. O setInterval abaixo só pinta a tela.
+    function consumido(){ return (Date.now()-S.qStart)/1000 + S.qGasto; }
+
+    function sair(){ if(S.foraDesde==null) S.foraDesde=Date.now(); }
+    function voltar(){
+      if(S.foraDesde==null) return;
+      var ausente=(Date.now()-S.foraDesde)/1000; S.foraDesde=null;
+      // Fora da aba o relógio corre em dobro. O Date.now() já contou a primeira vez;
+      // aqui se debita a segunda.
+      S.fora[i]+=ausente; S.qGasto+=ausente;
+      pintar();
+    }
+
+    function pintar(){
+      var el=document.getElementById('clk'), bar=document.getElementById('clkbar'), box=document.getElementById('tmr');
+      if(!el) return;
+      var resta=Math.max(0, LIMITE-consumido());
+      el.textContent=Math.ceil(resta);
+      if(bar) bar.style.transform='scaleX('+(resta/LIMITE)+')';
+      if(box){ if(resta<=10) box.classList.add('urgente'); else box.classList.remove('urgente'); }
+      if(resta<=0) estourar();
+    }
+
+    function fechar(){ encerrada=true; pararRelogio(); }
+
+    function avancar(){
+      if(i+1<CONTENT.length){ S.ci=i+1; } else { S.screen='behavior'; S.bi=0; }
+      render(); window.scrollTo(0,0);
+    }
+
+    function estourar(){
+      if(encerrada) return;
+      fechar();
+      S.estourou[i]=true;
+      S.times[i]=LIMITE;
+      S.ans[i]=null;               // não respondeu: não é a mesma coisa que errar
+      avancar();
+    }
+
+    window._vis=function(){ if(document.hidden) sair(); else voltar(); };
+    window._sai=sair; window._volta=voltar;
+    document.addEventListener('visibilitychange', window._vis);
+    window.addEventListener('blur', window._sai);
+    window.addEventListener('focus', window._volta);
+    window._clk=setInterval(pintar,200);
+    pintar();
+
     Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
       b.onclick = function(){
-        S.ans[i] = parseInt(b.getAttribute('data-j'),10);
-        S.times[i] = Math.max(1, Math.round((Date.now()-S.qStart)/1000));
-        setTimeout(function(){
-          if(i+1<CONTENT.length){ S.ci=i+1; } else { S.screen='behavior'; S.bi=0; }
-          render(); window.scrollTo(0,0);
-        }, 160);
+        if(encerrada) return;
+        fechar();
+        b.classList.add('sel');
+        S.ans[i]=parseInt(b.getAttribute('data-j'),10);
+        S.times[i]=Math.max(1, Math.min(LIMITE, Math.round(consumido())));
+        setTimeout(avancar, 160);
       };
     });
-    if(i>0) document.getElementById('back').onclick = function(){ S.ci=i-1; render(); };
   }
 
   function behavior(){
-    if(window._clk){ clearInterval(window._clk); window._clk=null; }
+    pararRelogio();
     var i=S.bi, sel=S.beh[i], B=BEHAVIOR[i];
     app.innerHTML =
       '<div class="prog">Parte 2 · situação '+(i+1)+' de '+BEHAVIOR.length+'</div>'+
       '<div class="qbox"><div class="qmat">No dia a dia</div><div class="qtext">'+esc(B.q)+'</div>'+
       B.o.map(function(op,j){ return '<button class="opt'+(sel===j?' sel':'')+'" data-j="'+j+'">'+esc(op[0])+'</button>'; }).join('')+
-      '</div><button class="back" id="back">Voltar</button>';
+      '</div>'+
+      // O "Voltar" só anda dentro da Parte 2. Voltar para a Parte 1 daria 40 segundos
+      // novos numa questão já vencida, que é a mesma brecha do voltar da Parte 1.
+      (i>0?'<button class="back" id="back">Voltar</button>':'');
     Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
       b.onclick = function(){
         S.beh[i] = parseInt(b.getAttribute('data-j'),10);
@@ -253,9 +363,7 @@
         }, 160);
       };
     });
-    document.getElementById('back').onclick = function(){
-      if(i>0){ S.bi=i-1; render(); } else { S.screen='content'; S.ci=CONTENT.length-1; render(); }
-    };
+    if(i>0) document.getElementById('back').onclick = function(){ S.bi=i-1; render(); };
   }
 
   function form(){
@@ -312,7 +420,7 @@
 
     // Mediana, a mesma que alimenta o eixo de pressão: o número gravado na base
     // tem que ser o mesmo que a pessoa viu na tela, senão a análise não fecha.
-    var tmed = tempoMediano();
+    var tmed = tempoMedio();
     var errouEm = erradas.length ? erradas.join(', ') : 'nenhuma';
     var q = new URLSearchParams(location.search);
 
@@ -367,48 +475,62 @@
     });
   }
 
-  // Mediana do tempo por questão, e não média: uma única questão em que a pessoa
-  // saiu para atender o telefone puxa a média inteira e mente sobre o ritmo.
-  function tempoMediano(){
-    var ts=[]; CONTENT.forEach(function(_,i){ if(S.times[i]!=null) ts.push(S.times[i]); });
-    if(!ts.length) return null;
-    ts.sort(function(a,b){ return a-b; });
-    var m=Math.floor(ts.length/2);
-    return ts.length%2 ? ts[m] : Math.round((ts[m-1]+ts[m])/2);
+  // Nota de ritmo de UMA questão, de 0 a 100. É o único sensor do eixo de pressão que
+  // a pessoa não consegue maquiar: no autorrelato ninguém marca que trava, e era isso
+  // que mantinha o eixo Y alto e o quadrante verde para todo mundo.
+  // Agora se calcula por questão e se tira a média, não a mediana: com teto de 40s não
+  // existe mais outlier a proteger, e a mediana engoliria justamente a questão em que
+  // a pessoa saiu da aba, que é a que mais interessa.
+  function notaRitmo(t, estourou){
+    if(estourou) return 0;
+    if(t==null) return null;
+    if(t<10)  return 0;    // não leu: marcou no reflexo
+    if(t<18)  return 40;   // rápido demais para pegadinha
+    if(t<=32) return 100;  // lê, pesa e decide
+    return 60;             // decidiu no limite do relógio
   }
 
-  // Nota de ritmo, de 0 a 100, tirada do relógio. É o único sensor do eixo de
-  // pressão que a pessoa não consegue maquiar: no autorrelato ninguém marca que
-  // trava, e por isso o eixo Y vivia alto e o quadrante vivia verde.
-  // Faixas calibradas para questão DIFÍCIL com enunciado de caso: ler o enunciado
-  // e as quatro alternativas não se faz em menos de 15 segundos, e passar de dois
-  // minutos e meio por questão não fecha 80 questões em cinco horas.
-  function notaRitmo(t){
-    if(t==null) return null;
-    if(t<15)   return 0;    // não leu: marcou no reflexo
-    if(t<25)   return 30;   // leu por cima
-    if(t<40)   return 65;   // rápido, mas plausível
-    if(t<=90)  return 100;  // faixa de quem lê, pensa e decide
-    if(t<=150) return 55;   // lento: cobra pedágio nas últimas questões
-    return 25;              // travando
+  function ritmoMedio(){
+    var soma=0, n=0;
+    CONTENT.forEach(function(_,i){
+      var nt=notaRitmo(S.times[i], S.estourou[i]);
+      if(nt!=null){ soma+=nt; n++; }
+    });
+    return n? Math.round(soma/n) : null;
+  }
+
+  function tempoMedio(){
+    var soma=0, n=0;
+    CONTENT.forEach(function(_,i){ if(S.times[i]!=null){ soma+=S.times[i]; n++; } });
+    return n? Math.round(soma/n) : null;
+  }
+
+  function estourouQuantas(){
+    var n=0; CONTENT.forEach(function(_,i){ if(S.estourou[i]) n++; }); return n;
+  }
+  function segundosFora(){
+    var s=0; CONTENT.forEach(function(_,i){ if(S.fora[i]) s+=S.fora[i]; }); return Math.round(s);
   }
 
   function compute(){
+    // Questão estourada é ponto perdido no conteúdo, porque na prova questão não
+    // respondida também é ponto perdido. No TEXTO ela nunca se mistura com erro.
     var c=0; CONTENT.forEach(function(Q,i){ if(S.ans[i]===Q.c) c++; });
     var X=Math.round(c/CONTENT.length*100);
     var bp=0; BEHAVIOR.forEach(function(B,i){ bp += (S.beh[i]!=null?B.o[S.beh[i]][1]:0); });
     var Yrel=Math.round(bp/(BEHAVIOR.length*2)*100);
-    var tmed=tempoMediano(), Yrit=notaRitmo(tmed);
-    // Metade autorrelato, metade relógio. Sem relógio, vale só o autorrelato.
-    var Y=(Yrit==null)?Yrel:Math.round(Yrel*0.5+Yrit*0.5);
-    return {X:X,Y:Y,c:c,Yrel:Yrel,Yrit:Yrit,tmed:tmed};
+    var Yrit=ritmoMedio();
+    // 70% relógio, 30% autorrelato. Ninguém se declara travado, então autorrelato
+    // pesado era o que inflava o eixo. Sem relógio, vale só o autorrelato.
+    var Y=(Yrit==null)?Yrel:Math.round(Yrel*0.3+Yrit*0.7);
+    return {X:X,Y:Y,c:c,Yrel:Yrel,Yrit:Yrit,tmed:tempoMedio(),
+            estourou:estourouQuantas(), fora:segundosFora()};
   }
 
-  // Os cortes. Eram 50 e 50, e com 5 questões de padrão médio isso fez 9 de 9
-  // pessoas caírem no verde em 02/08/2026, incluindo quem já reprovou duas vezes.
-  // Agora são 7 questões difíceis: 5 acertos, ou 71%, é a régua de conteúdo; e 70
-  // no eixo de pressão exige autorrelato bom E ritmo de leitura compatível.
-  var CORTE_X=71, CORTE_Y=70;
+  // Os cortes. Eram 50 e 50, e com 5 questões de padrão médio isso fez 9 de 9 pessoas
+  // caírem no verde em 02/08/2026, incluindo quem já reprovou duas vezes com 3 de 5.
+  // Agora: as SETE, sem estouro de tempo, e 70 no eixo de pressão.
+  var CORTE_X=100, CORTE_Y=70;
 
   function jaReprovou(){
     return S.momento==='Já fiz a prova uma vez e não passei' ||
@@ -418,10 +540,15 @@
 
   function quadrant(X,Y){
     var hiX=X>=CORTE_X, hiY=Y>=CORTE_Y;
-    if(hiX&&hiY) return {cls:'green',lab:'Nesta amostra você não abriu buraco',txt:'Sete questões difíceis e você segurou as duas pontas. É bom, e não é comum. Também não é veredito: são 7 contra 80, sem cansaço, sem cinco horas de relógio e sem as 11 matérias que ficam fora do núcleo. O que este teste não tem como saber é se o seu rendimento continua o mesmo na quadragésima questão, e é exatamente ali que a prova é decidida.'};
-    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas o seu desempenho não acompanha',txt:'O conteúdo não é o seu maior problema. O que te derruba aparece na hora: ritmo, travada, insegurança na questão difícil. Estudar mais matéria não conserta isso, e é o único conselho que você vai receber enquanto estiver pagando mensalidade.'};
+    // O quinto desfecho, e ele existe por um motivo só: quem já reprovou NUNCA sai
+    // "apto". Acrescentar parágrafo não bastava, porque o rótulo verde continuava na
+    // tela. Aqui o próprio veredito é interceptado, e a cor deixa de dizer "está tudo
+    // bem". A contradição entre gabaritar e ter reprovado não é elogio: é o diagnóstico.
+    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,lab:'O seu problema não está no que estas 7 medem',txt:'Você acertou as sete pegadinhas, no tempo, sem consultar. E já prestou o exame sem passar. Essas duas coisas não se contradizem: uma explica a outra. O que te derruba não é o conteúdo do núcleo, porque o conteúdo do núcleo você acabou de mostrar que tem. É o que sete questões não alcançam.'};
+    if(hiX&&hiY) return {cls:'green',forte:true,lab:'Nesta amostra você não abriu buraco',txt:'Sete pegadinhas, no tempo, e você segurou as duas pontas. É bom e não é comum. Também não é veredito: são 7 contra 80, sem cansaço e sem as 11 matérias de fora do núcleo. O que este teste não sabe é se o seu rendimento é o mesmo na quadragésima questão.'};
+    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas o seu desempenho não acompanha',txt:'O conteúdo não é o seu maior problema. O que te derruba apareceu na hora: ritmo, travada, insegurança na questão difícil. Estudar mais matéria não conserta isso, e é o único conselho que você vai receber enquanto estiver pagando mensalidade.'};
     if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas o conteúdo não sustenta',txt:'Você funciona bem sob pressão, e isso é metade do caminho. A outra metade abriu buraco: nas questões que decidem a prova, o conteúdo não respondeu. E buraco no núcleo duro não se compensa com as matérias de fora, porque elas valem menos.'};
-    return {cls:'mixed',lab:'Está perdendo ponto nos dois lados',txt:'Conteúdo e desempenho cederam na mesma amostra. É o diagnóstico mais duro de receber e o mais fácil de tratar, porque os dois problemas têm solução conhecida e ordem certa de ataque. O que não funciona é o que provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha.'};
+    return {cls:'mixed',lab:'Está perdendo ponto nos dois lados',txt:'Conteúdo e desempenho cederam na mesma amostra. É o diagnóstico mais duro de receber e o mais fácil de tratar, porque os dois têm solução conhecida e ordem certa de ataque. O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha.'};
   }
 
   // A frase que o placar sozinho não diz. O 'momento' era o dado mais pesado do
@@ -429,68 +556,88 @@
   // Não mexe na nota, porque nota é desempenho medido. Mexe na LEITURA, que é
   // onde ele vale: quem já reprovou e vai bem numa amostra está no ponto cego
   // que este produto existe para tratar.
+  // Estrutura fixa de três tempos, e ela é o que converte: o que a sua situação
+  // revela · o que corrige · quanto custa. Antes parava no diagnóstico, que é
+  // exatamente onde a pessoa fecha a aba satisfeita.
   function leituraMomento(q){
-    var forte=(q.cls==='green');
+    var forte=!!q.forte, p='';
     if(reprovouMais()){
-      return forte
-        ? '<p><b>E aqui está o ponto.</b> Você foi bem nestas 7 e já prestou duas vezes ou mais sem passar. As duas coisas não se contradizem: elas se explicam. Quem vai bem numa amostra curta e reprova na prova inteira não reprova por falta de conteúdo do núcleo. Reprova por amplitude, por ritmo ao longo das 80 e pelo detalhe que só aparece na terceira hora. Nada disso cabe em 7 questões, e nenhum cursinho tem interesse em te dizer isso.</p>'
-        : '<p><b>E aqui está o ponto.</b> Você já prestou duas vezes ou mais, e o buraco apareceu de novo, agora em 7 questões. Isso não é falta de esforço. É estudo no escuro: mais um ano na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>';
+      p = forte
+        ? '<b>E aqui está o ponto.</b> Você acertou sete pegadinhas e já prestou duas vezes ou mais sem passar. Não é contradição, é o diagnóstico: o que te derruba não está no conteúdo do núcleo, está no que sete questões não alcançam. Amplitude nas 11 matérias de fora, ritmo ao longo das 80 e o rendimento na terceira hora de prova.'
+        : '<b>E aqui está o ponto.</b> Você já prestou duas vezes ou mais, e o buraco apareceu de novo, agora em sete questões. Isso não é falta de esforço. É estudo no escuro: mais um ano na matéria que você já sabe, enquanto a que te derruba segue intocada.';
+      p += forte
+        ? '</p><p><b>O que corrige:</b> medir isso com número em vez de suposição. O diagnóstico completo cronometra 24 questões e mostra em que ponto o seu rendimento cai. O Plano Completo cobre o resto do caminho: as fichas das 17 disciplinas, dois simulados de 80 questões e o cronograma até a prova. É o pedaço que as suas duas reprovações mostram que está faltando.'
+        : '</p><p><b>O que corrige:</b> parar de estudar no escuro. O diagnóstico completo mede as 6 matérias do núcleo em 24 questões, diz qual delas te derruba e se o problema é conteúdo ou pressão, matéria por matéria. Com isso você sabe por onde começar amanhã, em vez de recomeçar tudo pela terceira vez.';
+    } else if(jaReprovou()){
+      p = forte
+        ? '<b>E aqui está o ponto.</b> Você acertou as sete e, mesmo assim, prestou e não passou. Alguma coisa entre a sua capacidade e a sua nota se perde no caminho, e não é conteúdo do núcleo.'
+        : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o buraco reapareceu aqui. Repetir a mesma preparação tende a repetir o mesmo resultado.';
+      p += '</p><p><b>O que corrige:</b> descobrir o que é, com nome e tamanho, antes de gastar mais um semestre. É o que o diagnóstico completo faz em 24 questões cronometradas, e sai na hora, com o seu nome.';
+    } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
+      p = '<b>Você está no melhor momento possível.</b> Antes da primeira tentativa, com tempo de corrigir a rota.'+
+          '</p><p><b>O que corrige:</b> saber agora, e não em setembro, qual das 6 matérias do núcleo te derruba. Quem descobre o próprio buraco depois de reprovar paga um ano por essa informação.';
+    } else if(S.momento==='Ainda estou na faculdade'){
+      p = '<b>Você está cedo, e isso é vantagem.</b> Dá para chegar na prova com o buraco já fechado, em vez de descobri-lo no dia.'+
+          '</p><p><b>O que corrige:</b> um mapa do que cai de verdade, para não perder semestre estudando o que quase não aparece na prova.';
+    } else {
+      return '';
     }
-    if(jaReprovou()){
-      return forte
-        ? '<p><b>E aqui está o ponto.</b> Você foi bem nestas 7 e, mesmo assim, prestou e não passou. Alguma coisa entre a sua capacidade e a sua nota está se perdendo no caminho, e não é conteúdo do núcleo. Descobrir o que é, com nome e tamanho, é o trabalho do diagnóstico.</p>'
-        : '<p><b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o buraco reapareceu aqui. Repetir a mesma preparação tende a repetir o mesmo resultado.</p>';
-    }
-    if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
-      return '<p><b>Você está no melhor momento possível.</b> Antes da primeira tentativa, com tempo de corrigir a rota. Quem descobre o próprio buraco depois de reprovar paga um ano por essa informação.</p>';
-    }
-    if(S.momento==='Ainda estou na faculdade'){
-      return '<p><b>Você está cedo, e isso é vantagem.</b> Dá para chegar na prova com o buraco já fechado, em vez de descobri-lo no dia.</p>';
-    }
-    return '';
+    return '<p>'+p+'</p>';
   }
 
-  // Matérias em que a pessoa errou, na ordem em que apareceram, sem repetir.
+  // Matérias em que a pessoa ERROU (respondeu e errou), sem repetir. Questão em que
+  // o tempo estourou fica de fora: não responder não é a mesma coisa que errar, e
+  // misturar as duas destrói justamente a separação que este produto vende.
   function materiasErradas(){
     var out=[];
-    CONTENT.forEach(function(qq,i){ if(S.ans[i]!==qq.c && out.indexOf(qq.mat)<0) out.push(qq.mat); });
+    CONTENT.forEach(function(qq,i){
+      if(!S.estourou[i] && S.ans[i]!==qq.c && out.indexOf(qq.mat)<0) out.push(qq.mat);
+    });
+    return out;
+  }
+  function materiasEstouradas(){
+    var out=[];
+    CONTENT.forEach(function(qq,i){ if(S.estourou[i] && out.indexOf(qq.mat)<0) out.push(qq.mat); });
     return out;
   }
 
-  // O bloco do que ainda está trancado. Regra: o que as 5 questões já mostraram
-  // sai legível e verdadeiro; o que depende das 24 sai como barra opaca, sem
-  // número por baixo. Valor fixo que parece calculado destrói a credibilidade
-  // no primeiro print comparado entre duas pessoas.
-  function lockbox(forte){
-    var err=materiasErradas();
+  // O bloco do que ainda está trancado. É o motor da urgência e o único bloco que
+  // CRESCEU nesta revisão: tudo o mais na tela de resultado encolheu, porque o
+  // resultado grátis estava entregando o que o R$47 vende e tirando a urgência.
+  // Regra: o que as 7 já mostraram sai legível e verdadeiro; o que depende das 24 sai
+  // como barra opaca, sem número por baixo. Valor fixo que parece calculado destrói a
+  // credibilidade no primeiro print comparado entre duas pessoas.
+  function lockbox(){
+    var err=materiasErradas(), est=materiasEstouradas();
     function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
     function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
-    var linhas = err.length
-      ? real('Onde você tropeçou nestas '+CONTENT.length, err.join(', '))
-      : real('Onde você tropeçou nestas '+CONTENT.length, 'em nenhuma');
-    linhas += forte
-      ? trava('Se este placar se sustenta em 24 questões')+
-        trava('A matéria do núcleo em que você ainda oscila')+
-        trava('Sua margem para o dia da prova')
-      : trava('Sua porcentagem em cada uma das 6 matérias do núcleo')+
-        trava('Se o que te derruba é conteúdo ou pressão, matéria por matéria')+
-        trava('Por onde começar a estudar amanhã');
+    var linhas = real('Onde você errou', err.length? err.join(', ') : 'em nenhuma');
+    if(est.length) linhas += real('Onde o tempo estourou', est.join(', '));
+    linhas +=
+      trava('Sua porcentagem em cada uma das 6 matérias do núcleo')+
+      trava('Qual das 6 te derruba, com nome')+
+      trava('Se o que te derruba é conteúdo ou pressão, matéria por matéria')+
+      trava('Em que ponto das 24 questões o seu rendimento cai')+
+      trava('Por onde começar a estudar amanhã');
     return '<div class="lockbox">'+
       '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
       '<div class="inner">'+linhas+'</div>'+
-      '<div class="cta">A primeira linha saiu das suas '+CONTENT.length+' respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
+      '<div class="cta">O que está legível saiu das suas '+CONTENT.length+' respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
     '</div>';
   }
 
   function gabarito(){
-    // A demo do produto: UMA questão corrigida no formato do relatório pago.
-    // Mostra a PRIMEIRA que a pessoa errou: é mais útil para ela, e faz a amostra
-    // variar sozinha. Corrigir sempre a mesma questão vira atalho de grupo de
-    // WhatsApp e a demo perde a graça para todo mundo que chega depois.
-    var idx=0;
-    for(var k=0;k<CONTENT.length;k++){ if(S.ans[k]!==CONTENT[k].c){ idx=k; break; } }
-    // Acertou todas: sorteia, para não repetir a mesma em todo mundo.
-    if(S.ans[idx]===CONTENT[idx].c) idx=Math.floor(Math.random()*CONTENT.length);
+    // A demo do produto: UMA questão corrigida no formato do relatório pago. É o único
+    // bloco de conteúdo que sobrou de graça, e sobrou de propósito: é 1 de 248 questões,
+    // não substitui o produto, e é a única prova na tela de que ele é competente.
+    // Prioridade: primeiro uma questão em que o TEMPO ESTOUROU, porque é ali que mora a
+    // desculpa do relógio, e ler o comentário mata a desculpa sozinho, sem a página
+    // precisar discutir. Depois a primeira errada. Só então sorteia, para não repetir a
+    // mesma em todo mundo e virar atalho de grupo de WhatsApp.
+    var idx=-1, k;
+    for(k=0;k<CONTENT.length;k++){ if(S.estourou[k]){ idx=k; break; } }
+    if(idx<0) for(k=0;k<CONTENT.length;k++){ if(S.ans[k]!==CONTENT[k].c){ idx=k; break; } }
+    if(idx<0) idx=Math.floor(Math.random()*CONTENT.length);
     var Q=CONTENT[idx], sua=S.ans[idx];
     var alts=Q.o.map(function(op,j){
       var cls='alt'+(j===Q.c?' certa':'')+(j===sua&&sua!==Q.c?' sua':'');
@@ -498,68 +645,74 @@
       var suf=(j===Q.c?' — correta':(j===sua?' — a sua resposta':''));
       return '<div class="'+cls+'">'+pre+esc(op)+suf+'</div>';
     }).join('');
+    var nota = S.estourou[idx] ? '<p style="margin-bottom:8px"><b>Nesta o tempo acabou antes de você marcar.</b></p>' : '';
     return '<div class="gab"><div class="k">Gabarito comentado · amostra do relatório</div>'+
-      '<div class="q">'+esc(Q.mat)+' · '+esc(Q.q)+'</div>'+alts+
+      '<div class="q">'+esc(Q.mat)+' · '+esc(Q.q)+'</div>'+alts+nota+
       '<div class="exp">'+Q.exp+' <b>No diagnóstico completo, cada uma das 24 questões vem com um comentário assim.</b></div></div>';
   }
 
   function pressao(){
-    // Devolve a leitura dos 3 cenários psicotécnicos e a ponte para o produto:
-    // o R$47 inclui o raio-x de pressão e a folha de tática de prova.
-    var scores=[], linhas='';
+    // ENCOLHIDO em 02/08/2026. Antes imprimia a leitura dos TRÊS cenários, o que era a
+    // folha de tática de prova entregue de graça e tirava a urgência de comprar. Agora
+    // nomeia só o pior, em uma frase, sem dizer o que fazer com aquilo.
+    // Regra da tela inteira: nomear sem dimensionar e sem prescrever.
+    var pior=null;
     BEHAVIOR.forEach(function(B,i){
       var sel=S.beh[i]; if(sel==null) return;
-      var sc=B.o[sel][1]; scores.push(sc);
-      linhas+='<p style="margin-bottom:6px">'+esc(B.leit[sc])+'</p>';
+      var sc=B.o[sel][1];
+      if(pior===null || sc<pior.sc) pior={sc:sc, txt:B.leit[sc]};
     });
-    if(!scores.length) return '';
-    var tem0=scores.indexOf(0)>=0, tem1=scores.indexOf(1)>=0;
-    var cls=tem0?'ochre':(tem1?'mixed':'green');
-    var ponte;
-    if(tem0||tem1){
-      ponte='<p><b>O que o diagnóstico faz com isso:</b> o raio-x de pressão mostra em que ponto das 24 questões o seu rendimento cai, e a folha de tática de prova monta a ordem das três passadas para o seu perfil. Nervosismo não se resolve com mais matéria; se resolve com método na hora da prova.'+(tem0?' E no Plano Completo existe ainda o módulo Cabeça para a prova, feito exatamente para quem trava.':'')+'</p>';
-    } else {
-      ponte='<p><b>O que o diagnóstico faz com isso:</b> confirma se esse controle se sustenta por 24 questões seguidas, e a folha de tática de prova transforma esse sangue frio em pontos.</p>';
-    }
-    return '<div class="verdict '+cls+'"><div class="k">Como você funcionou sob pressão</div>'+linhas+ponte+'</div>';
+    if(!pior) return '';
+    // Só a primeira frase do 'leit': ela nomeia o comportamento. O resto do texto
+    // original traduzia aquilo de volta para a prova, que é a parte que ensina.
+    var frase=String(pior.txt).split('. ')[0];
+    if(frase.slice(-1)!=='.') frase+='.';
+    var cls=pior.sc===0?'ochre':(pior.sc===1?'mixed':'green');
+    var fecho=pior.sc===2
+      ? ' O diagnóstico mede se isso se sustenta por 24 questões seguidas.'
+      : ' O tamanho disso está no diagnóstico.';
+    return '<div class="verdict '+cls+'"><div class="k">Sob pressão</div><p style="margin-bottom:0">'+esc(frase)+fecho+'</p></div>';
   }
 
   function tempo(){
-    // O relógio é o sensor que a pessoa não controla. Três sinais, por prioridade:
-    // erro rápido (convicção errada), hesitação máxima, ritmo lento demais.
-    var ts=[]; CONTENT.forEach(function(_,i){ if(S.times[i]!=null) ts.push({i:i,t:S.times[i]}); });
-    if(ts.length<CONTENT.length) return '';
-    var soma=0; ts.forEach(function(x){ soma+=x.t; });
-    var avg=soma/ts.length;
-    var lin=[], ruim=false;
-    var rapErr=null;
-    ts.forEach(function(x){ if(S.ans[x.i]!==CONTENT[x.i].c && x.t<=Math.max(15,avg*0.6) && (rapErr===null||x.t<rapErr.t)) rapErr=x; });
-    if(rapErr){ ruim=true; lin.push('Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+' segundos, sem hesitar. Erro com convicção é o mais caro da prova: você não desconfia dele, não revisa, e ele passa.'); }
-    var mx=ts[0]; ts.forEach(function(x){ if(x.t>mx.t) mx=x; });
-    if(mx.t>=40 && mx.t>=2*avg){
+    // ENCOLHIDO em 02/08/2026: eram até três achados analisados, que é o raio-x de
+    // pressão de graça. Agora sai UM, o mais forte, por prioridade: estouro, erro com
+    // convicção, ritmo. Reporta o fato e para. Não defende a regra do relógio: página
+    // que argumenta soa insegura e abre a porta para "na prova eu teria mais tempo".
+    var est=estourouQuantas(), fora=segundosFora(), lin=null, ruim=false;
+    if(est){
       ruim=true;
-      var acertou=S.ans[mx.i]===CONTENT[mx.i].c;
-      lin.push('Onde você mais parou: <b>'+esc(CONTENT[mx.i].mat)+'</b>, '+mx.t+' segundos'+(acertou?'. Acertou, mas hesitou: conteúdo mal assentado hesita antes de acertar, e na prova a hesitação cobra em tempo.':', e ainda saiu errada.'));
+      lin='O tempo acabou antes de você marcar em <b>'+est+'</b> '+(est>1?'questões':'questão')+'. Na prova, questão não respondida vale o mesmo que questão errada.';
+    } else {
+      var rapErr=null;
+      CONTENT.forEach(function(Q,i){
+        if(S.times[i]!=null && S.ans[i]!==Q.c && S.times[i]<=15 && (rapErr===null||S.times[i]<rapErr.t)) rapErr={i:i,t:S.times[i]};
+      });
+      var tm=tempoMedio();
+      if(rapErr){
+        ruim=true;
+        lin='Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+' segundos, sem hesitar. Erro com convicção é o que mais passa despercebido.';
+      } else if(tm!=null && tm>=33){
+        ruim=true; lin='Você decidiu no limite do relógio: '+tm+' segundos por questão, em média.';
+      } else if(tm!=null && tm<10){
+        ruim=true; lin='Você decidiu em '+tm+' segundos por questão, em média. Nenhuma pegadinha se lê nesse tempo.';
+      } else if(tm!=null){
+        lin='Ritmo firme: '+tm+' segundos por questão, em média, e nenhuma estourou.';
+      }
     }
-    if(avg>=120){ ruim=true; lin.push('Ritmo médio de '+Math.round(avg)+' segundos em questões curtas. Na prova são 80 seguidas, com enunciados bem mais longos: esse ritmo cobra pedágio nas dez últimas.'); }
-    if(!lin.length) lin.push('Ritmo firme: você decidiu em média em '+Math.round(avg)+' segundos e não hesitou além da conta em nenhuma.');
-    var corpo=''; lin.forEach(function(l){ corpo+='<p style="margin-bottom:6px">'+l+'</p>'; });
-    return '<div class="verdict '+(ruim?'ochre':'green')+'"><div class="k">O que o relógio mostrou</div>'+corpo+
-      '<p>O raio-x de pressão do diagnóstico completo cronometra as 24 questões e mostra em que ponto o seu rendimento cai.</p></div>';
+    if(lin===null) return '';
+    var extra = fora>=3
+      ? '<p style="margin-bottom:0">Você ficou '+fora+' segundos fora desta aba durante a Parte 1, e fora da aba o relógio corre em dobro.</p>'
+      : '';
+    return '<div class="verdict '+(ruim?'ochre':'green')+'"><div class="k">O que o relógio mostrou</div>'+
+      '<p'+(extra?'':' style="margin-bottom:0"')+'>'+lin+'</p>'+extra+'</div>';
   }
 
-  function custoErros(){
-    // Converte cada erro em preço real na prova: "errou Ética, que são 8 das 80".
-    // É o argumento de fato, não de opinião. Sem erro, não aparece.
-    var erradas=[]; CONTENT.forEach(function(Q,i){ if(S.ans[i]!==Q.c) erradas.push(Q); });
-    if(!erradas.length) return '';
-    var mats={}; erradas.forEach(function(Q){ if(!mats[Q.mat]) mats[Q.mat]=Q; });
-    var linhas=Object.keys(mats).map(function(m){
-      return '<p style="margin-bottom:6px">Você errou <b>'+esc(m)+'</b>. '+esc(m)+' são '+esc(mats[m].fatia)+'. Errar aí no dia custa mais do que em quase qualquer outro lugar.</p>';
-    }).join('');
-    return '<div class="verdict ochre"><div class="k">O que esses erros custam na prova real</div>'+linhas+
-      '<p>Foi assim numa amostra pequena. O diagnóstico completo mede isso em 24 questões e mostra o tamanho real de cada buraco.</p></div>';
-  }
+  // custoErros() foi REMOVIDO em 02/08/2026. Ele listava, matéria por matéria, quanto
+  // cada erro vale na prova, que é literalmente o "por onde começar a estudar" que o
+  // R$47 vende. Era o bloco que mais canibalizava o produto. A matéria em que a pessoa
+  // tropeçou continua aparecendo, uma vez só, na linha legível do lockbox.
+  // O campo 'fatia' segue no CONTENT porque é dado verdadeiro e barato de manter.
 
   function result(){
     var r=compute(), q=quadrant(r.X,r.Y);
@@ -572,25 +725,31 @@
       (S.email?'&email='+encodeURIComponent(S.email):'')+
       (digits?'&phoneNumber='+encodeURIComponent(digits):'');
     var buyUrl=CHECKOUT_URL+fill, buyUrlC=CHECKOUT_COMPLETO+fill;
-    // Quem chega forte (quadrante verde) não compra "descobrir fraqueza":
-    // recebe o Plano Completo como oferta principal. Os demais, o R$47.
-    var forte=(q.cls==='green');
+    // Quem chega forte não compra "descobrir fraqueza": recebe o Plano Completo como
+    // oferta principal. Os demais, o R$47. A flag vem do PRÓPRIO desfecho e não mais da
+    // cor, porque o quinto desfecho (quem já reprovou e gabaritou) é forte e NÃO é verde.
+    var forte=!!q.forte;
     app.innerHTML =
       '<div class="prog">Seu resultado</div>'+
       '<h1 style="font-size:24px">'+nome+', aqui está o seu sinal.</h1>'+
-      '<p class="lead" style="margin-bottom:6px">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b> na parte de conteúdo.</p>'+
-      '<p class="lead" style="margin-bottom:16px">Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora da prova. Com '+CONTENT.length+' questões dá para ver um sinal, não um mapa.</p>'+
+      // Erro e estouro nunca se misturam na mesma frase: são dois problemas diferentes,
+      // e essa separação é a tese que a landing afirma e que aqui o quiz demonstra com
+      // o número da própria pessoa.
+      '<p class="lead" style="margin-bottom:6px">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b>.'+
+        (r.estourou? ' Errou '+(CONTENT.length-r.c-r.estourou)+' e estourou o tempo em '+r.estourou+'.' : '')+'</p>'+
+      '<p class="lead" style="margin-bottom:16px">'+
+        (r.estourou? 'São dois problemas diferentes, com soluções diferentes, e é por isso que estudar mais matéria não resolve o segundo.'
+                   : 'Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora.')+'</p>'+
       '<div class="plot"><div class="vline"></div><div class="hline"></div>'+
         '<div class="ql tr">Pronto de verdade</div><div class="ql br">Sabe, mas trava</div>'+
         '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q)+'</div>'+
-      pressao()+
       tempo()+
-      custoErros()+
+      pressao()+
       gabarito()+
-      lockbox(forte)+
+      lockbox()+
       (forte
         ? '<div class="offer">'+
             '<h3>Você não precisa descobrir fraqueza. Precisa de amplitude.</h3>'+
