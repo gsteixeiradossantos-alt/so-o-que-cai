@@ -1100,13 +1100,13 @@
     var promessa = forte
       ? 'Ver em que ponto o seu rendimento cede, com número'
       : (ps.exec===0
-          ? 'Quais matérias são, com nome, e quanto falta em cada uma'
+          ? 'As matérias, com nome, e quanto falta em cada uma'
           : 'Saber se o que te derruba é a matéria ou a hora da prova');
     if(jaReprovou()){
       linhas=[
         ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
-        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
+        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         ['Repetir a mesma preparação, sem saber o que corrigir', promessa]
       ];
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
@@ -1114,8 +1114,8 @@
         forte
           ? ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo que o seu acerto se sustenta']
           : ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo onde você perde ponto'],
-        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' esperando a próxima chance','20 minutos'],
+        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         ['Ver quem passou seguir para a 2ª fase sem você','Corrigir a rota enquanto dá tempo']
       ];
     } else if(S.momento==='Ainda estou na faculdade'){
@@ -1123,8 +1123,8 @@
         forte
           ? ['Descobrir só no dia o que as 7 não alcançam','Medir isso antes, em 24 questões']
           : ['Chegar na prova com o mesmo buraco de hoje','Chegar com ele fechado'],
-        [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
+        [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez, ou '+PARCELA],
         // Esta linha dizia "Sair da faculdade já advogado". Saiu em 02/08/2026: a
         // coluna da direita é o que a pessoa RECEBE, e ali estava o resultado do
         // exame. Isso é promessa de aprovação dita pela estrutura da tabela, e é
@@ -1139,8 +1139,8 @@
         forte
           ? ['Sair daqui sabendo só que acertou 7 questões','Saber o que as 7 não alcançaram']
           : ['Sair daqui sabendo que tem um buraco, sem saber onde','O nome dele, e o tamanho'],
-        [TAXA_EXAME+' na inscrição, quando você decidir prestar','R$47, uma vez, ou '+PARCELA],
-        [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos']
+        [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
+        [TAXA_EXAME+' na inscrição, quando você decidir prestar','R$47, uma vez, ou '+PARCELA]
       ];
     }
     var html='<div class="custo"><div class="lin cab"><div>Se você não fizer nada</div><div>Se você olhar agora</div></div>';
@@ -1896,15 +1896,23 @@
             // calendário, que é o único argumento REAL de urgência que este produto tem
             // e que hoje só aparecia escondido no rodapé do bônus.
             : (diasParaProva()
+              // O calendário fica no título, que é onde o relógio pesa. O parágrafo
+              // parou de explicar o produto: no último bloco antes do último botão,
+              // descrever entregável é voltar atrás. Agora ele põe a decisão binária na
+              // mesa, que é a única coisa que aquele lugar da página precisa fazer.
               ? '<h3>A prova é '+porExtenso(DATA_PROVA)+'.<br>Faltam '+diasParaProva()+' dias de estudo.</h3>'+
-                '<p>A única decisão que importa agora é em quais matérias essas horas vão cair. Este raio-x olhou '+CONTENT.length+' questões. O completo olha 24 e devolve o número de cada uma hoje, em 20 minutos.</p>'
+                '<p>Você já sabe que o problema existe. A decisão agora é uma só: continuar estudando no escuro, ou descobrir hoje exatamente o que corrigir antes da próxima prova.</p>'
               : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
                 '<p>A única decisão que importa é em quais matérias as suas horas de estudo vão cair. O diagnóstico completo devolve o número de cada uma.</p>'))+
           '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
           C.PAGA+'<div class="rmicro">Com o Guia da FGV e o Kit Reta Final juntos, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO_FIM+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
-            '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
+            // Reescrito para liderar pelo CONTROLE, não pela política. É o mesmo fato,
+            // mas quem acabou de sair de um diagnóstico gratuito resiste menos quando a
+            // frase devolve a decisão para depois de ver, em vez de pedir a decisão
+            // agora. A garantia já era isso; só não estava dita assim.
+            '<span>Faça o diagnóstico inteiro primeiro. <b>Só depois você decide se valeu:</b> são 7 dias para pedir de volta, sem perguntas.</span>'+
           '</div>'+
           '<a class="upsell" href="'+C.buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
         '</div>'+
