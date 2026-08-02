@@ -1065,6 +1065,9 @@
   // dia, que era um número derivado por retórica; este é uma opção de pagamento de
   // verdade e faz o mesmo trabalho de deixar o valor pequeno.
   var PARCELA='6x de R$8,82';
+  // 6 x 8,82. Escrito na página de propósito: esconder o total é o que faz o leitor
+  // desconfiar do parcelado, e mostrar empurra para o Pix.
+  var TOTAL_PARCELADO='R$52,92';
 
   // A comparação de custo, em duas colunas. Esquerda longa e cara, direita curta e
   // barata: a assimetria é o argumento inteiro. Muda pelo MOMENTO da pessoa, porque o
@@ -1075,14 +1078,23 @@
   // 7 deixam em aberto, que é o único argumento honesto para esse perfil.
   function tabelaCusto(forte){
     var linhas;
+    // A promessa da coluna da direita não pode ser uma pergunta que a manchete ACABOU
+    // de responder. Quem lê "Você perdeu 4, e todas foram de matéria" e três blocos
+    // abaixo encontra "saber se o que te derruba é a matéria ou a hora da prova" percebe
+    // que a oferta está fingindo que a dúvida segue aberta. Aqui a promessa avança para
+    // o que de fato continua desconhecido depois do veredito.
+    var ps=perdaSeparada();
+    var promessa = forte
+      ? 'Ver em que ponto o seu rendimento cede, com número'
+      : (ps.exec===0
+          ? 'Quais matérias são, com nome, e quanto falta em cada uma'
+          : 'Saber se o que te derruba é a matéria ou a hora da prova');
     if(jaReprovou()){
       linhas=[
         ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
         [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
-        forte
-          ? ['Repetir a mesma preparação, sem saber o que corrigir','Ver em que ponto o seu rendimento cede, com número']
-          : ['Repetir a mesma preparação, sem saber o que corrigir','Saber se o que te derruba é a matéria ou a hora da prova']
+        ['Repetir a mesma preparação, sem saber o que corrigir', promessa]
       ];
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
       linhas=[
@@ -1196,7 +1208,12 @@
       p2:'E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
     if(hiX&&!hiY) return {cls:'ochre',forte:gabaritou,
       lab:M.lab, hl:M.hl,
-      lead:'O que cedeu não foi o conteúdo: '+causaPressao(r)+'.',
+      // Quando houve estouro, o prefixo do lead já disse "nas outras N o tempo acabou
+      // antes de você marcar". Chamar causaPressao() aqui repetia a frase inteira dentro
+      // da mesma linha. Só cabe quando a causa NÃO é o estouro.
+      lead:(r.estourou>0
+        ? 'Nada do que você marcou estava errado. O que faltou foi tempo.'
+        : 'O que cedeu não foi o conteúdo: '+causaPressao(r)+'.'),
       p1:'Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta.',
       p2:'Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
     // Estouro puro: acertou tudo o que respondeu e o que perdeu foi inteiro para o
@@ -1223,9 +1240,20 @@
     // O Y cai junto com os erros (a nota de decisão pune errar), então dá para chegar
     // aqui com o relógio limpo. Nesse caso a abertura não pode acusar o relógio: o bloco
     // "O que o relógio mostrou", três blocos abaixo, sai verde e desmentiria o veredito.
-    var abriu = relogioAcusou(r)
+    // O lead TEM que sair da mesma régua da manchete, e até 02/08/2026 não saía:
+    // vinha de relogioAcusou(), que olha estouro, queda de rendimento e ritmo, enquanto
+    // a manchete passou a vir de perdaSeparada(), que olha ONDE o ponto foi perdido.
+    // As duas discordavam e a tela dizia, com duas linhas de distância, "todas foram de
+    // matéria" e "os dois eixos cederam ao mesmo tempo". Régua diferente para a mesma
+    // pergunta produz contradição na cara do leitor, e este publico desconfia de curso.
+    // A queda de rendimento continua sendo dita, no bloco "O que o relógio mostrou",
+    // que é onde ela é achado e não veredito.
+    var ps=perdaSeparada();
+    var abriu = (ps.mat>0 && ps.exec>0)
       ? 'Os dois eixos cederam ao mesmo tempo.'
-      : 'O relógio, desta vez, não foi o problema: o que pesou foi a matéria.';
+      : (ps.exec===0
+          ? 'O relógio não tirou ponto seu: o que pesou foi a matéria.'
+          : 'A matéria você mostrou que tem. O que cedeu foi a execução.');
     return {cls:'mixed', lab:M.lab, hl:M.hl,
       lead:abriu,
       p1:'É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo.'+peso,
@@ -1524,12 +1552,12 @@
   // oferta descobre que foi enganado, ainda mais este público, que já foi enganado
   // por cursinho. A data escrita não promete fim nenhum: ela só registra o dia em
   // que o Gustavo está se comprometendo, e amanhã ela se atualiza sozinha.
-  function hojeExtenso(){
+  function porExtenso(d){
     var M=['janeiro','fevereiro','março','abril','maio','junho','julho',
            'agosto','setembro','outubro','novembro','dezembro'];
-    var d=new Date();
     return d.getDate()+' de '+M[d.getMonth()];
   }
+  function hojeExtenso(){ return porExtenso(new Date()); }
 
   // O Kit Reta Final: era bump de R$19 e virou bônus incluído em 02/08/2026.
   // A descrição é o que o arquivo kit-reta-final.html realmente entrega, conferido
@@ -1542,14 +1570,23 @@
         '<div class="tl"><b>Kit Reta Final</b><span class="val">vendido por R$ 19</span></div>'+
         '<p>O plano das últimas três semanas, semana a semana. O checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
       '</div></div>'+
-      (d? '<div class="pe">Faltam '+d+' dias para a prova, e é exatamente esse o período que o Kit cobre. Depois de hoje eu não garanto que ele siga incluído.</div>'
-        : '<div class="pe">Depois de hoje eu não garanto que ele siga incluído.</div>')+
+      // A frase anterior era "Depois de hoje eu não garanto que ele siga incluído", e
+      // sozinha ela fazia o oposto do pretendido: para quem não pode pagar hoje, ela
+      // transforma "não posso agora" em "então já perdi", e quem perdeu não volta. A
+      // única resposta qualitativa que existe no funil é exatamente essa pessoa, a
+      // Delzuita, que chegou ao checkout e disse "só terei dinheiro dia 6". A pressão
+      // fica, mas só sobre o Kit, e por um motivo verdadeiro: ele cobre a reta final,
+      // então vale menos a cada dia. O preço fica garantido porque nunca foi outro.
+      (d? '<div class="pe">Faltam '+d+' dias para a prova, e é exatamente esse o período que o Kit cobre. Ele está incluído hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro. O Kit eu não garanto, e ele cobre menos prova a cada dia que passa.</div>'
+        : '<div class="pe">O Kit está incluído hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro.</div>')+
     '</div>';
   }
 
   function stackOferta(){
     var itens=[
-      ['Diagnóstico de 24 questões cronometradas',': o número de cada matéria e o ponto onde seu rendimento cai, com o seu nome'],
+      // "com o seu nome" saiu daqui: a mesma frase já aparece na prosa logo acima e no
+      // lockbox da tela anterior. Três vezes na mesma dobra faz a oferta parecer menor.
+      ['Diagnóstico de 24 questões cronometradas',': o número de cada matéria e o ponto onde seu rendimento cai'],
       ['Gabarito comentado das 24',': cada questão com um comentário como o da amostra abaixo'],
       ['Fichas do que mais cai',' nas 6 matérias do núcleo'],
       ['Folha de tática para o seu perfil',': com ordem de prova e regra de pulo'],
@@ -1592,9 +1629,15 @@
       // é o que destrava quem não tem cartão com limite, e era a informação mais
       // escondida da página. O prazo de acesso passou a aparecer: a oferta.html sempre
       // disse "12 meses" e aqui só dizia "sem mensalidade", que lê como vitalício.
+      // O total do parcelado sai escrito, sem ninguém perguntar. Para um público que
+      // já se queimou com cursinho, mostrar o que a página poderia esconder compra
+      // confiança, e ainda empurra para o Pix, que é melhor para os dois lados.
       PAGA:'<div class="pag"><span class="pix">Pix</span> <b>R$ 47</b> à vista '+
-           '<span>ou '+PARCELA+' no cartão</span></div>',
-      MICRO:'pagamento único, sem mensalidade · acesso na hora, por 12 meses<br>7 dias de garantia'
+           '<span>ou '+PARCELA+' no cartão, '+TOTAL_PARCELADO+' no total</span></div>',
+      MICRO:'pagamento único, sem mensalidade · acesso na hora, por 12 meses<br>7 dias de garantia',
+      // No bloco final a garantia já está no selo, 20 pixels abaixo. Repetir ali era a
+      // quarta aparição da mesma frase na mesma tela.
+      MICRO_FIM:'pagamento único, sem mensalidade · acesso na hora, por 12 meses'
     };
   }
 
@@ -1721,6 +1764,13 @@
   function solucao(){
     var C=ctx(), r=C.r, q=C.q, L=C.L, forte=C.forte;
     var tc=tabelaCusto(C.semFalhaDeMateria);
+    // O título desta seção era L.titulo, o MESMO que fecha a tela anterior na ponte.
+    // A pessoa clicava em "Ver minha solução" e a primeira linha do outro lado era a
+    // frase que ela acabou de ler. A tela nova começava parada. Aqui ela avança: o
+    // título da ponte é o que a PESSOA precisa fazer, este é o que o PRODUTO faz.
+    var tituloSol = C.semFalhaDeMateria
+      ? 'As 24 questões que medem o que estas '+CONTENT.length+' não alcançam'
+      : 'As 24 questões que dão nome ao que estas '+CONTENT.length+' só apontaram';
 
     document.body.className='res';
 
@@ -1733,7 +1783,7 @@
 
       '<div class="rbody">'+
         (L? '<div class="rsec" style="margin-top:34px"><div class="rkk">O que corrige</div>'+
-            '<h3 class="rh3">'+esc(L.titulo)+'</h3>'+
+            '<h3 class="rh3">'+esc(tituloSol)+'</h3>'+
             '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+bonusKit()+
             '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
             C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>'
@@ -1781,10 +1831,18 @@
             // não é o mesmo que não existir nada.
             ? '<h3>Sete questões não acharam nada.<br>Vinte e quatro podem.</h3>'+
               '<p>Com uma questão por matéria, tudo o que dá para afirmar é que naquela você acertou. O diagnóstico completo mede 24, cronometradas, nas mesmas 6 matérias. Você quer entrar na prova com essa dúvida em aberto, ou prefere fechá-la em 20 minutos?</p>'
-            : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
-              '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada. O diagnóstico completo troca isso pelo número de cada matéria.</p>')+
+            // Este bloco repetia, quase palavra por palavra, o argumento do "estudar no
+            // escuro" que já aparece no parágrafo de abertura e no pull-quote da tela 1.
+            // Terceira vez do mesmo argumento não convence mais ninguém. Trocado pelo
+            // calendário, que é o único argumento REAL de urgência que este produto tem
+            // e que hoje só aparecia escondido no rodapé do bônus.
+            : (diasParaProva()
+              ? '<h3>A prova é '+porExtenso(DATA_PROVA)+'.<br>Faltam '+diasParaProva()+' dias de estudo.</h3>'+
+                '<p>A única decisão que importa agora é em quais matérias essas horas vão cair. Este raio-x olhou '+CONTENT.length+' questões. O completo olha 24 e devolve o número de cada uma hoje, em 20 minutos.</p>'
+              : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
+                '<p>A única decisão que importa é em quais matérias as suas horas de estudo vão cair. O diagnóstico completo devolve o número de cada uma.</p>'))+
           '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-          C.PAGA+'<div class="rmicro">Com o Kit Reta Final junto, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO+'</div>'+
+          C.PAGA+'<div class="rmicro">Com o Kit Reta Final junto, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO_FIM+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
             '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
