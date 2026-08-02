@@ -409,7 +409,7 @@
     // O mesmo resultado que a pessoa vê vai junto no e-mail do lead. Sem isso
     // chega só um nome e um telefone, e não dá para saber quem o anúncio trouxe.
     var R = compute();
-    var Q = quadrant(R.X, R.Y);
+    var Q = quadrant(R.X, R.Y, R);
     var conta = {}, ordem = [];
     CONTENT.forEach(function(qq,i){
       if(S.ans[i]!==qq.c){ if(!conta[qq.mat]){ conta[qq.mat]=0; ordem.push(qq.mat); } conta[qq.mat]++; }
@@ -590,17 +590,51 @@
   }
   function reprovouMais(){ return S.momento==='Já fiz duas ou mais vezes e não passei'; }
 
-  function quadrant(X,Y){
+  // Dias até a 1ª fase. Urgência REAL, tirada do calendário, nunca inventada.
+  // ATUALIZAR a cada edição do exame.
+  var DATA_PROVA=new Date(2026,8,6); // 06/09/2026
+  function diasParaProva(){
+    var d=Math.ceil((DATA_PROVA-new Date())/86400000);
+    return d>0? d : null;
+  }
+  function faltam(){
+    var d=diasParaProva();
+    return d? 'Faltam '+d+' dias para a prova. ' : '';
+  }
+  // Quantas a pessoa errou de verdade, sem contar as que o tempo estourou.
+  function errosReais(){
+    var n=0; CONTENT.forEach(function(Q,i){ if(!S.estourou[i] && S.ans[i]!==Q.c) n++; });
+    return n;
+  }
+
+  // Nomeia a causa REAL da queda de pressão, em vez de listar possibilidades. A página
+  // tem o dado; oferecer "ou isso, ou aquilo, ou aquilo outro" soa como chute e é o
+  // oposto de diagnóstico.
+  function causaPressao(r){
+    if(!r) return 'o relógio te cobrou';
+    if(r.estourou) return 'em '+r.estourou+(r.estourou>1?' questões o tempo acabou antes de você marcar':' questão o tempo acabou antes de você marcar');
+    if(r.res!=null && r.res<=55) return 'o seu rendimento caiu nas três últimas em relação às três primeiras';
+    if(r.cons!=null && r.cons<=55) return 'o seu ritmo oscilou demais de uma questão para outra';
+    if(r.tmed!=null && r.tmed>=33) return 'você decidiu no limite do relógio, questão após questão';
+    if(r.tmed!=null && r.tmed<10) return 'você decidiu rápido demais para quem está lendo pegadinha';
+    return 'o relógio te cobrou';
+  }
+
+  function quadrant(X,Y,r){
     var hiX=X>=CORTE_X, hiY=Y>=CORTE_Y;
+    var perdeu=errosReais()+estourouQuantas();
     // O quinto desfecho, e ele existe por um motivo só: quem já reprovou NUNCA sai
     // "apto". Acrescentar parágrafo não bastava, porque o rótulo verde continuava na
     // tela. Aqui o próprio veredito é interceptado, e a cor deixa de dizer "está tudo
     // bem". A contradição entre gabaritar e ter reprovado não é elogio: é o diagnóstico.
-    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,lab:'O seu problema não está no que estas 7 medem',txt:'Você acertou as sete pegadinhas, no tempo, sem consultar. E já prestou o exame sem passar. Essas duas coisas não se contradizem: uma explica a outra. O que te derruba não é o conteúdo do núcleo, porque o conteúdo do núcleo você acabou de mostrar que tem. É o que sete questões não alcançam.'};
-    if(hiX&&hiY) return {cls:'green',forte:true,lab:'Nesta amostra você não abriu buraco',txt:'Sete pegadinhas, no tempo, e você segurou as duas pontas. É bom e não é comum. Também não é veredito: são 7 contra 80, sem cansaço e sem as 11 matérias de fora do núcleo. O que este teste não sabe é se o seu rendimento é o mesmo na quadragésima questão.'};
-    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas o seu desempenho não acompanha',txt:'O conteúdo não é o seu maior problema. O que te derruba apareceu na hora: ritmo, travada, insegurança na questão difícil. Estudar mais matéria não conserta isso, e é o único conselho que você vai receber enquanto estiver pagando mensalidade.'};
-    if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas o conteúdo não sustenta',txt:'Você funciona bem sob pressão, e isso é metade do caminho. A outra metade abriu buraco: nas questões que decidem a prova, o conteúdo não respondeu. E buraco no núcleo duro não se compensa com as matérias de fora, porque elas valem menos.'};
-    return {cls:'mixed',lab:'Está perdendo ponto nos dois lados',txt:'Conteúdo e desempenho cederam na mesma amostra. É o diagnóstico mais duro de receber e o mais fácil de tratar, porque os dois têm solução conhecida e ordem certa de ataque. O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha.'};
+    // Cada desfecho termina numa CURIOSIDADE ESPECÍFICA, e ela não é enfeite: é o que
+    // entrega o leitor para o bloco rasurado logo abaixo. A frase final aponta para uma
+    // linha trancada do lockbox, então os dois respiram juntos em vez de repetir.
+    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,lab:'O seu problema não está no que estas 7 medem',txt:'Você acertou as sete, no tempo, sem consultar. E já prestou o exame sem passar. As duas coisas juntas dizem uma coisa só: a matéria das 6 que decidem a prova você tem. O que te derrubou estava fora do alcance destas 7 questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
+    if(hiX&&hiY) return {cls:'green',forte:true,lab:'Você acertou as sete',txt:'Sete pegadinhas, todas certas, dentro do tempo. Isso é raro. O que estas 7 não medem é o que acontece da questão 40 em diante: três horas de prova nas costas, as outras 11 matérias no meio e o cansaço que nenhum teste de três minutos reproduz. Você acabou de provar que sabe. O que ainda não sabe é se isso se mantém quando a amostra triplica, e em qual das 6 matérias você começa a ceder primeiro.'};
+    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe a matéria. O problema é a hora da prova',txt:'Você acertou o que precisava acertar, e mesmo assim '+causaPressao(r)+'. Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta. Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
+    if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas a matéria não respondeu',txt:'Sob pressão você funcionou, e isso é metade do caminho. A outra metade: você perdeu '+perdeu+' das 7, e estas 7 são uma de cada matéria do núcleo, com Ética entrando duas vezes porque sozinha ela vale 8 das 80 questões da prova. Ponto perdido aí não se compensa nas 11 matérias de fora: elas valem menos, e é justamente por isso que são de fora. O que falta é o número. Em qual das 6 está o buraco, e de que tamanho ele é.'};
+    return {cls:'mixed',lab:'Você perdeu ponto dos dois lados',txt:'Você perdeu '+perdeu+' das 7 e o relógio ainda te cobrou. É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo. O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha. O que falta você saber é qual das 6 matérias entra primeiro nessa ordem, e quanto você tem em cada uma delas hoje.'};
   }
 
   // A frase que o placar sozinho não diz. O 'momento' era o dado mais pesado do
@@ -608,29 +642,49 @@
   // Não mexe na nota, porque nota é desempenho medido. Mexe na LEITURA, que é
   // onde ele vale: quem já reprovou e vai bem numa amostra está no ponto cego
   // que este produto existe para tratar.
-  // Estrutura fixa de três tempos, e ela é o que converte: o que a sua situação
-  // revela · o que corrige · quanto custa. Antes parava no diagnóstico, que é
-  // exatamente onde a pessoa fecha a aba satisfeita.
-  function leituraMomento(q){
+  // Estrutura fixa de dois tempos: o que a SUA situação revela · o que corrige, com o
+  // entregável dito por extenso e o preço na frase.
+  // Duas regras aprendidas na marra em 02/08/2026:
+  // 1. NUNCA consolar. "Você está cedo, e isso é vantagem" tira a urgência inteira e a
+  //    pessoa fecha a aba tranquila. Se ela errou, o fato é que hoje ela não passaria.
+  // 2. NUNCA falar por metáfora. "Um mapa do que cai" não significa nada para quem está
+  //    no primeiro contato. Dizer o que a pessoa recebe: 24 questões cronometradas, a
+  //    porcentagem em cada uma das 6, o nome da que derruba.
+  // A urgência aqui é sempre REAL: a data da prova e o próprio placar dela.
+  function leituraMomento(q, r){
     var forte=!!q.forte, p='';
+    // O NÚMERO é do quadrante. Aqui não se repete, senão saem duas frases seguidas
+    // dizendo "você perdeu 4 de 7" e o texto vira eco.
+    // DIAG NÃO enumera o que o relatório mostra. O bloco rasurado faz isso logo abaixo,
+    // e melhor, porque é visual. Enumerar aqui matava a curiosidade que o quadrante
+    // acabou de criar, antes de o lockbox poder usá-la. Aqui fica só formato e preço.
+    var DIAG='São 24 questões cronometradas nas 6 matérias que decidem a prova, e o relatório sai na hora, com o seu nome, por R$47.';
+    // Para quem acertou as sete, o argumento NÃO pode ser "descubra onde você perde
+    // ponto": ela acabou de não perder nenhum, e a oferta soaria desconectada do que ela
+    // viu na tela. Para ela o produto serve para outra coisa.
+    var DIAG_F='São 24 questões cronometradas nas mesmas 6 matérias, e para você não servem para achar buraco: servem para responder essa pergunta com número. Sai na hora, com o seu nome, por R$47.';
+    if(forte) DIAG=DIAG_F;
     if(reprovouMais()){
       p = forte
-        ? '<b>E aqui está o ponto.</b> Você acertou sete pegadinhas e já prestou duas vezes ou mais sem passar. Não é contradição, é o diagnóstico: o que te derruba não está no conteúdo do núcleo, está no que sete questões não alcançam. Amplitude nas 11 matérias de fora, ritmo ao longo das 80 e o rendimento na terceira hora de prova.'
-        : '<b>E aqui está o ponto.</b> Você já prestou duas vezes ou mais, e o buraco apareceu de novo, agora em sete questões. Isso não é falta de esforço. É estudo no escuro: mais um ano na matéria que você já sabe, enquanto a que te derruba segue intocada.';
+        ? '<b>E aqui está o ponto.</b> Duas provas ou mais sem passar, e a matéria do núcleo você tem. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
+        : '<b>E aqui está o ponto.</b> O padrão acabou de se repetir na sua frente, em três minutos. Isso não é falta de esforço, e é bem provável que você tenha estudado mais do que muita gente que passou. O esforço é que foi para o lugar errado: mais um ano na matéria que você já sabia, enquanto a que te derruba seguiu intocada, porque ninguém nunca te disse qual era.';
       p += forte
-        ? '</p><p><b>O que corrige:</b> medir isso com número em vez de suposição. O diagnóstico completo cronometra 24 questões e mostra em que ponto o seu rendimento cai. O Plano Completo cobre o resto do caminho: as fichas das 17 disciplinas, dois simulados de 80 questões e o cronograma até a prova. É o pedaço que as suas duas reprovações mostram que está faltando.'
-        : '</p><p><b>O que corrige:</b> parar de estudar no escuro. O diagnóstico completo mede as 6 matérias do núcleo em 24 questões, diz qual delas te derruba e se o problema é conteúdo ou pressão, matéria por matéria. Com isso você sabe por onde começar amanhã, em vez de recomeçar tudo pela terceira vez.';
+        ? '</p><p><b>O que corrige:</b> medir o que ainda não foi medido. '+DIAG+' E o Plano Completo cobre justamente o pedaço que as suas provas apontaram: as fichas das 17 disciplinas, dois simulados de 80 questões para ver onde o rendimento cai, e o cronograma dia a dia até a prova, por R$127.'
+        : '</p><p><b>O que corrige:</b> saber o nome dessa matéria antes de abrir o próximo caderno. '+DIAG+' '+faltam()+'Dá para gastá-los estudando tudo outra vez, ou gastá-los onde você está perdendo ponto.';
     } else if(jaReprovou()){
       p = forte
-        ? '<b>E aqui está o ponto.</b> Você acertou as sete e, mesmo assim, prestou e não passou. Alguma coisa entre a sua capacidade e a sua nota se perde no caminho, e não é conteúdo do núcleo.'
-        : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o buraco reapareceu aqui. Repetir a mesma preparação tende a repetir o mesmo resultado.';
-      p += '</p><p><b>O que corrige:</b> descobrir o que é, com nome e tamanho, antes de gastar mais um semestre. É o que o diagnóstico completo faz em 24 questões cronometradas, e sai na hora, com o seu nome.';
+        ? '<b>E aqui está o ponto.</b> Você acertou tudo aqui e mesmo assim prestou e não passou. Entre o que você sabe e a nota que saiu tem alguma coisa se perdendo, e não é a matéria do núcleo. Enquanto ela não tiver nome, a segunda tentativa é a primeira de novo.'
+        : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o mesmo resultado reapareceu num teste de três minutos, sem sala cheia e sem cinco horas de prova. Repetir a mesma preparação costuma devolver a mesma nota.';
+      p += '</p><p><b>O que corrige:</b> trocar suposição por número. '+DIAG+' '+faltam()+'A primeira reprovação custou um semestre inteiro. Esta informação custa vinte minutos.';
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
-      p = '<b>Você está no melhor momento possível.</b> Antes da primeira tentativa, com tempo de corrigir a rota.'+
-          '</p><p><b>O que corrige:</b> saber agora, e não em setembro, qual das 6 matérias do núcleo te derruba. Quem descobre o próprio buraco depois de reprovar paga um ano por essa informação.';
+      p = '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.'+
+          '</p><p><b>O que corrige:</b> olhar antes, e não depois. '+faltam()+DIAG+' A primeira tentativa é a mais barata que você vai ter. A partir da segunda, o preço passa a ser mais um semestre.';
     } else if(S.momento==='Ainda estou na faculdade'){
-      p = '<b>Você está cedo, e isso é vantagem.</b> Dá para chegar na prova com o buraco já fechado, em vez de descobri-lo no dia.'+
-          '</p><p><b>O que corrige:</b> um mapa do que cai de verdade, para não perder semestre estudando o que quase não aparece na prova.';
+      p = '<b>E aqui está o ponto.</b> Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.'+
+          // A esperança fica ancorada no que dá para SABER, nunca no tempo que resta.
+          // Quem está na faculdade pode estar a três semanas da prova, e "você está
+          // cedo" faz essa pessoa desconectar na hora.
+          '</p><p><b>O que corrige:</b> saber desde já quais são as 6 matérias que decidem a prova e em qual delas você já perde ponto, em vez de descobrir isso no dia. '+DIAG+' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.';
     } else {
       return '';
     }
@@ -774,7 +828,7 @@
   // O campo 'fatia' segue no CONTENT porque é dado verdadeiro e barato de manter.
 
   function result(){
-    var r=compute(), q=quadrant(r.X,r.Y);
+    var r=compute(), q=quadrant(r.X,r.Y,r);
     var nome=esc((S.nome.split(' ')[0])||'você');
     var left=Math.max(10,Math.min(90,r.X)), top=Math.max(10,Math.min(90,100-r.Y));
     // Checkout pré-preenchido com o que a pessoa já digitou: ela não encara
@@ -804,7 +858,7 @@
         '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
-      '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q)+'</div>'+
+      '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q,r)+'</div>'+
       tempo()+
       pressao()+
       gabarito()+
