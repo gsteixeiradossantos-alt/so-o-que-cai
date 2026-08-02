@@ -139,14 +139,25 @@
   var BASE_URL = "https://so-o-que-cai-app.vercel.app/api/lead"; // fonte de verdade do lead
   // ======================
 
-  // 5 questões de conteúdo (3 do padrão da prova + 2 DIFÍCEIS de Ética, para o
-  // resultado ter erro de verdade para mostrar) + 3 cenários psicotécnicos.
-  // 'fatia' = peso real da matéria na prova, usado no bloco "o que o erro custa".
+  // 7 questões de conteúdo, TODAS difíceis, uma por matéria do núcleo duro
+  // (Ética entra duas vezes porque é a maior fatia da prova) + 3 cenários
+  // psicotécnicos.
+  // Por que só difíceis: com questão de padrão médio todo mundo acertava 3 de 5,
+  // batia o corte e recebia "chega bem nos dois". Em 02/08/2026, 9 de 9 pessoas
+  // caíram no mesmo quadrante verde, incluindo quem já reprovou duas vezes. Uma
+  // amostra que não consegue reprovar ninguém não mede nada e ainda alivia quem
+  // deveria sair incomodado.
+  // Critério de escolha: pegadinha clássica ou norma recente. Cada uma separa
+  // quem sabe de quem decorou, e as quatro novas vêm do banco do produto,
+  // revisado contra fontes primárias em 04/07/2026.
+  // 'fatia' = peso aproximado da matéria na prova, usado no bloco "o que o erro custa".
   var CONTENT = [
-    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', exp:'<b>Por que a B é a certa:</b> o sigilo profissional é, ao mesmo tempo, direito e dever do advogado, e alcança os fatos de que ele toma conhecimento no exercício da profissão (Código de Ética e Disciplina da OAB, arts. 35 a 37). As outras caem uma a uma: o sigilo não cede por simples pedido do cliente nem de terceiro, e cobre também fatos anteriores ao mandato, quando conhecidos em razão do ofício.', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
-    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', q:'O habeas corpus é cabível quando:', exp:'<b>Por que a A é a certa:</b> o habeas corpus protege a liberdade de locomoção contra ilegalidade ou abuso de poder (art. 5º, LXVIII, da Constituição). As outras três são os remédios vizinhos, e a banca vive trocando um pelo outro: direito líquido e certo não amparado por HC é mandado de segurança, conhecimento de informações pessoais é habeas data, e falta de norma regulamentadora é mandado de injunção.', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
-    {mat:'Civil', fatia:'7 das 80 questões', q:'Sobre prescrição e decadência, é correto que:', exp:'<b>Por que a B é a certa:</b> violado o direito, nasce a pretensão, e é ela que a prescrição extingue (art. 189 do Código Civil). O direito em si continua existindo, tanto que a dívida prescrita paga não se repete. A decadência é outra coisa: atinge o próprio direito potestativo, aquele que se exerce por prazo certo.', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
     {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Um militar da ativa foi aprovado no Exame de Ordem. Sobre o exercício da advocacia, ele:', exp:'<b>Por que a C é a certa:</b> militar da ativa é caso de incompatibilidade, não de impedimento (art. 28, V, do Estatuto da Advocacia). A diferença cai muito: impedimento proíbe advogar contra certas partes, incompatibilidade proíbe advogar em qualquer hipótese, inclusive em causa própria e fora do horário de serviço.', o:['Pode advogar livremente, desde que fora do horário de serviço.','Está impedido: só não pode advogar contra a Fazenda Pública que o remunera.','Está incompatibilizado: não pode exercer a advocacia enquanto estiver na ativa, nem em causa própria.','Pode advogar apenas em causas da Justiça Militar.'], c:2},
+    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', dif:true, q:'Larissa, brasileira nata, naturalizou-se italiana em 2025 para trabalhar na Europa, sem qualquer requerimento ao Brasil. Quanto à nacionalidade brasileira, Larissa:', exp:'<b>Por que a C é a certa:</b> a EC 131/2023 mudou o art. 12, § 4º, da Constituição. Adquirir outra nacionalidade deixou de causar perda automática: hoje a perda depende de pedido expresso do próprio brasileiro ou de cancelamento judicial da naturalização por fraude. Quem marcou a A não errou por não saber Constitucional, errou porque estudou por material anterior a 2023.', o:['Perdeu-a automaticamente ao adquirir voluntariamente outra nacionalidade.','Perdeu-a, salvo se provar que a naturalização foi imposta para permanência no território.','Conservou-a, pois após a EC 131/2023 a perda depende de pedido expresso ao Estado brasileiro, ressalvadas as hipóteses de apatridia, ou de cancelamento judicial da naturalização por fraude.','Conservou-a, mas ficou automaticamente suspensa enquanto mantiver a nacionalidade italiana.'], c:2},
+    {mat:'Civil', fatia:'7 das 80 questões', dif:true, q:'Sobre prescrição e decadência, é correto que:', exp:'<b>Por que a B é a certa:</b> violado o direito, nasce a pretensão, e é ela que a prescrição extingue (art. 189 do Código Civil). O direito em si continua existindo, tanto que a dívida prescrita paga não se repete. A decadência é outra coisa: atinge o próprio direito potestativo, aquele que se exerce por prazo certo.', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
+    {mat:'Processo Civil', fatia:'6 a 7 das 80 questões', dif:true, q:'Publicada sentença omissa quanto a um dos pedidos, General Cargas opôs embargos de declaração. Quanto ao prazo dos demais recursos:', exp:'<b>Por que a D é a certa:</b> os embargos de declaração <b>interrompem</b> o prazo recursal para as duas partes, e interromper significa que o prazo recomeça do zero depois do julgamento (CPC, arts. 1.023 e 1.026). A alternativa A troca interromper por suspender, que devolveria só o saldo. Essa troca é uma das que mais derruba gente, e derruba advogado também: é perda de prazo real.', o:['Fica suspenso, voltando a correr pelo restante após o julgamento.','Continua correndo, pois os embargos não interferem em outros prazos.','Fica suspenso apenas para a parte embargante.','Fica interrompido para ambas as partes, reiniciando por inteiro após a publicação do julgamento dos embargos.'], c:3},
+    {mat:'Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Criado em comunidade isolada onde a prática era tida como lícita, Josué praticou conduta típica sem qualquer possibilidade de conhecer sua ilicitude, o que ficou provado. Josué:', exp:'<b>Por que a A é a certa:</b> erro de proibição inevitável isenta de pena; se fosse evitável, apenas diminuiria de um sexto a um terço (CP, art. 21). A pegadinha está na D: erro de proibição atua na <b>culpabilidade</b> e o dolo permanece inteiro. Quem exclui o dolo está confundindo com erro de tipo (art. 20), que é outra figura.', o:['Fica isento de pena, pois o erro de proibição inevitável exclui a culpabilidade.','Responde pelo crime com pena reduzida de um sexto a um terço.','Responde normalmente, pois ninguém se escusa de cumprir a lei.','Tem excluído o dolo, respondendo por culpa.'], c:0},
+    {mat:'Processo Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Durante a instrução, o juiz entendeu presente risco à ordem pública e, sem qualquer provocação, decretou de ofício a prisão preventiva do réu. A decisão é:', exp:'<b>Por que a C é a certa:</b> depois da Lei 13.964/2019, o pacote anticrime, a preventiva exige requerimento do Ministério Público, do querelante ou do assistente, ou representação da autoridade policial. Não cabe de ofício <b>em nenhuma fase</b> (CPP, arts. 311 e 312). A alternativa A era a resposta certa antes de 2019, e é por isso que ela continua sendo a mais marcada.', o:['Válida, pois na fase judicial o juiz pode agir de ofício.','Válida, se fundamentada em fatos concretos.','Ilegal, pois após a Lei 13.964/2019 a preventiva exige requerimento do Ministério Público, do querelante ou do assistente, ou representação da autoridade policial, vedada a decretação de ofício.','Ilegal apenas na fase de inquérito.'], c:2},
     {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'No contrato de honorários com cláusula quota litis (percentual sobre o resultado da causa), é correto que:', exp:'<b>Por que a C é a certa:</b> a cláusula quota litis é permitida, mas com trava: somados aos honorários de sucumbência, os honorários não podem superar as vantagens que o cliente obteve na causa. Por isso a A erra ao proibir de vez e a B erra ao autorizar que o advogado leve mais que o cliente. E o contrato escrito é exigido, não dispensado.', o:['É vedado em qualquer hipótese pelo Código de Ética.','Os honorários podem superar as vantagens obtidas pelo cliente, se houver pacto expresso.','Os honorários, somados aos de sucumbência, não podem ser superiores às vantagens advindas em favor do cliente.','Dispensa contrato escrito, por decorrer do êxito.'], c:2}
   ];
   // Parte 2: psicotécnico indireto. Cenários de OUTRO domínio (trânsito, prazo,
@@ -193,7 +204,7 @@
     app.innerHTML =
       '<h1>Em 3 minutos, descubra <em>onde</em> você perde ponto na 1ª fase.</h1>'+
       '<p class="lead">Existem dois jeitos de reprovar: não saber a matéria, e saber e travar na hora. Este mini-diagnóstico separa os dois e te diz qual está te derrubando.</p>'+
-      '<p class="lead" style="margin-bottom:22px">São 5 questões do que mais cai, com o relógio correndo como na prova, e 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
+      '<p class="lead" style="margin-bottom:22px">São '+CONTENT.length+' questões, uma de cada matéria que decide a prova, e são as difíceis de propósito: questão fácil não mostra buraco nenhum. O relógio corre como na prova. Depois, 3 situações rápidas do dia a dia. No fim, seu resultado na tela.</p>'+
       '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
@@ -299,7 +310,9 @@
     var tsoma = 0, tn = 0;
     CONTENT.forEach(function(_,i){ if(S.times[i]!=null){ tsoma += S.times[i]; tn++; } });
 
-    var tmed = tn ? Math.round(tsoma/tn) : null;
+    // Mediana, a mesma que alimenta o eixo de pressão: o número gravado na base
+    // tem que ser o mesmo que a pessoa viu na tela, senão a análise não fecha.
+    var tmed = tempoMediano();
     var errouEm = erradas.length ? erradas.join(', ') : 'nenhuma';
     var q = new URLSearchParams(location.search);
 
@@ -354,19 +367,87 @@
     });
   }
 
+  // Mediana do tempo por questão, e não média: uma única questão em que a pessoa
+  // saiu para atender o telefone puxa a média inteira e mente sobre o ritmo.
+  function tempoMediano(){
+    var ts=[]; CONTENT.forEach(function(_,i){ if(S.times[i]!=null) ts.push(S.times[i]); });
+    if(!ts.length) return null;
+    ts.sort(function(a,b){ return a-b; });
+    var m=Math.floor(ts.length/2);
+    return ts.length%2 ? ts[m] : Math.round((ts[m-1]+ts[m])/2);
+  }
+
+  // Nota de ritmo, de 0 a 100, tirada do relógio. É o único sensor do eixo de
+  // pressão que a pessoa não consegue maquiar: no autorrelato ninguém marca que
+  // trava, e por isso o eixo Y vivia alto e o quadrante vivia verde.
+  // Faixas calibradas para questão DIFÍCIL com enunciado de caso: ler o enunciado
+  // e as quatro alternativas não se faz em menos de 15 segundos, e passar de dois
+  // minutos e meio por questão não fecha 80 questões em cinco horas.
+  function notaRitmo(t){
+    if(t==null) return null;
+    if(t<15)   return 0;    // não leu: marcou no reflexo
+    if(t<25)   return 30;   // leu por cima
+    if(t<40)   return 65;   // rápido, mas plausível
+    if(t<=90)  return 100;  // faixa de quem lê, pensa e decide
+    if(t<=150) return 55;   // lento: cobra pedágio nas últimas questões
+    return 25;              // travando
+  }
+
   function compute(){
     var c=0; CONTENT.forEach(function(Q,i){ if(S.ans[i]===Q.c) c++; });
     var X=Math.round(c/CONTENT.length*100);
     var bp=0; BEHAVIOR.forEach(function(B,i){ bp += (S.beh[i]!=null?B.o[S.beh[i]][1]:0); });
-    var Y=Math.round(bp/(BEHAVIOR.length*2)*100);
-    return {X:X,Y:Y,c:c};
+    var Yrel=Math.round(bp/(BEHAVIOR.length*2)*100);
+    var tmed=tempoMediano(), Yrit=notaRitmo(tmed);
+    // Metade autorrelato, metade relógio. Sem relógio, vale só o autorrelato.
+    var Y=(Yrit==null)?Yrel:Math.round(Yrel*0.5+Yrit*0.5);
+    return {X:X,Y:Y,c:c,Yrel:Yrel,Yrit:Yrit,tmed:tmed};
   }
+
+  // Os cortes. Eram 50 e 50, e com 5 questões de padrão médio isso fez 9 de 9
+  // pessoas caírem no verde em 02/08/2026, incluindo quem já reprovou duas vezes.
+  // Agora são 7 questões difíceis: 5 acertos, ou 71%, é a régua de conteúdo; e 70
+  // no eixo de pressão exige autorrelato bom E ritmo de leitura compatível.
+  var CORTE_X=71, CORTE_Y=70;
+
+  function jaReprovou(){
+    return S.momento==='Já fiz a prova uma vez e não passei' ||
+           S.momento==='Já fiz duas ou mais vezes e não passei';
+  }
+  function reprovouMais(){ return S.momento==='Já fiz duas ou mais vezes e não passei'; }
+
   function quadrant(X,Y){
-    var hiX=X>=50, hiY=Y>=50;
-    if(hiX&&hiY) return {cls:'green',lab:'Você chega bem nos dois',txt:'Você foi bem na amostra, e isso é um sinal, não um veredito: acertar 5 questões não aprova ninguém. A OAB reprova quem acerta as fáceis e sangra nas matérias de peso. O diagnóstico mostra se esse resultado se sustenta em 24 questões, nas 6 matérias que decidem a prova.'};
-    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas trava',txt:'O conteúdo não parece ser o seu maior problema. O que te derruba é o desempenho na hora: tempo, travada, insegurança. Isso se trata com tática de prova, não com mais matéria.'};
-    if(!hiX&&hiY) return {cls:'mixed',lab:'Falta conteúdo',txt:'Você se segura bem na prova, mas ainda tem lacuna de conteúdo. O caminho é focar nas matérias certas, começando pelas de maior peso, sem se perder no que quase não cai.'};
-    return {cls:'mixed',lab:'Conteúdo e tática',txt:'Você está perdendo ponto nos dois lados. A boa notícia: dá para atacar os dois com método, começando pelo conteúdo de maior peso e trabalhando a tática em paralelo.'};
+    var hiX=X>=CORTE_X, hiY=Y>=CORTE_Y;
+    if(hiX&&hiY) return {cls:'green',lab:'Nesta amostra você não abriu buraco',txt:'Sete questões difíceis e você segurou as duas pontas. É bom, e não é comum. Também não é veredito: são 7 contra 80, sem cansaço, sem cinco horas de relógio e sem as 11 matérias que ficam fora do núcleo. O que este teste não tem como saber é se o seu rendimento continua o mesmo na quadragésima questão, e é exatamente ali que a prova é decidida.'};
+    if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe, mas o seu desempenho não acompanha',txt:'O conteúdo não é o seu maior problema. O que te derruba aparece na hora: ritmo, travada, insegurança na questão difícil. Estudar mais matéria não conserta isso, e é o único conselho que você vai receber enquanto estiver pagando mensalidade.'};
+    if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas o conteúdo não sustenta',txt:'Você funciona bem sob pressão, e isso é metade do caminho. A outra metade abriu buraco: nas questões que decidem a prova, o conteúdo não respondeu. E buraco no núcleo duro não se compensa com as matérias de fora, porque elas valem menos.'};
+    return {cls:'mixed',lab:'Está perdendo ponto nos dois lados',txt:'Conteúdo e desempenho cederam na mesma amostra. É o diagnóstico mais duro de receber e o mais fácil de tratar, porque os dois problemas têm solução conhecida e ordem certa de ataque. O que não funciona é o que provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha.'};
+  }
+
+  // A frase que o placar sozinho não diz. O 'momento' era o dado mais pesado do
+  // formulário e até 02/08/2026 não entrava em lugar nenhum: era só gravado.
+  // Não mexe na nota, porque nota é desempenho medido. Mexe na LEITURA, que é
+  // onde ele vale: quem já reprovou e vai bem numa amostra está no ponto cego
+  // que este produto existe para tratar.
+  function leituraMomento(q){
+    var forte=(q.cls==='green');
+    if(reprovouMais()){
+      return forte
+        ? '<p><b>E aqui está o ponto.</b> Você foi bem nestas 7 e já prestou duas vezes ou mais sem passar. As duas coisas não se contradizem: elas se explicam. Quem vai bem numa amostra curta e reprova na prova inteira não reprova por falta de conteúdo do núcleo. Reprova por amplitude, por ritmo ao longo das 80 e pelo detalhe que só aparece na terceira hora. Nada disso cabe em 7 questões, e nenhum cursinho tem interesse em te dizer isso.</p>'
+        : '<p><b>E aqui está o ponto.</b> Você já prestou duas vezes ou mais, e o buraco apareceu de novo, agora em 7 questões. Isso não é falta de esforço. É estudo no escuro: mais um ano na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>';
+    }
+    if(jaReprovou()){
+      return forte
+        ? '<p><b>E aqui está o ponto.</b> Você foi bem nestas 7 e, mesmo assim, prestou e não passou. Alguma coisa entre a sua capacidade e a sua nota está se perdendo no caminho, e não é conteúdo do núcleo. Descobrir o que é, com nome e tamanho, é o trabalho do diagnóstico.</p>'
+        : '<p><b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o buraco reapareceu aqui. Repetir a mesma preparação tende a repetir o mesmo resultado.</p>';
+    }
+    if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
+      return '<p><b>Você está no melhor momento possível.</b> Antes da primeira tentativa, com tempo de corrigir a rota. Quem descobre o próprio buraco depois de reprovar paga um ano por essa informação.</p>';
+    }
+    if(S.momento==='Ainda estou na faculdade'){
+      return '<p><b>Você está cedo, e isso é vantagem.</b> Dá para chegar na prova com o buraco já fechado, em vez de descobri-lo no dia.</p>';
+    }
+    return '';
   }
 
   // Matérias em que a pessoa errou, na ordem em que apareceram, sem repetir.
@@ -385,8 +466,8 @@
     function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
     function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
     var linhas = err.length
-      ? real('Onde você tropeçou nestas 5', err.join(', '))
-      : real('Onde você tropeçou nestas 5', 'em nenhuma');
+      ? real('Onde você tropeçou nestas '+CONTENT.length, err.join(', '))
+      : real('Onde você tropeçou nestas '+CONTENT.length, 'em nenhuma');
     linhas += forte
       ? trava('Se este placar se sustenta em 24 questões')+
         trava('A matéria do núcleo em que você ainda oscila')+
@@ -397,7 +478,7 @@
     return '<div class="lockbox">'+
       '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
       '<div class="inner">'+linhas+'</div>'+
-      '<div class="cta">A primeira linha saiu das suas 5 respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
+      '<div class="cta">A primeira linha saiu das suas '+CONTENT.length+' respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
     '</div>';
   }
 
@@ -504,7 +585,7 @@
         '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
-      '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p></div>'+
+      '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q)+'</div>'+
       pressao()+
       tempo()+
       custoErros()+
@@ -521,7 +602,7 @@
             '<a class="alt" href="'+buyUrl+'" id="buy2" data-v="47">Prefere começar só pelo raio-x? Diagnóstico por R$ 47</a>'+
           '</div>'
         : '<div class="offer">'+
-            '<h3>Esse foi só o raio-x de 5 questões. A prova tem 80.</h3>'+
+            '<h3>Esse foi o raio-x de '+CONTENT.length+' questões. A prova tem 80.</h3>'+
             '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada.</p>'+
             '<p>O diagnóstico completo acende a luz. 24 questões depois, você sabe a sua porcentagem em cada matéria do núcleo, qual delas te derruba, se o seu problema é conteúdo ou pressão, e por onde começar amanhã. E leva junto o kit para agir: fichas do que mais cai, folha de tática para o seu perfil e simulados para medir se está subindo.</p>'+
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
