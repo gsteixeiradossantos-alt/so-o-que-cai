@@ -55,6 +55,10 @@
   .btn[disabled]{opacity:.4;cursor:not-allowed}
   .btn.full{width:100%}
   .back{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;margin-top:14px;padding:4px}
+  .back.mini{font-size:12.5px;text-decoration:underline;margin-top:22px;opacity:.75}
+  .autor{display:flex;align-items:flex-start;gap:13px;margin-top:20px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  .autor img{border-radius:50%;flex-shrink:0;object-fit:cover}
+  .autor p{font-size:13.5px;color:var(--muted2);line-height:1.5}
   .field{margin-bottom:13px}
   .field label{display:block;font-size:13.5px;color:var(--muted2);margin-bottom:5px}
   .field input{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 14px;font:inherit;font-size:16px;color:var(--ink)}
@@ -105,7 +109,11 @@
   .lockbox .row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line)}
   .lockbox .row:last-child{border-bottom:none}
   .lockbox .row .t{color:var(--ink)}
-  .lockbox .val{filter:blur(6px);user-select:none;pointer-events:none;color:var(--muted2);white-space:nowrap}
+  /* O que as 5 questões já mostraram sai legível e verdadeiro. O que depende das
+     24 vira barra opaca: sem texto por baixo, não há valor falso nem screenshot
+     para comparar com o do colega. */
+  .lockbox .val{color:var(--ink);white-space:nowrap;font-weight:600;font-size:13.5px;text-align:right}
+  .lockbox .val.trava{display:inline-block;width:88px;height:10px;border-radius:5px;background:var(--muted2);opacity:.3;font-size:0}
   .lockbox .cta{font-size:12px;color:var(--muted);padding:0 20px 14px}
 </style>
 </head>
@@ -136,11 +144,11 @@
   // resultado ter erro de verdade para mostrar) + 3 cenários psicotécnicos.
   // 'fatia' = peso real da matéria na prova, usado no bloco "o que o erro custa".
   var CONTENT = [
-    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
-    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', q:'O habeas corpus é cabível quando:', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
-    {mat:'Civil', fatia:'7 das 80 questões', q:'Sobre prescrição e decadência, é correto que:', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
-    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Um militar da ativa foi aprovado no Exame de Ordem. Sobre o exercício da advocacia, ele:', o:['Pode advogar livremente, desde que fora do horário de serviço.','Está impedido: só não pode advogar contra a Fazenda Pública que o remunera.','Está incompatibilizado: não pode exercer a advocacia enquanto estiver na ativa, nem em causa própria.','Pode advogar apenas em causas da Justiça Militar.'], c:2},
-    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'No contrato de honorários com cláusula quota litis (percentual sobre o resultado da causa), é correto que:', o:['É vedado em qualquer hipótese pelo Código de Ética.','Os honorários podem superar as vantagens obtidas pelo cliente, se houver pacto expresso.','Os honorários, somados aos de sucumbência, não podem ser superiores às vantagens advindas em favor do cliente.','Dispensa contrato escrito, por decorrer do êxito.'], c:2}
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', q:'Sobre o sigilo profissional do advogado, é correto afirmar que:', exp:'<b>Por que a B é a certa:</b> o sigilo profissional é, ao mesmo tempo, direito e dever do advogado, e alcança os fatos de que ele toma conhecimento no exercício da profissão (Código de Ética e Disciplina da OAB, arts. 35 a 37). As outras caem uma a uma: o sigilo não cede por simples pedido do cliente nem de terceiro, e cobre também fatos anteriores ao mandato, quando conhecidos em razão do ofício.', o:['Cede sempre que o cliente pedir.','É direito e dever do advogado e abrange os fatos de que tome conhecimento no exercício da profissão.','Não se aplica a fatos anteriores ao mandato.','Pode ser quebrado a pedido de terceiros interessados.'], c:1},
+    {mat:'Constitucional', fatia:'6 a 7 das 80 questões', q:'O habeas corpus é cabível quando:', exp:'<b>Por que a A é a certa:</b> o habeas corpus protege a liberdade de locomoção contra ilegalidade ou abuso de poder (art. 5º, LXVIII, da Constituição). As outras três são os remédios vizinhos, e a banca vive trocando um pelo outro: direito líquido e certo não amparado por HC é mandado de segurança, conhecimento de informações pessoais é habeas data, e falta de norma regulamentadora é mandado de injunção.', o:['Há ilegalidade ou abuso de poder com coação à liberdade de locomoção.','Se busca proteger direito líquido e certo não amparado por HC.','Se busca conhecimento de informações pessoais do impetrante.','Falta norma regulamentadora que inviabilize um direito.'], c:0},
+    {mat:'Civil', fatia:'7 das 80 questões', q:'Sobre prescrição e decadência, é correto que:', exp:'<b>Por que a B é a certa:</b> violado o direito, nasce a pretensão, e é ela que a prescrição extingue (art. 189 do Código Civil). O direito em si continua existindo, tanto que a dívida prescrita paga não se repete. A decadência é outra coisa: atinge o próprio direito potestativo, aquele que se exerce por prazo certo.', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Um militar da ativa foi aprovado no Exame de Ordem. Sobre o exercício da advocacia, ele:', exp:'<b>Por que a C é a certa:</b> militar da ativa é caso de incompatibilidade, não de impedimento (art. 28, V, do Estatuto da Advocacia). A diferença cai muito: impedimento proíbe advogar contra certas partes, incompatibilidade proíbe advogar em qualquer hipótese, inclusive em causa própria e fora do horário de serviço.', o:['Pode advogar livremente, desde que fora do horário de serviço.','Está impedido: só não pode advogar contra a Fazenda Pública que o remunera.','Está incompatibilizado: não pode exercer a advocacia enquanto estiver na ativa, nem em causa própria.','Pode advogar apenas em causas da Justiça Militar.'], c:2},
+    {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'No contrato de honorários com cláusula quota litis (percentual sobre o resultado da causa), é correto que:', exp:'<b>Por que a C é a certa:</b> a cláusula quota litis é permitida, mas com trava: somados aos honorários de sucumbência, os honorários não podem superar as vantagens que o cliente obteve na causa. Por isso a A erra ao proibir de vez e a B erra ao autorizar que o advogado leve mais que o cliente. E o contrato escrito é exigido, não dispensado.', o:['É vedado em qualquer hipótese pelo Código de Ética.','Os honorários podem superar as vantagens obtidas pelo cliente, se houver pacto expresso.','Os honorários, somados aos de sucumbência, não podem ser superiores às vantagens advindas em favor do cliente.','Dispensa contrato escrito, por decorrer do êxito.'], c:2}
   ];
   // Parte 2: psicotécnico indireto. Cenários de OUTRO domínio (trânsito, prazo,
   // memória em público) que revelam congelamento/afobação/controle sem perguntar
@@ -362,9 +370,48 @@
     return {cls:'mixed',lab:'Conteúdo e tática',txt:'Você está perdendo ponto nos dois lados. A boa notícia: dá para atacar os dois com método, começando pelo conteúdo de maior peso e trabalhando a tática em paralelo.'};
   }
 
+  // Matérias em que a pessoa errou, na ordem em que apareceram, sem repetir.
+  function materiasErradas(){
+    var out=[];
+    CONTENT.forEach(function(qq,i){ if(S.ans[i]!==qq.c && out.indexOf(qq.mat)<0) out.push(qq.mat); });
+    return out;
+  }
+
+  // O bloco do que ainda está trancado. Regra: o que as 5 questões já mostraram
+  // sai legível e verdadeiro; o que depende das 24 sai como barra opaca, sem
+  // número por baixo. Valor fixo que parece calculado destrói a credibilidade
+  // no primeiro print comparado entre duas pessoas.
+  function lockbox(forte){
+    var err=materiasErradas();
+    function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
+    function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
+    var linhas = err.length
+      ? real('Onde você tropeçou nestas 5', err.join(', '))
+      : real('Onde você tropeçou nestas 5', 'em nenhuma');
+    linhas += forte
+      ? trava('Se este placar se sustenta em 24 questões')+
+        trava('A matéria do núcleo em que você ainda oscila')+
+        trava('Sua margem para o dia da prova')
+      : trava('Sua porcentagem em cada uma das 6 matérias do núcleo')+
+        trava('Se o que te derruba é conteúdo ou pressão, matéria por matéria')+
+        trava('Por onde começar a estudar amanhã');
+    return '<div class="lockbox">'+
+      '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
+      '<div class="inner">'+linhas+'</div>'+
+      '<div class="cta">A primeira linha saiu das suas 5 respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
+    '</div>';
+  }
+
   function gabarito(){
     // A demo do produto: UMA questão corrigida no formato do relatório pago.
-    var Q=CONTENT[0], sua=S.ans[0];
+    // Mostra a PRIMEIRA que a pessoa errou: é mais útil para ela, e faz a amostra
+    // variar sozinha. Corrigir sempre a mesma questão vira atalho de grupo de
+    // WhatsApp e a demo perde a graça para todo mundo que chega depois.
+    var idx=0;
+    for(var k=0;k<CONTENT.length;k++){ if(S.ans[k]!==CONTENT[k].c){ idx=k; break; } }
+    // Acertou todas: sorteia, para não repetir a mesma em todo mundo.
+    if(S.ans[idx]===CONTENT[idx].c) idx=Math.floor(Math.random()*CONTENT.length);
+    var Q=CONTENT[idx], sua=S.ans[idx];
     var alts=Q.o.map(function(op,j){
       var cls='alt'+(j===Q.c?' certa':'')+(j===sua&&sua!==Q.c?' sua':'');
       var pre=String.fromCharCode(65+j)+') ';
@@ -373,7 +420,7 @@
     }).join('');
     return '<div class="gab"><div class="k">Gabarito comentado · amostra do relatório</div>'+
       '<div class="q">'+esc(Q.mat)+' · '+esc(Q.q)+'</div>'+alts+
-      '<div class="exp"><b>Por que a B é a certa:</b> o sigilo profissional é, ao mesmo tempo, direito e dever do advogado, e alcança os fatos de que ele toma conhecimento no exercício da profissão (Código de Ética e Disciplina da OAB, arts. 35 a 37). As outras caem uma a uma: o sigilo não cede por simples pedido do cliente nem de terceiro, e cobre também fatos anteriores ao mandato, quando conhecidos em razão do ofício. <b>No diagnóstico completo, cada uma das 24 questões vem com um comentário assim.</b></div></div>';
+      '<div class="exp">'+Q.exp+' <b>No diagnóstico completo, cada uma das 24 questões vem com um comentário assim.</b></div></div>';
   }
 
   function pressao(){
@@ -463,30 +510,11 @@
       tempo()+
       custoErros()+
       gabarito()+
-      (forte
-        ? '<div class="lockbox">'+
-            '<div class="head">O que as 24 questões ainda revelam sobre você</div>'+
-            '<div class="inner">'+
-            '<div class="row"><span class="t">Se o seu '+r.c+' de '+CONTENT.length+' se sustenta em 24 questões</span><span class="val">confirma ou expõe</span></div>'+
-            '<div class="row"><span class="t">A matéria do núcleo em que você ainda oscila</span><span class="val">Processo Penal · 66%</span></div>'+
-            '<div class="row"><span class="t">Sua margem de segurança para o dia da prova</span><span class="val">apertada · 8 pontos</span></div>'+
-            '<div class="row"><span class="t">Por onde fechar os últimos pontos</span><span class="val">Súmulas e tática</span></div>'+
-            '</div>'+
-            '<div class="cta">Rasurado porque depende das suas 24 respostas. Sai na hora, com o seu nome.</div>'+
-          '</div>'
-        : '<div class="lockbox">'+
-            '<div class="head">O que o diagnóstico completo revela sobre você</div>'+
-            '<div class="inner">'+
-            '<div class="row"><span class="t">A matéria que mais te derruba</span><span class="val">Processo Civil · 45%</span></div>'+
-            '<div class="row"><span class="t">Sua porcentagem em cada uma das 6 matérias</span><span class="val">62 · 45 · 71 · 58</span></div>'+
-            '<div class="row"><span class="t">Onde você perde ponto por pressão, não por conteúdo</span><span class="val">2ª metade da prova</span></div>'+
-            '<div class="row"><span class="t">Por onde começar a estudar amanhã</span><span class="val">Súmulas de Ética</span></div>'+
-            '</div>'+
-            '<div class="cta">Rasurado porque depende das suas 24 respostas. Sai na hora, com o seu nome.</div>'+
-          '</div>')+
+      lockbox(forte)+
       (forte
         ? '<div class="offer">'+
             '<h3>Você não precisa descobrir fraqueza. Precisa de amplitude.</h3>'+
+            '<p><b>Quem reprova com esse perfil quase nunca reprova por despreparo. Reprova por subestimar o que ainda não testou.</b></p>'+
             '<p>Quem chega forte no núcleo raramente reprova por ele. Reprova pelas 11 matérias de fora, pelo ritmo nas 80 questões e pelo detalhe que só aparece sob pressão.</p>'+
             '<p>O Plano Completo cobre esse resto do caminho: o diagnóstico de 24 questões para confirmar se este resultado se sustenta, as fichas das 17 disciplinas, dois simulados completos de 80 questões e o cronograma dia a dia até a prova.</p>'+
             '<a class="btn full" href="'+buyUrlC+'" id="buy" data-v="127">Quero o Plano Completo</a>'+
@@ -501,12 +529,20 @@
             '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
             '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
           '</div>')+
-      '<div class="center"><button class="back" id="redo">Refazer o mini-diagnóstico</button></div>';
+      // Quem chegou frio precisa ver que tem gente por trás disso, e não uma URL
+      // genérica. Vai depois da oferta, para não competir com ela.
+      '<div class="autor">'+
+        '<img src="assets/gustavo.webp" alt="Gustavo" width="48" height="48">'+
+        '<p>Quem fez isto é o <b>Gustavo, advogado</b>. Passei pela 1ª fase enchendo a mesa de apostila e quase me enrolei, não por não saber, mas por gastar as poucas horas que tinha na matéria errada. O Só o que Cai faz essa separação em 20 minutos.</p>'+
+      '</div>'+
+      '<div class="center"><button class="back mini" id="redo">Refazer o teste</button></div>';
     ['buy','buy2'].forEach(function(id){
       var el=document.getElementById(id);
       if(el) el.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:parseInt(el.getAttribute('data-v'),10),currency:'BRL'}); }catch(e){} } };
     });
-    document.getElementById('redo').onclick=function(){ S={ screen:'intro', ci:0, ans:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel, momento:S.momento }; render(); window.scrollTo(0,0); };
+    document.getElementById('redo').onclick=function(){ // times:{} tem que voltar aqui. Sem ele, S.times fica undefined e a primeira
+// resposta estoura em S.times[i], deixando o quiz morto na questao 1.
+S={ screen:'intro', ci:0, ans:{}, times:{}, bi:0, beh:{}, nome:S.nome, email:S.email, tel:S.tel, momento:S.momento }; render(); window.scrollTo(0,0); };
   }
 
   render();
