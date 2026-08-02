@@ -654,14 +654,12 @@
   // candidato sabe exatamente quanto pagou e quanto esperou.
   var TAXA_EXAME='R$350', ESPERA_EXAME='4 meses';
 
-  // R$47 diluído nos dias que faltam. Só aparece enquanto o número ainda ajuda: a menos
-  // de 10 dias da prova o valor por dia dispara e a frase vira piada contra a própria
-  // página. Calculado, nunca escrito à mão, para não envelhecer.
-  function porDia(){
-    var d=diasParaProva();
-    if(!d || d<10) return '';
-    return 'Dá R$'+(47/d).toFixed(2).replace('.',',')+' por dia até a prova.';
-  }
+  // Parcelamento real do checkout, informado pelo Gustavo em 02/08/2026.
+  // ATENÇÃO ao escrever qualquer texto com isso: 6 x 8,82 = R$52,92, ou seja, o
+  // parcelado TEM juros. Nunca escrever "sem juros" ao lado. Substituiu a divisão por
+  // dia, que era um número derivado por retórica; este é uma opção de pagamento de
+  // verdade e faz o mesmo trabalho de deixar o valor pequeno.
+  var PARCELA='6x de R$8,82';
 
   // A comparação de custo, em duas colunas. Esquerda longa e cara, direita curta e
   // barata: a assimetria é o argumento inteiro. Muda pelo MOMENTO da pessoa, porque o
@@ -671,21 +669,21 @@
     if(jaReprovou()){
       linhas=[
         ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
-        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez'],
+        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
         ['Repetir a mesma preparação, sem saber o que corrigir','Saber se o que te derruba é a matéria ou a hora da prova']
       ];
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
       linhas=[
         ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo onde você perde ponto'],
-        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez'],
+        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' esperando a próxima chance','20 minutos'],
         ['Ver quem passou seguir para a 2ª fase sem você','Corrigir a rota enquanto dá tempo']
       ];
     } else if(S.momento==='Ainda estou na faculdade'){
       linhas=[
         ['Chegar na prova com o mesmo buraco de hoje','Chegar com ele fechado'],
-        [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez'],
+        [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
         ['A turma se preparando para a 2ª fase sem você','Sair da faculdade já advogado']
       ];
@@ -985,7 +983,7 @@
       // inclusive quem gabaritou: menor pedido para quem tem menos dor.
       '<div class="ctaslim">'+
         '<a class="btn full" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
-        '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia<br>'+porDia()+'</div>'+
+        '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
       '</div>'+
       tempo()+
       pressao()+
@@ -1008,7 +1006,7 @@
             // ela olhar para essa dúvida e decidir se quer levá-la para a sala de prova.
             '<p><b>Então a pergunta é essa: você quer entrar na prova com essa dúvida em aberto, ou prefere fechá-la em 20 minutos?</b></p>'+
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero o diagnóstico completo</a>'+
-            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia<br>'+porDia()+'</div>'+
+            '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
             '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer as 17 disciplinas, 2 simulados de 80 questões e o cronograma até a prova? Plano Completo por R$ 127</a>'+
           '</div>'
         : '<div class="offer">'+
@@ -1018,7 +1016,7 @@
             // mesmos itens apareciam na tela (gancho do veredito, bloco rasurado, e aqui).
             '<p>O diagnóstico completo acende a luz: 24 questões cronometradas, e no fim você tem o número de cada matéria em vez de suposição. E leva junto o kit para agir: as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados para medir se está subindo.</p>'+
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia<br>'+porDia()+'</div>'+
+            '<div class="price">R$ 47 à vista, no Pix ou no cartão<br>ou em até '+PARCELA+' · sem mensalidade · 7 dias de garantia</div>'+
             '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
           '</div>');
       // O bloco do autor saiu daqui e virou parte do bloco de confiança, ACIMA da oferta.
