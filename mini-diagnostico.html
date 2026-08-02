@@ -78,6 +78,18 @@
   .confia .dep .quem{display:block;margin-top:7px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .confia .gar{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted2);line-height:1.55}
   .confia .gar b{color:var(--green)}
+  /* Tabela de custo, duas colunas. A esquerda é longa e cara, a direita é curta e barata:
+     a assimetria é o argumento, e ela lê num segundo, o que nenhum parágrafo consegue. */
+  .custo{margin-top:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .custo .lin{display:grid;grid-template-columns:1fr 1fr}
+  .custo .lin+.lin{border-top:1px solid var(--line)}
+  .custo .lin>div{padding:11px 13px;font-size:13.5px;line-height:1.42}
+  .custo .lin>div:first-child{border-right:1px solid var(--line);color:var(--muted2)}
+  .custo .lin>div:last-child{color:var(--ink);font-weight:500}
+  .custo .cab>div{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.08em;
+    text-transform:uppercase;padding:9px 13px;font-weight:700}
+  .custo .cab>div:first-child{background:#F7E8E5;color:var(--red3)}
+  .custo .cab>div:last-child{background:#E9F1EA;color:var(--green)}
   /* CTA enxuto logo depois do veredito. O preço só aparecia no 6º bloco de 7. */
   .ctaslim{margin:18px 0 6px}
   .ctaslim .price{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
@@ -210,7 +222,7 @@
     {mat:'Constitucional', fatia:'6 a 7 das 80 questões', dif:true, q:'Proposta de emenda constitucional pretende tornar o voto facultativo no Brasil. A proposta:', exp:'<b>Por que a C é a certa:</b> a cláusula pétrea do art. 60, § 4º, II, protege o voto <b>direto, secreto, universal e periódico</b>. A obrigatoriedade não está nessa lista: ela mora no art. 14, § 1º, e pode ser suprimida por emenda. A alternativa A troca uma palavra da lista por outra que não está nela, e é só isso que separa quem sabe de quem decorou.', o:['É inconstitucional, pois o voto obrigatório é cláusula pétrea.','É inconstitucional, pois matéria eleitoral não admite emenda.','É constitucional, pois a cláusula pétrea protege o voto direto, secreto, universal e periódico, e não a sua obrigatoriedade.','Só seria válida se aprovada também por referendo popular.'], c:2},
     {mat:'Civil', fatia:'7 das 80 questões', dif:true, q:'Sobre prescrição e decadência, é correto que:', exp:'<b>Por que a B é a certa:</b> violado o direito, nasce a pretensão, e é ela que a prescrição extingue (art. 189 do Código Civil). O direito em si continua existindo, tanto que a dívida prescrita paga não se repete. A decadência é outra coisa: atinge o próprio direito potestativo, aquele que se exerce por prazo certo.', o:['A prescrição atinge o próprio direito.','A prescrição extingue a pretensão.','A decadência extingue a pretensão.','Prescrição e decadência são sinônimos.'], c:1},
     {mat:'Processo Civil', fatia:'6 a 7 das 80 questões', dif:true, q:'Publicada sentença omissa quanto a um dos pedidos, General Cargas opôs embargos de declaração. Quanto ao prazo dos demais recursos:', exp:'<b>Por que a D é a certa:</b> os embargos de declaração <b>interrompem</b> o prazo recursal para as duas partes, e interromper significa que o prazo recomeça do zero depois do julgamento (CPC, arts. 1.023 e 1.026). A alternativa A troca interromper por suspender, que devolveria só o saldo. Essa troca é uma das que mais derruba gente, e derruba advogado também: é perda de prazo real.', o:['Fica suspenso, voltando a correr pelo restante após o julgamento.','Continua correndo, pois os embargos não interferem em outros prazos.','Fica suspenso apenas para a parte embargante.','Fica interrompido para ambas as partes, reiniciando por inteiro após a publicação do julgamento dos embargos.'], c:3},
-    {mat:'Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Criado em comunidade isolada onde a prática era tida como lícita, Josué praticou conduta típica sem qualquer possibilidade de conhecer sua ilicitude, o que ficou provado. Josué:', exp:'<b>Por que a A é a certa:</b> erro de proibição inevitável isenta de pena; se fosse evitável, apenas diminuiria de um sexto a um terço (CP, art. 21). A pegadinha está na D: erro de proibição atua na <b>culpabilidade</b> e o dolo permanece inteiro. Quem exclui o dolo está confundindo com erro de tipo (art. 20), que é outra figura.', o:['Fica isento de pena, pois o erro de proibição inevitável exclui a culpabilidade.','Responde pelo crime com pena reduzida de um sexto a um terço.','Responde normalmente, pois ninguém se escusa de cumprir a lei.','Tem excluído o dolo, respondendo por culpa.'], c:0},
+    {mat:'Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Criado em comunidade isolada onde a prática era tida como lícita, Josué praticou conduta típica sem qualquer possibilidade de conhecer sua ilicitude, o que ficou provado. Josué:', exp:'<b>Por que a A é a certa:</b> erro de proibição inevitável isenta de pena; se fosse evitável, apenas diminuiria de um sexto a um terço (CP, art. 21). O erro clássico está na D: erro de proibição atua na <b>culpabilidade</b> e o dolo permanece inteiro. Quem exclui o dolo está confundindo com erro de tipo (art. 20), que é outra figura.', o:['Fica isento de pena, pois o erro de proibição inevitável exclui a culpabilidade.','Responde pelo crime com pena reduzida de um sexto a um terço.','Responde normalmente, pois ninguém se escusa de cumprir a lei.','Tem excluído o dolo, respondendo por culpa.'], c:0},
     {mat:'Processo Penal', fatia:'5 a 6 das 80 questões', dif:true, q:'Vítima de crime de ação penal pública condicionada, Sula ofereceu representação, mas se arrependeu. Quanto à retratação:', exp:'<b>Por que a D é a certa:</b> a representação só se torna irretratável <b>depois de oferecida a denúncia</b> (CPP, art. 25). Antes desse marco a vítima pode se retratar validamente. A alternativa A troca "denúncia" por "boletim de ocorrência" e a B por "trânsito em julgado". Um marco temporal trocado e a questão inteira cai.', o:['É vedada após o registro do boletim de ocorrência.','É possível a qualquer tempo, até o trânsito em julgado.','Depende de homologação judicial com oitiva do investigado.','É admitida somente até o oferecimento da denúncia.'], c:3},
     {mat:'Ética', fatia:'8 das 80 questões, a maior fatia da prova', dif:true, q:'Em ação penal contra Túlio, seu ex-cliente, o advogado Fábio é arrolado como testemunha. Túlio, interessado no depoimento, autoriza expressamente que Fábio revele o que souber. Fábio:', exp:'<b>Por que a D é a certa:</b> o advogado pode recusar-se a depor sobre fato ligado a quem foi seu cliente <b>mesmo autorizado</b> por ele (EOAB, art. 7º, XIX; CED, art. 38). A palavra que derruba é "autoriza": o sigilo é dever do profissional, não disposição do cliente, então a autorização não libera coisa alguma.', o:['Deve depor, pois a autorização do cliente afasta o dever de sigilo.','Deve depor, pois o sigilo não alcança processos de natureza penal.','Só pode recusar o depoimento se demonstrar prejuízo próprio.','Pode recusar-se a depor sobre fatos ligados ao antigo patrocínio, mesmo com a autorização do cliente.'], c:3}
   ];
@@ -222,7 +234,7 @@
   var BEHAVIOR = [
     {q:'Você está dirigindo num trevo desconhecido, o GPS trava e os carros atrás começam a buzinar. O que acontece primeiro?',
      o:[['Sigo por qualquer saída, só para não ficar parado ali',1],['Dou uma travada de alguns segundos antes de conseguir decidir',0],['Encosto onde dá e decido o caminho com calma',2]],
-     leit:{0:'No trevo, você travou antes de decidir. Na prova, esse é o perfil que dá branco numa questão difícil e perde o ritmo nas três seguintes.',1:'No trevo, você seguiu por qualquer saída para escapar da pressão. Na prova, é quem marca sem reler o enunciado e cai na pegadinha.',2:'No trevo, você parou e escolheu com calma: você decide bem debaixo de buzina.'}},
+     leit:{0:'No trevo, você travou antes de decidir. Na prova, esse é o perfil que dá branco numa questão difícil e perde o ritmo nas três seguintes.',1:'No trevo, você seguiu por qualquer saída para escapar da pressão. Na prova, é quem marca sem reler o enunciado e cai na alternativa que parece certa.',2:'No trevo, você parou e escolheu com calma: você decide bem debaixo de buzina.'}},
     {q:'Faltando 20 minutos para entregar algo importante, você percebe um erro numa parte que já estava pronta.',
      o:[['Corrijo o essencial e entrego no prazo',2],['Tento refazer tudo e por pouco não estouro o prazo',0],['Entrego como está e passo o resto do dia remoendo',1]],
      leit:{0:'Com o prazo estourando, você tentou refazer tudo. Na prova, é quem empaca numa questão e chega sem tempo nas dez últimas.',1:'Você entregou, mas ficou remoendo. Na prova, é quem carrega a questão anterior na cabeça e erra a seguinte por distração.',2:'Com o prazo apertado, você priorizou e entregou: sua gestão de tempo funciona sob pressão.'}},
@@ -636,6 +648,43 @@
     var d=diasParaProva();
     return d? 'Faltam '+d+' dias para a prova. ' : '';
   }
+
+  // Números do exame, confirmados pelo Gustavo em 02/08/2026. ATUALIZAR a cada edição:
+  // a taxa muda e o intervalo entre exames também. Número errado aqui é caro, porque o
+  // candidato sabe exatamente quanto pagou e quanto esperou.
+  var TAXA_EXAME='R$350', ESPERA_EXAME='4 meses';
+
+  // A comparação de custo, em duas colunas. Esquerda longa e cara, direita curta e
+  // barata: a assimetria é o argumento inteiro. Muda pelo MOMENTO da pessoa, porque o
+  // que ela perde ao não agir é completamente diferente em cada um.
+  function tabelaCusto(){
+    var linhas;
+    if(jaReprovou()){
+      linhas=[
+        ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
+        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez'],
+        [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
+        ['Estudar tudo outra vez, sem saber o quê','A matéria certa, já amanhã']
+      ];
+    } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
+      linhas=[
+        ['A primeira reprovação, que é a que instala a dúvida','Chegar sabendo onde você perde ponto'],
+        [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez'],
+        [ESPERA_EXAME+' esperando a próxima chance','20 minutos'],
+        ['Ver quem passou seguir para a 2ª fase sem você','Corrigir a rota enquanto dá tempo']
+      ];
+    } else if(S.momento==='Ainda estou na faculdade'){
+      linhas=[
+        ['Chegar na prova com o mesmo buraco de hoje','Chegar com ele fechado'],
+        [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez'],
+        [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
+        ['A turma se preparando para a 2ª fase sem você','Sair da faculdade já advogado']
+      ];
+    } else { return ''; }
+    var html='<div class="custo"><div class="lin cab"><div>Se você não fizer nada</div><div>Se você olhar agora</div></div>';
+    linhas.forEach(function(l){ html+='<div class="lin"><div>'+esc(l[0])+'</div><div>'+esc(l[1])+'</div></div>'; });
+    return html+'</div>';
+  }
   // Quantas a pessoa errou de verdade, sem contar as que o tempo estourou.
   function errosReais(){
     var n=0; CONTENT.forEach(function(Q,i){ if(!S.estourou[i] && S.ans[i]!==Q.c) n++; });
@@ -651,7 +700,7 @@
     if(r.res!=null && r.res<=55) return 'o seu rendimento caiu nas três últimas em relação às três primeiras';
     if(r.cons!=null && r.cons<=55) return 'o seu ritmo oscilou demais de uma questão para outra';
     if(r.tmed!=null && r.tmed>=33) return 'você decidiu no limite do relógio, questão após questão';
-    if(r.tmed!=null && r.tmed<10) return 'você decidiu rápido demais para quem está lendo pegadinha';
+    if(r.tmed!=null && r.tmed<10) return 'você decidiu rápido demais para quem está lendo questão difícil';
     return 'o relógio te cobrou';
   }
 
@@ -666,7 +715,7 @@
     // entrega o leitor para o bloco rasurado logo abaixo. A frase final aponta para uma
     // linha trancada do lockbox, então os dois respiram juntos em vez de repetir.
     if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,lab:'O seu problema não está no que estas 7 medem',txt:'Você acertou as sete, no tempo, sem consultar. E já prestou o exame sem passar. As duas coisas juntas dizem uma coisa só: a matéria das 6 que decidem a prova você tem. O que te derrubou estava fora do alcance destas 7 questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
-    if(hiX&&hiY) return {cls:'green',forte:true,lab:'Você acertou as sete',txt:'Sete pegadinhas, todas certas, dentro do tempo. Isso é raro. O que estas 7 não medem é o que acontece da questão 40 em diante: três horas de prova nas costas, as outras 11 matérias no meio e o cansaço que nenhum teste de quatro minutos reproduz. Você acabou de provar que sabe. O que ainda não sabe é se isso se mantém quando a amostra triplica, e em qual das 6 matérias você começa a ceder primeiro.'};
+    if(hiX&&hiY) return {cls:'green',forte:true,lab:'Você acertou as sete',txt:'Sete questões difíceis, todas certas, dentro do tempo. Você sabe a matéria que decide a prova. O que estas 7 não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar. E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
     if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe a matéria. O problema é a hora da prova',txt:'Você acertou o que precisava acertar, e mesmo assim '+causaPressao(r)+'. Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta. Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
     if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas a matéria não respondeu',txt:'Sob pressão você funcionou, e isso é metade do caminho. A outra metade: você perdeu '+perdeu+' das 7, e estas 7 são uma de cada matéria do núcleo, com Ética entrando duas vezes porque sozinha ela vale 8 das 80 questões da prova. Ponto perdido aí não se compensa nas 11 matérias de fora: elas valem menos, e é justamente por isso que são de fora. O que falta é o número. Em qual das 6 está o buraco, e de que tamanho ele é.'};
     return {cls:'mixed',lab:'Você perdeu ponto dos dois lados',txt:'Você perdeu '+perdeu+' das 7 e o relógio ainda te cobrou. É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo. O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha. O que falta você saber é qual das 6 matérias entra primeiro nessa ordem, e quanto você tem em cada uma delas hoje.'};
@@ -710,15 +759,15 @@
         : '<b>E aqui está o ponto.</b> O padrão acabou de se repetir na sua frente, em quatro minutos. Isso não é falta de esforço, e é bem provável que você tenha estudado mais do que muita gente que passou. O esforço é que foi para o lugar errado: mais um ano na matéria que você já sabia, enquanto a que te derruba seguiu intocada, porque ninguém nunca te disse qual era.';
       p += forte
         ? '</p><p><b>O que corrige:</b> medir o que ainda não foi medido. '+DIAG+' E o Plano Completo cobre justamente o pedaço que as suas provas apontaram: as fichas das 17 disciplinas, dois simulados de 80 questões para ver onde o rendimento cai, e o cronograma dia a dia até a prova, por R$127.'
-        : '</p><p><b>O que corrige:</b> saber o nome dessa matéria antes de abrir o próximo caderno. '+DIAG+' '+faltam()+'Dá para gastá-los estudando tudo outra vez, ou gastá-los onde você está perdendo ponto.';
+        : '</p><p><b>O que corrige:</b> saber o nome dessa matéria antes de abrir o próximo caderno. '+DIAG;
     } else if(jaReprovou()){
       p = forte
         ? '<b>E aqui está o ponto.</b> Você acertou tudo aqui e mesmo assim prestou e não passou. Entre o que você sabe e a nota que saiu tem alguma coisa se perdendo, e não é a matéria do núcleo. Enquanto ela não tiver nome, a segunda tentativa é a primeira de novo.'
         : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o mesmo resultado reapareceu num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. Repetir a mesma preparação costuma devolver a mesma nota.';
-      p += '</p><p><b>O que corrige:</b> trocar suposição por número. '+DIAG+' '+faltam()+'A primeira reprovação custou um semestre inteiro. Esta informação custa vinte minutos.';
+      p += '</p><p><b>O que corrige:</b> trocar suposição por número. '+DIAG+' Se o que te derrubou está entre essas 6 matérias, ele aparece ali com nome.';
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
       p = '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.'+
-          '</p><p><b>O que corrige:</b> olhar antes, e não depois. '+faltam()+DIAG+' A primeira tentativa é a mais barata que você vai ter. A partir da segunda, o preço passa a ser mais um semestre.';
+          '</p><p><b>O que corrige:</b> olhar antes, e não depois. '+faltam()+DIAG;
     } else if(S.momento==='Ainda estou na faculdade'){
       p = '<b>E aqui está o ponto.</b> Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.'+
           // A esperança fica ancorada no que dá para SABER, nunca no tempo que resta.
@@ -849,7 +898,7 @@
     } else if(tm!=null && tm>=33){
       ruim=true; lin='Você decidiu no limite do relógio: '+tm+' segundos por questão, em média.';
     } else if(tm!=null && tm<10){
-      ruim=true; lin='Você decidiu em '+tm+' segundos por questão, em média. Nenhuma pegadinha se lê nesse tempo.';
+      ruim=true; lin='Você decidiu em '+tm+' segundos por questão, em média. Nenhuma questão dessas se lê nesse tempo.';
     } else if(tm!=null){
       lin='Ritmo firme e parelho: '+tm+' segundos por questão, sem oscilar e sem cair no fim.';
     }
@@ -917,12 +966,16 @@
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
       '<div class="verdict '+q.cls+'"><div class="k">Onde você está</div><h2>'+q.lab+'</h2><p>'+q.txt+'</p>'+leituraMomento(q,r)+'</div>'+
-      // CTA logo depois do veredito. Antes o primeiro preço só aparecia no sexto bloco de
-      // sete, o que no celular é muito rolar para quem já decidiu.
+      // A comparação de custo vem logo depois do gancho e ANTES do botão: é ela que
+      // transforma o diagnóstico em decisão. Sem ela o botão pede dinheiro sem ter
+      // colocado nada na outra ponta da balança.
+      tabelaCusto()+
+      // CTA logo depois. Antes o primeiro preço só aparecia no sexto bloco de sete, o
+      // que no celular é muito rolar para quem já decidiu. Agora TODOS pedem R$47,
+      // inclusive quem gabaritou: menor pedido para quem tem menos dor.
       '<div class="ctaslim">'+
-        '<a class="btn full" href="'+(forte?buyUrlC:buyUrl)+'" id="buy0" data-v="'+(forte?127:47)+'">'+
-          (forte?'Quero o Plano Completo':'Quero o diagnóstico completo')+'</a>'+
-        '<div class="price">R$ '+(forte?'127':'47')+' · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+        '<a class="btn full" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+        '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
       '</div>'+
       tempo()+
       pressao()+
@@ -930,14 +983,19 @@
       lockbox()+
       confianca(forte)+
       (forte
+        // Oferta de quem acertou tudo. Refeita em 02/08: a versão anterior empurrava o
+        // produto de R$127 para quem acabou de provar que não precisa de diagnóstico, e
+        // isso faz o teste inteiro parecer funil de venda. Agora o pedido é o MENOR, e o
+        // argumento é o único honesto que existe para essa pessoa: sete questões não
+        // acharem nada não é o mesmo que não existir nada.
         ? '<div class="offer">'+
-            '<h3>Você não precisa descobrir fraqueza. Precisa de amplitude.</h3>'+
-            '<p><b>Quem reprova com esse perfil quase nunca reprova por despreparo. Reprova por subestimar o que ainda não testou.</b></p>'+
-            '<p>Quem chega forte no núcleo raramente reprova por ele. Reprova pelas 11 matérias de fora, pelo ritmo nas 80 questões e pelo detalhe que só aparece sob pressão.</p>'+
-            '<p>O Plano Completo cobre esse resto do caminho: o diagnóstico de 24 questões para confirmar se este resultado se sustenta, as fichas das 17 disciplinas, dois simulados completos de 80 questões e o cronograma dia a dia até a prova.</p>'+
-            '<a class="btn full" href="'+buyUrlC+'" id="buy" data-v="127">Quero o Plano Completo</a>'+
-            '<div class="price">R$ 127 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
-            '<a class="alt" href="'+buyUrl+'" id="buy2" data-v="47">Prefere começar só pelo raio-x? Diagnóstico por R$ 47</a>'+
+            '<h3>Sete questões não acharam nada. Vinte e quatro podem.</h3>'+
+            '<p>Este teste mediu 7 questões, uma por matéria. Não achou buraco em você, e isso é bom. Mas com uma questão por matéria, tudo o que dá para afirmar é que naquela você acertou.</p>'+
+            '<p><b>O diagnóstico completo mede 24, cronometradas, nas mesmas 6 matérias.</b> É a partir dali que aparece o que 7 não alcançam: em qual delas o seu acerto oscila, em que ponto o seu rendimento começa a cair, e a diferença entre saber a resposta e sustentar isso por 80 questões seguidas. O que ele encontrar é exatamente o tipo de coisa que decide uma reprovação, e que ninguém descobre estudando mais matéria.</p>'+
+            '<p>E ele não vem sozinho: junto vão as fichas do que mais cai, a folha de tática de prova para o seu perfil e 3 simulados. Para você eles servem menos para achar fraqueza e mais para o que importa agora, que é chegar no dia aquecido em vez de parado.</p>'+
+            '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero o diagnóstico completo</a>'+
+            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+            '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer as 17 disciplinas, 2 simulados de 80 questões e o cronograma até a prova? Plano Completo por R$ 127</a>'+
           '</div>'
         : '<div class="offer">'+
             '<h3>Esse foi o raio-x de '+CONTENT.length+' questões. A prova tem 80.</h3>'+
