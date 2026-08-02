@@ -749,6 +749,17 @@
     if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,lab:'O seu problema não está no que estas 7 medem',txt:'Você acertou as sete, no tempo, sem consultar. E já prestou o exame sem passar. As duas coisas juntas dizem uma coisa só: a matéria das 6 que decidem a prova você tem. O que te derrubou estava fora do alcance destas 7 questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
     if(hiX&&hiY) return {cls:'green',forte:true,lab:'Você acertou as sete',txt:'Sete questões difíceis, todas certas, dentro do tempo. Você sabe a matéria que decide a prova. O que estas 7 não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar. E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
     if(hiX&&!hiY) return {cls:'ochre',lab:'Você sabe a matéria. O problema é a hora da prova',txt:'Você acertou o que precisava acertar, e mesmo assim '+causaPressao(r)+'. Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta. Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
+    // Estouro puro: acertou tudo o que respondeu e o que perdeu foi inteiro para o
+    // relógio. Sem este desfecho a pessoa caía em "perdeu ponto dos dois lados" com o
+    // conselho invertido (fechar matéria primeiro), violando a regra de que estouro
+    // nunca se mistura com erro no texto. Vem ANTES do ramo hiY porque com um estouro
+    // só o Y ainda pode passar do corte, e "a matéria não respondeu" seria falso.
+    // O X continua contando estouro como ponto perdido (decisão registrada no compute);
+    // é o texto que separa, não a régua.
+    if(errosReais()===0 && estourouQuantas()>0){
+      var est=estourouQuantas();
+      return {cls:'ochre',lab:'O que te derrubou não foi a matéria. Foi o relógio',txt:'Tudo o que você marcou estava certo. O ponto que você perdeu foi inteiro para o relógio, e na prova questão em branco vale o mesmo que questão errada. Estudar mais matéria não muda isso: matéria você mostrou que tem. O que falta saber é para onde o seu tempo vai: em qual matéria você trava, e em que ponto da prova isso começa.'};
+    }
     if(!hiX&&hiY) return {cls:'mixed',lab:'Você se segura bem, mas a matéria não respondeu',txt:'Sob pressão você funcionou, e isso é metade do caminho. A outra metade: você perdeu '+perdeu+' das 7, e estas 7 são uma de cada matéria do núcleo, com Ética entrando duas vezes porque sozinha ela vale 8 das 80 questões da prova. Ponto perdido aí não se compensa nas 11 matérias de fora: elas valem menos, e é justamente por isso que são de fora. O que falta é o número. Em qual das 6 está o buraco, e de que tamanho ele é.'};
     // O Y cai junto com os erros (a nota de decisão pune errar), então dá para chegar
     // aqui com o relógio limpo. Nesse caso a abertura não pode acusar o relógio: o bloco
@@ -779,8 +790,10 @@
     // Terceiro perfil, descoberto na revisão de 02/08: acertou as 7 mas o eixo da hora
     // não fechou. O ramo padrão mandava essa pessoa ler "a matéria que te derruba seguiu
     // intocada" logo depois de o veredito dizer "Você sabe a matéria". O discriminador
-    // de matéria não é 'forte', é o X cheio.
-    var sabe = !forte && r && r.X>=CORTE_X;
+    // de matéria não é 'forte', é não ter errado conteúdo: X cheio OU estouro puro
+    // (zero erros reais com estouro), que recebe o mesmo tratamento de "a matéria não
+    // é o problema".
+    var sabe = !forte && r && (r.X>=CORTE_X || (errosReais()===0 && estourouQuantas()>0));
     // O NÚMERO é do quadrante. Aqui não se repete, senão saem duas frases seguidas
     // dizendo "você perdeu 4 de 7" e o texto vira eco.
     // DIAG NÃO enumera o que o relatório mostra. O bloco rasurado faz isso logo abaixo,
@@ -801,7 +814,7 @@
       p = forte
         ? '<b>E aqui está o ponto.</b> Duas provas ou mais sem passar, e a matéria do núcleo você tem. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
         : sabe
-        ? '<b>E aqui está o ponto.</b> Duas provas ou mais sem passar, e a matéria destas 7 você acertou inteira. O que cedeu foi a hora, e agora isso tem registro: aconteceu de novo, num teste de quatro minutos. Duas reprovações e este resultado apontam para o mesmo lugar, e não é o caderno.'
+        ? '<b>E aqui está o ponto.</b> Duas provas ou mais sem passar, e o que te derrubou aqui não foi a matéria. O que cedeu foi a hora, e agora isso tem registro: aconteceu de novo, num teste de quatro minutos. Duas reprovações e este resultado apontam para o mesmo lugar, e não é o caderno.'
         : '<b>E aqui está o ponto.</b> O padrão acabou de se repetir na sua frente, em quatro minutos. Isso não é falta de esforço, e é bem provável que você tenha estudado mais do que muita gente que passou. O esforço é que foi para o lugar errado: mais um ano na matéria que você já sabia, enquanto a que te derruba seguiu intocada, porque ninguém nunca te disse qual era.';
       p += forte
         ? '</p><p><b>O que corrige:</b> medir o que ainda não foi medido. '+DIAG+' E o Plano Completo cobre justamente o pedaço que as suas provas apontaram: as fichas das 17 disciplinas, dois simulados de 80 questões para ver onde o rendimento cai, e o cronograma dia a dia até a prova, por R$127.'
@@ -812,7 +825,7 @@
       p = forte
         ? '<b>E aqui está o ponto.</b> Você acertou tudo aqui e mesmo assim prestou e não passou. Entre o que você sabe e a nota que saiu tem alguma coisa se perdendo, e não é a matéria do núcleo. Enquanto ela não tiver nome, a segunda tentativa é a primeira de novo.'
         : sabe
-        ? '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e aqui a matéria respondeu: as sete certas. O que cedeu foi a hora, num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. No dia, isso só aumenta.'
+        ? '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e aqui a matéria não foi o problema. O que cedeu foi a hora, num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. No dia, isso só aumenta.'
         : '<b>E aqui está o ponto.</b> Você já prestou uma vez e não passou, e o mesmo resultado reapareceu num teste de quatro minutos, sem sala cheia e sem cinco horas de prova. Repetir a mesma preparação costuma devolver a mesma nota.';
       // O rabo "se o que te derrubou está entre essas 6 matérias, ele aparece ali com
       // nome" só para quem de fato perdeu matéria: para X cheio o veredito acabou de
@@ -826,8 +839,8 @@
         ? '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez e acabou de ver o melhor resultado que este teste dá. O que ele não mede é o que acontece com esse acerto na questão 40, com três horas de prova nas costas. É na primeira prova que isso pega quem sabe a matéria, justamente porque nunca foi medido.'+
           '</p><p><b>O que corrige:</b> medir antes do dia. '+faltam()+DIAG
         : sabe
-        ? '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, a matéria destas 7 você tem, e mesmo assim a hora te cobrou aqui, no conforto de casa. No dia são 80 questões, cinco horas e a sala cheia.'+
-          '</p><p><b>O que corrige:</b> medir antes do dia em que ponto o seu rendimento cai. '+faltam()+DIAG
+        ? '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e o que te cobrou aqui não foi a matéria: foi a hora, no conforto de casa. No dia são 80 questões, cinco horas e a sala cheia.'+
+          '</p><p><b>O que corrige:</b> medir em que ponto o seu rendimento cai, antes do dia. '+faltam()+DIAG
         : '<b>E aqui está o ponto.</b> Você vai prestar pela primeira vez, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas de prova e sem as outras 11 matérias no meio. No dia, tudo isso entra junto.'+
           '</p><p><b>O que corrige:</b> olhar antes, e não depois. '+faltam()+DIAG;
     } else if(S.momento==='Ainda estou na faculdade'){
@@ -837,13 +850,15 @@
         ? '<b>E aqui está o ponto.</b> A OAB cobra um pedaço pequeno do Direito, em cinco horas, e nesse pedaço, nestas 7, você não cedeu. O que ninguém mediu ainda é se isso se sustenta por 80 questões seguidas, porque a faculdade não cronometra ninguém.'+
           '</p><p><b>O que corrige:</b> medir isso antes do dia. '+faltam()+DIAG
         : sabe
-        ? '<b>E aqui está o ponto.</b> A matéria destas 7 você tem, ainda na faculdade. O que apareceu foi a hora, e isso a faculdade não mede nunca: prova de faculdade não cronometra ninguém.'+
+        ? '<b>E aqui está o ponto.</b> Ainda na faculdade, e a matéria não foi o que te derrubou aqui. O que apareceu foi a hora, e isso a faculdade não mede nunca: prova de faculdade não cronometra ninguém.'+
           '</p><p><b>O que corrige:</b> medir isso antes do dia. '+faltam()+DIAG
         : '<b>E aqui está o ponto.</b> Estar na faculdade não te protegeu disso, e não é culpa sua: a faculdade ensina o Direito inteiro, em cinco anos, e a OAB cobra um pedaço pequeno dele, em cinco horas. São duas coisas diferentes, e ninguém avisa. Quem estuda para a faculdade não está estudando para o exame.'+
           // A esperança fica ancorada no que dá para SABER, nunca no tempo que resta.
           // Quem está na faculdade pode estar a três semanas da prova, e "você está
           // cedo" faz essa pessoa desconectar na hora.
-          '</p><p><b>O que corrige:</b> saber desde já quais são as 6 matérias que decidem a prova e em qual delas você já perde ponto, em vez de descobrir isso no dia. '+DIAG+' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.';
+          // "quais são as 6 matérias" saiu daqui: o DIAG logo adiante já diz "nas 6
+          // matérias que decidem a prova" e a frase virava eco triplo do mesmo número.
+          '</p><p><b>O que corrige:</b> saber desde já em qual matéria você perde ponto, em vez de descobrir isso no dia. '+DIAG+' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.';
     } else {
       return '';
     }
@@ -876,7 +891,12 @@
     function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
     function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
     var linhas = real('Matérias do núcleo em que você cedeu', cederam.length? cederam.length+' de 6' : 'nenhuma');
-    linhas += real('Seu tempo médio por questão', (tempoMedio()!=null? tempoMedio()+'s' : 'sem registro'));
+    // A média já sai só das respondidas (tempoMedio ignora estouro). Quando houve
+    // estouro, o rótulo precisa dizer isso, senão a página elogia o ritmo na mesma
+    // tela em que o relógio derrubou a pessoa.
+    var estq=estourouQuantas();
+    linhas += real(estq? 'Seu tempo médio nas '+(CONTENT.length-estq)+' que você respondeu' : 'Seu tempo médio por questão',
+      (tempoMedio()!=null? tempoMedio()+'s' : 'sem registro'));
     linhas +=
       // Só faz sentido perguntar "quais são" se houve alguma. Para quem gabaritou essa
       // linha ficaria contradizendo o "nenhuma" que ela acabou de ler duas linhas acima.
@@ -1047,9 +1067,10 @@
         (r.estourou && erroN>0? 'São dois problemas diferentes, com soluções diferentes, e é por isso que estudar mais matéria não resolve o segundo.'
                    : 'Dois eixos, medidos separados: o quanto você domina o conteúdo que cai, e o quanto você se segura na hora.')+'</p>'+
       '<div class="plot"><div class="vline"></div><div class="hline"></div>'+
-        // Para quem já reprovou e gabaritou, "Pronto de verdade" no gráfico é o mesmo
-        // selo de "apto" que o quinto desfecho existe para impedir.
-        '<div class="ql tr">'+(forte&&jaReprovou()?'Pronto nestas 7':'Pronto de verdade')+'</div><div class="ql br">Sabe, mas trava</div>'+
+        // "Pronto nestas 7" para TODO mundo (02/08): "Pronto de verdade" era o selo de
+        // apto que o quinto desfecho mata, e para o gabaritado comum desmentia a oferta
+        // inteira, que vende exatamente a dúvida sobre o que as 7 não medem.
+        '<div class="ql tr">Pronto nestas 7</div><div class="ql br">Sabe, mas trava</div>'+
         '<div class="ql tl">Falta conteúdo</div><div class="ql bl">Conteúdo e tática</div>'+
         '<div class="you" style="left:'+left+'%;top:'+top+'%"><div class="dot"></div></div>'+
       '</div>'+
