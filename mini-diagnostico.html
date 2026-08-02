@@ -449,7 +449,10 @@
       '</div>'+
       '<div class="field"><label>Seu nome</label><input id="f_nome" type="text" placeholder="Como você se chama" value="'+esc(S.nome)+'"></div>'+
       '<div class="field"><label>Seu WhatsApp (com DDD)</label><input id="f_tel" type="tel" inputmode="numeric" placeholder="(00) 00000-0000" value="'+esc(S.tel)+'"></div>'+
-      '<div class="field"><label>Seu e-mail (opcional)</label><input id="f_email" type="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
+      // E-mail virou OBRIGATÓRIO em 02/08/2026, a pedido do Gustavo: metade das linhas
+      // do Formspree chegava sem e-mail, e sem ele não existe contato que não dependa
+      // do WhatsApp. Custo assumido: campo obrigatório a mais derruba envio de formulário.
+      '<div class="field"><label>Seu e-mail</label><input id="f_email" type="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" value="'+esc(S.email)+'"></div>'+
       '<button class="btn full" id="see">Ver o meu resultado</button>'+
       '<div class="small">É grátis e sem spam. Você pode sair quando quiser.</div>';
     // Marcar a opção NÃO re-renderiza o formulário. Antes chamava render(), que refazia a
@@ -470,7 +473,8 @@
       var digits=tel.replace(/\D/g,'');
       if(!S.momento){ alert('Marque onde você está hoje para ver o resultado.'); return; }
       if(!nome || digits.length<10){ alert('Preencha o nome e um WhatsApp válido com DDD para ver o resultado.'); return; }
-      if(email && !/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido — corrija ou deixe em branco.'); return; }
+      if(!email){ alert('Preencha o seu e-mail para ver o resultado.'); return; }
+      if(!/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido. Confira antes de continuar.'); return; }
       S.nome=nome; S.email=email; S.tel=tel;
       saveLead();
       S.screen='result'; render(); window.scrollTo(0,0);
