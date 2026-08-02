@@ -128,7 +128,8 @@
   // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
   // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
   // mas você precisa ligar isto para receber os contatos de verdade.
-  var CAPTURE_URL = "https://formspree.io/f/mlgyzdwj"; // Formspree: leads do mini-diagnostico
+  var CAPTURE_URL = "https://formspree.io/f/mlgyzdwj"; // Formspree: so o aviso por e-mail
+  var BASE_URL = "https://so-o-que-cai-app.vercel.app/api/lead"; // fonte de verdade do lead
   // ======================
 
   // 5 questões de conteúdo (3 do padrão da prova + 2 DIFÍCEIS de Ética, para o
@@ -291,26 +292,59 @@
     var tsoma = 0, tn = 0;
     CONTENT.forEach(function(_,i){ if(S.times[i]!=null){ tsoma += S.times[i]; tn++; } });
 
-    if(CAPTURE_URL){
-      // Formspree: campos planos + Accept JSON (para responder em JSON, sem redirecionar)
-      var envio={ nome:S.nome, email:S.email, telefone:S.tel, momento:S.momento,
+    var tmed = tn ? Math.round(tsoma/tn) : null;
+    var errouEm = erradas.length ? erradas.join(', ') : 'nenhuma';
+    var q = new URLSearchParams(location.search);
+
+    // Marca o Lead no pixel. Só roda depois que o lead foi guardado de verdade:
+    // disparar antes faz a Meta contar gente que a gente perdeu no caminho.
+    function marcarPixel(){
+      if(typeof fbq==='undefined') return;
+      try{
+        // Advanced matching: melhora o EMQ do pixel (a Meta faz o hash sozinha).
+        var am={};
+        if(S.email) am.em=S.email.trim().toLowerCase();
+        var d=S.tel.replace(/\D/g,''); if(d) am.ph='55'+d;
+        fbq('init','1024990753668044',am);
+        fbq('track','Lead');
+      }catch(e){}
+    }
+
+    // 1) Base própria (Supabase, via /api/lead na Vercel). É a fonte de verdade:
+    //    não tem teto mensal e permite cruzar lead contra venda depois.
+    var naBase = fetch(BASE_URL, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nome:S.nome, telefone:S.tel, email:S.email, momento:S.momento,
+        acertos:R.c, total_questoes:CONTENT.length,
+        eixo_conteudo:R.X, eixo_pressao:R.Y, perfil:Q.lab,
+        errou_em:errouEm, tempo_medio:tmed,
+        utm_campaign:q.get('utm_campaign'), utm_content:q.get('utm_content'),
+        referrer:document.referrer || null
+      })
+    }).then(function(r){ return r.ok; }).catch(function(){ return false; });
+
+    // 2) Formspree segue como aviso por e-mail, em paralelo. Se um falhar, o outro salva.
+    var noEmail = CAPTURE_URL ? fetch(CAPTURE_URL,{
+      method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({ nome:S.nome, email:S.email, telefone:S.tel, momento:S.momento,
         acertos: R.c + ' de ' + CONTENT.length,
         eixo_conteudo: R.X + '%',
         eixo_pressao: R.Y + '%',
         perfil: Q.lab,
-        errou_em: erradas.length ? erradas.join(', ') : 'nenhuma',
-        tempo_medio: tn ? Math.round(tsoma/tn) + 's por questão' : 'sem registro',
-        quando:lead.ts, _subject:'Novo lead do mini-diagnostico Só o que Cai' };
-      try{ fetch(CAPTURE_URL,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(envio)}); }catch(e){}
-    }
-    if(typeof fbq!=='undefined'){ try{
-      // Advanced matching: melhora o EMQ do pixel (a Meta faz o hash sozinha).
-      var am={};
-      if(S.email) am.em=S.email.trim().toLowerCase();
-      var d=S.tel.replace(/\D/g,''); if(d) am.ph='55'+d;
-      fbq('init','1024990753668044',am);
-      fbq('track','Lead');
-    }catch(e){} }
+        errou_em: errouEm,
+        tempo_medio: tmed != null ? tmed + 's por questão' : 'sem registro',
+        quando:lead.ts, _subject:'Novo lead do mini-diagnostico Só o que Cai' })
+    }).then(function(r){ return r.ok; }).catch(function(){ return false; }) : Promise.resolve(false);
+
+    Promise.all([naBase, noEmail]).then(function(ok){
+      if(ok[0] || ok[1]) return marcarPixel();
+      // Os dois falharam: tenta a base mais uma vez antes de desistir.
+      return fetch(BASE_URL, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ nome:S.nome, telefone:S.tel, email:S.email, momento:S.momento })
+      }).then(function(r){ if(r.ok) marcarPixel(); }).catch(function(){});
+    });
   }
 
   function compute(){
