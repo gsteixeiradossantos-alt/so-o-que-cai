@@ -654,6 +654,15 @@
   // candidato sabe exatamente quanto pagou e quanto esperou.
   var TAXA_EXAME='R$350', ESPERA_EXAME='4 meses';
 
+  // R$47 diluído nos dias que faltam. Só aparece enquanto o número ainda ajuda: a menos
+  // de 10 dias da prova o valor por dia dispara e a frase vira piada contra a própria
+  // página. Calculado, nunca escrito à mão, para não envelhecer.
+  function porDia(){
+    var d=diasParaProva();
+    if(!d || d<10) return '';
+    return 'Dá R$'+(47/d).toFixed(2).replace('.',',')+' por dia até a prova.';
+  }
+
   // A comparação de custo, em duas colunas. Esquerda longa e cara, direita curta e
   // barata: a assimetria é o argumento inteiro. Muda pelo MOMENTO da pessoa, porque o
   // que ela perde ao não agir é completamente diferente em cada um.
@@ -664,7 +673,7 @@
         ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
         [TAXA_EXAME+' na inscrição do próximo exame','R$47, uma vez'],
         [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
-        ['Estudar tudo outra vez, sem saber o quê','A matéria certa, já amanhã']
+        ['Repetir a mesma preparação, sem saber o que corrigir','Saber se o que te derruba é a matéria ou a hora da prova']
       ];
     } else if(S.momento==='Já me formei e vou fazer a minha primeira prova'){
       linhas=[
@@ -783,18 +792,10 @@
   // Matérias em que a pessoa ERROU (respondeu e errou), sem repetir. Questão em que
   // o tempo estourou fica de fora: não responder não é a mesma coisa que errar, e
   // misturar as duas destrói justamente a separação que este produto vende.
-  function materiasErradas(){
-    var out=[];
-    CONTENT.forEach(function(qq,i){
-      if(!S.estourou[i] && S.ans[i]!==qq.c && out.indexOf(qq.mat)<0) out.push(qq.mat);
-    });
-    return out;
-  }
-  function materiasEstouradas(){
-    var out=[];
-    CONTENT.forEach(function(qq,i){ if(S.estourou[i] && out.indexOf(qq.mat)<0) out.push(qq.mat); });
-    return out;
-  }
+  // materiasErradas() e materiasEstouradas() foram REMOVIDAS em 02/08. Existiam só para
+  // imprimir o nome das matérias na linha legível do bloco rasurado, e isso saiu: dizer
+  // "você errou Civil e Ética" entrega metade do diagnóstico, que é exatamente o que o
+  // R$47 vende. Se um dia for preciso reabrir, está no histórico do git.
 
   // O bloco do que ainda está trancado. É o motor da urgência e o único bloco que
   // CRESCEU nesta revisão: tudo o mais na tela de resultado encolheu, porque o
@@ -803,15 +804,24 @@
   // como barra opaca, sem número por baixo. Valor fixo que parece calculado destrói a
   // credibilidade no primeiro print comparado entre duas pessoas.
   function lockbox(){
-    var err=materiasErradas(), est=materiasEstouradas();
+    // 02/08: o NOME das matérias erradas saiu da linha legível e virou barra opaca.
+    // Dizer "você errou Civil e Ética" é entregar metade do diagnóstico de graça, e era
+    // exatamente o que o R$47 vende. No lugar entra a CONTAGEM: prova que o teste mediu
+    // alguma coisa, sem dizer o quê, e cria mais curiosidade do que o nome criava,
+    // porque agora a pergunta é "quais três?".
+    var cederam=[]; CONTENT.forEach(function(qq,i){
+      if((S.estourou[i]||S.ans[i]!==qq.c) && cederam.indexOf(qq.mat)<0) cederam.push(qq.mat);
+    });
     function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
     function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
-    var linhas = real('Onde você errou', err.length? err.join(', ') : 'em nenhuma');
-    if(est.length) linhas += real('Onde o tempo estourou', est.join(', '));
+    var linhas = real('Matérias do núcleo em que você cedeu', cederam.length? cederam.length+' de 6' : 'nenhuma');
+    linhas += real('Seu tempo médio por questão', (tempoMedio()!=null? tempoMedio()+'s' : 'sem registro'));
     linhas +=
-      trava('Sua porcentagem em cada uma das 6 matérias do núcleo')+
-      trava('Qual das 6 te derruba, com nome')+
-      trava('Se o que te derruba é conteúdo ou pressão, matéria por matéria')+
+      // Só faz sentido perguntar "quais são" se houve alguma. Para quem gabaritou essa
+      // linha ficaria contradizendo o "nenhuma" que ela acabou de ler duas linhas acima.
+      (cederam.length? trava('Quais delas são, com nome') : '')+
+      trava('Sua porcentagem em cada uma das 6')+
+      trava('Se o que te derruba é a matéria ou a hora da prova, uma por uma')+
       trava('Em que ponto das 24 questões o seu rendimento cai')+
       trava('Por onde começar a estudar amanhã');
     return '<div class="lockbox">'+
@@ -975,7 +985,7 @@
       // inclusive quem gabaritou: menor pedido para quem tem menos dor.
       '<div class="ctaslim">'+
         '<a class="btn full" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
-        '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+        '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia<br>'+porDia()+'</div>'+
       '</div>'+
       tempo()+
       pressao()+
@@ -993,8 +1003,12 @@
             '<p>Este teste mediu 7 questões, uma por matéria. Não achou buraco em você, e isso é bom. Mas com uma questão por matéria, tudo o que dá para afirmar é que naquela você acertou.</p>'+
             '<p><b>O diagnóstico completo mede 24, cronometradas, nas mesmas 6 matérias.</b> É a partir dali que aparece o que 7 não alcançam: em qual delas o seu acerto oscila, em que ponto o seu rendimento começa a cair, e a diferença entre saber a resposta e sustentar isso por 80 questões seguidas. O que ele encontrar é exatamente o tipo de coisa que decide uma reprovação, e que ninguém descobre estudando mais matéria.</p>'+
             '<p>E ele não vem sozinho: junto vão as fichas do que mais cai, a folha de tática de prova para o seu perfil e 3 simulados. Para você eles servem menos para achar fraqueza e mais para o que importa agora, que é chegar no dia aquecido em vez de parado.</p>'+
+            // Pergunta direta, e é o fecho certo para quem gabaritou: essa pessoa não tem
+            // dor para empurrar, tem uma dúvida em aberto. O trabalho da oferta é fazer
+            // ela olhar para essa dúvida e decidir se quer levá-la para a sala de prova.
+            '<p><b>Então a pergunta é essa: você quer entrar na prova com essa dúvida em aberto, ou prefere fechá-la em 20 minutos?</b></p>'+
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero o diagnóstico completo</a>'+
-            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia<br>'+porDia()+'</div>'+
             '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer as 17 disciplinas, 2 simulados de 80 questões e o cronograma até a prova? Plano Completo por R$ 127</a>'+
           '</div>'
         : '<div class="offer">'+
@@ -1004,7 +1018,7 @@
             // mesmos itens apareciam na tela (gancho do veredito, bloco rasurado, e aqui).
             '<p>O diagnóstico completo acende a luz: 24 questões cronometradas, e no fim você tem o número de cada matéria em vez de suposição. E leva junto o kit para agir: as fichas do que mais cai, a folha de tática para o seu perfil e 3 simulados para medir se está subindo.</p>'+
             '<a class="btn full" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia</div>'+
+            '<div class="price">R$ 47 · pagamento único · Pix ou cartão · 7 dias de garantia<br>'+porDia()+'</div>'+
             '<a class="alt" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
           '</div>');
       // O bloco do autor saiu daqui e virou parte do bloco de confiança, ACIMA da oferta.
