@@ -24,6 +24,18 @@
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1024990753668044&ev=PageView&noscript=1"/></noscript>
 <!-- ===== fim Facebook Pixel ===== -->
+<!-- ===== MICROSOFT CLARITY =====
+     Entrou em 02/08/2026. Estava instalado só na oferta.html, que virou a página
+     morta quando o mini-diagnóstico assumiu a porta de entrada: a gravação estava
+     na tela por onde ninguém mais passa. Com dezenas de pessoas no funil, e não
+     milhares, ver UMA sessão vale mais do que qualquer média. É a única ferramenta
+     capaz de dizer em qual das 7 questões a pessoa desiste. -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","xewy5d060m");
+</script>
+<!-- ===== fim Clarity ===== -->
 <style>
   :root{
     --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
@@ -192,7 +204,14 @@
   .rkick{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
   .rh1{font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
   .rh1 em{font-style:italic;color:#E7A85B}
-  .rlead{font-size:16.5px;line-height:1.6;color:#C9C1B4;margin-bottom:26px;max-width:44ch;text-wrap:pretty}
+  .rlead{font-size:16.5px;line-height:1.6;color:#C9C1B4;margin-bottom:20px;max-width:44ch;text-wrap:pretty}
+  /* A tradução da distância para a régua da prova. Ganhou destaque próprio em
+     02/08/2026: na varredura de relatos reais, a margem é o único vocabulário que
+     esse público usa espontaneamente ("fico nos 38/39", "por uma maldita questão"),
+     e era a única coisa que a página não dizia. */
+  .rmarg{display:flex;gap:11px;align-items:flex-start;margin-bottom:26px;padding:13px 15px;
+         border-left:3px solid var(--ocre2);background:rgba(199,122,43,.10);border-radius:0 10px 10px 0;
+         font-size:15px;line-height:1.55;color:#E7CFA8;max-width:44ch}
   .rlead b{color:#fff}
   .bars{display:flex;flex-direction:column;gap:16px;padding:20px 18px;border:1px solid #2C3B48;border-radius:16px;background:#1B2934}
   .bars .b{display:flex;flex-direction:column;gap:7px}
@@ -232,6 +251,19 @@
   .rbtn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:20px;background:var(--ocre);color:#fff;border:none;border-radius:13px;padding:19px 22px;font:inherit;font-size:17.5px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 14px 30px -14px rgba(166,93,30,.85);transition:background .15s}
   .rbtn:hover{background:#8c4d18;color:#fff}
   .rmicro{font-family:'Space Mono',monospace;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
+  /* Faixa de pagamento, 02/08/2026. O Pix estava dentro da microcopy de 11,5px, do
+     mesmo tamanho de "acesso imediato". A Delzuita respondeu no WhatsApp que parou
+     no checkout porque "só terei dinheiro dia 6", e o Reddit está cheio de gente
+     dizendo que não tem como pagar cursinho: para esse público o Pix é o desbloqueio,
+     porque não depende de cartão com limite. Merece linha própria e peso próprio. */
+  .pag{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:12px;
+       font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:14px;color:var(--muted2)}
+  .pag b{color:var(--ink);font-weight:600}
+  .pag .pix{display:inline-flex;align-items:center;gap:5px;background:#E9F1EA;border:1px solid #BFD8C4;
+            color:#2F6B4F;border-radius:999px;padding:4px 11px;font-weight:600;font-size:13px}
+  .ofim .pag{color:#E7CFA8}
+  .ofim .pag b{color:#fff}
+  .ofim .pag .pix{background:rgba(127,185,154,.16);border-color:rgba(127,185,154,.5);color:#9FD4B7}
   .viu{display:flex;flex-direction:column;gap:16px}
   .viu .it{border-left:3px solid var(--muted);padding:2px 0 2px 16px}
   .viu .it.ochre{border-left-color:var(--ocre)}
@@ -291,7 +323,9 @@
     <span class="tag">1ª fase · OAB</span>
   </div>
   <div id="app"></div>
-  <div class="foot">Mini-diagnóstico gratuito. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>
+  <!-- O aviso de não vinculação existia na oferta.html e na plano-completo.html e
+       faltava justamente aqui, que é a página que recebe todo o tráfego pago. -->
+  <div class="foot">Mini-diagnóstico gratuito. Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>
 </div>
 
 <script>
@@ -304,7 +338,16 @@
   // mas você precisa ligar isto para receber os contatos de verdade.
   var CAPTURE_URL = "https://formspree.io/f/mlgyzdwj"; // Formspree: so o aviso por e-mail
   var BASE_URL = "https://so-o-que-cai-app.vercel.app/api/lead"; // fonte de verdade do lead
+  // Marca na linha do lead que ele clicou em comprar. Em 02/08/2026 havia 29 cliques
+  // em comprar e zero venda, e nenhuma forma de saber QUEM clicou: o pixel só conta.
+  var CLIQUE_URL = "https://so-o-que-cai-app.vercel.app/api/clique";
   // ======================
+
+  // Id da linha do lead no banco, devolvido por /api/lead. Usado para (a) mandar
+  // sck=<id> no checkout da Hotmart, fechando lead -> clique -> venda sem depender
+  // de casar e-mail, e (b) marcar o clique em comprar. Fica null se a gravação
+  // falhar; nesse caso a página funciona igual, só sem rastreio.
+  var LEAD_ID = null;
 
   // 7 questões de conteúdo, TODAS difíceis, uma por matéria do núcleo duro
   // (Ética entra duas vezes porque é a maior fatia da prova) + 3 cenários
@@ -390,7 +433,11 @@
       // pessoa sai com a desculpa pronta de que errou porque era pegadinha.
       // A página não explica e não defende o relógio: justificar abre a porta para
       // "na prova eu teria mais tempo", que anula a dor.
-      '<p class="lead" style="margin-bottom:22px">São '+CONTENT.length+' questões, uma de cada matéria que decide a prova. <b style="color:var(--red)">Você tem '+LIMITE+' segundos em cada uma</b>: passou o tempo, a questão passa. Fora desta aba, o relógio corre em dobro.</p>'+
+      // O tamanho anunciado passou a ser o tamanho real em 02/08/2026. Dizia "São 7
+      // questões" e vinham 7 questões, 3 situações e um cadastro: o ponto em que a
+      // pessoa acha que terminou é o degrau anterior à captura, e descobrir ali que
+      // falta mais é o pior lugar possível para quebrar um combinado.
+      '<p class="lead" style="margin-bottom:22px">São '+CONTENT.length+' questões, uma de cada matéria que decide a prova, e depois '+BEHAVIOR.length+' situações rápidas do dia a dia. <b style="color:var(--red)">Você tem '+LIMITE+' segundos em cada questão</b>: passou o tempo, a questão passa. Fora desta aba, o relógio corre em dobro.</p>'+
       '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
@@ -596,19 +643,35 @@
       }catch(e){}
     }
 
+    // O payload completo fica numa variável porque o retry precisa mandar O MESMO.
+    // Até 02/08/2026 o retry mandava 4 dos 14 campos, e quem caísse nele virava uma
+    // linha cega: sem placar, sem eixos, sem matéria errada, sem origem.
+    // utm_source, utm_medium e fbclid entraram no mesmo dia. Sem fbclid não existe
+    // caminho para ligar a linha do banco ao criativo que trouxe a pessoa.
+    var payload = {
+      nome:S.nome, telefone:S.tel, email:S.email, momento:S.momento,
+      acertos:R.c, total_questoes:CONTENT.length,
+      eixo_conteudo:R.X, eixo_pressao:R.Y, perfil:Q.lab,
+      errou_em:errouEm, tempo_medio:tmed,
+      utm_campaign:q.get('utm_campaign'), utm_content:q.get('utm_content'),
+      utm_source:q.get('utm_source'), utm_medium:q.get('utm_medium'),
+      fbclid:q.get('fbclid'),
+      referrer:document.referrer || null
+    };
+
+    // Guarda o id devolvido. Chega depois do render do resultado, e tudo bem: quem
+    // usa o id é o clique no botão de comprar, que só acontece depois de ler a página.
+    function guardarId(resp){
+      return resp.json().then(function(j){ if(j && j.id) LEAD_ID=j.id; return true; })
+                        .catch(function(){ return true; });
+    }
+
     // 1) Base própria (Supabase, via /api/lead na Vercel). É a fonte de verdade:
     //    não tem teto mensal e permite cruzar lead contra venda depois.
     var naBase = fetch(BASE_URL, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        nome:S.nome, telefone:S.tel, email:S.email, momento:S.momento,
-        acertos:R.c, total_questoes:CONTENT.length,
-        eixo_conteudo:R.X, eixo_pressao:R.Y, perfil:Q.lab,
-        errou_em:errouEm, tempo_medio:tmed,
-        utm_campaign:q.get('utm_campaign'), utm_content:q.get('utm_content'),
-        referrer:document.referrer || null
-      })
-    }).then(function(r){ return r.ok; }).catch(function(){ return false; });
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.ok ? guardarId(r) : false; }).catch(function(){ return false; });
 
     // 2) Formspree segue como aviso por e-mail, em paralelo. Se um falhar, o outro salva.
     var noEmail = CAPTURE_URL ? fetch(CAPTURE_URL,{
@@ -625,12 +688,31 @@
 
     Promise.all([naBase, noEmail]).then(function(ok){
       if(ok[0] || ok[1]) return marcarPixel();
-      // Os dois falharam: tenta a base mais uma vez antes de desistir.
+      // Os dois falharam: tenta a base mais uma vez antes de desistir, com o payload
+      // INTEIRO. Mandar meia dúzia de campos aqui era transformar a falha de rede
+      // numa perda permanente de dado.
       return fetch(BASE_URL, {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ nome:S.nome, telefone:S.tel, email:S.email, momento:S.momento })
-      }).then(function(r){ if(r.ok) marcarPixel(); }).catch(function(){});
+        body: JSON.stringify(payload)
+      }).then(function(r){ if(r.ok){ guardarId(r); marcarPixel(); } }).catch(function(){});
     });
+  }
+
+  // Registra no banco que a pessoa pediu para comprar, e QUAL botão ela usou.
+  // sendBeacon porque aqui existe navegação de verdade: um fetch normal é cancelado
+  // quando a aba sai para o checkout da Hotmart. Falhar aqui não pode, em hipótese
+  // nenhuma, atrapalhar a ida para o checkout, então tudo vai dentro de try.
+  function marcarClique(botao, oferta){
+    if(!LEAD_ID) return;
+    try{
+      var corpo=JSON.stringify({ lead_id:LEAD_ID, botao:botao, oferta:String(oferta) });
+      if(navigator.sendBeacon){
+        navigator.sendBeacon(CLIQUE_URL, new Blob([corpo], {type:'text/plain;charset=UTF-8'}));
+      } else {
+        fetch(CLIQUE_URL, {method:'POST', headers:{'Content-Type':'text/plain'},
+                           body:corpo, keepalive:true}).catch(function(){});
+      }
+    }catch(e){}
   }
 
   // ===== EIXO DE PRESSÃO =====
@@ -734,13 +816,96 @@
             estourou:estourouQuantas(), fora:segundosFora()};
   }
 
-  // Os cortes. Eram 50 e 50, e com 5 questões de padrão médio isso fez 9 de 9 pessoas
-  // caírem no verde em 02/08/2026, incluindo quem já reprovou duas vezes com 3 de 5.
-  // Agora: as SETE, sem estouro de tempo, e 80 no eixo de pressão.
-  // Por que o Y subiu de 70 para 80: com o X exigindo as sete, o Y virou o ÚNICO
-  // separador entre perfis que gabaritaram, e a 70 ele não separava mais nada. A 80 ele
-  // exige execução parelha e sem queda no fim, que é o que o eixo passou a medir.
-  var CORTE_X=100, CORTE_Y=80;
+  // Os cortes, terceira calibragem, agora em cima de DADO REAL e não de estimativa.
+  //
+  // Histórico curto, porque o erro se repetiu invertido e vale não repetir de novo:
+  // com 50/50 e questão de padrão médio, 9 de 9 pessoas caíram no mesmo verde. A
+  // correção foi 100/80, e aí 8 de 12 caíram no MESMO "perdeu ponto dos dois lados":
+  // quem acertou 5 de 7 com 76% de firmeza leu exatamente a mesma manchete de quem
+  // acertou 1 de 7 com 33%. Corte que ninguém alcança não separa nada, igual a corte
+  // que todo mundo alcança.
+  //
+  // Os 12 leads reais da versão de 7 questões deram X de 14 a 86 e Y de 26 a 79.
+  // Ninguém gabaritou e ninguém passou de 79. Daí:
+  //   CORTE_X=71 -> acertar 5 das 7 (as sete são pegadinha escolhida para derrubar).
+  //   CORTE_Y=72 -> logo acima da mediana observada, que ficou perto de 70.
+  // Com esses cortes, os mesmos 12 se espalhariam por quatro desfechos em vez de dois.
+  //
+  // ATENÇÃO ao mexer aqui: baixar o CORTE_X faz 'forte' deixar de significar "acertou
+  // as sete". Por isso 'forte' NÃO depende mais do corte, e sim de não ter perdido
+  // nenhuma. Todo texto que diz "você acertou tudo" está pendurado em 'forte'.
+  var CORTE_X=71, CORTE_Y=72;
+
+  // ===== A DISTÂNCIA =====
+  // Substituiu o quadrante como manchete em 02/08/2026, depois da varredura de dores
+  // reais no Reddit e no X. O público não fala "não sei onde perco ponto": zero
+  // ocorrências dessa formulação em toda a varredura. O que ele fala é a MARGEM, e
+  // com gíria própria: "sempre fico nos 38/39", "a maldição do 38/39", "o número 39
+  // tá me perseguindo", "por uma maldita questão". O corte da prova é 40 de 80.
+  //
+  // Então a manchete deixa de dizer o que a pessoa É (quadrante, igual para 8 de 12)
+  // e passa a dizer QUANTO ela perdeu e ONDE. O número é dela, então discrimina
+  // sozinho, sem depender de acertar corte nenhum.
+  //
+  // A separação matéria x execução não é retórica, é a mesma régua que notaDecisao()
+  // já usa: errar uma pegadinha depois de 18 segundos é ter lido, pesado e errado, o
+  // que é conteúdo. Errar em menos de 18 é não ter lido direito, o que é execução.
+  // Tempo estourado é execução por definição.
+  function perdaSeparada(){
+    // Trava contra a leitura absurda, encontrada no teste com os leads reais: o
+    // Deocleciano acertou 1 de 7 respondendo em 11 segundos, e a regra crua devolvia
+    // "você perdeu 6, e nenhuma por falta de matéria". Errar rápido só é problema de
+    // DECISÃO em quem provou conteúdo no resto da prova. Em quem não provou, decidir
+    // rápido é o sintoma de não saber e chutar, e chutar é matéria.
+    var acertos=0; CONTENT.forEach(function(Q,i){ if(S.ans[i]===Q.c) acertos++; });
+    var provouConteudo = Math.round(acertos/CONTENT.length*100) >= CORTE_X;
+    var mat=0, exec=0;
+    CONTENT.forEach(function(Q,i){
+      if(S.estourou[i]){ exec++; return; }      // não respondeu: o relógio levou, sempre
+      if(S.ans[i]===Q.c) return;                // acertou
+      var t=S.times[i];
+      if(provouConteudo && t!=null && t<18) exec++;  // sabe, mas decidiu afobado
+      else mat++;                                     // leu e errou, ou chutou por não saber
+    });
+    return {mat:mat, exec:exec, total:mat+exec};
+  }
+
+  // Monta {lab, hl} da manchete. 'hl' é o trecho que sai em itálico ocre e PRECISA
+  // existir dentro de 'lab', senão a substituição não acha nada e o título sai reto.
+  function manchete(){
+    var p=perdaSeparada(), n=p.total;
+    if(n===0) return {lab:'Você não perdeu nenhuma das '+CONTENT.length, hl:'nenhuma'};
+    var quantas = n===1 ? 'Você perdeu 1' : 'Você perdeu '+n;
+    if(p.exec===0) return {lab:quantas+', e '+(n===1?'ela foi':'todas foram')+' de matéria', hl:'de matéria'};
+    if(p.mat===0)  return {lab:quantas+', e nenhuma por falta de matéria', hl:'nenhuma por falta de matéria'};
+    return {lab:quantas+': '+p.mat+' de matéria e '+p.exec+' na hora de decidir', hl:p.exec+' na hora de decidir'};
+  }
+
+  // A tradução da distância para a régua da prova. É o que empresta o vocabulário do
+  // "39" sem inventar projeção: NÃO diz que a pessoa tiraria X na prova, porque estas
+  // 7 são pegadinhas escolhidas a dedo e não uma amostra proporcional das 80. Diz o
+  // que a distância VALE, que é verdadeiro e é o que a pessoa reconhece.
+  function traduzMargem(){
+    var n=perdaSeparada().total;
+    if(n===0) return '';
+    if(n===1) return 'Na prova, 1 questão é a diferença entre 39 e 40. Entre voltar e não voltar.';
+    if(n<=3)  return 'Na prova, '+n+' questões são a distância entre 38 e 41. É nessa faixa que a maioria reprova.';
+    return '';
+  }
+
+  // A matéria que mais pesa entre as que a pessoa errou, com o peso REAL dela na
+  // prova. O campo 'fatia' existia em cada questão desde o começo e nunca era lido:
+  // era o argumento mais concreto do produto, escrito questão por questão, morto no
+  // código. Substituiu o holofote genérico na Ética, que os dados desmentiram: nos
+  // 11 leads reais, Ética foi a MENOS errada (3), e Penal e Constitucional as mais
+  // erradas (8 cada). Apontar para a matéria da PESSOA é melhor do que apontar para
+  // a matéria que a gente achava que era.
+  function materiaPeso(){
+    for(var i=0;i<CONTENT.length;i++){
+      if(!S.estourou[i] && S.ans[i]!==CONTENT[i].c) return CONTENT[i];
+    }
+    return null;
+  }
 
   function jaReprovou(){
     return S.momento==='Já fiz a prova uma vez e não passei' ||
@@ -806,9 +971,24 @@
           : ['Chegar na prova com o mesmo buraco de hoje','Chegar com ele fechado'],
         [TAXA_EXAME+' na inscrição, e de novo se reprovar','R$47, uma vez, ou '+PARCELA],
         [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos'],
-        ['A turma se preparando para a 2ª fase sem você','Sair da faculdade já advogado']
+        // Esta linha dizia "Sair da faculdade já advogado". Saiu em 02/08/2026: a
+        // coluna da direita é o que a pessoa RECEBE, e ali estava o resultado do
+        // exame. Isso é promessa de aprovação dita pela estrutura da tabela, e é
+        // proibido. Todas as outras entregas da coluna são informacionais.
+        ['A turma se preparando para a 2ª fase sem você','Entrar na prova com o número, e não com a esperança']
       ];
-    } else { return ''; }
+    } else {
+      // "Só estou olhando". Devolvia string vazia, e a oferta ficava sem nada na
+      // outra ponta da balança. Linhas neutras, sem inventar uma reprovação que
+      // essa pessoa não declarou.
+      linhas=[
+        forte
+          ? ['Sair daqui sabendo só que acertou 7 questões','Saber o que as 7 não alcançaram']
+          : ['Sair daqui sabendo que tem um buraco, sem saber onde','O nome dele, e o tamanho'],
+        [TAXA_EXAME+' na inscrição, quando você decidir prestar','R$47, uma vez, ou '+PARCELA],
+        [ESPERA_EXAME+' entre um exame e o seguinte','20 minutos']
+      ];
+    }
     var html='<div class="custo"><div class="lin cab"><div>Se você não fizer nada</div><div>Se você olhar agora</div></div>';
     linhas.forEach(function(l){ html+='<div class="lin"><div>'+esc(l[0])+'</div><div>'+esc(l[1])+'</div></div>'; });
     return html+'</div>';
@@ -862,18 +1042,31 @@
     // lead do hero, dois parágrafos do diagnóstico). Nenhuma frase foi reescrita: só
     // repartida. 'hl' é o trecho que sai em itálico ocre dentro do título, e precisa
     // existir DENTRO de 'lab', senão a substituição não acha nada e o título sai reto.
-    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:true,
-      lab:'O seu problema não está no que estas 7 medem', hl:'no que estas 7 medem',
-      lead:'Tudo no tempo, sem consultar. E já prestou o exame sem passar.',
-      p1:'As duas coisas juntas dizem uma coisa só: a matéria das 6 que decidem a prova você tem.',
-      p2:'O que te derrubou estava fora do alcance destas 7 questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
-    if(hiX&&hiY) return {cls:'green',forte:true,
-      lab:'Você acertou as sete', hl:'as sete',
-      lead:'Todas difíceis, todas dentro do tempo. Você sabe a matéria que decide a prova.',
-      p1:'O que estas 7 não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar.',
+    // A MANCHETE é a mesma função para todos os desfechos: a distância medida.
+    // Cada ramo abaixo continua escolhendo cor, lead e os dois parágrafos, mas nenhum
+    // deles escolhe mais o título. Era ali que 8 de 12 pessoas liam a mesma frase.
+    var M = manchete();
+    // 'forte' passou a significar UMA coisa só: não perdeu nenhuma. Antes era
+    // hiX&&hiY, e com o corte em 5 de 7 isso faria a página dizer "você acertou tudo"
+    // para quem errou duas. Todo texto de gabarito está pendurado aqui.
+    var gabaritou = perdeu===0;
+
+    if(hiX&&hiY&&jaReprovou()) return {cls:'ochre',forte:gabaritou,
+      lab:M.lab, hl:M.hl,
+      lead:(gabaritou
+        ? 'Sete pegadinhas, nenhuma perdida, tudo dentro do tempo. E você já prestou o exame sem passar.'
+        : 'Você segurou '+r.c+' das '+CONTENT.length+' mais difíceis. E já prestou o exame sem passar.'),
+      p1:'As duas coisas juntas dizem uma coisa só: o que te reprovou não é o núcleo de matéria que estas '+CONTENT.length+' cobrem.',
+      p2:'O que te derrubou estava fora do alcance destas '+CONTENT.length+' questões, e é por isso que você nunca achou sozinho. O que falta descobrir é em que ponto exatamente o seu rendimento cede, porque é ali que a sua prova é decidida.'};
+    if(hiX&&hiY) return {cls:'green',forte:gabaritou,
+      lab:M.lab, hl:M.hl,
+      lead:(gabaritou
+        ? 'As '+CONTENT.length+' eram difíceis e você não deixou nenhuma passar.'
+        : 'As '+CONTENT.length+' eram pegadinhas escolhidas para derrubar, e você segurou '+r.c+'.'),
+      p1:'O que estas '+CONTENT.length+' não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar.',
       p2:'E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
-    if(hiX&&!hiY) return {cls:'ochre',
-      lab:'Você sabe a matéria. O problema é a hora da prova', hl:'a hora da prova',
+    if(hiX&&!hiY) return {cls:'ochre',forte:gabaritou,
+      lab:M.lab, hl:M.hl,
       lead:'O que cedeu não foi o conteúdo: '+causaPressao(r)+'.',
       p1:'Na prova isso não aparece como erro de matéria. Aparece como questão em branco nas dez últimas, com você sabendo a resposta.',
       p2:'Estudar mais matéria não conserta isso, e por acaso é o único conselho que você recebe enquanto estiver pagando mensalidade. O que resolve é saber em que ponto da prova o seu rendimento cai, e em qual matéria ele cai primeiro.'};
@@ -885,16 +1078,18 @@
     // O X continua contando estouro como ponto perdido (decisão registrada no compute);
     // é o texto que separa, não a régua.
     if(errosReais()===0 && estourouQuantas()>0){
-      return {cls:'ochre',
-        lab:'O que te derrubou não foi a matéria. Foi o relógio', hl:'Foi o relógio',
+      return {cls:'ochre', lab:M.lab, hl:M.hl,
         lead:'Tudo o que você marcou estava certo.',
         p1:'Na prova, questão em branco vale o mesmo que questão errada.',
         p2:'Estudar mais matéria não muda isso: matéria você mostrou que tem. O que falta saber é para onde o seu tempo vai: em qual matéria você trava, e em que ponto da prova isso começa.'};
     }
-    if(!hiX&&hiY) return {cls:'mixed',
-      lab:'Você se segura bem, mas a matéria não respondeu', hl:'a matéria não respondeu',
+    // O peso da matéria que a pessoa errou, dito com o número dela. Antes esta frase
+    // apontava sempre para Ética, e os leads reais desmentiram: Ética é a menos errada.
+    var mp = materiaPeso();
+    var peso = mp ? ' A primeira que caiu foi '+mp.mat+', que vale '+mp.fatia+'.' : '';
+    if(!hiX&&hiY) return {cls:'mixed', lab:M.lab, hl:M.hl,
       lead:'Sob pressão você funcionou, e isso é metade do caminho.',
-      p1:'A outra metade: você perdeu '+perdeu+' das 7, e estas 7 são uma de cada matéria do núcleo, com Ética entrando duas vezes porque sozinha ela vale 8 das 80 questões da prova.',
+      p1:'A outra metade: você perdeu '+perdeu+' das '+CONTENT.length+', e estas '+CONTENT.length+' são uma de cada matéria do núcleo que decide a prova.'+peso,
       p2:'Ponto perdido aí não se compensa nas 11 matérias de fora: elas valem menos, e é justamente por isso que são de fora. O que falta é o número. Em qual das 6 está o buraco, e de que tamanho ele é.'};
     // O Y cai junto com os erros (a nota de decisão pune errar), então dá para chegar
     // aqui com o relógio limpo. Nesse caso a abertura não pode acusar o relógio: o bloco
@@ -902,10 +1097,9 @@
     var abriu = relogioAcusou(r)
       ? 'Os dois eixos cederam ao mesmo tempo.'
       : 'O relógio, desta vez, não foi o problema: o que pesou foi a matéria.';
-    var labm = relogioAcusou(r) ? 'Você perdeu ponto dos dois lados' : 'Foi a matéria que não respondeu';
-    return {cls:'mixed', lab:labm, hl:(relogioAcusou(r)?'dos dois lados':'a matéria'),
+    return {cls:'mixed', lab:M.lab, hl:M.hl,
       lead:abriu,
-      p1:'É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo.',
+      p1:'É o diagnóstico mais duro de receber e o mais fácil de tratar, porque aqui a ordem muda tudo: tática de prova em cima de matéria que você não sabe não vira ponto nenhum. Primeiro fecha a matéria de maior peso, e só depois trabalha o tempo.'+peso,
       p2:'O que não funciona é o que você provavelmente já tentou: estudar tudo, todo dia, esperando que a conta feche sozinha. O que falta você saber é qual das 6 matérias entra primeiro nessa ordem, e quanto você tem em cada uma delas hoje.'};
   }
 
@@ -935,7 +1129,12 @@
     // não fechou. O ramo padrão mandava essa pessoa ler "a matéria que te derruba seguiu
     // intocada" logo depois de o veredito dizer "Você sabe a matéria". O discriminador
     // de matéria não é 'forte', é não ter errado conteúdo: X cheio OU estouro puro.
-    var sabe = !forte && r && (r.X>=CORTE_X || (errosReais()===0 && estourouQuantas()>0));
+    // 'sabe' = não perdeu NENHUMA por matéria. Tem que ser exatamente a mesma régua
+    // da manchete, senão o título diz "nenhuma por falta de matéria" e a seção de
+    // oferta, 30 linhas abaixo, promete achar a matéria que derruba. Foi o que o
+    // teste de borda pegou no caso de quem sabe e decide afobado: erra respondendo,
+    // então errosReais() é 2, mas nenhuma dessas duas é matéria.
+    var sabe = !forte && perdaSeparada().mat===0;
     // DIAG NÃO enumera o que o relatório mostra: o bloco rasurado faz isso logo abaixo,
     // e melhor, porque é visual. Aqui fica só formato e preço. O R$47 NÃO é só o
     // relatório: inclui as fichas, a folha de tática e 3 simulados.
@@ -988,7 +1187,19 @@
       texto = (forte||sabe)? (faltam()+DIAG)
         : (DIAG + ' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.');
     } else {
-      return null;
+      // "Só estou olhando". Até 02/08/2026 este momento devolvia null, e o efeito
+      // era grave: sem leitura e sem tabela de custo, a oferta aparecia como uma
+      // lista de itens e um botão, sem uma única frase de transição depois do
+      // diagnóstico. Era o único perfil que via o preço sem nenhum antecedente.
+      // Nenhum dos 18 leads reais marcou esta opção, então o texto é curto de
+      // propósito: existe para a página não quebrar, não para converter.
+      ponto = forte
+        ? 'Você entrou por curiosidade e não perdeu nenhuma. Isso responde uma pergunta e abre outra: estas '+CONTENT.length+' não medem o que acontece na questão 40, com três horas de prova nas costas.'
+        : sabe
+        ? 'Você entrou por curiosidade e a matéria não foi o problema. O que apareceu foi a hora, num teste de quatro minutos feito sem sala cheia e sem cinco horas de prova.'
+        : 'Você entrou por curiosidade e o teste achou alguma coisa. Curiosidade que encontra buraco deixa de ser curiosidade.';
+      titulo = 'Saber o tamanho disso antes de decidir qualquer coisa';
+      texto = DIAG;
     }
     return {ponto:ponto, titulo:titulo, texto:texto};
   }
@@ -1055,7 +1266,7 @@
     var alts=Q.o.map(function(op,j){
       var cls='alt'+(j===Q.c?' certa':'')+(j===sua&&sua!==Q.c?' sua':'');
       var pre=String.fromCharCode(65+j)+') ';
-      var suf=(j===Q.c?' — correta':(j===sua?' — a sua resposta':''));
+      var suf=(j===Q.c?' · correta':(j===sua?' · a sua resposta':''));
       return '<div class="'+cls+'">'+pre+esc(op)+suf+'</div>';
     }).join('');
     var nota = S.estourou[idx] ? '<p style="margin-bottom:8px"><b>Nesta o tempo acabou antes de você marcar.</b></p>' : '';
@@ -1128,6 +1339,15 @@
   // Teto de 96%: barra cheia encostando na borda lê como "completo", e nada aqui é
   // completo — o produto inteiro é sobre o que ainda não foi medido.
   function barraConteudo(r){
+    // Estouro puro: acertou TUDO o que respondeu e o que perdeu foi inteiro para o
+    // relógio. A barra media acertos sobre as 7 e saía "Parcial · 6/7" em vermelho,
+    // a 200 pixels de uma manchete que dizia "não foi a matéria, foi o relógio".
+    // Duas afirmações opostas na mesma tela. Aqui a barra passa a medir o que a
+    // pessoa de fato respondeu, que é a única coisa que o conteúdo dela sustenta.
+    if(errosReais()===0 && r.estourou>0){
+      var resp=CONTENT.length-r.estourou;
+      return {rot:'Domínio do conteúdo que cai', v:'Alto · '+r.c+'/'+resp+' do que deu tempo', cls:'ok', w:96};
+    }
     var n=r.c, alto=r.X>=CORTE_X;
     var txt = alto? 'Alto · '+n+'/'+CONTENT.length
             : (r.X>=50? 'Parcial · '+n+'/'+CONTENT.length : 'Baixo · '+n+'/'+CONTENT.length);
@@ -1171,10 +1391,10 @@
   // não sabe o que fazer com ela. A lista transforma o R$47 em cinco coisas na mão.
   function stackOferta(){
     var itens=[
-      ['Diagnóstico de 24 questões cronometradas',' — o número de cada matéria e o ponto onde seu rendimento cai, com o seu nome'],
-      ['Gabarito comentado das 24',' — cada questão com um comentário como o da amostra abaixo'],
+      ['Diagnóstico de 24 questões cronometradas',': o número de cada matéria e o ponto onde seu rendimento cai, com o seu nome'],
+      ['Gabarito comentado das 24',': cada questão com um comentário como o da amostra abaixo'],
       ['Fichas do que mais cai',' nas 6 matérias do núcleo'],
-      ['Folha de tática para o seu perfil',' — com ordem de prova e regra de pulo'],
+      ['Folha de tática para o seu perfil',': com ordem de prova e regra de pulo'],
       ['3 simulados',' para medir se está subindo']
     ];
     return '<div class="stack"><div class="hd">O que chega na sua mão, na hora</div>'+
@@ -1198,14 +1418,23 @@
     // A tabela não pode prometer "descobrir a matéria" para quem não perdeu matéria:
     // vale para quem gabaritou (forte) E para quem tem X cheio ou estouro puro, que é
     // o mesmo caso do 'sabe' da leitura do momento.
-    var semFalhaDeMateria = forte || r.X>=CORTE_X || (errosReais()===0 && estourouQuantas()>0);
+    // Mesma régua da manchete e do 'sabe'. A tabela não pode prometer "descobrir a
+    // matéria" para quem o título acabou de absolver de falha de matéria.
+    var semFalhaDeMateria = perdaSeparada().mat===0;
     var tc=tabelaCusto(semFalhaDeMateria), vt=tempo(), vp=pressao();
     // O trecho em itálico do título. Se 'hl' não estiver dentro de 'lab', o título sai
     // reto em vez de quebrar: substituição só acontece quando encontra.
     var h1=esc(q.lab);
     if(q.hl && q.lab.indexOf(q.hl)>=0) h1=h1.replace(esc(q.hl),'<em>'+esc(q.hl)+'</em>');
     if(!/[.!?]$/.test(q.lab)) h1+='.';
-    var MICRO='R$ 47 à vista, no Pix ou no cartão · ou em até '+PARCELA+'<br>acesso imediato · sem mensalidade · 7 dias de garantia';
+    // A faixa de pagamento saiu da microcopy de 11,5px e virou linha própria: o Pix
+    // é o que destrava quem não tem cartão com limite, e era a informação mais
+    // escondida da página. O prazo de acesso passou a aparecer: a oferta.html sempre
+    // disse "12 meses" e aqui só dizia "sem mensalidade", que lê como vitalício.
+    // Duas páginas no ar com dois contratos diferentes para o mesmo R$47.
+    var PAGA='<div class="pag"><span class="pix">Pix</span> <b>R$ 47</b> à vista '+
+             '<span>ou '+PARCELA+' no cartão</span></div>';
+    var MICRO='pagamento único, sem mensalidade · acesso na hora, por 12 meses<br>7 dias de garantia';
 
     // A tela de resultado sai da casca estreita do quiz e vira página de vendas.
     document.body.className='res';
@@ -1223,6 +1452,7 @@
                                : (r.estourou>1? '. Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
                                               : '. Na outra o tempo acabou antes de você marcar.'))
                      : '.')+' '+esc(q.lead)+'</p>'+
+        (traduzMargem()? '<div class="rmarg">'+esc(traduzMargem())+'</div>' : '')+
         '<div class="bars">'+
           '<div class="b"><div class="hd"><span>'+esc(bx.rot)+'</span><span class="v '+bx.cls+'">'+esc(bx.v)+'</span></div>'+
             '<div class="tr"><i class="'+bx.cls+'" style="width:'+bx.w+'%"></i></div></div>'+
@@ -1305,7 +1535,7 @@
             : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
               '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada. O diagnóstico completo troca isso pelo número de cada matéria.</p>')+
           '<a class="rbtn" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-          '<div class="rmicro">'+MICRO+'</div>'+
+          PAGA+'<div class="rmicro">'+MICRO+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
             '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
@@ -1313,11 +1543,11 @@
           '<a class="upsell" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
         '</div>'+
 
-        '<div class="rfoot">Mini-diagnóstico gratuito. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
+        '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
       '</div>'+
 
       '<div class="sticky" id="stk"><div class="in">'+
-        '<div class="t"><div class="a">Diagnóstico completo</div><div class="b">R$ 47 · ou '+PARCELA+'</div></div>'+
+        '<div class="t"><div class="a">Diagnóstico completo</div><div class="b">R$ 47 no Pix · ou '+PARCELA+'</div></div>'+
         '<a href="'+buyUrl+'" id="buy3" data-v="47">Quero agora</a>'+
       '</div></div>';
 
@@ -1325,9 +1555,29 @@
 
     // Não existe "refazer": a tela de resultado é a tela de decisão, e uma terceira
     // saída ao lado do botão de compra só serve para quem hesita desistir sem custo.
+    //
+    // Três coisas acontecem no clique, e a ORDEM importa:
+    // 1. sck=<id do lead> entra na URL agora, e não na hora de montar o HTML, porque
+    //    o id chega do banco depois do render. É ele que fecha lead -> venda dentro
+    //    da Hotmart sem depender de casar e-mail.
+    // 2. O clique é gravado no banco, com o botão. O pixel diz quantos; isto diz quem.
+    // 3. O InitiateCheckout dispara UMA VEZ por sessão. Quatro botões apontam para o
+    //    mesmo checkout, e até 02/08/2026 quem clicava no do meio, voltava e clicava
+    //    na barra fixa contava duas vezes. Com 2 checkouts no funil, um evento a mais
+    //    é 50% de erro.
+    var icDisparado=false;
     ['buy0','buy','buy2','buy3'].forEach(function(id){
       var el=document.getElementById(id);
-      if(el) el.onclick=function(){ if(typeof fbq!=='undefined'){ try{ fbq('track','InitiateCheckout',{value:parseInt(el.getAttribute('data-v'),10),currency:'BRL'}); }catch(e){} } };
+      if(!el) return;
+      el.onclick=function(){
+        var oferta=parseInt(el.getAttribute('data-v'),10);
+        if(LEAD_ID && el.href.indexOf('&sck=')<0) el.href = el.href + '&sck=' + encodeURIComponent(LEAD_ID);
+        marcarClique(id, oferta);
+        if(!icDisparado && typeof fbq!=='undefined'){
+          icDisparado=true;
+          try{ fbq('track','InitiateCheckout',{value:oferta,currency:'BRL'}); }catch(e){}
+        }
+      };
     });
 
     // Barra fixa: só depois de 1,2 tela rolada, quando o primeiro CTA já saiu de vista.

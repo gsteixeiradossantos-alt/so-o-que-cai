@@ -9,6 +9,8 @@
 </head>
 <body>
 <p>Levando você para o Só o que Cai. <a href="./mini-diagnostico.html">Clique aqui se não for automático.</a></p>
-<script>location.replace('./mini-diagnostico.html');</script>
+<!-- A querystring TEM que sobreviver ao redirect: sem ela o clique do anúncio chega
+     ao quiz sem utm nem fbclid, e o lead entra no banco sem origem nenhuma. -->
+<script>location.replace('./mini-diagnostico.html' + location.search);</script>
 </body>
 </html>
