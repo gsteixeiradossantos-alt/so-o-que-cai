@@ -115,7 +115,31 @@
   @media (prefers-reduced-motion: reduce){
     .timer.urgente .num{animation:none}
     .clock i{animation:none}
+    .load .mark{animation:none}
   }
+  /* Tela de apuração, entre o formulário e o resultado. Entrou em 02/08/2026 por dois
+     motivos, e o segundo é o que decidiu:
+     1. Resultado que aparece no mesmo instante do clique lê como tabela pronta. A pessoa
+        acabou de gastar 4 minutos cronometrados; ver o cálculo acontecer é o que faz o
+        resultado parecer dela.
+     2. O id do lead volta do banco DEPOIS do render, e é ele que monta o sck= no
+        checkout. Sem essa janela, quem clica em comprar rápido demais vai para a
+        Hotmart sem o rastreio que liga a venda ao lead.
+     Os três passos exibidos são os cálculos que de fato acontecem, na ordem em que
+     acontecem. Nada de "consultando a banca" ou coisa que a página não faz. */
+  .load{display:flex;flex-direction:column;align-items:center;justify-content:center;
+        text-align:center;min-height:56vh;padding:0 8px}
+  .load .mark{width:46px;height:46px;margin-bottom:26px;animation:respira 1.6s ease-in-out infinite}
+  @keyframes respira{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.09);opacity:1}}
+  .load .st{font-size:17px;font-weight:500;color:var(--ink);margin-bottom:20px;min-height:1.5em;
+            transition:opacity .25s}
+  .load .st.sai{opacity:0}
+  .load .tr{width:100%;max-width:290px;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .load .tr i{display:block;height:100%;width:4%;border-radius:99px;
+              background:linear-gradient(90deg,var(--ocre),var(--ocre2));
+              transition:width .85s cubic-bezier(.35,0,.25,1)}
+  .load .pe{margin-top:22px;font-family:'Space Mono',monospace;font-size:11px;
+            letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
   .qmat{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
   .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
@@ -212,6 +236,31 @@
   .rmarg{display:flex;gap:11px;align-items:flex-start;margin-bottom:26px;padding:13px 15px;
          border-left:3px solid var(--ocre2);background:rgba(199,122,43,.10);border-radius:0 10px 10px 0;
          font-size:15px;line-height:1.55;color:#E7CFA8;max-width:44ch}
+  /* Ponte entre a tela de diagnóstico e a tela de oferta. Em 02/08/2026 as duas eram
+     uma só, e a auditoria tinha apontado o efeito: a oferta se disfarçava de
+     continuação do diagnóstico e o preço chegava sem aviso, no meio de uma tabela.
+     Separadas, a oferta passa a ser uma coisa que a pessoa PEDE. */
+  .ponte{margin-top:40px;padding:26px 22px 24px;background:var(--card);
+         border:1px solid var(--line);border-radius:16px;text-align:center}
+  .ponte .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.13em;
+            text-transform:uppercase;color:var(--ocre);margin-bottom:11px}
+  .ponte h3{font-family:'Spectral',Georgia,serif;font-size:23px;font-weight:600;line-height:1.25;
+            margin-bottom:11px;text-wrap:balance}
+  .ponte p{font-size:15.5px;line-height:1.6;color:var(--muted2);max-width:46ch;
+           margin:0 auto 20px;text-wrap:pretty}
+  /* Cabeçalho compacto da tela de oferta: reancora POR QUE ela está vendo isso.
+     Sem ele, a segunda tela começa do nada e perde o diagnóstico de vista. */
+  .rrecap{background:var(--navy);color:#F3EEE4;padding:22px 20px 20px}
+  .rrecap .in{max-width:600px;margin:0 auto}
+  .rrecap .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+             text-transform:uppercase;color:#8E9AA4;margin-bottom:8px}
+  .rrecap .h{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
+             color:#F3EEE4;text-wrap:balance}
+  .rrecap .h em{font-style:italic;color:var(--ocre2)}
+  .voltar{display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;
+          letter-spacing:.07em;text-transform:uppercase;color:#8E9AA4;text-decoration:none;
+          border-bottom:1px solid rgba(142,154,164,.4);padding-bottom:2px}
+  .voltar:hover{color:#F3EEE4;border-color:#F3EEE4}
   .rlead b{color:#fff}
   .bars{display:flex;flex-direction:column;gap:16px;padding:20px 18px;border:1px solid #2C3B48;border-radius:16px;background:#1B2934}
   .bars .b{display:flex;flex-direction:column;gap:7px}
@@ -419,7 +468,9 @@
     if(S.screen==='content') return content();
     if(S.screen==='behavior') return behavior();
     if(S.screen==='form') return form();
+    if(S.screen==='loading') return carregando();
     if(S.screen==='result') return result();
+    if(S.screen==='solucao') return solucao();
   }
 
   function intro(){
@@ -602,9 +653,69 @@
       if(!email){ alert('Preencha o seu e-mail para ver o resultado.'); return; }
       if(!/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido. Confira antes de continuar.'); return; }
       S.nome=nome; S.email=email; S.tel=tel;
+      // saveLead() dispara a gravação AGORA e a tela de apuração corre em paralelo:
+      // o tempo da barra é o tempo que o banco tem para devolver o id do lead.
       saveLead();
-      S.screen='result'; render(); window.scrollTo(0,0);
+      S.screen='loading'; render(); window.scrollTo(0,0);
     };
+  }
+
+  // Apuração. Três passos, todos verdadeiros: é isso que compute() e quadrant() fazem,
+  // nesta ordem. A barra é honesta quanto ao que descreve, e o tempo dela não é enfeite:
+  // é a janela em que o /api/lead devolve o id que monta o sck= no checkout.
+  function carregando(){
+    pararRelogio();
+    var PASSOS=[
+      ['Somando o que você acertou', 34],
+      ['Cruzando o tempo de cada resposta', 71],
+      ['Montando o seu resultado', 95]
+    ];
+    var MIN=2700;    // piso: abaixo disso não dá tempo de ler os três passos
+    var MAX=4200;    // teto: nunca segurar mais que isso, mesmo sem id do banco
+    app.innerHTML =
+      '<div class="load">'+
+        '<svg class="mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+          '<rect width="32" height="32" rx="8" fill="#15212B"/>'+
+          '<g stroke="#F3EEE4" stroke-width="2.4" fill="none"><circle cx="16" cy="16" r="7.2"/>'+
+          '<path d="M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4"/></g>'+
+          '<circle cx="16" cy="16" r="3" fill="#C77A2B"/></svg>'+
+        '<div class="st" id="ldst" role="status" aria-live="polite">'+esc(PASSOS[0][0])+'</div>'+
+        '<div class="tr"><i id="ldbar"></i></div>'+
+        '<div class="pe">Gerando o seu resultado personalizado</div>'+
+      '</div>';
+
+    var st=document.getElementById('ldst'), bar=document.getElementById('ldbar');
+    var t0=Date.now(), i=0;
+    setTimeout(function(){ if(bar) bar.style.width=PASSOS[0][1]+'%'; }, 60);
+
+    function passo(){
+      i++;
+      if(i<PASSOS.length){
+        if(st){
+          st.classList.add('sai');
+          setTimeout(function(){ st.textContent=PASSOS[i][0]; st.classList.remove('sai'); }, 220);
+        }
+        if(bar) bar.style.width=PASSOS[i][1]+'%';
+        setTimeout(passo, 900);
+      } else {
+        entregar();
+      }
+    }
+    setTimeout(passo, 900);
+
+    // Só entrega quando o piso de tempo passou. Se o id do lead ainda não chegou,
+    // espera mais um pouco, até o teto, e vai assim mesmo: a página nunca trava
+    // esperando rede.
+    function entregar(){
+      var passou=Date.now()-t0;
+      if(passou<MIN) return setTimeout(entregar, MIN-passou);
+      if(LEAD_ID===null && passou<MAX) return setTimeout(entregar, 250);
+      if(bar) bar.style.width='100%';
+      setTimeout(function(){
+        if(S.screen!=='loading') return;   // guarda contra entrega dupla
+        S.screen='result'; render(); window.scrollTo(0,0);
+      }, 260);
+    }
   }
 
   function saveLead(){
@@ -1402,41 +1513,94 @@
       '<div class="tot"><span>Tudo, uma vez, sem mensalidade</span><span class="p">R$ 47</span></div></div>';
   }
 
-  function result(){
+  // Contexto compartilhado pelas duas telas do resultado. Existe porque em 02/08/2026 a
+  // tela de resultado foi partida em duas: DIAGNÓSTICO (o que o teste achou, sem preço
+  // nenhum) e SOLUÇÃO (a oferta). Antes era uma tela só, e a auditoria tinha apontado o
+  // efeito: a oferta se disfarçava de continuação do diagnóstico e a etiqueta de preço
+  // chegava no meio de uma tabela, sem aviso. Partida em duas, a oferta é uma coisa que
+  // a pessoa PEDE, e o clique nesse pedido é um degrau novo de funil que dá para medir.
+  function ctx(){
     var r=compute(), q=quadrant(r.X,r.Y,r), L=leituraMomento(q,r);
-    var nome=esc((S.nome.split(' ')[0])||'você');
     // Checkout pré-preenchido com o que a pessoa já digitou: ela não encara o formulário
     // vazio de novo (é onde o funil perde gente).
     var digits=S.tel.replace(/\D/g,'');
     var fill='&name='+encodeURIComponent(S.nome)+
       (S.email?'&email='+encodeURIComponent(S.email):'')+
       (digits?'&phoneNumber='+encodeURIComponent(digits):'');
-    var buyUrl=CHECKOUT_URL+fill, buyUrlC=CHECKOUT_COMPLETO+fill;
-    var forte=!!q.forte;
-    var erroN=CONTENT.length-r.c-r.estourou;
-    var bx=barraConteudo(r), by=barraPressao(r);
-    // A tabela não pode prometer "descobrir a matéria" para quem não perdeu matéria:
-    // vale para quem gabaritou (forte) E para quem tem X cheio ou estouro puro, que é
-    // o mesmo caso do 'sabe' da leitura do momento.
-    // Mesma régua da manchete e do 'sabe'. A tabela não pode prometer "descobrir a
-    // matéria" para quem o título acabou de absolver de falha de matéria.
-    var semFalhaDeMateria = perdaSeparada().mat===0;
-    var tc=tabelaCusto(semFalhaDeMateria), vt=tempo(), vp=pressao();
     // O trecho em itálico do título. Se 'hl' não estiver dentro de 'lab', o título sai
     // reto em vez de quebrar: substituição só acontece quando encontra.
     var h1=esc(q.lab);
     if(q.hl && q.lab.indexOf(q.hl)>=0) h1=h1.replace(esc(q.hl),'<em>'+esc(q.hl)+'</em>');
     if(!/[.!?]$/.test(q.lab)) h1+='.';
-    // A faixa de pagamento saiu da microcopy de 11,5px e virou linha própria: o Pix
-    // é o que destrava quem não tem cartão com limite, e era a informação mais
-    // escondida da página. O prazo de acesso passou a aparecer: a oferta.html sempre
-    // disse "12 meses" e aqui só dizia "sem mensalidade", que lê como vitalício.
-    // Duas páginas no ar com dois contratos diferentes para o mesmo R$47.
-    var PAGA='<div class="pag"><span class="pix">Pix</span> <b>R$ 47</b> à vista '+
-             '<span>ou '+PARCELA+' no cartão</span></div>';
-    var MICRO='pagamento único, sem mensalidade · acesso na hora, por 12 meses<br>7 dias de garantia';
+    return {
+      r:r, q:q, L:L, h1:h1,
+      nome: esc((S.nome.split(' ')[0])||'você'),
+      buyUrl: CHECKOUT_URL+fill, buyUrlC: CHECKOUT_COMPLETO+fill,
+      forte: !!q.forte,
+      erroN: CONTENT.length-r.c-r.estourou,
+      // Mesma régua da manchete e do 'sabe'. A tabela não pode prometer "descobrir a
+      // matéria" para quem o título acabou de absolver de falha de matéria.
+      semFalhaDeMateria: perdaSeparada().mat===0,
+      // A faixa de pagamento saiu da microcopy de 11,5px e virou linha própria: o Pix
+      // é o que destrava quem não tem cartão com limite, e era a informação mais
+      // escondida da página. O prazo de acesso passou a aparecer: a oferta.html sempre
+      // disse "12 meses" e aqui só dizia "sem mensalidade", que lê como vitalício.
+      PAGA:'<div class="pag"><span class="pix">Pix</span> <b>R$ 47</b> à vista '+
+           '<span>ou '+PARCELA+' no cartão</span></div>',
+      MICRO:'pagamento único, sem mensalidade · acesso na hora, por 12 meses<br>7 dias de garantia'
+    };
+  }
 
-    // A tela de resultado sai da casca estreita do quiz e vira página de vendas.
+  // Liga os botões de compra. Chamado só na tela de solução, que é a única que os tem.
+  // Três coisas acontecem no clique, e a ORDEM importa:
+  // 1. sck=<id do lead> entra na URL agora, e não na hora de montar o HTML, porque o id
+  //    chega do banco depois do render. É ele que fecha lead -> venda dentro da Hotmart
+  //    sem depender de casar e-mail.
+  // 2. O clique é gravado no banco, com o botão. O pixel diz quantos; isto diz quem.
+  // 3. O InitiateCheckout dispara UMA VEZ por sessão. Quatro botões apontam para o mesmo
+  //    checkout, e até 02/08/2026 quem clicava no do meio, voltava e clicava na barra
+  //    fixa contava duas vezes. Com 2 checkouts no funil, um evento a mais é 50% de erro.
+  var icDisparado=false;
+  function ligarCompra(){
+    ['buy0','buy','buy2','buy3'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el) return;
+      el.onclick=function(){
+        var oferta=parseInt(el.getAttribute('data-v'),10);
+        if(LEAD_ID && el.href.indexOf('&sck=')<0) el.href = el.href + '&sck=' + encodeURIComponent(LEAD_ID);
+        marcarClique(id, oferta);
+        if(!icDisparado && typeof fbq!=='undefined'){
+          icDisparado=true;
+          try{ fbq('track','InitiateCheckout',{value:oferta,currency:'BRL'}); }catch(e){}
+        }
+      };
+    });
+  }
+
+  // Barra fixa: só depois de 1,2 tela rolada, quando o primeiro CTA já saiu de vista.
+  function ligarBarraFixa(){
+    var stk=document.getElementById('stk'), visivel=false;
+    if(!stk) return;
+    function checarBarra(){
+      var deve = window.scrollY > window.innerHeight*1.2;
+      if(deve!==visivel){ visivel=deve; stk.className='sticky'+(deve?' on':''); }
+    }
+    if(window._stk) window.removeEventListener('scroll', window._stk);
+    window._stk=checarBarra;
+    window.addEventListener('scroll', checarBarra, {passive:true});
+    checarBarra();
+  }
+
+  // ===== TELA 1: DIAGNÓSTICO =====
+  // Nenhum preço, nenhum botão de compra, nenhum depoimento. Só o que o teste achou.
+  // Termina no lockbox (o que ficou fechado) e na ponte para a solução, nessa ordem,
+  // porque é o bloco rasurado que cria a pergunta que o botão responde.
+  function result(){
+    var C=ctx(), r=C.r, q=C.q, L=C.L;
+    var bx=barraConteudo(r), by=barraPressao(r);
+    var vt=tempo(), vp=pressao();
+
+    // A tela de resultado sai da casca estreita do quiz e ganha a largura da leitura.
     document.body.className='res';
 
     var html =
@@ -1445,10 +1609,10 @@
           '<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F3EEE4"/><g stroke="#15212B" stroke-width="2.4" fill="none"><circle cx="16" cy="16" r="7.2"/><path d="M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4"/></g><circle cx="16" cy="16" r="3" fill="#C77A2B"/></svg>'+
           '<span class="nm">Só o que Cai</span><span class="tg">1ª fase · OAB</span>'+
         '</div>'+
-        '<div class="rkick">'+nome+' · seu resultado</div>'+
-        '<h1 class="rh1">'+h1+'</h1>'+
+        '<div class="rkick">'+C.nome+' · seu resultado</div>'+
+        '<h1 class="rh1">'+C.h1+'</h1>'+
         '<p class="rlead">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b>'+
-          (r.estourou? (erroN>0? ', errou '+erroN+' e estourou o tempo em '+r.estourou+'.'
+          (r.estourou? (C.erroN>0? ', errou '+C.erroN+' e estourou o tempo em '+r.estourou+'.'
                                : (r.estourou>1? '. Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
                                               : '. Na outra o tempo acabou antes de você marcar.'))
                      : '.')+' '+esc(q.lead)+'</p>'+
@@ -1466,19 +1630,7 @@
         '<div style="margin-top:38px">'+
           '<p class="rp forte">'+esc(q.p1)+'</p>'+
           '<p class="rp">'+esc(q.p2)+'</p>'+
-          (L? '<div class="pull"><p>'+esc(L.ponto)+'</p></div>' : '')+
         '</div>'+
-
-        // A comparação de custo e a lista do que chega vêm ANTES do botão: é o que
-        // coloca alguma coisa na outra ponta da balança antes de pedir dinheiro.
-        (L? '<div class="rsec"><div class="rkk">O que corrige</div>'+
-            '<h3 class="rh3">'+esc(L.titulo)+'</h3>'+
-            '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+
-            '<a class="rbtn" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
-            '<div class="rmicro">'+MICRO+'</div></div>'
-          : '<div class="rsec">'+tc+stackOferta()+
-            '<a class="rbtn" href="'+buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
-            '<div class="rmicro">'+MICRO+'</div></div>')+
 
         ((vt||vp)? '<div class="rsec"><div class="rkk">Leitura do teste</div>'+
           '<h3 class="rh3">O que o teste viu em você</h3><div class="viu">'+
@@ -1491,6 +1643,56 @@
 
         '<div class="rsec"><div class="rkk">Diagnóstico completo</div>'+
           '<h3 class="rh3">O que ainda está fechado para você</h3>'+lockbox()+'</div>'+
+
+        // A ponte. Fecha o diagnóstico e entrega o leitor para a tela de oferta, sem
+        // preço nenhum até aqui. O pull-quote do momento (L.ponto) desceu para cá: era
+        // pull-quote solto no meio e virou o último argumento antes do pedido.
+        (L? '<div class="pull"><p>'+esc(L.ponto)+'</p></div>' : '')+
+        '<div class="ponte">'+
+          '<div class="k">O que fazer com isso</div>'+
+          '<h3>'+esc(L? L.titulo : 'Trocar suposição por número')+'</h3>'+
+          '<p>Você já sabe o tamanho do buraco. O que vem agora é o que fecha ele, e quanto custa.</p>'+
+          '<a class="rbtn" href="#" id="versol" style="margin-top:0">Ver minha solução</a>'+
+        '</div>'+
+
+        '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
+      '</div>';
+
+    app.innerHTML = html;
+    var vs=document.getElementById('versol');
+    if(vs) vs.onclick=function(e){
+      e.preventDefault();
+      S.screen='solucao'; render(); window.scrollTo(0,0);
+    };
+  }
+
+  // ===== TELA 2: SOLUÇÃO =====
+  // A oferta. Só chega aqui quem pediu, clicando em "Ver minha solução". Esse clique é
+  // um degrau novo de funil: antes, Lead e "leu a oferta" eram o mesmo evento, e não
+  // dava para separar quem leu o diagnóstico e foi embora de quem leu a oferta e não
+  // comprou. São dois problemas diferentes e pedem remédios diferentes.
+  function solucao(){
+    var C=ctx(), r=C.r, q=C.q, L=C.L, forte=C.forte;
+    var tc=tabelaCusto(C.semFalhaDeMateria);
+
+    document.body.className='res';
+
+    // Reancora POR QUE ela está vendo uma oferta: o diagnóstico dela, em uma linha.
+    var html =
+      '<div class="rrecap"><div class="in">'+
+        '<div class="k">'+C.nome+' · seu diagnóstico</div>'+
+        '<div class="h">'+C.h1+'</div>'+
+      '</div></div>'+
+
+      '<div class="rbody">'+
+        (L? '<div class="rsec" style="margin-top:34px"><div class="rkk">O que corrige</div>'+
+            '<h3 class="rh3">'+esc(L.titulo)+'</h3>'+
+            '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+
+            '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+            C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>'
+          : '<div class="rsec" style="margin-top:34px">'+tc+stackOferta()+
+            '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+            C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>')+
 
         '<div class="rsec"><div class="rkk">Quem já fez</div>'+
           '<h3 class="rh3">Três pessoas que estavam onde você está agora</h3>'+depoimentos()+'</div>'+
@@ -1534,13 +1736,13 @@
               '<p>Com uma questão por matéria, tudo o que dá para afirmar é que naquela você acertou. O diagnóstico completo mede 24, cronometradas, nas mesmas 6 matérias. Você quer entrar na prova com essa dúvida em aberto, ou prefere fechá-la em 20 minutos?</p>'
             : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
               '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada. O diagnóstico completo troca isso pelo número de cada matéria.</p>')+
-          '<a class="rbtn" href="'+buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-          PAGA+'<div class="rmicro">'+MICRO+'</div>'+
+          '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
+          C.PAGA+'<div class="rmicro">'+C.MICRO+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
             '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
           '</div>'+
-          '<a class="upsell" href="'+buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
+          '<a class="upsell" href="'+C.buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
         '</div>'+
 
         '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
@@ -1548,48 +1750,20 @@
 
       '<div class="sticky" id="stk"><div class="in">'+
         '<div class="t"><div class="a">Diagnóstico completo</div><div class="b">R$ 47 no Pix · ou '+PARCELA+'</div></div>'+
-        '<a href="'+buyUrl+'" id="buy3" data-v="47">Quero agora</a>'+
+        '<a href="'+C.buyUrl+'" id="buy3" data-v="47">Quero agora</a>'+
       '</div></div>';
 
     app.innerHTML = html;
+    ligarCompra();
+    ligarBarraFixa();
 
-    // Não existe "refazer": a tela de resultado é a tela de decisão, e uma terceira
-    // saída ao lado do botão de compra só serve para quem hesita desistir sem custo.
-    //
-    // Três coisas acontecem no clique, e a ORDEM importa:
-    // 1. sck=<id do lead> entra na URL agora, e não na hora de montar o HTML, porque
-    //    o id chega do banco depois do render. É ele que fecha lead -> venda dentro
-    //    da Hotmart sem depender de casar e-mail.
-    // 2. O clique é gravado no banco, com o botão. O pixel diz quantos; isto diz quem.
-    // 3. O InitiateCheckout dispara UMA VEZ por sessão. Quatro botões apontam para o
-    //    mesmo checkout, e até 02/08/2026 quem clicava no do meio, voltava e clicava
-    //    na barra fixa contava duas vezes. Com 2 checkouts no funil, um evento a mais
-    //    é 50% de erro.
-    var icDisparado=false;
-    ['buy0','buy','buy2','buy3'].forEach(function(id){
-      var el=document.getElementById(id);
-      if(!el) return;
-      el.onclick=function(){
-        var oferta=parseInt(el.getAttribute('data-v'),10);
-        if(LEAD_ID && el.href.indexOf('&sck=')<0) el.href = el.href + '&sck=' + encodeURIComponent(LEAD_ID);
-        marcarClique(id, oferta);
-        if(!icDisparado && typeof fbq!=='undefined'){
-          icDisparado=true;
-          try{ fbq('track','InitiateCheckout',{value:oferta,currency:'BRL'}); }catch(e){}
-        }
-      };
-    });
-
-    // Barra fixa: só depois de 1,2 tela rolada, quando o primeiro CTA já saiu de vista.
-    var stk=document.getElementById('stk'), visivel=false;
-    function checarBarra(){
-      var deve = window.scrollY > window.innerHeight*1.2;
-      if(deve!==visivel){ visivel=deve; stk.className='sticky'+(deve?' on':''); }
+    // Marca que a pessoa PEDIU a oferta. É o degrau que faltava entre Lead e
+    // InitiateCheckout: sem ele não dava para separar quem largou no diagnóstico de
+    // quem leu a oferta inteira e não comprou, que são problemas diferentes. Também
+    // vira público de remarketing: "pediu a solução e não comprou".
+    if(typeof fbq!=='undefined'){
+      try{ fbq('track','ViewContent',{content_name:'solucao',value:47,currency:'BRL'}); }catch(e){}
     }
-    if(window._stk) window.removeEventListener('scroll', window._stk);
-    window._stk=checarBarra;
-    window.addEventListener('scroll', checarBarra, {passive:true});
-    checarBarra();
   }
 
   render();
