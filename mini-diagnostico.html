@@ -257,6 +257,24 @@
   .rrecap .h{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
              color:#F3EEE4;text-wrap:balance}
   .rrecap .h em{font-style:italic;color:var(--ocre2)}
+  /* Bônus. Entrou em 02/08/2026, quando o Kit Reta Final deixou de ser bump de R$19 e
+     passou a vir incluído: o acréscimo de 40% no pedido é atrito grande demais para um
+     público que espera o dia 5 do mês, e não havia nenhum outro material livre para
+     usar como bônus. A data sai por extenso do relógio, não é "hoje" solto: quem voltar
+     amanhã lê a data de amanhã e a página nunca prometeu prazo nenhum. */
+  .bonus{margin-top:14px;border:1.5px dashed var(--ocre2);border-radius:14px;padding:16px 17px 14px;
+         background:linear-gradient(180deg,rgba(199,122,43,.07),rgba(199,122,43,.02))}
+  .bonus .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.11em;
+            text-transform:uppercase;color:var(--ocre);margin-bottom:11px}
+  .bonus .row{display:flex;gap:11px;align-items:flex-start}
+  .bonus .row svg{flex:none;margin-top:2px}
+  .bonus .tl{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
+  .bonus .tl b{font-size:15.5px;font-weight:600}
+  .bonus .val{font-family:'Space Mono',monospace;font-size:11px;color:var(--ocre);
+              border:1px solid var(--line);border-radius:99px;padding:2px 8px;background:var(--card)}
+  .bonus .row p{font-size:14.5px;line-height:1.55;color:var(--muted2)}
+  .bonus .pe{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
+             font-size:13.5px;color:var(--muted2)}
   .voltar{display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;
           letter-spacing:.07em;text-transform:uppercase;color:#8E9AA4;text-decoration:none;
           border-bottom:1px solid rgba(142,154,164,.4);padding-bottom:2px}
@@ -1500,6 +1518,35 @@
   // O que a pessoa recebe, item a item. Existe porque "diagnóstico" sozinho é
   // informação, e informação é a coisa mais difícil de vender que existe: o comprador
   // não sabe o que fazer com ela. A lista transforma o R$47 em cinco coisas na mão.
+  // Data de hoje por extenso. Existe por causa do bônus: a página diz "quem entrar
+  // hoje, 2 de agosto" em vez de "só hoje". A diferença não é estilo, é honestidade
+  // conferível. "Só hoje" AFIRMA que acaba, e quem voltar amanhã e achar a mesma
+  // oferta descobre que foi enganado, ainda mais este público, que já foi enganado
+  // por cursinho. A data escrita não promete fim nenhum: ela só registra o dia em
+  // que o Gustavo está se comprometendo, e amanhã ela se atualiza sozinha.
+  function hojeExtenso(){
+    var M=['janeiro','fevereiro','março','abril','maio','junho','julho',
+           'agosto','setembro','outubro','novembro','dezembro'];
+    var d=new Date();
+    return d.getDate()+' de '+M[d.getMonth()];
+  }
+
+  // O Kit Reta Final: era bump de R$19 e virou bônus incluído em 02/08/2026.
+  // A descrição é o que o arquivo kit-reta-final.html realmente entrega, conferido
+  // no repo do app. Nunca prometer aqui coisa que não esteja lá dentro.
+  function bonusKit(){
+    var d=diasParaProva();
+    return '<div class="bonus">'+
+      '<div class="k">Quem entrar hoje, '+hojeExtenso()+'</div>'+
+      '<div class="row">'+CHECK+'<div>'+
+        '<div class="tl"><b>Kit Reta Final</b><span class="val">vendido por R$ 19</span></div>'+
+        '<p>O plano das últimas três semanas, semana a semana. O checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
+      '</div></div>'+
+      (d? '<div class="pe">Faltam '+d+' dias para a prova, e é exatamente esse o período que o Kit cobre. Depois de hoje eu não garanto que ele siga incluído.</div>'
+        : '<div class="pe">Depois de hoje eu não garanto que ele siga incluído.</div>')+
+    '</div>';
+  }
+
   function stackOferta(){
     var itens=[
       ['Diagnóstico de 24 questões cronometradas',': o número de cada matéria e o ponto onde seu rendimento cai, com o seu nome'],
@@ -1687,10 +1734,10 @@
       '<div class="rbody">'+
         (L? '<div class="rsec" style="margin-top:34px"><div class="rkk">O que corrige</div>'+
             '<h3 class="rh3">'+esc(L.titulo)+'</h3>'+
-            '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+
+            '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+bonusKit()+
             '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
             C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>'
-          : '<div class="rsec" style="margin-top:34px">'+tc+stackOferta()+
+          : '<div class="rsec" style="margin-top:34px">'+tc+stackOferta()+bonusKit()+
             '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
             C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>')+
 
@@ -1737,7 +1784,7 @@
             : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
               '<p>O jeito mais comum de reprovar de novo é estudar no escuro: semanas inteiras na matéria que você já sabe, enquanto a que te derruba segue intocada. O diagnóstico completo troca isso pelo número de cada matéria.</p>')+
           '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
-          C.PAGA+'<div class="rmicro">'+C.MICRO+'</div>'+
+          C.PAGA+'<div class="rmicro">Com o Kit Reta Final junto, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
             '<span>Garantia de 7 dias: se não valeu, devolvo 100%, sem perguntas. <b>O risco é meu.</b></span>'+
