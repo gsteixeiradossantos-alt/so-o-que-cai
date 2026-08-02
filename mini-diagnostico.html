@@ -475,28 +475,71 @@
     });
   }
 
-  // Nota de ritmo de UMA questão, de 0 a 100. É o único sensor do eixo de pressão que
-  // a pessoa não consegue maquiar: no autorrelato ninguém marca que trava, e era isso
-  // que mantinha o eixo Y alto e o quadrante verde para todo mundo.
-  // Agora se calcula por questão e se tira a média, não a mediana: com teto de 40s não
-  // existe mais outlier a proteger, e a mediana engoliria justamente a questão em que
-  // a pessoa saiu da aba, que é a que mais interessa.
-  function notaRitmo(t, estourou){
+  // ===== EIXO DE PRESSÃO =====
+  // Refeito em 02/08/2026. A versão anterior era 70% relógio + 30% autorrelato, e o 100
+  // continuava fácil por dois motivos: o autorrelato tem uma alternativa obviamente
+  // "certa" em cada cenário, e a faixa boa do relógio era um platô de 15 segundos, que é
+  // exatamente onde cai quem lê com atenção. Resultado: não separava ninguém de ninguém.
+  // Agora são quatro componentes, e 85% deles são MEDIDOS, não declarados.
+
+  // 1) DECISÃO. Tempo cruzado com acerto, por questão. O tempo sozinho mentia: quem passa
+  // por 7 questões a 25 segundos e acerta 3 não decidiu bem, chutou num ritmo confortável.
+  function notaDecisao(t, estourou, acertou){
     if(estourou) return 0;
     if(t==null) return null;
-    if(t<10)  return 0;    // não leu: marcou no reflexo
-    if(t<18)  return 40;   // rápido demais para pegadinha
-    if(t<=32) return 100;  // lê, pesa e decide
-    return 60;             // decidiu no limite do relógio
+    if(t<10)  return acertou? 60 : 0;    // reflexo: acertar assim pode ser sorte; errar é chute
+    if(t<18)  return acertou? 85 : 15;   // rápido para pegadinha
+    if(t<=32) return acertou? 100: 35;   // leu, pesou e decidiu. Errar aqui é conteúdo, não pressão
+    return      acertou? 70 : 25;        // chegou no limite do relógio
+  }
+  function decisoes(){
+    var out=[];
+    CONTENT.forEach(function(Q,i){
+      var n=notaDecisao(S.times[i], S.estourou[i], S.ans[i]===Q.c);
+      if(n!=null) out.push(n);
+    });
+    return out;
+  }
+  function notaDecisaoMedia(){
+    var d=decisoes(); if(!d.length) return null;
+    var s=0; d.forEach(function(x){ s+=x; });
+    return Math.round(s/d.length);
   }
 
-  function ritmoMedio(){
-    var soma=0, n=0;
-    CONTENT.forEach(function(_,i){
-      var nt=notaRitmo(S.times[i], S.estourou[i]);
-      if(nt!=null){ soma+=nt; n++; }
-    });
-    return n? Math.round(soma/n) : null;
+  // 2) CONSTÂNCIA. O que mede travar não é a média, é a oscilação. 20,22,19,21,20,23,20 e
+  // 8,40,12,38,9,40,15 têm quase a mesma média e são duas pessoas completamente
+  // diferentes: a segunda chuta em umas e congela em outras. Coeficiente de variação.
+  function notaConstancia(){
+    var ts=[]; CONTENT.forEach(function(_,i){ if(S.times[i]!=null) ts.push(S.times[i]); });
+    if(ts.length<3) return null;
+    var m=0; ts.forEach(function(t){ m+=t; }); m/=ts.length;
+    if(m<=0) return 0;
+    var v=0; ts.forEach(function(t){ v+=(t-m)*(t-m); }); v/=ts.length;
+    var cv=Math.sqrt(v)/m;
+    if(cv<=0.20) return 100;
+    if(cv<=0.35) return 80;
+    if(cv<=0.50) return 55;
+    if(cv<=0.70) return 30;
+    return 10;
+  }
+
+  // 3) RESISTÊNCIA. Na prova o que derruba é cair ao longo das 80. Aqui se compara as 3
+  // últimas contra as 3 primeiras, pela nota de DECISÃO e não pelo tempo puro, porque a
+  // queda aparece como mais erro E mais tempo ao mesmo tempo. É uma versão crua do "em
+  // que ponto o seu rendimento cai" que o produto pago mede em 24 questões.
+  function notaResistencia(){
+    var d=decisoes(); if(d.length<6) return null;
+    function med(a){ var s=0; a.forEach(function(x){ s+=x; }); return s/a.length; }
+    var delta=med(d.slice(-3))-med(d.slice(0,3));
+    // Faixas largas de propósito. Com 7 questões e 3 de cada lado, UM erro que por acaso
+    // caiu no fim já move a média em ~33 pontos. Estreitar isso faria a página acusar
+    // queda em quem só teve azar na ordem dos erros. Um erro tardio fica em 80 e não
+    // dispara nada; dois erros tardios já é padrão, e aí sim.
+    if(delta>=0)   return 100;   // não caiu, ou melhorou
+    if(delta>=-25) return 80;
+    if(delta>=-50) return 55;
+    if(delta>=-75) return 30;
+    return 10;
   }
 
   function tempoMedio(){
@@ -517,20 +560,29 @@
     // respondida também é ponto perdido. No TEXTO ela nunca se mistura com erro.
     var c=0; CONTENT.forEach(function(Q,i){ if(S.ans[i]===Q.c) c++; });
     var X=Math.round(c/CONTENT.length*100);
+    // 4) AUTORRELATO. Cai de 30% para 15% do eixo: em cada cenário existe uma
+    // alternativa obviamente "certa", e era ela que segurava o eixo lá em cima.
     var bp=0; BEHAVIOR.forEach(function(B,i){ bp += (S.beh[i]!=null?B.o[S.beh[i]][1]:0); });
     var Yrel=Math.round(bp/(BEHAVIOR.length*2)*100);
-    var Yrit=ritmoMedio();
-    // 70% relógio, 30% autorrelato. Ninguém se declara travado, então autorrelato
-    // pesado era o que inflava o eixo. Sem relógio, vale só o autorrelato.
-    var Y=(Yrit==null)?Yrel:Math.round(Yrel*0.3+Yrit*0.7);
-    return {X:X,Y:Y,c:c,Yrel:Yrel,Yrit:Yrit,tmed:tempoMedio(),
+    var dec=notaDecisaoMedia(), cons=notaConstancia(), res=notaResistencia();
+    // 45 decisão + 20 constância + 20 resistência + 15 autorrelato. 85% medido.
+    // Cada peso que falta (por falta de dado) é redistribuído entre os que sobraram,
+    // para o eixo nunca sair menor só porque um componente não pôde ser calculado.
+    var partes=[[dec,0.45],[cons,0.20],[res,0.20],[Yrel,0.15]];
+    var soma=0, peso=0;
+    partes.forEach(function(p){ if(p[0]!=null){ soma+=p[0]*p[1]; peso+=p[1]; } });
+    var Y = peso? Math.round(soma/peso) : Yrel;
+    return {X:X,Y:Y,c:c,Yrel:Yrel,dec:dec,cons:cons,res:res,tmed:tempoMedio(),
             estourou:estourouQuantas(), fora:segundosFora()};
   }
 
   // Os cortes. Eram 50 e 50, e com 5 questões de padrão médio isso fez 9 de 9 pessoas
   // caírem no verde em 02/08/2026, incluindo quem já reprovou duas vezes com 3 de 5.
-  // Agora: as SETE, sem estouro de tempo, e 70 no eixo de pressão.
-  var CORTE_X=100, CORTE_Y=70;
+  // Agora: as SETE, sem estouro de tempo, e 80 no eixo de pressão.
+  // Por que o Y subiu de 70 para 80: com o X exigindo as sete, o Y virou o ÚNICO
+  // separador entre perfis que gabaritaram, e a 70 ele não separava mais nada. A 80 ele
+  // exige execução parelha e sem queda no fim, que é o que o eixo passou a medir.
+  var CORTE_X=100, CORTE_Y=80;
 
   function jaReprovou(){
     return S.momento==='Já fiz a prova uma vez e não passei' ||
@@ -680,25 +732,32 @@
     // convicção, ritmo. Reporta o fato e para. Não defende a regra do relógio: página
     // que argumenta soa insegura e abre a porta para "na prova eu teria mais tempo".
     var est=estourouQuantas(), fora=segundosFora(), lin=null, ruim=false;
+    var cons=notaConstancia(), res=notaResistencia(), tm=tempoMedio();
+    var rapErr=null;
+    CONTENT.forEach(function(Q,i){
+      if(S.times[i]!=null && !S.estourou[i] && S.ans[i]!==Q.c && S.times[i]<=15 &&
+         (rapErr===null||S.times[i]<rapErr.t)) rapErr={i:i,t:S.times[i]};
+    });
     if(est){
       ruim=true;
       lin='O tempo acabou antes de você marcar em <b>'+est+'</b> '+(est>1?'questões':'questão')+'. Na prova, questão não respondida vale o mesmo que questão errada.';
-    } else {
-      var rapErr=null;
-      CONTENT.forEach(function(Q,i){
-        if(S.times[i]!=null && S.ans[i]!==Q.c && S.times[i]<=15 && (rapErr===null||S.times[i]<rapErr.t)) rapErr={i:i,t:S.times[i]};
-      });
-      var tm=tempoMedio();
-      if(rapErr){
-        ruim=true;
-        lin='Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+' segundos, sem hesitar. Erro com convicção é o que mais passa despercebido.';
-      } else if(tm!=null && tm>=33){
-        ruim=true; lin='Você decidiu no limite do relógio: '+tm+' segundos por questão, em média.';
-      } else if(tm!=null && tm<10){
-        ruim=true; lin='Você decidiu em '+tm+' segundos por questão, em média. Nenhuma pegadinha se lê nesse tempo.';
-      } else if(tm!=null){
-        lin='Ritmo firme: '+tm+' segundos por questão, em média, e nenhuma estourou.';
-      }
+    } else if(res!=null && res<=55){
+      // A queda ao longo do teste é o achado mais vendável que existe aqui: é a prova,
+      // com o número da própria pessoa, de que o problema aparece com o tempo de prova.
+      ruim=true;
+      lin='Você foi pior nas três últimas do que nas três primeiras. E aqui foram sete questões, não oitenta.';
+    } else if(cons!=null && cons<=55){
+      ruim=true;
+      lin='Seu ritmo oscilou muito de uma questão para outra: em umas você decidiu quase na hora, em outras quase no limite. Não é lentidão, é irregularidade.';
+    } else if(rapErr){
+      ruim=true;
+      lin='Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+' segundos, sem hesitar. Erro com convicção é o que mais passa despercebido.';
+    } else if(tm!=null && tm>=33){
+      ruim=true; lin='Você decidiu no limite do relógio: '+tm+' segundos por questão, em média.';
+    } else if(tm!=null && tm<10){
+      ruim=true; lin='Você decidiu em '+tm+' segundos por questão, em média. Nenhuma pegadinha se lê nesse tempo.';
+    } else if(tm!=null){
+      lin='Ritmo firme e parelho: '+tm+' segundos por questão, sem oscilar e sem cair no fim.';
     }
     if(lin===null) return '';
     var extra = fora>=3
