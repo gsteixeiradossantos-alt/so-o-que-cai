@@ -346,6 +346,10 @@
   .stack .tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
   .stack .tot span:first-child{font-size:14px;color:var(--muted2)}
   .stack .tot .p{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .atalho{display:block;margin-top:26px;padding:13px 16px;border:1px solid var(--line);
+    border-radius:11px;background:var(--card);text-align:center;font-size:14.5px;
+    color:var(--muted2);text-decoration:none;cursor:pointer}
+  .atalho:hover{color:var(--ink)}
   .rbtn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:20px;background:var(--ocre);color:#fff;border:none;border-radius:13px;padding:19px 22px;font:inherit;font-size:17.5px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 14px 30px -14px rgba(166,93,30,.85);transition:background .15s}
   .rbtn:hover{background:#8c4d18;color:#fff}
   .rmicro{font-family:'Space Mono',monospace;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
@@ -1943,6 +1947,15 @@
       '</div></div>'+
 
       '<div class="rbody">'+
+        // ATALHO DA PONTE, 03/08/2026. A ponte fica no fim, depois de quatro seções, e
+        // só 27% dos leads chegavam nela. Quem acabou de ler o veredito já recebeu o
+        // diagnóstico que o anúncio prometeu -- daqui para baixo é aprofundamento, não
+        // entrega. Então quem já decidiu ganha uma saída aqui, e quem quer ler continua.
+        // É LINK, não botão: o botão grande continua sendo um só, na ponte, para esta
+        // saída não competir com ela nem transformar a tela de resultado em página de
+        // venda. Leva para a MESMA tela de oferta e marca o MESMO passo, então a taxa
+        // da ponte passa a medir "pediu a oferta", venha de onde vier.
+        '<a href="#" id="versoltopo" class="atalho">Já entendi — quero o diagnóstico completo (R$ 47)</a>'+
         '<div style="margin-top:38px">'+
           '<p class="rp forte">'+esc(q.p1)+'</p>'+
           '<p class="rp">'+esc(q.p2)+'</p>'+
@@ -2002,7 +2015,12 @@
       '</div>';
 
     app.innerHTML = html;
-    var vs=document.getElementById('versol');
+    var vs=document.getElementById('versol'), vt2=document.getElementById('versoltopo');
+    if(vt2) vt2.onclick=function(e){
+      e.preventDefault();
+      marcarPasso('oferta');
+      S.screen='solucao'; render(); window.scrollTo(0,0);
+    };
     if(vs) vs.onclick=function(e){
       e.preventDefault();
       // Marca o degrau ANTES de trocar de tela: a chamada é disparada e esquecida,
