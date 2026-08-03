@@ -946,14 +946,34 @@
     });
   }
 
+  // Lê um cookie do navegador. _fbp e _fbc são os identificadores que a própria
+  // Meta grava (o segundo só existe se a pessoa veio de um anúncio). Vão crus para
+  // o servidor: sem eles, a correspondência do evento cai bastante.
+  function lerCookie(nome){
+    try{
+      var m = document.cookie.match(new RegExp('(^|;\\s*)' + nome + '=([^;]*)'));
+      return m ? decodeURIComponent(m[2]) : null;
+    }catch(e){ return null; }
+  }
+
   // Registra no banco que a pessoa pediu para comprar, e QUAL botão ela usou.
   // sendBeacon porque aqui existe navegação de verdade: um fetch normal é cancelado
   // quando a aba sai para o checkout da Hotmart. Falhar aqui não pode, em hipótese
   // nenhuma, atrapalhar a ida para o checkout, então tudo vai dentro de try.
-  function marcarClique(botao, oferta){
-    if(!LEAD_ID){ return enfileirar(function(){ marcarClique(botao, oferta); }); }
+  //
+  // `extras` só vem preenchido no clique em que o pixel disparou o InitiateCheckout.
+  // É ele que autoriza o servidor a mandar o mesmo evento pela Conversions API, com
+  // o mesmo id — os dois lados contam como um evento só.
+  function marcarClique(botao, oferta, extras){
+    if(!LEAD_ID){ return enfileirar(function(){ marcarClique(botao, oferta, extras); }); }
     try{
-      var corpo=JSON.stringify({ lead_id:LEAD_ID, botao:botao, oferta:String(oferta) });
+      var dados={ lead_id:LEAD_ID, botao:botao, oferta:String(oferta) };
+      if(extras){
+        dados.ic_event_id = extras.ic_event_id;
+        if(extras.fbp) dados.fbp = extras.fbp;
+        if(extras.fbc) dados.fbc = extras.fbc;
+      }
+      var corpo=JSON.stringify(dados);
       if(navigator.sendBeacon){
         navigator.sendBeacon(CLIQUE_URL, new Blob([corpo], {type:'text/plain;charset=UTF-8'}));
       } else {
@@ -1874,10 +1894,14 @@
   // 1. sck=<id do lead> entra na URL agora, e não na hora de montar o HTML, porque o id
   //    chega do banco depois do render. É ele que fecha lead -> venda dentro da Hotmart
   //    sem depender de casar e-mail.
-  // 2. O clique é gravado no banco, com o botão. O pixel diz quantos; isto diz quem.
-  // 3. O InitiateCheckout dispara UMA VEZ por sessão. Quatro botões apontam para o mesmo
+  // 2. O InitiateCheckout dispara UMA VEZ por sessão. Quatro botões apontam para o mesmo
   //    checkout, e até 02/08/2026 quem clicava no do meio, voltava e clicava na barra
   //    fixa contava duas vezes. Com 2 checkouts no funil, um evento a mais é 50% de erro.
+  //    Passou a vir antes do passo 3 porque é ele que decide se o servidor também manda
+  //    o evento, e essa decisão viaja junto no mesmo beacon.
+  // 3. O clique é gravado no banco, com o botão. O pixel diz quantos; isto diz quem —
+  //    e, quando o passo 2 autorizou, leva de carona o id do evento e os cookies da
+  //    Meta para o /api/clique repetir o checkout pela Conversions API.
   var icDisparado=false;
   function ligarCompra(){
     // 'buy2' saiu da lista em 03/08 junto com o link do Plano Completo. Sobraram os três
@@ -1888,11 +1912,25 @@
       el.onclick=function(){
         var oferta=parseInt(el.getAttribute('data-v'),10);
         if(LEAD_ID && el.href.indexOf('&sck=')<0) el.href = el.href + '&sck=' + encodeURIComponent(LEAD_ID);
-        marcarClique(id, oferta);
-        if(!icDisparado && typeof fbq!=='undefined'){
+
+        // O evento sai por dois caminhos: o pixel daqui e a Conversions API lá no
+        // /api/clique, com nome, e-mail e telefone do lead, que o navegador não
+        // manda. O `eventID` é o mesmo nos dois — é o que faz a Meta contar um
+        // checkout, e não dois. Sem ele, o servidor duplicaria o que o pixel já
+        // disse, que é justamente o erro corrigido em 02/08 por outro caminho.
+        var extras=null;
+        if(!icDisparado){
           icDisparado=true;
-          try{ fbq('track','InitiateCheckout',{value:oferta,currency:'BRL'}); }catch(e){}
+          extras={
+            ic_event_id: 'ic-' + (LEAD_ID || 'x') + '-' + Date.now().toString(36),
+            fbp: lerCookie('_fbp'),
+            fbc: lerCookie('_fbc')
+          };
+          if(typeof fbq!=='undefined'){
+            try{ fbq('track','InitiateCheckout',{value:oferta,currency:'BRL'},{eventID:extras.ic_event_id}); }catch(e){}
+          }
         }
+        marcarClique(id, oferta, extras);
       };
     });
   }
