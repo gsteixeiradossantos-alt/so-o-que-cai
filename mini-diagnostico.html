@@ -1853,6 +1853,9 @@
           //    diagnóstico grátis e cairia numa página de venda. Este público é 67% de
           //    gente que já reprovou e que desconfia de curso por experiência própria.
           //    Ele pune isso mais do que pune preço.
+          //    03/08: a regra estava escrita aqui e NÃO estava cumprida. O texto dizia
+          //    "e o preço está lá também", que anuncia a EXISTÊNCIA de um preço, não o
+          //    preço; e o botão não trazia valor nenhum. Agora o número aparece nos dois.
           // 2. O BOTÃO NÃO PODE PROMETER CONTINUAÇÃO GRATUITA. Por isso saíram "Ver o
           //    restante do diagnóstico" e "Ver o que faltou neste diagnóstico": as duas
           //    leem como sobra do teste que ela acabou de fazer, o que é a mesma isca
@@ -1861,8 +1864,8 @@
           // "Ver o diagnóstico completo" nomeia o produto de propósito. Perde algum
           // clique e não surpreende ninguém do outro lado, que é a troca certa aqui.
           // A curiosidade fica no que a frase NÃO diz: o que essas 7 não alcançam.
-          '<p>Você já descobriu onde está o problema. O que estas '+CONTENT.length+' questões não alcançam está no diagnóstico completo, e o preço está lá também.</p>'+
-          '<a class="rbtn" href="#" id="versol" style="margin-top:0">Ver o diagnóstico completo</a>'+
+          '<p>Você já descobriu onde está o problema. O que estas '+CONTENT.length+' questões não alcançam está no diagnóstico completo, e ele custa R$ 47.</p>'+
+          '<a class="rbtn" href="#" id="versol" style="margin-top:0">Ver o diagnóstico completo — R$ 47</a>'+
         '</div>'+
 
         '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
@@ -1916,10 +1919,10 @@
             '<p class="rp forte" style="margin-bottom:20px">'+esc(reacende)+'</p>'+
             '<h3 class="rh3">'+esc(tituloSol)+'</h3>'+
             '<p class="rp">'+esc(L.texto)+'</p>'+tc+stackOferta()+bonusKit()+
-            '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+            '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo — R$ 47</a>'+
             C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>'
           : '<div class="rsec" style="margin-top:34px">'+tc+stackOferta()+bonusKit()+
-            '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo</a>'+
+            '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero o diagnóstico completo — R$ 47</a>'+
             C.PAGA+'<div class="rmicro">'+C.MICRO+'</div></div>')+
 
         '<div class="rsec"><div class="rkk">Quem já fez</div>'+
@@ -1983,7 +1986,7 @@
                 '<p>Você já sabe que o problema existe. A decisão agora é uma só: continuar estudando no escuro, ou descobrir hoje exatamente o que corrigir antes da próxima prova.</p>'
               : '<h3>Esse foi o raio-x de '+CONTENT.length+' questões.<br>A prova tem 80.</h3>'+
                 '<p>A única decisão que importa é em quais matérias as suas horas de estudo vão cair. O diagnóstico completo devolve o número de cada uma.</p>'))+
-          '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo</a>'+
+          '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero meu diagnóstico completo — R$ 47</a>'+
           C.PAGA+'<div class="rmicro">Com o Guia da FGV e o Kit Reta Final juntos, para quem entrar hoje, '+hojeExtenso()+'<br>'+C.MICRO_FIM+'</div>'+
           '<div class="selo">'+
             '<svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.5l6 2.4v4.2c0 3.6-2.5 6.3-6 8.4-3.5-2.1-6-4.8-6-8.4V3.9L9 1.5z" fill="none" stroke="#7FB99A" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 9l2 2 3.6-3.8" stroke="#7FB99A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>'+
