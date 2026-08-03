@@ -218,6 +218,16 @@
      para comparar com o do colega. */
   .lockbox .val{color:var(--ink);white-space:nowrap;font-weight:600;font-size:13.5px;text-align:right}
   .lockbox .val.trava{display:inline-block;width:88px;height:10px;border-radius:5px;background:var(--muted2);opacity:.3;font-size:0}
+  /* Os NOMES das matérias em que a pessoa cedeu. Bloco próprio, de largura inteira,
+     porque .val é nowrap e uma lista de matérias estoura a linha. É o único item do
+     lockbox que ganhou destaque visual: é ele que transforma "3 de 6" em um problema
+     com nome, e é nome que a pessoa carrega para fora da página. */
+  .lockbox .named{padding:12px 0 4px;border-bottom:1px solid var(--line)}
+  .lockbox .named .lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;
+                       text-transform:uppercase;color:var(--muted2);margin-bottom:9px}
+  .lockbox .named .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .lockbox .named .chips b{font-weight:600;font-size:13.5px;padding:5px 11px;border-radius:999px;
+                           background:rgba(199,122,43,.12);border:1px solid rgba(199,122,43,.34);color:var(--ocre2)}
   .lockbox .cta{font-size:12px;color:var(--muted);padding:0 20px 14px}
   /* ===== Resultado v3 (02/08/2026) · layout de página de vendas =====
      Vem do handoff de design "Pagina de Venda - Resultado". Regra do ritmo: a página
@@ -862,6 +872,24 @@
     }catch(e){}
   }
 
+  // Registra que a pessoa atravessou a PONTE, isto é, pediu para ver a oferta.
+  // Aqui não há navegação para fora (é troca de tela na mesma página), então um
+  // fetch normal basta; sendBeacon fica como caminho principal só por simetria com
+  // marcarClique e porque é mais barato para o navegador. Falhar não pode afetar
+  // nada: a troca de tela acontece independentemente do resultado.
+  function marcarPasso(passo){
+    if(!LEAD_ID) return;
+    try{
+      var corpo=JSON.stringify({ lead_id:LEAD_ID, passo:passo });
+      if(navigator.sendBeacon){
+        navigator.sendBeacon(CLIQUE_URL, new Blob([corpo], {type:'text/plain;charset=UTF-8'}));
+      } else {
+        fetch(CLIQUE_URL, {method:'POST', headers:{'Content-Type':'text/plain'},
+                           body:corpo, keepalive:true}).catch(function(){});
+      }
+    }catch(e){}
+  }
+
   // ===== EIXO DE PRESSÃO =====
   // Refeito em 02/08/2026. A versão anterior era 70% relógio + 30% autorrelato, e o 100
   // continuava fácil por dois motivos: o autorrelato tem uma alternativa obviamente
@@ -1408,17 +1436,34 @@
   // como barra opaca, sem número por baixo. Valor fixo que parece calculado destrói a
   // credibilidade no primeiro print comparado entre duas pessoas.
   function lockbox(){
-    // 02/08: o NOME das matérias erradas saiu da linha legível e virou barra opaca.
-    // Dizer "você errou Civil e Ética" é entregar metade do diagnóstico de graça, e era
-    // exatamente o que o R$47 vende. No lugar entra a CONTAGEM: prova que o teste mediu
-    // alguma coisa, sem dizer o quê, e cria mais curiosidade do que o nome criava,
-    // porque agora a pergunta é "quais três?".
+    // 02/08: o NOME das matérias erradas saiu da linha legível e virou barra opaca, com
+    // o argumento de que dizer "você errou Civil e Ética" entregava metade do diagnóstico
+    // de graça e criaria mais curiosidade ("quais três?").
+    //
+    // 03/08: DEVOLVIDO. O que a aposta anterior custou está medido: 63 leads e 3
+    // checkouts iniciados (4,8%), com 12 pessoas entre as que foram pior e nenhum clique
+    // vindo delas. Três razões:
+    //   1. Curiosidade não é ruminação. "3 de 6" é uma abstração, e ninguém rumina uma
+    //      abstração no ônibus. Nome tem cara e endereço; é o que a pessoa leva embora.
+    //   2. O contrato. O anúncio promete diagnóstico; ela paga com 7 questões e o e-mail
+    //      e recebia um diagnóstico rasurado. Este público é 67% de gente que já reprovou
+    //      e desconfia por experiência própria -- é quem pune isso mais rápido.
+    //   3. O R$47 não é "os nomes". É porcentagem por matéria, matéria vs. relógio, o
+    //      ponto das 24 em que o rendimento cai e por onde começar. Tudo isso continua
+    //      trancado logo abaixo. O nome era a isca, não o produto.
     var cederam=[]; CONTENT.forEach(function(qq,i){
       if((S.estourou[i]||S.ans[i]!==qq.c) && cederam.indexOf(qq.mat)<0) cederam.push(qq.mat);
     });
     function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
     function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
+    // Os nomes, de largura inteira. Rótulo na segunda pessoa e no passado: é o que ela
+    // acabou de fazer, não uma etiqueta sobre quem ela é.
+    function nomes(lista){
+      return '<div class="named"><div class="lab">Onde você cedeu</div><div class="chips">'+
+        lista.map(function(m){ return '<b>'+esc(m)+'</b>'; }).join('')+'</div></div>';
+    }
     var linhas = real('Matérias do núcleo em que você cedeu', cederam.length? cederam.length+' de 6' : 'nenhuma');
+    if(cederam.length) linhas += nomes(cederam);
     // A média já sai só das respondidas (tempoMedio ignora estouro). Quando houve
     // estouro, o rótulo precisa dizer isso, senão a página elogia o ritmo na mesma
     // tela em que o relógio derrubou a pessoa.
@@ -1426,16 +1471,18 @@
     linhas += real(estq? 'Seu tempo médio nas '+(CONTENT.length-estq)+' que você respondeu' : 'Seu tempo médio por questão',
       (tempoMedio()!=null? tempoMedio()+'s' : 'sem registro'));
     linhas +=
-      // Só faz sentido perguntar "quais são" se houve alguma. Para quem gabaritou essa
-      // linha ficaria contradizendo o "nenhuma" que ela acabou de ler duas linhas acima.
-      (cederam.length? trava('Quais delas são, com nome') : '')+
+      // "Quais delas são, com nome" saiu daqui em 03/08: os nomes agora estão legíveis
+      // logo acima. Deixar a linha trancada seria cobrar por uma coisa já entregue.
       trava('Sua porcentagem em cada uma das 6')+
       trava('Se o que te derruba é a matéria ou a hora da prova, uma por uma')+
       trava('Em que ponto das 24 questões o seu rendimento cai')+
       trava('Por onde começar a estudar amanhã');
     return '<div class="lockbox">'+
       '<div class="inner" style="padding-top:14px">'+linhas+'</div>'+
-      '<div class="cta">O que está legível saiu das suas '+CONTENT.length+' respostas. O resto depende das 24, e sai na hora, com o seu nome.</div>'+
+      // "com o seu nome" virou "em relatório com o seu nome" em 03/08: com os nomes das
+      // matérias agora legíveis logo acima, a frase antiga passou a ler como se o nome
+      // em questão fosse o das matérias, e não o dela no relatório.
+      '<div class="cta">O que está legível saiu das suas '+CONTENT.length+' respostas. O resto depende das 24, e sai na hora, em relatório com o seu nome.</div>'+
     '</div>';
   }
 
@@ -1818,6 +1865,9 @@
     var vs=document.getElementById('versol');
     if(vs) vs.onclick=function(e){
       e.preventDefault();
+      // Marca o degrau ANTES de trocar de tela: a chamada é disparada e esquecida,
+      // e render() derruba o nó em que este handler está pendurado.
+      marcarPasso('oferta');
       S.screen='solucao'; render(); window.scrollTo(0,0);
     };
   }
