@@ -449,6 +449,22 @@
   // falhar; nesse caso a página funciona igual, só sem rastreio.
   var LEAD_ID = null;
 
+  // Eventos que aconteceram ANTES de o id chegar da rede. Até 03/08/2026 eles eram
+  // descartados em silêncio (`if(!LEAD_ID) return`), sob a premissa, escrita no código,
+  // de que "quem usa o id é o clique no botão de comprar, que só acontece depois de ler
+  // a página". A premissa é falsa, e o abandono de carrinho da Hotmart provou: Gutemberg
+  // (lead #34) abriu o checkout 17 SEGUNDOS depois de virar lead, e Delzuita (#15) em
+  // ~2 minutos. Nenhum dos dois tem clique no banco. Quem decide rápido é justamente o
+  // comprador mais quente, e era exatamente ele que sumia da medição.
+  // Agora o evento espera na fila e é drenado quando o id chega.
+  var PENDENTES = [];
+  function enfileirar(fn){ if(PENDENTES.length<20) PENDENTES.push(fn); }
+  function drenarPendentes(){
+    if(!LEAD_ID) return;
+    var fila=PENDENTES; PENDENTES=[];
+    for(var i=0;i<fila.length;i++){ try{ fila[i](); }catch(e){} }
+  }
+
   // 7 questões de conteúdo, TODAS difíceis, uma por matéria do núcleo duro
   // (Ética entra duas vezes porque é a maior fatia da prova) + 3 cenários
   // psicotécnicos.
@@ -890,7 +906,7 @@
     // Guarda o id devolvido. Chega depois do render do resultado, e tudo bem: quem
     // usa o id é o clique no botão de comprar, que só acontece depois de ler a página.
     function guardarId(resp){
-      return resp.json().then(function(j){ if(j && j.id) LEAD_ID=j.id; return true; })
+      return resp.json().then(function(j){ if(j && j.id){ LEAD_ID=j.id; drenarPendentes(); } return true; })
                         .catch(function(){ return true; });
     }
 
@@ -931,7 +947,7 @@
   // quando a aba sai para o checkout da Hotmart. Falhar aqui não pode, em hipótese
   // nenhuma, atrapalhar a ida para o checkout, então tudo vai dentro de try.
   function marcarClique(botao, oferta){
-    if(!LEAD_ID) return;
+    if(!LEAD_ID){ return enfileirar(function(){ marcarClique(botao, oferta); }); }
     try{
       var corpo=JSON.stringify({ lead_id:LEAD_ID, botao:botao, oferta:String(oferta) });
       if(navigator.sendBeacon){
@@ -949,7 +965,7 @@
   // marcarClique e porque é mais barato para o navegador. Falhar não pode afetar
   // nada: a troca de tela acontece independentemente do resultado.
   function marcarPasso(passo){
-    if(!LEAD_ID) return;
+    if(!LEAD_ID){ return enfileirar(function(){ marcarPasso(passo); }); }
     try{
       var corpo=JSON.stringify({ lead_id:LEAD_ID, passo:passo });
       if(navigator.sendBeacon){
