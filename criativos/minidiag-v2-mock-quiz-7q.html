@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  Criativo de anúncio · mini-diagnóstico · "mock do quiz" · 7 questões
+  --------------------------------------------------------------------
+  Substitui assets/anuncios/minidiag-v2.png, que trazia "QUESTÃO 1 DE 5" e
+  "5 perguntas" na arte depois que o diagnóstico passou a ter 7. A arte antiga
+  existia só como PNG, sem fonte. Esta fica versionada.
+
+  O cartão imita a tela real da questão: matéria, contador, enunciado e duas
+  alternativas, uma delas marcada. Se a tela do diagnóstico mudar, esta arte
+  precisa mudar junto — é o mesmo erro que gerou a refação.
+
+  Render: ver criativos/render.sh (Chrome headless, 1080x1080).
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45;
+    --muted:#8A8378; --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E;
+  }
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative; width:1080px; height:1080px; overflow:hidden;
+       background:var(--paper); font-family:'Hanken Grotesk',system-ui,sans-serif}
+
+  /* ---------- assinatura (idêntica à do relógio) ---------- */
+  .marca{position:absolute; left:80px; top:82px; display:flex; align-items:center; gap:22px}
+  .selo{width:66px; height:66px; border-radius:16px; background:var(--navy); position:relative}
+  .selo .anel{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+              width:30px; height:30px; border-radius:50%; border:3px solid var(--paper)}
+  .selo .miolo{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+               width:13px; height:13px; border-radius:50%; background:var(--ocre)}
+  .selo i{position:absolute; background:var(--paper); border-radius:1px}
+  .selo .t-n{left:50%; top:9px;   margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-s{left:50%; bottom:9px;margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-l{top:50%;  left:9px;  margin-top:-1.5px;  height:3px; width:9px}
+  .selo .t-o{top:50%;  right:9px; margin-top:-1.5px;  height:3px; width:9px}
+  .nome{font-family:'Spectral',Georgia,serif; font-weight:700; font-size:46px;
+        color:var(--ink); line-height:1; letter-spacing:-.01em}
+  .sub{font-family:'Space Mono',monospace; font-size:19px; color:var(--muted);
+       letter-spacing:.19em; margin-top:9px}
+
+  /* ---------- manchete ---------- */
+  .h{position:absolute; left:80px; top:236px; font-family:'Spectral',Georgia,serif;
+     font-weight:700; font-size:92px; line-height:1.13; color:var(--ink);
+     letter-spacing:-.02em}
+
+  /* ---------- cartão da questão ---------- */
+  /* Altura fechada na soma do conteúdo (cabeçalho + enunciado de 2 linhas +
+     2 alternativas + respiros). Mexer em qualquer um dos espaços abaixo exige
+     refazer esta conta, senão a última alternativa vaza pela borda. */
+  .cartao{position:absolute; left:80px; top:474px; width:920px; height:364px;
+          border-radius:24px; background:var(--card); border:2px solid var(--line);
+          box-sizing:border-box; padding:30px 34px}
+  .cab{display:flex; align-items:center; justify-content:space-between;
+       font-family:'Space Mono',monospace; font-size:24px; letter-spacing:.09em}
+  .cab .materia{color:var(--ocre); font-weight:700}
+  .cab .qual{color:var(--muted)}
+  .cab .rel{display:flex; align-items:center; gap:12px; color:var(--ink); font-weight:700}
+  .cab .bolinha{width:15px; height:15px; border-radius:50%; background:var(--ocre)}
+  .enun{margin-top:22px; font-size:35px; line-height:1.32; color:var(--ink); font-weight:500}
+  .alt{margin-top:16px; height:62px; border-radius:14px; display:flex; align-items:center;
+       padding:0 26px; font-size:31px; color:var(--ink); box-sizing:border-box}
+  .alt .letra{font-weight:700; margin-right:16px}
+  .alt.marcada{background:#FAF0E3; border:2px solid var(--ocre)}
+  .alt.solta{background:#FFFFFF; border:2px solid var(--line); color:var(--muted2)}
+
+  /* ---------- pé ---------- */
+  .linha{position:absolute; left:80px; top:864px; font-size:35px; color:var(--muted2)}
+  .linha b{font-weight:600; color:var(--ink)}
+  .cta{position:absolute; left:80px; top:930px; height:80px; padding:0 34px;
+       border-radius:15px; background:var(--navy); display:flex; align-items:center;
+       gap:26px; font-family:'Space Mono',monospace; font-weight:700; font-size:29px;
+       color:var(--paper); letter-spacing:.05em}
+  .seta{font-size:33px; line-height:1}
+</style></head>
+<body>
+<div class="art">
+
+  <div class="marca">
+    <div class="selo">
+      <i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div>
+    </div>
+    <div>
+      <div class="nome">Só o que Cai</div>
+      <div class="sub">1ª FASE · OAB</div>
+    </div>
+  </div>
+
+  <div class="h">Onde você perde<br>ponto na 1ª fase?</div>
+
+  <div class="cartao">
+    <div class="cab">
+      <div><span class="materia">ÉTICA</span> <span class="qual">· QUESTÃO 1 DE 7</span></div>
+      <div class="rel">12s <span class="bolinha"></span></div>
+    </div>
+    <div class="enun">Sobre o sigilo profissional do<br>advogado, é correto afirmar que:</div>
+    <div class="alt marcada"><span class="letra">B)</span> É direito e dever do advogado…</div>
+    <div class="alt solta"><span class="letra">C)</span> Não se aplica a fatos anteriores…</div>
+  </div>
+
+  <div class="linha"><b>7 perguntas</b>, de graça, resultado na hora.</div>
+
+  <div class="cta">DESCUBRA ABAIXO <span class="seta">↓</span></div>
+
+</div>
+</body></html>

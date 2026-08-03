@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  Criativo de anúncio · mini-diagnóstico · "relógio" · 7 questões
+  ---------------------------------------------------------------
+  Substitui assets/anuncios/minidiag-v4.png, que dizia "5 questões" na arte
+  depois que o diagnóstico passou a ter 7. A arte antiga foi entregue só como
+  PNG, sem fonte — por isso a correção virou refação. Esta fica versionada.
+
+  Render: ver criativos/render.sh (Chrome headless, 1080x1080).
+  Paleta e tipografia espelham mini-diagnostico.html.
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45;
+    --muted:#8A8378; --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E;
+  }
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{
+    position:relative; width:1080px; height:1080px; overflow:hidden;
+    background:var(--paper); font-family:'Hanken Grotesk',system-ui,sans-serif;
+  }
+
+  /* ---------- assinatura ---------- */
+  .marca{position:absolute; left:80px; top:82px; display:flex; align-items:center; gap:22px}
+  .selo{width:66px; height:66px; border-radius:16px; background:var(--navy); position:relative}
+  .selo .anel{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:30px; height:30px; border-radius:50%; border:3px solid var(--paper);
+  }
+  .selo .miolo{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:13px; height:13px; border-radius:50%; background:var(--ocre);
+  }
+  .selo i{position:absolute; background:var(--paper); border-radius:1px}
+  .selo .t-n{left:50%; top:9px;  margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-s{left:50%; bottom:9px;margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-l{top:50%;  left:9px;  margin-top:-1.5px;  height:3px; width:9px}
+  .selo .t-o{top:50%;  right:9px; margin-top:-1.5px;  height:3px; width:9px}
+  .nome{font-family:'Spectral',Georgia,serif; font-weight:700; font-size:46px;
+        color:var(--ink); line-height:1; letter-spacing:-.01em}
+  .sub{font-family:'Space Mono',monospace; font-size:19px; color:var(--muted);
+       letter-spacing:.19em; margin-top:9px}
+
+  /* ---------- manchete ---------- */
+  .h{position:absolute; left:80px; top:250px; font-family:'Spectral',Georgia,serif;
+     font-weight:700; font-size:96px; line-height:1.14; color:var(--ink);
+     letter-spacing:-.02em}
+  .h em{font-style:italic; color:var(--ocre); display:block}
+
+  /* ---------- relógio ---------- */
+  .relogio{position:absolute; left:50%; top:512px; transform:translateX(-50%);
+           width:262px; height:262px; border-radius:50%;
+           background:var(--card); border:11px solid var(--navy)}
+  .relogio .tick{position:absolute; left:50%; top:9px; width:4px; height:19px;
+                 margin-left:-2px; background:#BDB5A6; transform-origin:2px 122px;
+                 border-radius:2px}
+  .relogio .tick.forte{background:#8D8577; height:24px}
+  .ponteiro{position:absolute; left:50%; top:50%; background:var(--ocre);
+            border-radius:6px; transform-origin:50% 100%}
+  .p-hora{width:11px; height:62px; margin-left:-5.5px; margin-top:-62px;
+          transform:rotate(58deg)}
+  .p-min{width:9px; height:86px; margin-left:-4.5px; margin-top:-86px;
+         transform:rotate(-24deg)}
+  .pino{position:absolute; left:50%; top:50%; width:24px; height:24px;
+        margin:-12px 0 0 -12px; border-radius:50%; background:var(--ocre)}
+
+  /* ---------- pé ---------- */
+  .linhas{position:absolute; left:80px; top:800px; font-size:35px;
+          line-height:1.42; color:var(--muted2); font-weight:400}
+  .linhas b{font-weight:600; color:var(--ink)}
+  .cta{position:absolute; left:80px; top:930px; height:80px; padding:0 34px;
+       border-radius:15px; background:var(--navy); display:flex; align-items:center;
+       gap:26px; font-family:'Space Mono',monospace; font-weight:700; font-size:29px;
+       color:var(--paper); letter-spacing:.05em}
+  .seta{font-size:33px; line-height:1}
+</style></head>
+<body>
+<div class="art">
+
+  <div class="marca">
+    <div class="selo">
+      <i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div>
+    </div>
+    <div>
+      <div class="nome">Só o que Cai</div>
+      <div class="sub">1ª FASE · OAB</div>
+    </div>
+  </div>
+
+  <div class="h">7 questões.<em>Relógio correndo.</em></div>
+
+  <div class="relogio" id="rel">
+    <div class="ponteiro p-hora"></div>
+    <div class="ponteiro p-min"></div>
+    <div class="pino"></div>
+  </div>
+
+  <div class="linhas">
+    O tempo de cada resposta também fala.<br>
+    Responda <b>7 questões grátis</b> e veja o seu.
+  </div>
+
+  <div class="cta">DESCUBRA ABAIXO <span class="seta">↓</span></div>
+
+</div>
+<script>
+  // Marcações do mostrador: 12 traços, os das horas cheias mais fortes.
+  var rel = document.getElementById('rel');
+  for (var i = 0; i < 12; i++) {
+    var t = document.createElement('div');
+    t.className = 'tick' + (i % 3 === 0 ? ' forte' : '');
+    t.style.transform = 'rotate(' + (i * 30) + 'deg)';
+    rel.appendChild(t);
+  }
+</script>
+</body></html>
