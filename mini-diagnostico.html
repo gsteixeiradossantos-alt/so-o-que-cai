@@ -418,7 +418,9 @@
 <script>
   // ===== CONFIGURAR =====
   var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I?checkoutMode=10"; // diagnóstico completo R$47 + Order Bump Kit Reta Final
-  var CHECKOUT_COMPLETO = "https://pay.hotmart.com/O106944368L?checkoutMode=10"; // Plano Completo R$127 (inclui o diagnóstico)
+  // O checkout do Plano Completo (R$127) saiu daqui em 03/08: esta página vende UMA
+  // coisa, o R$47. O R$127 virou upsell pós-compra na Hotmart, que é onde o compromisso
+  // está no pico. Se um dia precisar voltar, o link está no histórico do git.
   // Para onde enviar os leads (nome/e-mail/WhatsApp). Cole aqui um endpoint de formulário
   // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
   // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
@@ -1370,7 +1372,10 @@
       titulo = forte? 'Medir o que ainda não foi medido'
         : sabe? 'Parar de estudar de novo o que você já tem'
         : 'Saber o nome dessa matéria antes de abrir o próximo caderno';
-      texto = DIAG + (forte? ' E o Plano Completo cobre justamente o pedaço que as suas provas apontaram: as fichas das 17 disciplinas, dois simulados de 80 questões para ver onde o rendimento cai, e o cronograma dia a dia até a prova, por R$127.' : '');
+      // A frase que vendia o Plano Completo (R$127) aqui dentro saiu em 03/08, junto com
+      // o link no fim da página: esta tela vende UMA coisa, o R$47. O R$127 passou a ser
+      // upsell pós-compra na Hotmart.
+      texto = DIAG;
     } else if(jaReprovou()){
       ponto = forte
         ? 'Você acertou tudo aqui e mesmo assim prestou e não passou. Entre o que você sabe e a nota que saiu tem alguma coisa se perdendo, e não é a matéria do núcleo. Enquanto ela não tiver nome, a segunda tentativa é a primeira de novo.'
@@ -1711,7 +1716,7 @@
     return {
       r:r, q:q, L:L, h1:h1,
       nome: esc((S.nome.split(' ')[0])||'você'),
-      buyUrl: CHECKOUT_URL+fill, buyUrlC: CHECKOUT_COMPLETO+fill,
+      buyUrl: CHECKOUT_URL+fill,
       forte: !!q.forte,
       erroN: CONTENT.length-r.c-r.estourou,
       // Mesma régua da manchete e do 'sabe'. A tabela não pode prometer "descobrir a
@@ -1744,7 +1749,9 @@
   //    fixa contava duas vezes. Com 2 checkouts no funil, um evento a mais é 50% de erro.
   var icDisparado=false;
   function ligarCompra(){
-    ['buy0','buy','buy2','buy3'].forEach(function(id){
+    // 'buy2' saiu da lista em 03/08 junto com o link do Plano Completo. Sobraram os três
+    // que apontam para o mesmo checkout de R$47: meio da oferta, bloco final e barra fixa.
+    ['buy0','buy','buy3'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -1986,7 +1993,11 @@
             // agora. A garantia já era isso; só não estava dita assim.
             '<span>Faça o diagnóstico inteiro primeiro. <b>Só depois você decide se valeu:</b> são 7 dias para pedir de volta, sem perguntas.</span>'+
           '</div>'+
-          '<a class="upsell" href="'+C.buyUrlC+'" id="buy2" data-v="127">Quer o pacote inteiro de uma vez? Plano Completo por R$ 127</a>'+
+          // O link do Plano Completo (R$127) saiu daqui em 03/08. Ele transformava uma
+          // DECISÃO ("compro ou não") numa ESCOLHA ("qual dos dois"), e escolha trava.
+          // Também ancorava o R$47 contra o R$127 antes do desejo estar formado.
+          // O R$127 agora é upsell pós-compra na Hotmart, que é o momento em que o
+          // compromisso está no pico -- e é lá que ele tem que aparecer, uma vez só.
         '</div>'+
 
         '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
