@@ -155,6 +155,17 @@
   .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.12s}
   .opt:hover{border-color:var(--ocre2)}
   .opt.sel{border-color:var(--ocre);background:#FBF1E6}
+  /* Confirmar da Parte 1 (03/08/2026). Antes o clique na alternativa já empurrava para a
+     próxima questão; agora dá para trocar, e alguém precisa fechar a questão. Fica sempre
+     visível, desabilitado enquanto nada está marcado, para a pessoa entender a regra sem
+     ler instrução: o botão está ali, apagado, dizendo o que falta. */
+  .conf{display:block;width:100%;margin-top:14px;background:var(--navy);color:#fff;border:none;
+        border-radius:12px;padding:14px 20px;font:inherit;font-size:16px;font-weight:600;
+        cursor:pointer;transition:.15s}
+  .conf:hover:not([disabled]){background:#0d161d}
+  .conf[disabled]{background:transparent;color:var(--muted2);border:1.5px dashed var(--line);
+                  cursor:default;font-weight:500}
+  .podetrocar{margin-top:9px;text-align:center;font-size:12.5px;color:var(--muted2)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:14px 22px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s}
   .btn:hover{background:#0d161d}
   .btn[disabled]{opacity:.4;cursor:not-allowed}
@@ -487,7 +498,19 @@
   // justamente o que este teste quer medir.
   var LIMITE = 40;
 
+  // sel/selT/ansPrim/trocas entraram em 03/08/2026, quando a Parte 1 passou a permitir
+  // TROCAR a resposta antes de confirmar. Até então o primeiro clique travava a questão,
+  // e por isso a promessa da entrada ("você sabia, travou e mudou a resposta certa") era
+  // a única coisa que a página prometia e o instrumento não tinha como ver.
+  //   sel[i]     seleção atual (null enquanto não marcou nada)
+  //   selT[i]    instante da seleção atual, em segundos de prova
+  //   ansPrim[i] a PRIMEIRA alternativa marcada, que é o palpite antes de pensar demais
+  //   trocas[i]  quantas vezes trocou depois da primeira
+  // ans[i] continua sendo a resposta VALENDO e times[i] o instante da DECISÃO (a última
+  // seleção, não o clique em confirmar): assim tudo que já lia esses dois continua lendo
+  // a mesma coisa.
   var S = { screen:'intro', ci:0, ans:{}, times:{}, estourou:{}, fora:{}, bi:0, beh:{},
+            sel:{}, selT:{}, ansPrim:{}, trocas:{},
             nome:'', email:'', tel:'', momento:'' };
 
   // Em que ponto da caminhada a pessoa está. Serve para saber quem o anúncio traz
@@ -563,7 +586,13 @@
         '<div class="rule">'+esc(Q.mat)+'</div>'+
       '</div>'+
       '<div class="qbox"><div class="qtext">'+esc(Q.q)+'</div>'+
-      Q.o.map(function(op,j){ return '<button class="opt" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
+      Q.o.map(function(op,j){ return '<button class="opt'+(S.sel[i]===j?' sel':'')+'" data-j="'+j+'">'+esc(op)+'</button>'; }).join('')+
+      // O confirmar é o preço de poder trocar de ideia. Fica sempre na tela, e não só
+      // depois da primeira marcação, para a pessoa saber desde o começo que o clique na
+      // alternativa não a empurra para a próxima questão.
+      '<button class="conf" id="conf"'+(S.sel[i]==null?' disabled':'')+'>'+
+        (S.sel[i]==null? 'Marque uma alternativa' : 'Confirmar e seguir')+'</button>'+
+      '<div class="podetrocar">Dá para trocar enquanto o tempo corre.</div>'+
       '</div>';
     // NÃO existe "Voltar" na Parte 1. Com questão cronometrada, voltar seria a brecha:
     // deixa estourar, volta e responde com 40 segundos novos.
@@ -607,12 +636,25 @@
       render(); window.scrollTo(0,0);
     }
 
+    // O tempo acabou. Duas situações, e a diferença entre elas é o que preserva a
+    // semântica antiga de estourou[]:
+    //   - nada marcado  -> não respondeu. Igualzinho ao que era antes de 03/08.
+    //   - algo marcado  -> respondeu e não deu tempo de confirmar. Na prova de verdade
+    //     a marcação vale, então aqui vale também: estourou[i] fica FALSO e o instante
+    //     da decisão é o da seleção, não o limite. Contar 40s puniria no eixo de pressão
+    //     quem decidiu em 5 e só não apertou o botão.
     function estourar(){
       if(encerrada) return;
       fechar();
-      S.estourou[i]=true;
-      S.times[i]=LIMITE;
-      S.ans[i]=null;               // não respondeu: não é a mesma coisa que errar
+      if(S.sel[i]==null){
+        S.estourou[i]=true;
+        S.times[i]=LIMITE;
+        S.ans[i]=null;             // não respondeu: não é a mesma coisa que errar
+      } else {
+        S.estourou[i]=false;
+        S.ans[i]=S.sel[i];
+        S.times[i]=S.selT[i];
+      }
       avancar();
     }
 
@@ -624,16 +666,38 @@
     window._clk=setInterval(pintar,200);
     pintar();
 
-    Array.prototype.forEach.call(app.querySelectorAll('.opt'), function(b){
+    // Marcar NÃO encerra mais a questão: o relógio segue e a alternativa pode trocar.
+    // É o que permite ver "sabia, travou e mudou a resposta certa", que a página promete
+    // na entrada desde sempre e que o instrumento não media.
+    var opts = app.querySelectorAll('.opt');
+    var conf = document.getElementById('conf');
+    Array.prototype.forEach.call(opts, function(b){
       b.onclick = function(){
         if(encerrada) return;
-        fechar();
+        var j = parseInt(b.getAttribute('data-j'),10);
+        if(S.sel[i]===j) return;                 // reclicar na mesma não é troca
+        if(S.sel[i]==null){
+          S.ansPrim[i]=j;                        // o palpite antes de pensar demais
+          S.trocas[i]=0;
+        } else {
+          S.trocas[i]=(S.trocas[i]||0)+1;
+        }
+        S.sel[i]=j;
+        S.selT[i]=Math.max(1, Math.min(LIMITE, Math.round(consumido())));
+        Array.prototype.forEach.call(opts, function(o){ o.classList.remove('sel'); });
         b.classList.add('sel');
-        S.ans[i]=parseInt(b.getAttribute('data-j'),10);
-        S.times[i]=Math.max(1, Math.min(LIMITE, Math.round(consumido())));
-        setTimeout(avancar, 160);
+        if(conf){ conf.disabled=false; conf.textContent='Confirmar e seguir'; }
       };
     });
+
+    if(conf) conf.onclick = function(){
+      if(encerrada || S.sel[i]==null) return;
+      fechar();
+      S.estourou[i]=false;
+      S.ans[i]=S.sel[i];
+      S.times[i]=S.selT[i];                      // o instante da DECISÃO, não o do botão
+      setTimeout(avancar, 160);
+    };
   }
 
   function behavior(){
@@ -807,11 +871,16 @@
     // linha cega: sem placar, sem eixos, sem matéria errada, sem origem.
     // utm_source, utm_medium e fbclid entraram no mesmo dia. Sem fbclid não existe
     // caminho para ligar a linha do banco ao criativo que trouxe a pessoa.
+    var TR = trocasResumo();
     var payload = {
       nome:S.nome, telefone:S.tel, email:S.email, momento:S.momento,
       acertos:R.c, total_questoes:CONTENT.length,
       eixo_conteudo:R.X, eixo_pressao:R.Y, perfil:Q.lab,
       errou_em:errouEm, tempo_medio:tmed,
+      // Trocas de resposta. Vão para o banco antes de virarem copy: primeiro é preciso
+      // saber se o comportamento existe nesta base e com que frequência. Escrever a
+      // página em cima de uma coisa que acontece em 3% dos casos seria escrever no vazio.
+      trocas:TR.trocas, trocou_certa_errada:TR.perdeu, trocou_errada_certa:TR.salvou,
       utm_campaign:q.get('utm_campaign'), utm_content:q.get('utm_content'),
       utm_source:q.get('utm_source'), utm_medium:q.get('utm_medium'),
       fbclid:q.get('fbclid'),
@@ -970,6 +1039,27 @@
   }
   function segundosFora(){
     var s=0; CONTENT.forEach(function(_,i){ if(S.fora[i]) s+=S.fora[i]; }); return Math.round(s);
+  }
+
+  // A conta que só existe desde 03/08, quando a Parte 1 passou a deixar trocar de
+  // resposta. Compara o PRIMEIRO palpite com o que ficou valendo:
+  //   perdeu   -> tinha a certa e trocou para errada. É a frase que o público descreve
+  //               com as próprias palavras ("eu sabia, mudei, e era a primeira").
+  //   salvou   -> estava errada e corrigiu a tempo. Entra porque sem ela o número vira
+  //               acusação: trocar não é defeito, trocar CERTA por ERRADA é que é.
+  //   trocas   -> total de trocas, para saber se o comportamento sequer existe nesta base.
+  // Questão sem seleção nenhuma (estourou de verdade) fica fora das três.
+  function trocasResumo(){
+    var r={ trocas:0, perdeu:0, salvou:0 };
+    CONTENT.forEach(function(Q,i){
+      if(S.ansPrim[i]==null) return;
+      r.trocas += (S.trocas[i]||0);
+      if(!S.trocas[i]) return;                      // marcou e manteve: não trocou nada
+      var acertouAntes = S.ansPrim[i]===Q.c, acertouDepois = S.ans[i]===Q.c;
+      if(acertouAntes && !acertouDepois) r.perdeu++;
+      if(!acertouAntes && acertouDepois) r.salvou++;
+    });
+    return r;
   }
 
   function compute(){
@@ -1536,6 +1626,24 @@
     return {k:'Sob pressão', p:esc(frase)+fecho, cls:(pior.sc===0?'ochre':(pior.sc===1?'':'green'))};
   }
 
+  // A leitura das trocas. Só aparece quando a pessoa REALMENTE trocou certa por errada:
+  // é medição, não retórica, e uma linha que só sai quando é verdade não desgasta.
+  // Vem antes de tempo() na tela porque é o achado mais específico que a página tem --
+  // e porque é o único que a pessoa já suspeitava sozinha, sem conseguir provar.
+  // Segue a regra da tela: nomear sem dimensionar e sem prescrever. Quantas foram, sim;
+  // em quais matérias e o que fazer com isso, não -- isso é o que o diagnóstico vende.
+  function trocou(){
+    var t=trocasResumo();
+    if(!t.perdeu) return null;
+    var uma=t.perdeu===1;
+    var p='Você tinha marcado a alternativa certa em '+(uma?'uma questão':t.perdeu+' questões')+
+          ' e trocou por outra antes de confirmar.';
+    if(t.salvou) p+=' Em '+(t.salvou===1?'outra':t.salvou+' outras')+' a troca te salvou: '+
+                    'estava errada e você corrigiu. Trocar não é o problema.';
+    p+=' O diagnóstico mostra em quais matérias isso acontece, e se acontece cedo ou na hora que o tempo aperta.';
+    return {k:'Ao trocar de resposta', p:esc(p), cls:'ochre'};
+  }
+
   function tempo(){
     // v3: devolve OBJETO. Sai UM achado, o mais forte, por prioridade: estouro, queda no
     // fim, oscilação, erro com convicção, ritmo. Reporta o fato e para. Não defende a
@@ -1561,7 +1669,10 @@
       lin='Seu ritmo oscilou muito de uma questão para outra: em umas você decidiu quase na hora, em outras quase no limite. Não é lentidão, é irregularidade.';
     } else if(rapErr){
       ruim=true;
-      lin='Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+' segundos, sem hesitar. Erro com convicção é o que mais passa despercebido.';
+      // "em 1 segundos" aparecia para quem respondia no primeiro segundo. Numa frase que
+      // acusa pressa, o erro de concordância entrega a página junto.
+      lin='Você errou a questão de <b>'+esc(CONTENT[rapErr.i].mat)+'</b> em '+rapErr.t+
+          (rapErr.t===1?' segundo':' segundos')+', sem hesitar. Erro com convicção é o que mais passa despercebido.';
     } else if(tm!=null && tm>=33){
       ruim=true; lin='Você decidiu no limite do relógio: '+tm+' segundos por questão, em média.';
     } else if(tm!=null && tm<10){
@@ -1787,7 +1898,7 @@
   function result(){
     var C=ctx(), r=C.r, q=C.q, L=C.L;
     var bx=barraConteudo(r), by=barraPressao(r);
-    var vt=tempo(), vp=pressao();
+    var vt=tempo(), vp=pressao(), vx=trocou();
 
     // A tela de resultado sai da casca estreita do quiz e ganha a largura da leitura.
     document.body.className='res';
@@ -1821,8 +1932,11 @@
           '<p class="rp">'+esc(q.p2)+'</p>'+
         '</div>'+
 
-        ((vt||vp)? '<div class="rsec"><div class="rkk">Leitura do teste</div>'+
+        ((vt||vp||vx)? '<div class="rsec"><div class="rkk">Leitura do teste</div>'+
           '<h3 class="rh3">O que o teste viu em você</h3><div class="viu">'+
+          // A troca vem primeiro: é o achado mais específico da tela e o único que a
+          // pessoa já suspeitava de si mesma sem nunca ter tido prova.
+          (vx? '<div class="it '+vx.cls+'"><div class="k">'+esc(vx.k)+'</div><p>'+vx.p+'</p></div>' : '')+
           (vt? '<div class="it '+vt.cls+'"><div class="k">'+esc(vt.k)+'</div><p>'+vt.p+'</p></div>' : '')+
           (vp? '<div class="it '+vp.cls+'"><div class="k">'+esc(vp.k)+'</div><p>'+vp.p+'</p></div>' : '')+
           '</div></div>' : '')+
