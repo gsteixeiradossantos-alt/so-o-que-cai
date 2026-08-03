@@ -622,9 +622,28 @@
   // ===========================================================================
 
   // Aplica o link do checkout em todos os botões e dispara o evento do Pixel ao clicar.
+  //
+  // A trava de uma-vez-por-sessão entrou em 03/08/2026. Até aqui, TODO clique em
+  // qualquer botão .js-buy disparava um InitiateCheckout — e a página tem vários,
+  // todos apontando para o mesmo checkout. Quem clicava no do meio, voltava e
+  // clicava no do fim contava duas, três vezes. No pixel isso apareceu como
+  // InitiateCheckout em paridade com PageView nos dias 29/07, 30/07 e 01/08, que é
+  // sinal de contagem, não de gente.
+  //
+  // Esta página ficou órfã quando o funil passou a ser o mini-diagnóstico: nada mais
+  // aponta para ela, e por isso o sintoma sumiu sozinho. A trava vai aqui mesmo
+  // assim, porque link antigo, print e favorito continuam existindo, e o dia em que
+  // alguém cair aqui a poluição volta sem avisar.
+  //
+  // É a mesma trava do mini-diagnostico.html, de propósito: se as duas páginas
+  // contarem checkout de jeitos diferentes, o número do funil deixa de significar
+  // uma coisa só.
+  var icDisparado = false;
   document.querySelectorAll('.js-buy').forEach(function(a){
     a.setAttribute('href', CHECKOUT_URL);
     a.addEventListener('click', function(){
+      if (icDisparado) return;
+      icDisparado = true;
       if (typeof fbq !== 'undefined') { fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); }
     });
   });
