@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ===== FACEBOOK PIXEL ===== -->
 <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -48,31 +48,45 @@
 </script>
 <!-- ===== fim Clarity ===== -->
 <style>
+  /* ===== TOKENS (handoff "Página de Vendas v2", 04/08/2026) =====
+     A paleta saiu do bege/ocre para navy/dourado/laranja, e a tipografia de
+     Spectral+Hanken+Space Mono para Source Serif 4 + Source Sans 3 + Cinzel.
+     Os NOMES das variáveis foram mantidos de propósito: aparecem em centenas de
+     regras, e renomear só para trocar valor seria risco sem ganho nenhum.
+       --navy   virou o navy principal do design (#14304A)
+       --ocre   virou o dourado escuro dos eyebrows em fundo claro (#B07B1E)
+       --ocre2  virou o laranja de ação (#E07B39)
+     Os tokens NOVOS (--navy2, --gold, --laranja2, --azul, --sec) são os que o
+     design introduziu e não tinham equivalente. */
   :root{
-    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
-    --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E; --ocre2:#C77A2B; --green:#3A7A5C;
+    --paper:#F7F4EE; --card:#FFFFFF; --ink:#14304A; --muted2:#5B6B78; --muted:#A39B8A;
+    --line:#E3DCCD; --navy:#14304A; --navy2:#0E2233; --gold:#F0B429;
+    --ocre:#B07B1E; --ocre2:#E07B39; --laranja2:#C9662A; --azul:#BFDCEE;
+    --green:#4E7A4E; --green2:#3D663D; --sec:#5B6B78;
     --red:#C0271A; --red2:#E8B4AE; --red3:#8E1A10;
   }
   *{box-sizing:border-box;margin:0}
-  body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--ocre)} a:hover{color:#8F6114}
+  ::selection{background:var(--gold);color:var(--navy)}
   .wrap{max-width:560px;margin:0 auto;padding:40px 22px 64px}
   .brand{display:flex;align-items:center;gap:10px;margin-bottom:28px}
   .logo{display:flex;align-items:center}
   .logo svg{display:block;border-radius:8px}
-  .word{font-family:'Spectral',serif;font-weight:600;font-size:21px}
-  .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
+  .word{font-family:'Source Serif 4',serif;font-weight:600;font-size:21px}
+  .tag{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-family:'Source Serif 4',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
   h1 em{font-style:italic;color:var(--ocre)}
   .lead{font-size:16px;color:var(--muted2);margin-bottom:8px}
-  .prog{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
-  .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2)}
+  .prog{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+  .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted2)}
   .clock i{width:7px;height:7px;border-radius:50%;background:var(--ocre);animation:pulse 1s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
   /* Cronômetro regressivo. Era um relógio crescente de 11px escondido na barra de
      progresso: sumia na tela. Agora é o elemento mais visível da questão, porque a
      pressão do relógio é metade do que este teste mede. */
   .timer{text-align:center;margin-bottom:16px}
-  .timer .num{font-family:'Space Mono',monospace;font-weight:700;font-size:40px;line-height:1;
+  .timer .num{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:40px;line-height:1;
     color:var(--red);font-variant-numeric:tabular-nums;display:inline-block;
     transition:transform .18s ease}
   .timer .bar{height:6px;border-radius:3px;background:var(--red2);overflow:hidden;margin-top:10px}
@@ -86,7 +100,7 @@
   @keyframes tictac{0%,100%{transform:scale(1.08)}50%{transform:scale(1.26)}}
   .timer.urgente .num{transform:scale(1.15);animation:tictac .9s infinite}
   .timer.urgente .bar i{background:var(--red3)}
-  .timer .rule{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.09em;
+  .timer .rule{font-family:'Source Sans 3',sans-serif;font-size:9.5px;letter-spacing:.09em;
     text-transform:uppercase;color:var(--muted);margin-top:8px}
   /* Progresso. Antes era uma linha cinza de 9,5px embaixo de um número vermelho de 40px:
      sumia. Só que saber que falta pouco é justamente o que segura quem cansa na quinta
@@ -98,7 +112,7 @@
   .confia{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:20px}
   .confia .autor{margin-top:0;background:none;border:none;padding:0;border-radius:0}
   .confia .dep{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted2);line-height:1.55}
-  .confia .dep .quem{display:block;margin-top:7px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .confia .dep .quem{display:block;margin-top:7px;font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .confia .gar{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted2);line-height:1.55}
   .confia .gar b{color:var(--green)}
   /* Tabela de custo, duas colunas. A esquerda é longa e cara, a direita é curta e barata:
@@ -109,17 +123,17 @@
   .custo .lin>div{padding:11px 13px;font-size:13.5px;line-height:1.42}
   .custo .lin>div:first-child{border-right:1px solid var(--line);color:var(--muted2)}
   .custo .lin>div:last-child{color:var(--ink);font-weight:500}
-  .custo .cab>div{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.08em;
+  .custo .cab>div{font-family:'Source Sans 3',sans-serif;font-size:9.5px;letter-spacing:.08em;
     text-transform:uppercase;padding:9px 13px;font-weight:700}
   .custo .cab>div:first-child{background:#F7E8E5;color:var(--red3)}
   .custo .cab>div:last-child{background:#E9F1EA;color:var(--green)}
   /* CTA enxuto logo depois do veredito. O preço só aparecia no 6º bloco de 7. */
   .ctaslim{margin:18px 0 6px}
-  .ctaslim .price{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+  .ctaslim .price{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
   .timer .prog7{display:flex;gap:4px;justify-content:center;margin-bottom:9px}
   .timer .prog7 i{width:18px;height:3px;border-radius:2px;background:var(--line)}
   .timer .prog7 i.ok{background:var(--ink)}
-  .timer .conta{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.07em;
+  .timer .conta{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:.07em;
     text-transform:uppercase;color:var(--ink);margin-bottom:6px}
   /* Cor sozinha não pode carregar o sinal, por daltonismo: o tamanho, a barra drenando
      e o próprio número já carregam em paralelo. Aqui só se desliga o movimento. */
@@ -149,10 +163,10 @@
   .load .tr i{display:block;height:100%;width:4%;border-radius:99px;
               background:linear-gradient(90deg,var(--ocre),var(--ocre2));
               transition:width .85s cubic-bezier(.35,0,.25,1)}
-  .load .pe{margin-top:22px;font-family:'Space Mono',monospace;font-size:11px;
+  .load .pe{margin-top:22px;font-family:'Source Sans 3',sans-serif;font-size:11px;
             letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .qmat{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
+  .qmat{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
   .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
   .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.12s}
   .opt:hover{border-color:var(--ocre2)}
@@ -176,6 +190,223 @@
   /* Entrega entre parênteses, ao lado do resultado que ela produz. Cinza e menor: o que
      o olho pega primeiro é o verbo; a entrega é a prova de que o verbo é possível. */
   .stack .it .qual{color:var(--muted);font-size:13.5px}
+
+  /* ==========================================================================
+     PÁGINA DE VENDAS v2 — handoff de 04/08/2026
+     Escopo em body.vendas: o quiz continua com o layout estreito de sempre, e
+     nada daqui vaza para as telas de pergunta. Os tokens (:root) já são os novos,
+     então o quiz herda a paleta e a tipografia sem herdar a estrutura.
+     ========================================================================== */
+  body.vendas{background:var(--paper);padding-bottom:96px}
+  body.vendas .wrap{max-width:none;padding:0}
+
+  .vtopo{background:var(--navy2);color:var(--paper);display:flex;justify-content:space-between;
+         align-items:center;padding:14px 24px;gap:12px}
+  .vtopo .wm{font-family:'Cinzel',serif;font-weight:600;font-size:16px;letter-spacing:3px}
+  .vtopo .tg{font-size:12px;letter-spacing:2.5px;color:var(--azul);text-transform:uppercase}
+
+  /* ---- hero ---- */
+  .vhero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);
+         color:var(--paper);padding:56px 24px 64px}
+  .vhero .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+  .vhero h1{font-family:'Source Serif 4',Georgia,serif;font-size:38px;line-height:1.2;
+            font-weight:700;text-wrap:pretty;margin:0}
+  .vhero h1 em{font-style:italic;color:var(--gold)}
+  .eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:var(--ocre)}
+  .eyebrow.gold{color:var(--gold)}
+  .placar{display:flex;gap:16px;flex-wrap:wrap;align-items:stretch}
+  /* O placar é cartão dourado porque é o número que a pessoa veio buscar: tem que
+     ser a primeira coisa que o olho encontra depois da manchete. */
+  .placar .nota{flex:0 0 auto;background:var(--gold);color:var(--navy);border-radius:10px;
+                padding:20px 28px;display:flex;flex-direction:column;justify-content:center;
+                align-items:center;gap:2px}
+  .placar .nota .n{font-family:'Source Serif 4',Georgia,serif;font-size:52px;font-weight:700;line-height:1}
+  .placar .nota .n span{font-size:26px;font-weight:400}
+  .placar .nota .lb{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+  .placar .eixos{flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px}
+  .placar .eixo{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
+                border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;
+                align-items:center;gap:12px;font-size:15px}
+  .placar .eixo b{font-size:12px;font-weight:700;letter-spacing:1.5px;padding:4px 10px;
+                  border-radius:4px;white-space:nowrap}
+  .placar .eixo b.laranja{background:var(--ocre2);color:#fff}
+  .placar .eixo b.azul{background:var(--azul);color:var(--navy)}
+  .vhero .lede{font-size:17px;line-height:1.6;color:var(--azul);max-width:600px;margin:0}
+  .vhero .lede strong{color:var(--paper)}
+  .vhero .lede.margem{font-size:15px;opacity:.85}
+  .vhero .micro{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(191,220,238,.6)}
+
+  /* ---- resumo flutuante ---- */
+  .vresumo{max-width:760px;margin:-28px auto 0;padding:0 24px;position:relative;z-index:2}
+  .cardres{background:var(--card);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(14,34,51,.10);padding:20px 24px;display:flex;
+           justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .cardres .t{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .cardres .s{font-size:14px;color:var(--sec);margin-top:4px}
+
+  /* ---- botões ---- */
+  .btn-lar{display:inline-block;background:var(--ocre2);color:#fff;text-decoration:none;
+           font-weight:700;font-size:15px;padding:12px 22px;border-radius:8px;
+           white-space:nowrap;border:none;cursor:pointer;transition:.15s;text-align:center}
+  .btn-lar:hover{background:var(--laranja2);color:#fff}
+  .btn-lar.grande{font-size:18px;padding:16px 36px;border-radius:10px;white-space:normal}
+
+  /* ---- seções ---- */
+  .vsec{margin:0 auto;padding:56px 24px 8px;display:flex;flex-direction:column;gap:20px}
+  .vsec.estreita{max-width:680px}
+  .vsec.larga{max-width:960px}
+  .vsec h2{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
+  .vsec h2.grande{font-size:32px}
+  .vsec h2.apos{margin-top:12px}
+  .vsec .p{font-size:17px;line-height:1.65;margin:0}
+  .vsec .p.sec{color:var(--sec)}
+  .callout{background:var(--card);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;
+           padding:16px 20px;font-family:'Source Serif 4',Georgia,serif;font-size:19px;
+           font-weight:600;line-height:1.45}
+  .obsgrid{display:flex;flex-direction:column;gap:12px}
+  .obs{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+       display:flex;gap:14px;align-items:flex-start}
+  .obs i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:1.5px;
+         text-transform:uppercase;color:var(--ocre2);flex:0 0 84px;padding-top:3px}
+  .obs p{font-size:15px;line-height:1.55;color:var(--sec);margin:0}
+
+  /* ---- gabarito ---- */
+  .gab{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .gab .mat{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+            color:var(--ocre);padding:16px 18px 0}
+  .gab .q{font-size:16px;line-height:1.5;font-weight:600;padding:8px 18px 14px}
+  .gab .alt{margin:0 18px 8px;padding:10px 14px;border-radius:8px;background:var(--paper);
+            font-size:14.5px;line-height:1.45;border:1px solid transparent}
+  .gab .alt.sua{background:#FBEDE2;border-color:var(--ocre2)}
+  .gab .alt.certa{background:#EAF3EA;border-color:var(--green)}
+  .gab .notagab{padding:0 18px 8px;font-size:14px;color:var(--sec)}
+  .gab .exp{margin:6px 18px 14px;padding:14px 16px;background:var(--paper);border-radius:8px;
+            font-size:14.5px;line-height:1.6;color:var(--sec)}
+  .gab .exp b{color:var(--ink)}
+  .gabbtn{display:block;width:100%;background:var(--navy);color:var(--gold);border:none;
+          padding:14px 18px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;
+          text-align:center;transition:.15s}
+  .gabbtn:hover{background:var(--navy2)}
+
+  /* ---- cartões ---- */
+  .cardb{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  .cardb.pequeno h4{font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
+  .cardb.pequeno p{font-size:14px;line-height:1.55;color:var(--sec);margin:0}
+  .cardn{background:var(--navy);color:var(--paper);border-radius:10px;padding:22px 24px}
+  .cardn h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700;
+            line-height:1.3;margin:8px 0 10px}
+  .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
+  .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+
+  /* ---- onde cedeu ---- */
+  .cardn.cedeu{display:flex;flex-direction:column;gap:4px}
+  .cardn .cnum{font-family:'Source Serif 4',Georgia,serif;font-size:38px;font-weight:700;
+               line-height:1;color:var(--gold)}
+  .cardn .cnum span{font-size:20px;font-weight:400;color:var(--azul)}
+  .cardn .clb{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--azul)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
+        padding:6px 14px;font-size:14px;font-weight:600;color:var(--ink)}
+  .chip.fraco{font-weight:400;color:var(--sec)}
+  .chip.fraco b{color:var(--ink)}
+  .riscado .ri{font-size:16px;line-height:1.5;color:var(--muted);text-decoration:line-through;
+               padding:7px 0;border-top:1px solid var(--line)}
+  .riscado .ri:first-child{border-top:none;padding-top:0}
+  .riscado .ripe{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+                 font-size:13px;line-height:1.55;color:var(--sec)}
+
+  /* ---- bônus ---- */
+  .bonus{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
+  .btopo{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .btopo .bk{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+  .bdias{background:var(--ocre2);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;
+         border-radius:999px;white-space:nowrap}
+  .bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
+  .bcard{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
+         border-radius:10px;padding:14px 16px}
+  .bcard .bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .bcard .bh b{font-family:'Source Serif 4',Georgia,serif;font-size:17px;color:var(--gold)}
+  .bcard .bh i{font-style:normal;font-size:12px;color:var(--azul)}
+  .bcard p{font-size:14px;line-height:1.55;color:var(--azul);margin-top:8px}
+  .bpe{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(191,220,238,.8)}
+
+  /* ---- preço ---- */
+  .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
+         padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .preco .v{font-family:'Source Serif 4',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
+  .preco .v span{font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
+  .micro2{font-size:13px;color:var(--sec)}
+  .selo2{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--sec)}
+
+  /* ---- depoimentos ---- */
+  .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:34px;color:var(--gold);line-height:.6}
+  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;
+          line-height:1.5;margin:10px 0 16px}
+  .dep2 p b{font-weight:700}
+  .dep2 .quem{display:flex;gap:10px;align-items:center}
+  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);
+             display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
+  .dep2 .nm{font-size:14px;font-weight:700}
+  .dep2 .cid{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--sec)}
+
+  /* ---- autor e garantia ---- */
+  .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .autorlinha{display:flex;gap:14px;align-items:center;margin:12px 0}
+  .autorlinha img{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0}
+  .autorlinha b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .autorlinha i{font-style:normal;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sec)}
+  .cardb p{font-size:15px;line-height:1.6;color:var(--sec);margin:0}
+
+  /* ---- FAQ ---- */
+  .faq{display:flex;flex-direction:column;gap:10px}
+  .fitem{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .fitem.on{border-color:var(--gold)}
+  .fq{width:100%;background:none;border:none;padding:16px 18px;font:inherit;font-size:16px;
+      font-weight:700;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;
+      align-items:center;gap:12px;text-align:left}
+  .fq i{font-style:normal;font-size:20px;color:var(--ocre);flex-shrink:0}
+  .fa{padding:0 18px 16px}
+  .fa p{font-size:15px;line-height:1.6;color:var(--sec);margin:0}
+
+  /* ---- CTA final ---- */
+  .vfim{background:var(--navy2);color:var(--paper);padding:56px 24px;text-align:center;
+        display:flex;flex-direction:column;gap:16px;align-items:center;margin-top:56px}
+  .vfim h2{font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:700;line-height:1.25}
+  .vfim .pfim{font-size:16px;color:var(--azul)}
+  .vfim .micro2{color:var(--azul)}
+  .vfim .legal{font-size:12px;color:rgba(191,220,238,.55);max-width:520px;line-height:1.55}
+
+  /* ---- barra fixa ---- */
+  body.vendas .sticky{position:fixed;left:0;right:0;bottom:0;background:var(--card);
+    border-top:2px solid var(--gold);box-shadow:0 -6px 20px rgba(14,34,51,.12);z-index:50;
+    transform:none;padding:10px 0}
+  body.vendas .sticky .in{max-width:960px;margin:0 auto;padding:0 20px;display:flex;
+    justify-content:space-between;align-items:center;gap:14px}
+  body.vendas .sticky .a{font-size:14px;font-weight:700;color:var(--ink)}
+  body.vendas .sticky .b{font-size:12px;color:var(--sec)}
+
+
+  /* A marca do quiz (logo redondo + wordmark) sai na página de vendas: lá a marca é a
+     barra navy do topo, e as duas juntas davam dois cabeçalhos empilhados. */
+  body.vendas .brand{display:none}
+  /* O botão da barra fixa herdava o dourado antigo de .sticky a; na página de vendas
+     ele é o mesmo laranja de ação de todos os outros CTAs. */
+  body.vendas .sticky a{background:var(--ocre2);border-radius:8px;padding:12px 22px;
+    font-size:15px;font-weight:700}
+  body.vendas .sticky a:hover{background:var(--laranja2)}
+  @media(max-width:560px){
+    .vhero{padding:40px 20px 48px}
+    .vhero h1{font-size:29px}
+    .vsec{padding:40px 20px 8px}
+    .vsec h2{font-size:22px} .vsec h2.grande{font-size:26px}
+    .preco .v{font-size:38px}
+    .vfim h2{font-size:24px}
+    body.vendas .sticky .b{display:none}
+    .btn-lar{font-size:14px;padding:11px 16px}
+    .btn-lar.grande{font-size:16px;padding:14px 22px}
+  }
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:14px 22px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s}
   .btn:hover{background:#0d161d}
   .btn[disabled]{opacity:.4;cursor:not-allowed}
@@ -194,14 +425,14 @@
   .verdict.ochre{background:#FBF1E6;border-color:#E7CFA8}
   .verdict.mixed{background:#F1ECE0}
   .verdict.green{background:#E9F1EA;border-color:#BFD8C4}
-  .verdict .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
-  .verdict h2{font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px}
+  .verdict .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+  .verdict h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:22px;margin-bottom:8px}
   .verdict p{font-size:15px;color:var(--muted2)}
   .plot{position:relative;width:100%;max-width:280px;margin:0 auto 18px;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:14px}
   .plot .vline,.plot .hline{position:absolute;background:var(--line)}
   .plot .vline{left:50%;top:8%;bottom:8%;width:1.5px}
   .plot .hline{top:50%;left:8%;right:8%;height:1.5px}
-  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:.03em;max-width:42%}
+  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Source Sans 3',sans-serif;letter-spacing:.03em;max-width:42%}
   .plot .tl{top:8px;left:10px}.plot .tr{top:8px;right:10px;text-align:right}
   .plot .bl{bottom:8px;left:10px}.plot .br{bottom:8px;right:10px;text-align:right}
   .plot .you{position:absolute;transform:translate(-50%,-50%)}
@@ -209,9 +440,9 @@
   .plot .ylab{font-size:9.5px}
   .center{text-align:center}
   .offer{background:var(--navy);color:#fff;border-radius:16px;padding:24px 20px;margin-top:8px;text-align:center}
-  .offer h3{font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
+  .offer h3{font-family:'Source Serif 4',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
   .offer p{font-size:14.5px;color:#C9C1B4;margin-bottom:16px}
-  .offer .price{font-family:'Space Mono',monospace;font-size:13px;color:#E7CFA8;margin-top:12px}
+  .offer .price{font-family:'Source Sans 3',sans-serif;font-size:13px;color:#E7CFA8;margin-top:12px}
   .offer .btn{background:var(--ocre);}
   .offer .btn:hover{background:#8c4d18}
   .offer .alt{display:inline-block;margin-top:14px;font-size:13px;color:#C9C1B4;text-decoration:underline;cursor:pointer}
@@ -219,7 +450,7 @@
   .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
   /* gabarito comentado (amostra do relatório pago) */
   .gab{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 18px}
-  .gab .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+  .gab .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
   .gab .q{font-size:15px;font-weight:500;margin-bottom:10px}
   .gab .alt{font-size:14px;padding:9px 11px;border-radius:9px;margin-bottom:6px;border:1px solid var(--line);color:var(--muted2)}
   .gab .alt.certa{background:#E9F1EA;border-color:#BFD8C4;color:var(--ink);font-weight:500}
@@ -229,7 +460,7 @@
   /* bloco trancado (teaser do diagnóstico completo): o TÓPICO fica legível
      para dar curiosidade; só a RESPOSTA é rasurada. */
   .lockbox{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;background:var(--card)}
-  .lockbox .head{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 20px 4px}
+  .lockbox .head{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 20px 4px}
   .lockbox .inner{padding:6px 20px 16px}
   .lockbox .row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line)}
   .lockbox .row:last-child{border-bottom:none}
@@ -244,7 +475,7 @@
      lockbox que ganhou destaque visual: é ele que transforma "3 de 6" em um problema
      com nome, e é nome que a pessoa carrega para fora da página. */
   .lockbox .named{padding:12px 0 4px;border-bottom:1px solid var(--line)}
-  .lockbox .named .lab{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;
+  .lockbox .named .lab{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.1em;
                        text-transform:uppercase;color:var(--muted2);margin-bottom:9px}
   .lockbox .named .chips{display:flex;flex-wrap:wrap;gap:7px}
   .lockbox .named .chips b{font-weight:600;font-size:13.5px;padding:5px 11px;border-radius:999px;
@@ -263,10 +494,10 @@
   .rhero{background:var(--navy);color:#fff;padding:20px 22px 34px}
   .rhero .in{max-width:600px;margin:0 auto}
   .rbrand{display:flex;align-items:center;gap:10px;margin-bottom:30px}
-  .rbrand .nm{font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#fff}
-  .rbrand .tg{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
-  .rkick{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
-  .rh1{font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .rbrand .nm{font-family:'Source Serif 4',serif;font-weight:600;font-size:19px;color:#fff}
+  .rbrand .tg{font-family:'Source Sans 3',sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  .rkick{font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
+  .rh1{font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
   .rh1 em{font-style:italic;color:#E7A85B}
   .rlead{font-size:16.5px;line-height:1.6;color:#C9C1B4;margin-bottom:20px;max-width:44ch;text-wrap:pretty}
   /* A tradução da distância para a régua da prova. Ganhou destaque próprio em
@@ -280,9 +511,9 @@
      Sem ele, a segunda tela começa do nada e perde o diagnóstico de vista. */
   .rrecap{background:var(--navy);color:#F3EEE4;padding:22px 20px 20px}
   .rrecap .in{max-width:600px;margin:0 auto}
-  .rrecap .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+  .rrecap .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.12em;
              text-transform:uppercase;color:#8E9AA4;margin-bottom:8px}
-  .rrecap .h{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
+  .rrecap .h{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
              color:#F3EEE4;text-wrap:balance}
   .rrecap .h em{font-style:italic;color:var(--ocre2)}
   /* Bônus. Entrou em 02/08/2026, quando o Kit Reta Final deixou de ser bump de R$19 e
@@ -290,21 +521,10 @@
      público que espera o dia 5 do mês, e não havia nenhum outro material livre para
      usar como bônus. A data sai por extenso do relógio, não é "hoje" solto: quem voltar
      amanhã lê a data de amanhã e a página nunca prometeu prazo nenhum. */
-  .bonus{margin-top:14px;border:1.5px dashed var(--ocre2);border-radius:14px;padding:16px 17px 14px;
-         background:linear-gradient(180deg,rgba(199,122,43,.07),rgba(199,122,43,.02))}
-  .bonus .k{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.11em;
-            text-transform:uppercase;color:var(--ocre);margin-bottom:11px}
-  .bonus .row{display:flex;gap:11px;align-items:flex-start}
-  .bonus .row + .row{margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
-  .bonus .row svg{flex:none;margin-top:2px}
-  .bonus .tl{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
-  .bonus .tl b{font-size:15.5px;font-weight:600}
-  .bonus .val{font-family:'Space Mono',monospace;font-size:11px;color:var(--ocre);
-              border:1px solid var(--line);border-radius:99px;padding:2px 8px;background:var(--card)}
-  .bonus .row p{font-size:14.5px;line-height:1.55;color:var(--muted2)}
-  .bonus .pe{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
-             font-size:13.5px;color:var(--muted2)}
-  .voltar{display:inline-block;margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;
+  /* O bloco .bonus antigo (tracejado ocre) saiu em 04/08/2026: o design novo tem
+     um .bonus próprio, em cartão navy, definido lá em cima. Duas definições da mesma
+     classe conviviam, e a de baixo vencia por ordem. */
+  .voltar{display:inline-block;margin-top:14px;font-family:'Source Sans 3',sans-serif;font-size:11px;
           letter-spacing:.07em;text-transform:uppercase;color:#8E9AA4;text-decoration:none;
           border-bottom:1px solid rgba(142,154,164,.4);padding-bottom:2px}
   .voltar:hover{color:#F3EEE4;border-color:#F3EEE4}
@@ -313,7 +533,7 @@
   .bars .b{display:flex;flex-direction:column;gap:7px}
   .bars .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
   .bars .hd span:first-child{font-size:13.5px;color:#C9C1B4}
-  .bars .v{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .bars .v{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
   .bars .v.ok{color:#7FB99A}
   .bars .v.no{color:#E7A85B}
   .bars .tr{height:8px;border-radius:4px;background:#2C3B48;overflow:hidden}
@@ -321,21 +541,21 @@
   .bars .b:nth-child(2) .tr i{animation-delay:.15s}
   .bars .tr i.ok{background:var(--green)}
   .bars .tr i.no{background:var(--ocre2)}
-  .bars .ft{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+  .bars .ft{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
   @keyframes fillbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   @media (prefers-reduced-motion: reduce){ .bars .tr i{animation:none} }
   .rbody{max-width:600px;margin:0 auto;padding:0 22px}
   .rsec{margin-top:44px}
-  .rkk{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .rkk{font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
   .rkk.v{color:var(--green)}
-  .rh3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(22px,5.6vw,27px);line-height:1.18;letter-spacing:-.015em;margin-bottom:14px;text-wrap:pretty}
+  .rh3{font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(22px,5.6vw,27px);line-height:1.18;letter-spacing:-.015em;margin-bottom:14px;text-wrap:pretty}
   .rp{font-size:16px;line-height:1.62;color:var(--muted2);margin-bottom:20px;text-wrap:pretty}
   .rp.forte{font-size:17.5px;color:var(--ink);margin-bottom:16px}
   .rp b{color:var(--ink)}
   .pull{border-left:3px solid var(--ocre);padding:4px 0 4px 18px;margin-bottom:4px}
-  .pull p{font-family:'Spectral',serif;font-size:19px;line-height:1.42;color:var(--ink);text-wrap:pretty}
+  .pull p{font-family:'Source Serif 4',serif;font-size:19px;line-height:1.42;color:var(--ink);text-wrap:pretty}
   .stack{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-  .stack .hd{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .stack .hd{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
   .stack .it{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px}
   .stack .it:last-of-type{margin-bottom:0}
   .stack .it svg{flex-shrink:0;margin-top:2px}
@@ -351,17 +571,17 @@
   .stack .mini li{position:relative;margin-bottom:4px;font-size:14px;line-height:1.45}
   .stack .mini li:before{content:'';position:absolute;left:-12px;top:8px;width:4px;height:4px;
                          border-radius:50%;background:var(--ocre2)}
-  .stack .tot .p{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .stack .tot .p{font-family:'Source Sans 3',sans-serif;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
   .rbtn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:20px;background:var(--ocre);color:#fff;border:none;border-radius:13px;padding:19px 22px;font:inherit;font-size:17.5px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 14px 30px -14px rgba(166,93,30,.85);transition:background .15s}
   .rbtn:hover{background:#8c4d18;color:#fff}
-  .rmicro{font-family:'Space Mono',monospace;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
+  .rmicro{font-family:'Source Sans 3',sans-serif;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
   /* Faixa de pagamento, 02/08/2026. O Pix estava dentro da microcopy de 11,5px, do
      mesmo tamanho de "acesso imediato". A Delzuita respondeu no WhatsApp que parou
      no checkout porque "só terei dinheiro dia 6", e o Reddit está cheio de gente
      dizendo que não tem como pagar cursinho: para esse público o Pix é o desbloqueio,
      porque não depende de cartão com limite. Merece linha própria e peso próprio. */
   .pag{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:12px;
-       font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:14px;color:var(--muted2)}
+       font-family:'Source Sans 3',system-ui,sans-serif;font-size:14px;color:var(--muted2)}
   .pag b{color:var(--ink);font-weight:600}
   .pag .pix{display:inline-flex;align-items:center;gap:5px;background:#E9F1EA;border:1px solid #BFD8C4;
             color:#2F6B4F;border-radius:999px;padding:4px 11px;font-weight:600;font-size:13px}
@@ -380,25 +600,25 @@
   .obs b{color:var(--ink);font-weight:600}
   .deps{display:flex;flex-direction:column;gap:14px}
   .dep2{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .dep2 .asp{font-family:'Spectral',serif;font-size:34px;line-height:.6;color:var(--ocre2);height:18px}
-  .dep2 p{font-family:'Spectral',serif;font-size:17.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+  .dep2 .asp{font-family:'Source Serif 4',serif;font-size:34px;line-height:.6;color:var(--ocre2);height:18px}
+  .dep2 p{font-family:'Source Serif 4',serif;font-size:17.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
   .dep2 p b{font-weight:600;background:#F5E4CE;box-shadow:0 0 0 3px #F5E4CE}
   .dep2 .quem{display:flex;align-items:center;gap:11px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:#E9E0CE;color:var(--muted2);font-family:'Spectral',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:#E9E0CE;color:var(--muted2);font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .dep2 .nm{font-size:14.5px;font-weight:600;line-height:1.3}
-  .dep2 .cid{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .dep2 .cid{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px}
   .vid{position:relative;width:min(300px,78%);margin:0 auto;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--navy)}
   .vid video{width:100%;height:100%;object-fit:cover;display:block}
-  .vidleg{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
+  .vidleg{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
   .autor2{display:flex;align-items:flex-start;gap:16px}
   .autor2 img{width:76px;height:76px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex-shrink:0;border:2px solid var(--line)}
-  .autor2 .k{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .autor2 .k{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
   .autor2 p{font-size:15px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
   .gar2{border-top:1px solid var(--line);margin-top:20px;padding-top:18px;font-size:14.5px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
   .gar2 b{color:var(--green)}
   .ofim{margin-top:44px;background:var(--navy);border-radius:20px;padding:30px 24px;text-align:center}
-  .ofim .k{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:12px}
-  .ofim h3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,6vw,29px);line-height:1.16;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .ofim .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:12px}
+  .ofim h3{font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(23px,6vw,29px);line-height:1.16;color:#fff;margin-bottom:14px;text-wrap:pretty}
   .ofim p{font-size:15px;line-height:1.6;color:#C9C1B4;margin-bottom:22px;text-wrap:pretty}
   .ofim .rbtn{box-shadow:0 14px 30px -14px rgba(0,0,0,.8)}
   .ofim .rbtn:hover{background:var(--ocre2)}
@@ -417,7 +637,7 @@
   .sticky .in{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px}
   .sticky .t{flex:1;min-width:0}
   .sticky .t .a{font-size:14px;font-weight:600;line-height:1.25}
-  .sticky .t .b{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted)}
+  .sticky .t .b{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted)}
   .sticky a{background:var(--ocre);color:#fff;border-radius:11px;padding:14px 20px;font-size:15.5px;font-weight:600;text-decoration:none;white-space:nowrap}
   .sticky a:hover{background:#8c4d18;color:#fff}
   @media (prefers-reduced-motion: reduce){ .sticky{transition:none} }
@@ -458,6 +678,32 @@
   // de casar e-mail, e (b) marcar o clique em comprar. Fica null se a gravação
   // falhar; nesse caso a página funciona igual, só sem rastreio.
   var LEAD_ID = null;
+
+  // Nome do produto. Em um lugar só porque ele aparece no hero, no resumo, na oferta,
+  // na barra fixa e no FAQ — e já mudou duas vezes em 24 horas.
+  // 03/08: era "diagnóstico completo", que vendia o mesmo substantivo que a pessoa
+  //        acabou de consumir de graça.
+  // 03/08: virou "Plano de Recuperação da 1ª Fase", que resolvia isso mas lia como curso
+  //        e jogava fora o diferencial, que é o diagnóstico.
+  // 04/08: "Diagnóstico Completo + Mapa da Aprovação" (handoff). Mantém a continuidade
+  //        com o mini-diagnóstico e nomeia o que vem depois dele.
+  // ATENÇÃO: o nome do produto na Hotmart tem que acompanhar, senão a pessoa clica em
+  // comprar e cai num checkout com outro nome, no exato momento do cartão.
+  var PRODUTO = 'Diagnóstico Completo + Mapa da Aprovação';
+
+  // FAQ. Regra: cada pergunta é uma dúvida OPERACIONAL que trava a compra. Nenhuma
+  // repete argumento já feito na página — isso seria responder pela quinta vez uma
+  // pergunta que já tem dono, que é o problema que o inventário existe para impedir.
+  var FAQ = [
+    { q:'Funciona no celular?',
+      a:'Sim. Tudo roda no navegador, sem instalar nada: questões, fichas e simulados.' },
+    { q:'Quanto tempo leva o Diagnóstico Completo?',
+      a:'As 24 questões cronometradas levam cerca de 40 minutos. O Mapa da Aprovação sai na hora, com a ordem das correções.' },
+    { q:'Já estudo com outro curso. Isso substitui?',
+      a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o seu estudo atual render ponto.' },
+    { q:'E se eu não gostar?',
+      a:'Você tem 7 dias para pedir reembolso, sem perguntas. Dá para usar o material inteiro antes de decidir.' }
+  ];
 
   // ===== VARIANTES DA ENTRADA =====
   // Medido em 03/08/2026 sobre 124 leads: 45% de quem chega NUNCA reprovou (21%
@@ -1518,7 +1764,12 @@
       lead:(gabaritou
         ? 'As '+CONTENT.length+' eram difíceis e você não deixou nenhuma passar.'
         : 'As '+CONTENT.length+' eram pegadinhas escolhidas para derrubar, e você segurou '+r.c+'.'),
-      p1:'O que estas '+CONTENT.length+' não medem é a questão 40, com três horas de prova nas costas e a sala esvaziando ao seu redor: é ali que quem sabe começa a errar.',
+      // Reescrita em 04/08/2026. Dizia "O que estas 7 não medem é a questão 40…", que é
+      // a pergunta da seção 4 inteira, dita na seção 2. A poda automática não alcançava:
+      // o gatilho estava na PRIMEIRA palavra, e cortar ali apagaria o parágrafo todo.
+      // Agora ela interpreta o resultado, que é o trabalho desta seção. O limite do
+      // teste continua sendo dito, mas onde tem dono, uma seção adiante.
+      p1:'Acertar as '+CONTENT.length+' com o relógio correndo diz uma coisa concreta: nas matérias de maior peso, você decide certo sob pressão. É o desempenho que a prova cobra nas primeiras horas, quando a sala ainda está cheia e o cansaço não entrou.',
       p2:'E tem uma diferença que decide muita coisa: sete questões não acharem nada em você não é a mesma coisa que não existir nada.'};
     if(hiX&&!hiY) return {cls:'ochre',forte:gabaritou,
       lab:M.lab, hl:M.hl,
@@ -1715,64 +1966,56 @@
   // como barra opaca, sem número por baixo. Valor fixo que parece calculado destrói a
   // credibilidade no primeiro print comparado entre duas pessoas.
   function lockbox(){
-    // 02/08: o NOME das matérias erradas saiu da linha legível e virou barra opaca, com
-    // o argumento de que dizer "você errou Civil e Ética" entregava metade do diagnóstico
-    // de graça e criaria mais curiosidade ("quais três?").
+    // Dois cartões, desde 04/08/2026. O de cima mostra o que a pessoa JÁ TEM (as
+    // matérias em que cedeu, com nome, e o tempo médio). O de baixo mostra, riscado,
+    // o que estas 7 questões não alcançam.
     //
-    // 03/08: DEVOLVIDO. O que a aposta anterior custou está medido: 63 leads e 3
-    // checkouts iniciados (4,8%), com 12 pessoas entre as que foram pior e nenhum clique
-    // vindo delas. Três razões:
-    //   1. Curiosidade não é ruminação. "3 de 6" é uma abstração, e ninguém rumina uma
-    //      abstração no ônibus. Nome tem cara e endereço; é o que a pessoa leva embora.
-    //   2. O contrato. O anúncio promete diagnóstico; ela paga com 7 questões e o e-mail
-    //      e recebia um diagnóstico rasurado. Este público é 67% de gente que já reprovou
-    //      e desconfia por experiência própria -- é quem pune isso mais rápido.
-    //   3. O R$47 não é "os nomes". É porcentagem por matéria, matéria vs. relógio, o
-    //      ponto das 24 em que o rendimento cai e por onde começar. Tudo isso continua
-    //      trancado logo abaixo. O nome era a isca, não o produto.
+    // Os nomes das matérias ficam LEGÍVEIS, e isso já foi testado dos dois jeitos.
+    // Em 02/08 viraram barra opaca, com o argumento de que dizer "você errou Civil e
+    // Ética" entregava metade do diagnóstico de graça. O que a aposta custou está
+    // medido: 63 leads e 3 checkouts (4,8%), com 12 pessoas entre as que foram pior e
+    // nenhum clique vindo delas. Devolvido em 03/08, por três razões:
+    //   1. Curiosidade não é ruminação. "3 de 6" é abstração, e ninguém rumina uma
+    //      abstração no ônibus. Nome tem cara e endereço.
+    //   2. O contrato. O anúncio promete diagnóstico; ela paga com 7 questões e o
+    //      e-mail e recebia um diagnóstico rasurado. Este público é majoritariamente
+    //      gente que já reprovou e desconfia por experiência própria.
+    //   3. O R$47 nunca foi "os nomes". É porcentagem por matéria, matéria vs. relógio
+    //      e a ordem das correções, e tudo isso segue trancado logo abaixo.
+    //
+    // A lista riscada só pode conter PERGUNTA. Nenhum substantivo de entrega (plano,
+    // ficha, simulado, cronograma) entra aqui: quem responde é a seção da oferta, e
+    // antecipar a resposta faz a oferta ler como repetição.
     var cederam=[]; CONTENT.forEach(function(qq,i){
       if((S.estourou[i]||S.ans[i]!==qq.c) && cederam.indexOf(qq.mat)<0) cederam.push(qq.mat);
     });
-    function real(t,v){ return '<div class="row"><span class="t">'+t+'</span><span class="val">'+esc(v)+'</span></div>'; }
-    function trava(t){ return '<div class="row"><span class="t">'+t+'</span><span class="val trava"></span></div>'; }
-    // Os nomes, de largura inteira. Rótulo na segunda pessoa e no passado: é o que ela
-    // acabou de fazer, não uma etiqueta sobre quem ela é.
-    function nomes(lista){
-      return '<div class="named"><div class="lab">Onde você cedeu</div><div class="chips">'+
-        lista.map(function(m){ return '<b>'+esc(m)+'</b>'; }).join('')+'</div></div>';
-    }
-    var linhas = real('Matérias do núcleo em que você cedeu', cederam.length? cederam.length+' de 6' : 'nenhuma');
-    if(cederam.length) linhas += nomes(cederam);
-    // A média já sai só das respondidas (tempoMedio ignora estouro). Quando houve
-    // estouro, o rótulo precisa dizer isso, senão a página elogia o ritmo na mesma
-    // tela em que o relógio derrubou a pessoa.
-    var estq=estourouQuantas();
-    linhas += real(estq? 'Seu tempo médio nas '+(CONTENT.length-estq)+' que você respondeu' : 'Seu tempo médio por questão',
-      (tempoMedio()!=null? tempoMedio()+'s' : 'sem registro'));
-    linhas +=
-      // "Quais delas são, com nome" saiu daqui em 03/08: os nomes agora estão legíveis
-      // logo acima. Deixar a linha trancada seria cobrar por uma coisa já entregue.
-      // As travas são PERGUNTAS, não entregas. Está proibido escrever aqui o nome de
-      // qualquer coisa que a pessoa recebe (plano, ficha, simulado, cronograma): quem
-      // responde é a seção seguinte, e antecipar a resposta faz a oferta ler como
-      // repetição. "Quais conteúdos dentro delas" entrou em 03/08 — é o buraco real,
-      // porque uma questão por matéria diz SE cedeu, nunca em qual ponto da matéria.
-      trava('Sua porcentagem em cada uma das 6')+
-      trava('Quais conteúdos dentro delas custam mais ponto')+
-      trava('Se o que te derruba é a matéria ou a hora da prova, uma por uma')+
-      trava('O que acontece nas outras matérias que este teste não mediu')+
-      // "Por onde começar amanhã" saiu em 03/08: era o Plano de estudo com outro nome,
-      // ou seja, entrega dentro da seção que só pode perguntar. A ordem das correções é
-      // pergunta legítima e continua sendo o buraco real de quem tem os dois eixos baixos.
-      trava('Qual deve ser a ordem das correções');
-    return '<div class="lockbox">'+
-      '<div class="inner" style="padding-top:14px">'+linhas+'</div>'+
-      // A linha de fecho prometia entrega ("o resto depende das 24, e sai na hora, em
-      // relatório com o seu nome") dentro da seção que só pode perguntar. Agora ela
-      // fecha na pergunta e entrega o leitor para a seção seguinte sem descrever nada.
-      '<div class="cta">O que está legível saiu das suas '+CONTENT.length+' respostas. O que está riscado é o que elas não alcançam.</div>'+
-    '</div>';
+    var estq=estourouQuantas(), tmed=tempoMedio();
+
+    var chips = cederam.map(function(m){ return '<span class="chip">'+esc(m)+'</span>'; }).join('');
+    if(tmed!=null) chips += '<span class="chip fraco"><b>'+tmed+'s</b> tempo médio/questão'+
+      (estq? ' (nas '+(CONTENT.length-estq)+' que você respondeu)' : '')+'</span>';
+
+    var perguntas=[
+      'Sua porcentagem em cada uma das 6',
+      'Quais conteúdos dentro delas custam mais ponto',
+      'Se o que te derruba é a matéria ou a hora da prova, uma por uma',
+      'O que acontece nas matérias que este teste não mediu',
+      'Qual deve ser a ordem das correções'
+    ];
+
+    return '<div class="cardn cedeu">'+
+        '<div class="cnum">'+cederam.length+' <span>de 6</span></div>'+
+        '<div class="clb">matérias do núcleo</div>'+
+        (chips? '<div class="chips">'+chips+'</div>' : '')+
+      '</div>'+
+      '<h2 class="apos">O que estas '+CONTENT.length+' questões ainda não respondem</h2>'+
+      '<p class="p">Elas mostraram <strong>em quais</strong> matérias você cedeu. O que não conseguem mostrar:</p>'+
+      '<div class="cardb riscado">'+
+        perguntas.map(function(t){ return '<div class="ri">'+esc(t)+'</div>'; }).join('')+
+        '<div class="ripe">O que está legível saiu das suas '+CONTENT.length+' respostas. O que está riscado é o que elas não alcançam.</div>'+
+      '</div>';
   }
+
 
   function gabarito(){
     // A demo do produto: UMA questão corrigida no formato do relatório pago. É o único
@@ -1793,13 +2036,20 @@
       var suf=(j===Q.c?' · correta':(j===sua?' · a sua resposta':''));
       return '<div class="'+cls+'">'+pre+esc(op)+suf+'</div>';
     }).join('');
-    var nota = S.estourou[idx] ? '<p style="margin-bottom:8px"><b>Nesta o tempo acabou antes de você marcar.</b></p>' : '';
+    var nota = S.estourou[idx] ? '<p class="notagab"><b>Nesta o tempo acabou antes de você marcar.</b></p>' : '';
+    var letra = String.fromCharCode(65+Q.c);
+    // O COMENTÁRIO FICA FECHADO (04/08/2026). A questão, as alternativas, a que ela
+    // marcou e qual é a certa continuam à vista: isso é a prova, e prova não se
+    // esconde. O que fica atrás do botão é o PORQUÊ, que é longo e que nem todo mundo
+    // quer ler ali. Quem abre está pedindo, e pedir é um sinal de interesse que a
+    // página não tinha como ler quando o texto vinha aberto por padrão.
     return '<div class="gab">'+
-      '<div class="q">'+esc(Q.mat)+' · '+esc(Q.q)+'</div>'+alts+nota+
-      // "No diagnóstico completo" saiu em 03/08 junto com o nome antigo do produto. A
-      // frase também deixou de nomear a entrega: esta seção prova o MÉTODO, e citar o
-      // que vem dentro do produto é trabalho da seção 5.
-      '<div class="exp">'+Q.exp+' <b>Cada questão do Mapa da Aprovação vem com um comentário assim.</b></div></div>';
+      '<div class="mat">'+esc(Q.mat)+'</div>'+
+      '<div class="q">'+esc(Q.q)+'</div>'+alts+nota+
+      '<div class="exp" id="gabexp" hidden>'+Q.exp+
+        ' <b>Cada questão do Mapa da Aprovação vem com um comentário assim.</b></div>'+
+      '<button type="button" class="gabbtn" id="gabtoggle">Ver por que a '+letra+' é a certa: comentário completo</button>'+
+    '</div>';
   }
 
   function pressao(){
@@ -1970,27 +2220,29 @@
   // preço próprio porque era vendido; o Guia não tem, então diz de onde veio.
   function bonusKit(){
     var d=diasParaProva();
+    // A pressão fica SÓ sobre o Kit, e por um motivo verdadeiro: ele cobre a reta
+    // final, então vale menos a cada dia. O preço nunca entra na pressão. A frase
+    // anterior era "depois de hoje eu não garanto", e ela fazia o oposto do
+    // pretendido: para quem não pode pagar hoje, transformava "não posso agora" em
+    // "então já perdi" — e quem perdeu não volta. A única resposta qualitativa do
+    // funil inteiro foi exatamente essa pessoa, que disse "só terei dinheiro dia 6".
     return '<div class="bonus">'+
-      '<div class="k">Quem entrar hoje, '+hojeExtenso()+', leva os dois</div>'+
-      '<div class="row">'+CHECK+'<div>'+
-        '<div class="tl"><b>Guia de leitura da FGV</b><span class="val">vinha só no Plano Completo</span></div>'+
-        '<p>As seis regras contra o erro de leitura da banca: ler a última linha primeiro, caçar as negativas, eliminar duas alternativas antes de decidir, e a resposta que você não deve trocar depois de ter marcado.</p>'+
-      '</div></div>'+
-      '<div class="row">'+CHECK+'<div>'+
-        '<div class="tl"><b>Kit Reta Final</b><span class="val">vendido por R$ 19</span></div>'+
-        '<p>O plano das últimas três semanas, semana a semana. O checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
-      '</div></div>'+
-      // A frase anterior era "Depois de hoje eu não garanto que ele siga incluído", e
-      // sozinha ela fazia o oposto do pretendido: para quem não pode pagar hoje, ela
-      // transforma "não posso agora" em "então já perdi", e quem perdeu não volta. A
-      // única resposta qualitativa que existe no funil é exatamente essa pessoa, a
-      // Delzuita, que chegou ao checkout e disse "só terei dinheiro dia 6". A pressão
-      // fica, mas só sobre o Kit, e por um motivo verdadeiro: ele cobre a reta final,
-      // então vale menos a cada dia. O preço fica garantido porque nunca foi outro.
-      (d? '<div class="pe">Faltam '+d+' dias para a prova, e é exatamente esse o período que o Kit cobre. Os dois estão incluídos hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro. Os bônus eu não garanto, e o Kit cobre menos prova a cada dia que passa.</div>'
-        : '<div class="pe">Os dois estão incluídos hoje, '+hojeExtenso()+'. Se você só puder pagar em outro dia, o preço continua R$47: nunca foi outro.</div>')+
+      '<div class="btopo">'+
+        '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva os dois</div>'+
+        (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
+      '</div>'+
+      '<div class="bgrid">'+
+        '<div class="bcard"><div class="bh"><b>Guia de leitura da FGV</b>'+
+          '<i>vinha só no Plano Completo</i></div>'+
+          '<p>As seis regras contra o erro de leitura da banca: ler a última linha primeiro, caçar as negativas, eliminar duas antes de decidir.</p></div>'+
+        '<div class="bcard"><div class="bh"><b>Kit Reta Final</b>'+
+          '<i>vendido por R$ 19</i></div>'+
+          '<p>O plano das últimas três semanas, o checklist da véspera e do dia, a estratégia das 80 questões e o protocolo anti-branco.</p></div>'+
+      '</div>'+
+      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. Os bônus eu não garanto, e o Kit cobre menos prova a cada dia que passa.</div>'+
     '</div>';
   }
+
 
   // Reescrita em 03/08/2026. A pilha antiga listava cinco linhas de uma frase, e quatro
   // delas começavam pela palavra "diagnóstico", "gabarito", "fichas" — nomes de arquivo.
@@ -2005,35 +2257,33 @@
   //   assets/banco-de-questoes.js ... 248 questões
   // Se algum desses mudar, ESTE texto muda junto: aqui é promessa de entrega.
   function stackOferta(){
-    // Reordenada em 03/08/2026 por RESULTADO, não por mecanismo. A versão anterior
-    // abria cada item pelo nome da entrega ("diagnóstico aprofundado", "correção
-    // comentada", "fichas"), que é como o produto foi construído, não como ele é
-    // comprado. Ninguém compra ficha; compra saber o que corrigir. Agora o rótulo é o
-    // verbo que a pessoa executa, e a entrega vem entre parênteses como prova de que o
-    // verbo é possível. Mesmo conteúdo, lido como jornada: descobrir -> corrigir ->
-    // provar melhor -> confirmar -> organizar.
+    // Ordenada por RESULTADO, não por mecanismo: o rótulo é o verbo que a pessoa
+    // executa, e a entrega vem em cinza logo abaixo como prova de que o verbo é
+    // possível. Ninguém compra ficha; compra saber o que corrigir.
+    // Números conferidos arquivo por arquivo em 03/08/2026, não estimados:
+    //   assets/fichas.js ............. 17 matérias, 79 subtemas
+    //   assets/simulados.js .......... 5 (3 focados + 2 completos)
+    //   assets/banco-de-questoes.js .. 248 questões
+    // Se algum mudar, ESTE texto muda junto: aqui é promessa de entrega.
     var blocos=[
-      ['Saiba exatamente o que corrigir', '(diagnóstico aprofundado)',
-       '24 questões cronometradas medem com precisão onde você perde ponto e confirmam o seu perfil.', null],
-      ['Entenda por que errou', '(correção comentada)',
-       'Cada questão explica:', ['por que a sua resposta parecia correta','por que a banca escolheu outra alternativa','qual detalhe da lei ou da súmula fez a diferença']],
-      ['Corrija o que está faltando', '(fichas das 17 matérias)',
-       'Cada tema traz:', ['a regra','a súmula aplicável','a pegadinha que mais reprova candidatos']],
-      ['Faça a prova melhor', '(estratégia de prova)',
-       'Para os momentos em que a prova começa a sair do controle:', ['quando insistir numa questão e quando pular','como voltar depois','como dividir as cinco horas','como evitar trocar uma resposta certa por uma errada']],
-      ['Confirme que evoluiu', '(simulados)',
-       'Cinco simulados, mais de 240 questões, para medir se os pontos voltaram antes do dia da prova.', null],
-      ['Organize tudo', '(plano de estudo)',
-       'Cronograma de execução, guia da FGV, materiais da reta final e a organização da revisão.', null]
+      ['Saiba exatamente o que corrigir',
+       '24 questões cronometradas medem com precisão onde você perde ponto e confirmam o seu perfil.'],
+      ['Entenda por que errou',
+       'Cada questão explica por que a sua resposta parecia correta, por que a banca escolheu outra e qual detalhe da lei fez a diferença.'],
+      ['Corrija o que está faltando',
+       'Fichas das 17 matérias: a regra, a súmula aplicável e a pegadinha que mais reprova candidatos.'],
+      ['Faça a prova melhor',
+       'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada.'],
+      ['Confirme que evoluiu',
+       'Cinco simulados, mais de 240 questões, para medir se os pontos voltaram antes do dia da prova.'],
+      ['Organize tudo',
+       'Cronograma de execução, guia da FGV, materiais da reta final e a organização da revisão.']
     ];
-    return '<div class="stack"><div class="hd">Você recebe</div>'+
-      blocos.map(function(b){
-        return '<div class="it">'+CHECK+'<div><b>'+esc(b[0])+'</b> <span class="qual">'+esc(b[1])+'</span><br>'+esc(b[2])+
-          (b[3]? '<ul class="mini">'+b[3].map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>' : '')+
-        '</div></div>';
-      }).join('')+
-      '<div class="tot"><span>Tudo, uma vez, sem mensalidade</span><span class="p">R$ 47</span></div></div>';
+    return '<div class="grade">'+blocos.map(function(b){
+      return '<div class="cardb pequeno"><h4>'+esc(b[0])+'</h4><p>'+esc(b[1])+'</p></div>';
+    }).join('')+'</div>';
   }
+
 
   // Qual eixo está segurando a pessoa hoje. A tela de oferta abre nomeando isto, então
   // precisa ser a MESMA régua do resto da página (CORTE_X / CORTE_Y), senão o topo
@@ -2198,202 +2448,238 @@
   // Nenhum preço, nenhum botão de compra, nenhum depoimento. Só o que o teste achou.
   // Termina no lockbox (o que ficou fechado) e na ponte para a solução, nessa ordem,
   // porque é o bloco rasurado que cria a pergunta que o botão responde.
+  // ===== PÁGINA DE VENDAS v2 (handoff de 04/08/2026) =====
+  // Redesenho visual completo. A ARQUITETURA não mudou: continua a mesma ordem por
+  // pergunta e por evidência do INVENTARIO-mini-diagnostico.md, e nenhum bloco novo
+  // responde pergunta que já tinha dono. O que entrou de novo:
+  //   - resumo da oferta logo abaixo do hero, para quem já decidiu não precisar rolar
+  //   - comentário da questão colapsado (a prova continua visível, o porquê é pedido)
+  //   - FAQ, que responde objeção e não repete argumento de venda
+  //   - barra fixa, que já existia, agora com o nome novo
+  //
+  // Duas divergências deliberadas em relação ao arquivo do handoff:
+  //   1. TRAVESSÕES. O design usa "—" em várias frases; foram trocados por vírgula ou
+  //      dois pontos, conforme pedido no mesmo dia. A regra vale para a página inteira.
+  //   2. O handoff é estático, com "Gustavo, 2/7" fixo. Aqui tudo o que é resultado
+  //      continua vindo das 33 variantes de copy, da poda e do cálculo dos dois eixos.
   function result(){
     var C=ctx(), r=C.r, q=C.q, L=C.L, forte=C.forte;
     var bx=barraConteudo(r), by=barraPressao(r);
     var vt=tempo(), vp=pressao(), vx=trocou();
     var g=gargalo(r);
+    var d=diasParaProva();
 
-    document.body.className='res';
+    document.body.className='vendas';
 
-    // Prosa da seção 2, PODADA. p2 do quadrante costumava terminar em "o que falta
-    // descobrir é...", que é a pergunta da seção 4 feita duas seções antes. Aqui a
-    // oração é cortada no primeiro "o que falta/o que resolve": a seção 2 interpreta,
-    // a seção 4 pergunta, e nenhuma das duas faz o trabalho da outra.
-    // Corta, no texto do quadrante e no do momento, a oração que ENUMERA o que o teste
-    // não alcança. Essa enumeração é a seção 4 inteira; feita aqui, na seção 2, ela
-    // esvazia a seção seguinte e faz a página responder duas vezes "o que falta saber?".
-    //
-    // É poda e não reescrita porque são 6 textos de quadrante x 3 desfechos e 5 de
-    // momento x 3: reescrever à mão os 33 convidaria a divergirem com o tempo. A regra
-    // fica em um lugar só, e vale para variante nova que alguém escrever depois.
-    //
-    // O corte é sempre no INÍCIO da oração, e só se sobrar frase de pé (>20 caracteres):
-    // texto curto demais some inteiro, o que seria pior do que a repetição.
-    var GATILHOS = /\s*(O que falta descobrir|O que resolve|O que falta|Então o que te derruba está no que|O que ele não mede|O que ela não mede|Isso responde uma pergunta e abre outra)\b/;
+    var GAT = /\s*(O que falta descobrir|O que resolve|O que falta|Então o que te derruba está no que|O que ele não mede|O que ela não mede|Isso responde uma pergunta e abre outra)\b/;
     function podar(t){
       t = String(t);
-      var m = t.search(GATILHOS);
+      var m = t.search(GAT);
       if(m <= 20) return t;
       var corte = t.slice(0, m).replace(/[,;:\s—-]+$/,'');
       return /[.!?]$/.test(corte) ? corte : corte + '.';
     }
 
     var html =
-      // ===== 1. RESULTADO — "por que perdi pontos?" · evidência numérica =====
-      '<div class="rhero"><div class="in">'+
-        '<div class="rbrand">'+
-          '<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#F3EEE4"/><g stroke="#15212B" stroke-width="2.4" fill="none"><circle cx="16" cy="16" r="7.2"/><path d="M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4"/></g><circle cx="16" cy="16" r="3" fill="#C77A2B"/></svg>'+
-          '<span class="nm">Só o que Cai</span><span class="tg">1ª fase · OAB</span>'+
-        '</div>'+
-        '<div class="rkick">'+C.nome+' · seu resultado</div>'+
-        // Quem gabaritou tem manchete própria: "o que mais tirou seus pontos" não existe
-        // para quem não perdeu nenhum. São 1,7% da base (2 em 120), então é template
-        // separado — não pode contaminar a copy principal, escrita para quem acerta 3 ou 4.
+
+      // ===== BARRA DE MARCA =====
+      '<header class="vtopo">'+
+        '<div class="wm">SÓ O QUE CAI</div>'+
+        '<div class="tg">1ª fase · OAB</div>'+
+      '</header>'+
+
+      // ===== 1. HERO — "por que perdi pontos?" · evidência numérica =====
+      // O placar virou cartão dourado: é o número que a pessoa veio buscar, e ele
+      // passa a ser a primeira coisa que o olho encontra depois da manchete.
+      '<section class="vhero"><div class="in">'+
+        '<div class="eyebrow gold">'+C.nome+' · seu resultado</div>'+
         (forte
-          ? '<h1 class="rh1">Você acertou <em>7 de 7</em>. Excelente resultado.</h1>'+
-            '<p class="rlead">Nestas 7 nada cedeu, nem a matéria nem o relógio. O que fica em aberto é se esse desempenho se mantém numa amostra maior e nas outras matérias da prova.</p>'
-          : '<h1 class="rh1">'+g.h1+'</h1>'+
-            '<p class="rlead">Você acertou <b>'+r.c+' de '+CONTENT.length+'</b>'+
-              (r.estourou? (C.erroN>0? ', errou '+C.erroN+' e estourou o tempo em '+r.estourou+'.'
-                                     : (r.estourou>1? '. Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
-                                                    : '. Na outra o tempo acabou antes de você marcar.'))
-                         : '.')+' '+esc(g.exp)+'</p>')+
-        (traduzMargem()? '<div class="rmarg">'+esc(traduzMargem())+'</div>' : '')+
-        '<div class="bars">'+
-          '<div class="b"><div class="hd"><span>'+esc(bx.rot)+'</span><span class="v '+bx.cls+'">'+esc(bx.v)+'</span></div>'+
-            '<div class="tr"><i class="'+bx.cls+'" style="width:'+bx.w+'%"></i></div></div>'+
-          '<div class="b"><div class="hd"><span>'+esc(by.rot)+'</span><span class="v '+by.cls+'">'+esc(by.v)+'</span></div>'+
-            '<div class="tr"><i class="'+by.cls+'" style="width:'+by.w+'%"></i></div></div>'+
-          '<div class="ft">O teste mede esses dois fatores separadamente.</div>'+
-        '</div>'+
-      '</div></div>'+
-
-      '<div class="rbody">'+
-        // ===== 2. O QUE ISSO SIGNIFICA — "o que isso quer dizer?" =====
-        // Três blocos viraram um. Eram: prosa do quadrante, "leitura do teste" (as
-        // observações de comportamento) e o pull-quote do momento de vida. Nenhum é
-        // redundante em conteúdo — a prosa interpreta o eixo, a leitura traz o que o
-        // comportamento mostrou, o pull ancora no momento de vida. Eram redundantes em
-        // MOLDURA: três seções reabrindo o mesmo assunto. Agora é uma seção, três vozes.
-        // Era UM título com CINCO blocos titulados por dentro (p1, p2, e os três itens da
-        // leitura, cada um com seu próprio cabeçalho). A moldura tinha sido unificada mas
-        // o miolo continuava anunciando cinco assuntos, então a seção ainda lia como
-        // cinco seções. Agora é um texto: abre pelo princípio (que é o que a pessoa
-        // precisa entender ANTES de qualquer entrega), emenda a leitura do quadrante, e
-        // as observações entram como frases, com o rótulo em negrito no meio da linha em
-        // vez de cabeçalho próprio. Nenhum título novo depois do primeiro.
-        // p2 saiu: era o parágrafo que mais carregava "o que falta descobrir", que é a
-        // pergunta da seção 4 antecipada em duas seções.
-        '<div class="rsec" style="margin-top:38px"><div class="rkk">O que isso significa</div>'+
-          '<p class="rp forte">O erro mais comum depois de um resultado como este é tentar resolver tudo ao mesmo tempo. Quando falta conteúdo, treinar só estratégia de prova não recupera ponto. Quando falta execução, estudar mais matéria também não resolve sozinho.</p>'+
-          '<p class="rp">'+esc(podar(q.p1))+'</p>'+
-          ((vt||vp||vx)? '<div class="viu">'+
-            (vx? '<p class="obs '+vx.cls+'"><b>'+esc(vx.k)+':</b> '+vx.p+'</p>' : '')+
-            (vt? '<p class="obs '+vt.cls+'"><b>'+esc(vt.k)+':</b> '+vt.p+'</p>' : '')+
-            (vp? '<p class="obs '+vp.cls+'"><b>'+esc(vp.k)+':</b> '+vp.p+'</p>' : '')+
-          '</div>' : '')+
-          (L? '<div class="pull" style="margin-top:22px"><p>'+esc(podar(L.ponto))+'</p></div>' : '')+
-        '</div>'+
-
-        // ===== 3. QUESTÃO COMENTADA — "como vocês chegaram nessa conclusão?" =====
-        // Evidência qualitativa: prova do método. Subiu de posição — antes vinha depois
-        // de quatro seções de leitura. É valor entregue ANTES de qualquer pedido, e é o
-        // que compra o direito de pedir depois.
-        '<div class="rsec"><div class="rkk v">Como este diagnóstico pensa</div>'+
-          '<h3 class="rh3">A palavra que a banca trocou nesta questão</h3>'+gabarito()+
-          // O vídeo responde a mesma pergunta por outra evidência (transparência, não
-          // método), então pela regra 2 ele fica. Mas em uma linha: seção própria fazia
-          // dele um degrau, e vídeo no meio do fluxo custa a decisão de assistir.
-          '<div class="vidlinha">'+
-            '<span>Quer entender por que este diagnóstico existe?</span>'+
-            '<a href="#" id="vplay">▶ 28 segundos</a>'+
+          ? '<h1>Você acertou <em>7 de 7</em>. Excelente resultado.</h1>'
+          : '<h1>'+g.h1+'</h1>')+
+        '<div class="placar">'+
+          '<div class="nota"><div class="n">'+r.c+'<span>/'+CONTENT.length+'</span></div>'+
+            '<div class="lb">acertos</div></div>'+
+          '<div class="eixos">'+
+            '<div class="eixo"><span>'+esc(bx.rot)+'</span>'+
+              '<b class="laranja">'+esc(bx.v)+'</b></div>'+
+            '<div class="eixo"><span>'+esc(by.rot)+'</span>'+
+              '<b class="azul">'+esc(by.v)+'</b></div>'+
           '</div>'+
-          '<div class="vid" id="vwrap" hidden><video controls playsinline preload="none" poster="assets/video/diagnostico-explicado.jpg">'+
-            '<source src="assets/video/diagnostico-explicado.mp4" type="video/mp4">'+
-          '</video></div>'+
         '</div>'+
+        '<p class="lede">'+(forte
+          ? 'Nestas '+CONTENT.length+' nada cedeu, nem a matéria nem o relógio. O que fica em aberto é se esse desempenho se mantém numa amostra maior e nas outras matérias da prova.'
+          : 'Você acertou <strong>'+r.c+' de '+CONTENT.length+'</strong>'+
+            (r.estourou? (C.erroN>0? ', errou '+C.erroN+' e estourou o tempo em '+r.estourou+'.'
+                                   : (r.estourou>1? '. Nas outras '+r.estourou+' o tempo acabou antes de você marcar.'
+                                                  : '. Na outra o tempo acabou antes de você marcar.'))
+                       : '.')+' '+esc(g.exp))+'</p>'+
+        (traduzMargem()? '<p class="lede margem">'+esc(traduzMargem())+'</p>' : '')+
+        '<div class="micro">O teste mede esses dois fatores separadamente</div>'+
+      '</div></section>'+
 
-        // ===== 4. O QUE FALTA — "o que ainda falta saber?" =====
-        // SÓ PERGUNTAS. Proibido substantivo de entrega aqui (plano, ficha, simulado,
-        // cronograma): quem responde é a seção 5, e antecipar a resposta faz a seção 5
-        // parecer repetição. A abertura corrige um erro de fato da versão anterior, que
-        // dizia "você ainda não sabe quais matérias" — o bloco acima acabou de mostrar
-        // os nomes. O buraco real é granularidade, não identidade.
-        '<div class="rsec"><div class="rkk">O que estas '+CONTENT.length+' questões ainda não respondem</div>'+
-          '<p class="rp">Estas '+CONTENT.length+' questões mostraram <b>em quais matérias você cedeu</b>. O que elas ainda não conseguem mostrar é quanto falta em cada uma, quais conteúdos dentro dessas matérias estão custando mais pontos, e o que acontece nas outras matérias que este teste não mediu.</p>'+
-          lockbox()+
+      // ===== RESUMO DA OFERTA — atalho para quem já decidiu =====
+      // Não responde pergunta nova: é navegação. Por isso não tem argumento, só
+      // nome, preço e um link para a seção que argumenta.
+      '<section class="vresumo"><div class="cardres">'+
+        '<div><div class="t">'+PRODUTO+'</div>'+
+          '<div class="s">R$ 47 único · acesso na hora, por 12 meses · garantia de 7 dias</div></div>'+
+        '<a href="#oferta" class="btn-lar" id="verof">Ver a oferta completa</a>'+
+      '</div></section>'+
+
+      // ===== 2. O QUE ISSO SIGNIFICA =====
+      '<section class="vsec estreita">'+
+        '<div class="eyebrow">O que isso significa</div>'+
+        '<p class="p">O erro mais comum depois de um resultado como este é tentar resolver tudo ao mesmo tempo. Quando falta conteúdo, treinar só estratégia de prova não recupera ponto. Quando falta execução, estudar mais matéria também não resolve sozinho.</p>'+
+        '<div class="callout">'+esc(podar(q.p1))+'</div>'+
+        ((vt||vp||vx)? '<div class="obsgrid">'+
+          (vx? '<div class="obs"><i>'+esc(vx.k)+'</i><p>'+vx.p+'</p></div>' : '')+
+          (vt? '<div class="obs"><i>'+esc(vt.k)+'</i><p>'+vt.p+'</p></div>' : '')+
+          (vp? '<div class="obs"><i>'+esc(vp.k)+'</i><p>'+vp.p+'</p></div>' : '')+
+        '</div>' : '')+
+        (L? '<p class="p sec">'+esc(podar(L.ponto))+'</p>' : '')+
+      '</section>'+
+
+      // ===== 3. QUESTÃO COMENTADA — prova do método =====
+      // O comentário fica COLAPSADO. A questão, as alternativas e qual foi a resposta
+      // dela continuam à vista: isso é a prova. O porquê é o que ela pede ao clicar,
+      // e pedir é um sinal de interesse que a página não tinha como ler antes.
+      '<section class="vsec estreita">'+
+        '<div class="eyebrow">Como este diagnóstico pensa</div>'+
+        '<h2>A palavra que a banca trocou nesta questão</h2>'+
+        gabarito()+
+        '<div class="vidlinha">'+
+          '<span>Quer entender por que este diagnóstico existe?</span>'+
+          '<a href="#" id="vplay">▶ 28 segundos</a>'+
         '</div>'+
+        '<div class="vid" id="vwrap" hidden><video controls playsinline preload="none" poster="assets/video/diagnostico-explicado.jpg">'+
+          '<source src="assets/video/diagnostico-explicado.mp4" type="video/mp4">'+
+        '</video></div>'+
+      '</section>'+
 
-        // ===== 5. A OFERTA — "como eu descubro isso?" =====
-        // O produto deixou de se chamar "diagnóstico completo" em 03/08/2026. O nome
-        // vendia o MESMO substantivo que a pessoa acabou de consumir de graça: ela não
-        // pensa "quero a versão maior", pensa "já fiz esse". "Plano de Recuperação"
-        // muda a categoria, e o diagnóstico aprofundado vira o primeiro item DE DENTRO
-        // do produto, onde ele funciona como prova de personalização.
-        // ATENÇÃO: o nome do produto na Hotmart precisa acompanhar. Se o checkout ainda
-        // disser "diagnóstico completo", a inconsistência aparece no pior lugar possível.
-        '<div class="rsec" id="oferta"><div class="rkk">Continue de onde este diagnóstico parou</div>'+
-          // A sublinha "Inclui plano de estudo, estratégia de prova, simulados…" viveu
-          // poucas horas e saiu: ela anunciava a pilha que começa três linhas abaixo,
-          // vendendo o mesmo bloco duas vezes. Quem lista o que vem junto é o "Você
-          // recebe" — e ele lista melhor, porque diz para que serve cada coisa.
-          // Renomeado em 04/08/2026: o título somava dois nomes ("Diagnóstico
-          // Completo + Plano de Recuperação") para uma coisa só. O nome único
-          // tem que ser idêntico aqui, no WhatsApp/e-mail (PRODUTO em
-          // api/_sequencia.js do so-o-que-cai-app) e no checkout da Hotmart.
-          '<h3 class="rh3">Mapa da Aprovação</h3>'+
-          '<p class="rp">Por R$ 47, acesso imediato para transformar este diagnóstico em pontos na prova.</p>'+
-          stackOferta()+bonusKit()+
-          '<div class="fecho-obj">O objetivo não é fazer você estudar mais. É fazer você estudar o que precisa, e fazer a prova com uma estratégia melhor.</div>'+
-          C.PAGA+
-          '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
-          '<div class="rmicro">'+C.MICRO+'</div>'+
+      // ===== 4. O QUE FALTA — só perguntas =====
+      '<section class="vsec estreita">'+
+        '<div class="eyebrow">Onde você cedeu</div>'+
+        lockbox()+
+      '</section>'+
+
+      // ===== 5. A OFERTA =====
+      '<section class="vsec larga" id="oferta">'+
+        '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
+        '<h2 class="grande">'+PRODUTO+'</h2>'+
+        '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
+        stackOferta()+
+        bonusKit()+
+        // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
+        // tratamento: é o ponto onde a decisão acontece.
+        '<div class="preco">'+
+          '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
+          '<a class="btn-lar grande" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+          '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
+          '<div class="selo2">Seus dados não são vendidos</div>'+
         '</div>'+
+      '</section>'+
 
-        // ===== 6. DEPOIMENTOS — "isso funciona?" · evidência social =====
-        '<div class="rsec"><div class="rkk">Quem já fez</div>'+
-          '<h3 class="rh3">Três pessoas que estavam onde você está agora</h3>'+depoimentos()+'</div>'+
+      // ===== 6. DEPOIMENTOS — evidência social =====
+      '<section class="vsec larga">'+
+        '<div class="eyebrow">Quem já fez</div>'+
+        '<h2>Três pessoas que estavam onde você está agora</h2>'+
+        depoimentos()+
+      '</section>'+
 
-        // ===== 7. GUSTAVO — "quem fez?" · autoridade =====
-        // Era um bloco do tamanho de uma página nova, com a garantia grudada dentro.
-        // Compactado, e a garantia separada: são duas perguntas diferentes.
-        '<div class="rsec"><div class="autor2">'+
-          '<img src="assets/gustavo.webp" alt="Gustavo, advogado" width="76" height="76" loading="lazy">'+
-          '<div><div class="k">Quem criou isto</div>'+
-          '<p>“Gustavo, advogado. Também passei pela fase de estudar demais e ainda assim errar as questões erradas. Este diagnóstico nasceu justamente para separar falta de conteúdo de erro de execução.”</p></div>'+
-        '</div></div>'+
-
-        // ===== 8. GARANTIA + CTA — "e se eu não gostar?" · redução de risco =====
-        // A lista de seis itens saiu daqui em 03/08: ela repetia, 500 pixels depois, a
-        // mesma pilha que a seção 5 acabou de mostrar — e repetir a oferta no bloco de
-        // redução de risco troca o assunto da seção. Aqui a pergunta é uma só: "e se eu
-        // não gostar?". Quem responde outra coisa atrapalha.
-        '<div class="ofim">'+
-          '<div class="k">Sem risco</div>'+
-          '<h3>Faça o diagnóstico inteiro.<br>Só depois decida se valeu.</h3>'+
-          '<p>Se em até 7 dias você concluir que ele não trouxe valor para a sua preparação, basta pedir o reembolso. Sem perguntas e sem discussão. O risco é meu, não seu.</p>'+
-          C.PAGA+
-          '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
-          '<div class="rmicro">'+C.MICRO_FIM+'</div>'+
+      // ===== 7 e 8. AUTORIDADE e RISCO, lado a lado =====
+      '<section class="vsec larga"><div class="duo">'+
+        '<div class="cardb">'+
+          '<div class="eyebrow">Quem criou isto</div>'+
+          '<div class="autorlinha">'+
+            '<img src="assets/gustavo.webp" alt="Gustavo, advogado" width="72" height="72" loading="lazy">'+
+            '<div><b>Gustavo</b><i>Advogado</i></div>'+
+          '</div>'+
+          '<p>“Gustavo, advogado. Também passei pela fase de estudar demais e ainda assim errar as questões erradas. Este diagnóstico nasceu justamente para separar falta de conteúdo de erro de execução.”</p>'+
         '</div>'+
+        '<div class="cardn">'+
+          '<div class="eyebrow gold">Sem risco</div>'+
+          '<h3>Use o material inteiro. Só depois decida se valeu.</h3>'+
+          '<p>Se em até 7 dias você concluir que ele não trouxe valor, basta pedir o reembolso. Sem perguntas e sem discussão. O risco é meu, não seu.</p>'+
+        '</div>'+
+      '</div></section>'+
 
-        '<div class="rfoot">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
-      '</div>'+
+      // ===== FAQ — objeção, não argumento =====
+      // Cada pergunta aqui é uma dúvida operacional que trava a compra. Nenhuma
+      // repete argumento que já foi feito acima: isso seria a quinta resposta para
+      // uma pergunta que já tem dono.
+      '<section class="vsec estreita">'+
+        '<div class="eyebrow">Perguntas rápidas</div>'+
+        '<div class="faq">'+FAQ.map(function(f,i){
+          return '<div class="fitem" data-i="'+i+'">'+
+            '<button class="fq" type="button"><span>'+esc(f.q)+'</span><i>+</i></button>'+
+            '<div class="fa" hidden><p>'+esc(f.a)+'</p></div>'+
+          '</div>';
+        }).join('')+'</div>'+
+      '</section>'+
 
+      // ===== CTA FINAL =====
+      '<section class="vfim">'+
+        '<h2>Estudar o que precisa, não estudar mais.</h2>'+
+        '<div class="pfim">R$ 47 à vista no Pix · ou '+PARCELA+' no cartão</div>'+
+        '<a class="btn-lar grande" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+        '<div class="micro2">pagamento único · acesso na hora · garantia de 7 dias</div>'+
+        '<div class="legal">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
+      '</section>'+
+
+      // ===== BARRA FIXA =====
       '<div class="sticky" id="stk"><div class="in">'+
-        '<div class="t"><div class="a">Mapa da Aprovação</div><div class="b">R$ 47 no Pix · ou '+PARCELA+'</div></div>'+
-        '<a href="'+C.buyUrl+'" id="buy3" data-v="47">Quero agora</a>'+
+        '<div class="t"><div class="a">Diagnóstico Completo</div>'+
+          '<div class="b">R$ 47 no Pix · ou '+PARCELA+'</div></div>'+
+        '<a class="btn-lar" href="'+C.buyUrl+'" id="buy3" data-v="47">Quero descobrir o que corrigir</a>'+
       '</div></div>';
 
     app.innerHTML = html;
     ligarCompra();
     ligarBarraFixa();
 
-    // O vídeo só entra no DOM quando pedido. Em uma linha ele não interrompe quem já
-    // decidiu, e quem quer ver clica.
+    // Vídeo sob demanda: só entra no DOM quando pedido.
     var vp2=document.getElementById('vplay'), vw=document.getElementById('vwrap');
     if(vp2&&vw) vp2.onclick=function(e){ e.preventDefault(); vw.hidden=false; vp2.parentNode.hidden=true;
       try{ vw.querySelector('video').play(); }catch(err){} };
 
-    // A PONTE MORREU EM 03/08/2026, e com ela morreria a medição do degrau — mas o
-    // degrau continua existindo: "chegou na oferta" é diferente de "leu o diagnóstico e
-    // foi embora", e são problemas com remédios diferentes. Antes o sinal era o clique
-    // no botão da ponte; agora é a seção 5 entrar na tela. Mesma coluna no banco
-    // (viu_oferta_em), mesmo significado, sem custar um clique à pessoa.
-    //
-    // Contexto de por que a ponte saiu: só 28% a atravessavam. Os outros 72% faziam o
-    // quiz inteiro, entregavam telefone e iam embora sem NUNCA ver a página que vende.
+    // Comentário da questão. Fechado por padrão; o rótulo alterna.
+    var gb=document.getElementById('gabtoggle'), gx=document.getElementById('gabexp');
+    if(gb&&gx){
+      // O rótulo de "fechado" nomeia a alternativa certa ("Ver por que a C é a certa"),
+      // e a letra muda conforme a questão sorteada — então ele é guardado, não reescrito.
+      var rotuloFechado = gb.textContent;
+      gb.onclick=function(){
+        var aberto = !gx.hidden;
+        gx.hidden = aberto;
+        gb.textContent = aberto ? rotuloFechado : 'Fechar comentário';
+      };
+    }
+
+    // FAQ: um aberto por vez.
+    Array.prototype.forEach.call(app.querySelectorAll('.fitem'), function(it){
+      var b=it.querySelector('.fq'), a=it.querySelector('.fa'), sinal=it.querySelector('.fq i');
+      b.onclick=function(){
+        var vaiAbrir = a.hidden;
+        Array.prototype.forEach.call(app.querySelectorAll('.fitem'), function(o){
+          o.querySelector('.fa').hidden = true;
+          o.querySelector('.fq i').textContent = '+';
+          o.classList.remove('on');
+        });
+        if(vaiAbrir){ a.hidden=false; sinal.textContent='−'; it.classList.add('on'); }
+      };
+    });
+
+    // Âncora suave do resumo até a oferta.
+    var vo=document.getElementById('verof');
+    if(vo) vo.onclick=function(e){
+      e.preventDefault();
+      var alvo2=document.getElementById('oferta');
+      if(alvo2) alvo2.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+
+    // Marca que chegou na oferta. Sem a ponte, o sinal é a seção entrar na tela.
+    // Ver a nota longa da versão anterior: IntersectionObserver foi descartado por
+    // não disparar de forma confiável, e medição que não dá para conferir não serve.
     var alvo=document.getElementById('oferta'), marcou=false;
     function marcarOferta(){
       if(marcou) return; marcou=true;
@@ -2402,16 +2688,6 @@
         try{ fbq('track','ViewContent',{content_name:'oferta',value:47,currency:'BRL'}); }catch(e){}
       }
     }
-    // ROLAGEM, e não IntersectionObserver. A primeira versão usava IO e foi descartada
-    // depois de duas tentativas: com threshold 0.25 não disparava (a seção tem ~1735px e
-    // a janela ~800px, então exigir um quarto de um elemento mais alto que a tela depende
-    // da altura da copy, que muda toda semana); e com threshold 0 continuou não
-    // disparando no navegador de teste, mesmo com a seção comprovadamente dentro da tela.
-    //
-    // Este número é o único que separa "leu o diagnóstico e foi embora" de "leu a oferta
-    // e não comprou" — dois problemas com remédios diferentes. Medição que não dá para
-    // conferir não serve, então aqui vale o mecanismo simples, que se testa com uma linha:
-    // a borda de cima da oferta cruzou a metade de baixo da tela.
     if(alvo){
       var conferir=function(){
         if(alvo.getBoundingClientRect().top < window.innerHeight*0.85){
@@ -2422,7 +2698,7 @@
       };
       window.addEventListener('scroll', conferir, {passive:true});
       window.addEventListener('resize', conferir);
-      conferir();   // tela grande pode já nascer com a oferta visível
+      conferir();
     }
   }
 
