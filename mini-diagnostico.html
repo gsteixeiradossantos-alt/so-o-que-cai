@@ -4,13 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini-diagnóstico grátis · Só o que Cai · 1ª fase da OAB</title>
-<!-- 02/08/2026: as metas falavam de "conteúdo ou desempenho", que é a tese dos dois
-     eixos. Ela virou MECANISMO, não promessa. A promessa agora é a margem, que é a
-     única linguagem que este público usa sozinho: "fico nos 38/39", "por uma maldita
-     questão". Anúncio, entrada e veredito passam a dizer a mesma coisa. -->
-<meta name="description" content="38, 39, e faltaram duas questões. Em 4 minutos, descubra quais matérias custaram os pontos que faltaram na 1ª fase da OAB.">
-<meta property="og:title" content="Faltaram duas questões. E ninguém te diz quais.">
-<meta property="og:description" content="Mini-diagnóstico gratuito de 7 questões cronometradas: mostra quanto você perdeu e onde, se foi a palavra que a banca trocou ou a hora de decidir.">
+<!-- As metas acompanham a ENTRADA PADRÃO, senão o link compartilhado promete uma coisa
+     e a página abre com outra.
+     02/08/2026: falavam dos dois eixos; trocadas pela margem ("faltaram duas questões"),
+     que era a entrada padrão de então.
+     04/08/2026: a entrada padrão virou 'problema' — a margem descrevia só quem chegou
+     perto, e 45% de quem chega nunca prestou o exame. As metas seguem junto. -->
+<meta name="description" content="A maioria dos candidatos tenta corrigir o problema errado. Em 4 minutos, 7 questões cronometradas mostram se o que tira seus pontos na 1ª fase da OAB é conteúdo ou execução.">
+<meta property="og:title" content="Você sabe por que está perdendo pontos na 1ª fase?">
+<meta property="og:description" content="Mini-diagnóstico gratuito de 7 questões cronometradas: separa o que você perde por não saber a matéria do que você perde na hora de decidir.">
 <meta property="og:image" content="https://sooquecai.online/assets/og.png">
 <!-- A raiz (index.html) já aponta o canonical para cá. Faltava o par: sem o canonical
      próprio, a mesma página respondia em / e em /mini-diagnostico.html sem dizer qual
@@ -518,14 +520,20 @@
     }
   };
 
-  // Lido uma vez, no carregamento. Valor desconhecido ou ausente cai em 'repete',
-  // que é o comportamento que a página já tinha: link velho, link compartilhado e
-  // tráfego orgânico continuam vendo exatamente o que viam antes.
+  // Lido uma vez, no carregamento. Valor desconhecido ou ausente cai no PADRÃO.
+  //
+  // O padrão virou 'problema' em 04/08/2026. Era 'repete', e por um motivo que valia
+  // enquanto a página de resultado era a antiga: não mudar, de uma vez, o que 100% do
+  // tráfego pago vê. Com a página unificada no ar esse motivo se inverteu — 'repete'
+  // abre prometendo a margem ("faltaram duas questões") e o resultado entrega dois
+  // fatores e qual pesa mais. Duas histórias no mesmo funil, que é exatamente a
+  // incoerência que 'problema' existe para resolver: ela abre dizendo que há dois
+  // fatores e que a maioria corrige o errado, e a página então mede os dois.
   var VARIANTE = (function(){
     try{
       var v = new URLSearchParams(location.search).get('v');
-      return (v && VARIANTES[v]) ? v : 'repete';
-    }catch(e){ return 'repete'; }
+      return (v && VARIANTES[v]) ? v : 'problema';
+    }catch(e){ return 'problema'; }
   })();
 
   // Eventos que aconteceram ANTES de o id chegar da rede. Até 03/08/2026 eles eram
