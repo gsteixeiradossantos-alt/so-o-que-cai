@@ -1275,6 +1275,14 @@
       // saber se o comportamento existe nesta base e com que frequência. Escrever a
       // página em cima de uma coisa que acontece em 3% dos casos seria escrever no vazio.
       trocas:TR.trocas, trocou_certa_errada:TR.perdeu, trocou_errada_certa:TR.salvou,
+      // 04/08: os três componentes medidos do eixo de execução, um a um, e os tempos
+      // questão a questão. Não é curiosidade: o CORTE_Y=84 foi posto por estimativa
+      // porque o eixo antigo era outra conta e os tempos individuais nunca foram
+      // gravados. Sem estas quatro colunas, a próxima calibragem seria outro palpite.
+      // 'tempos' é o que permite recalcular o eixo inteiro de novo, sobre a base real,
+      // sem precisar de mais um mês de tráfego a cada vez que uma faixa mudar.
+      eixo_ritmo:R.rit, eixo_constancia:R.cons, eixo_resistencia:R.res,
+      tempos: CONTENT.map(function(_,i){ return S.times[i]!=null? S.times[i] : null; }).join(','),
       // Qual entrada esta pessoa leu. Sem isto, variante só daria para inferir pelo
       // utm_content do anúncio, e link compartilhado ou tráfego orgânico ficariam
       // fora da conta. É o campo que responde "a entrada nova converte melhor?".
@@ -1384,28 +1392,71 @@
   // continuava fácil por dois motivos: o autorrelato tem uma alternativa obviamente
   // "certa" em cada cenário, e a faixa boa do relógio era um platô de 15 segundos, que é
   // exatamente onde cai quem lê com atenção. Resultado: não separava ninguém de ninguém.
-  // Agora são quatro componentes, e 85% deles são MEDIDOS, não declarados.
+  //
+  // ===== 04/08/2026 · DESACOPLAMENTO =====
+  // A versão de 02/08 tinha um defeito que só apareceu quando deu para medir: a nota de
+  // DECISÃO olhava o gabarito. Errar valia 0/15/35/25 e acertar valia 60/85/100/70, e
+  // decisão era 45% do eixo. Ou seja: cada acerto a mais empurrava o eixo de EXECUÇÃO
+  // para cima por aritmética, não por comportamento.
+  //
+  // Nos 124 leads reais da versão de 7 questões:
+  //     1 acerto  -> Y médio 55      corr(X,Y) = 0,60   (R² = 0,37)
+  //     2 acertos -> Y médio 58      60% da base caía no MESMO desfecho ("os dois eixos
+  //     3 acertos -> Y médio 63       cederam"), e só 6% em "execução"
+  //     4 acertos -> Y médio 69
+  //     5 acertos -> Y médio 75      A fórmula previa +4,2 pontos de Y por acerto
+  //     6 acertos -> Y médio 80      (0,45 × 65/7). O observado foi +5,0.
+  //     7 acertos -> Y médio 80      Ou seja: ~84% da relação era construção nossa.
+  //
+  // Com isso a página afirmava "o teste mede esses dois fatores separadamente" enquanto
+  // media um fator e meio. Não é exagero de copy: é uma afirmação conferível, e ela
+  // estava errada.
+  //
+  // A regra agora é dura e vale para tudo abaixo: NENHUM componente do eixo Y consulta o
+  // gabarito. Acerto vive só no eixo X. O que sobra para medir execução é o que dá para
+  // ver sem saber a resposta certa: quanto tempo levou, se o ritmo oscilou, se mudou ao
+  // longo do teste, se o tempo estourou, e o que a pessoa declara sobre o dia de prova.
+  //
+  // O que ISSO custa: quem chuta rápido e erra tudo agora sai com execução alta. É o
+  // preço certo. Essa pessoa já sai com X = 14, e a leitura honesta dela é "falta
+  // matéria", não "você é ruim nas duas coisas". Era exatamente esse duplo desconto que
+  // enchia o quadrante do meio.
+  //
+  // O que NÃO entrou, de propósito: trocar a alternativa CERTA pela ERRADA. É o sinal de
+  // execução mais puro que existe aqui (a pessoa sabia e a hora tomou dela), mas ele olha
+  // o gabarito e a coluna trocou_certa_errada nasceu em 03/08 sem nenhuma linha ainda.
+  // Pesar no eixo um comportamento cuja frequência a gente ainda não conhece é repetir o
+  // erro que este bloco está desfazendo. Ele continua na PÁGINA, como observação narrada
+  // (bloco "Ao trocar de resposta"), que é onde ele vale sem contaminar o número.
 
-  // 1) DECISÃO. Tempo cruzado com acerto, por questão. O tempo sozinho mentia: quem passa
-  // por 7 questões a 25 segundos e acerta 3 não decidiu bem, chutou num ritmo confortável.
-  function notaDecisao(t, estourou, acertou){
+  // 1) RITMO. Só o relógio, questão a questão. O que cada faixa afirma é sobre a LEITURA,
+  // não sobre o resultado dela: abaixo de 8s não deu tempo de ler o enunciado destas
+  // questões (são pegadinha escolhida para derrubar); entre 15 e 30 é leitura e decisão
+  // dentro do tempo; acima de 31 é decidir no limite; estourar é o relógio ganhando.
+  // Os valores de faixa são mais duros do que os da versão acoplada de propósito. Lá,
+  // "aceitável" valia 85 porque o gabarito já fazia o trabalho de espalhar as pessoas.
+  // Sem ele, se aceitável continuar valendo 85 o eixo inteiro se comprime entre 80 e 100
+  // e para de separar — que é o defeito oposto, e igualmente fatal.
+  function notaRitmo(t, estourou){
     if(estourou) return 0;
     if(t==null) return null;
-    if(t<10)  return acertou? 60 : 0;    // reflexo: acertar assim pode ser sorte; errar é chute
-    if(t<18)  return acertou? 85 : 15;   // rápido para pegadinha
-    if(t<=32) return acertou? 100: 35;   // leu, pesou e decidiu. Errar aqui é conteúdo, não pressão
-    return      acertou? 70 : 25;        // chegou no limite do relógio
+    if(t<8)   return 15;    // não deu para ler: marcou, não decidiu
+    if(t<14)  return 55;    // rápido para uma questão escolhida para derrubar
+    if(t<20)  return 85;
+    if(t<=28) return 100;   // leu, pesou e decidiu dentro do relógio
+    if(t<=34) return 60;    // foi até o limite
+    return 30;              // marcou raspando o fim
   }
-  function decisoes(){
+  function ritmos(){
     var out=[];
-    CONTENT.forEach(function(Q,i){
-      var n=notaDecisao(S.times[i], S.estourou[i], S.ans[i]===Q.c);
+    CONTENT.forEach(function(_,i){
+      var n=notaRitmo(S.times[i], S.estourou[i]);
       if(n!=null) out.push(n);
     });
     return out;
   }
-  function notaDecisaoMedia(){
-    var d=decisoes(); if(!d.length) return null;
+  function notaRitmoMedia(){
+    var d=ritmos(); if(!d.length) return null;
     var s=0; d.forEach(function(x){ s+=x; });
     return Math.round(s/d.length);
   }
@@ -1420,31 +1471,45 @@
     if(m<=0) return 0;
     var v=0; ts.forEach(function(t){ v+=(t-m)*(t-m); }); v/=ts.length;
     var cv=Math.sqrt(v)/m;
-    if(cv<=0.20) return 100;
-    if(cv<=0.35) return 80;
-    if(cv<=0.50) return 55;
-    if(cv<=0.70) return 30;
+    // Apertado em 04/08 junto com o desacoplamento, e agora é o componente de MAIOR peso
+    // do eixo (35%): sem o gabarito, a oscilação é o que mais distingue uma pessoa da
+    // outra. Faixas antigas: 0.20/0.35/0.50/0.70.
+    if(cv<=0.15) return 100;
+    if(cv<=0.25) return 80;
+    if(cv<=0.38) return 55;
+    if(cv<=0.55) return 30;
     return 10;
   }
 
-  // 3) RESISTÊNCIA. Na prova o que derruba é cair ao longo das 80. Aqui se compara as 3
-  // últimas contra as 3 primeiras, pela nota de DECISÃO e não pelo tempo puro, porque a
-  // queda aparece como mais erro E mais tempo ao mesmo tempo. É uma versão crua do "em
-  // que ponto o seu rendimento cai" que o produto pago mede em 24 questões.
-  function notaResistencia(){
-    var d=decisoes(); if(d.length<6) return null;
+  // 3) RESISTÊNCIA. Na prova o que derruba é cair ao longo das 80. Compara as 3 últimas
+  // contra as 3 primeiras. Até 03/08 isso era medido pela nota de DECISÃO, com a
+  // justificativa de que a queda aparece como mais erro E mais tempo junto — só que a
+  // parte "mais erro" é gabarito, e era a segunda porta pela qual o conteúdo entrava no
+  // eixo Y. Agora é DERIVA DE TEMPO pura, em termos relativos ao próprio ritmo da pessoa
+  // (quem decide em 10s e vai para 20s dobrou; quem vai de 30 para 34 não mudou nada).
+  //
+  // Devolve {n, dir}: 'lento' é o achado clássico (foi ficando mais devagar, o relógio
+  // apertando); 'rapido' é despachar o fim, que na prova é a pessoa cansando e chutando
+  // as últimas. Os dois são queda, e o texto precisa saber qual foi — dizer "seu
+  // rendimento caiu" para quem ACELEROU é uma frase que o próprio leitor desmente.
+  //
+  // Faixas largas de propósito, pelo mesmo motivo de antes: com 3 questões de cada lado,
+  // uma única questão em que a pessoa parou para pensar já move a média.
+  function resistencia(){
+    var ts=[]; CONTENT.forEach(function(_,i){ if(S.times[i]!=null) ts.push(S.times[i]); });
+    if(ts.length<6) return null;
     function med(a){ var s=0; a.forEach(function(x){ s+=x; }); return s/a.length; }
-    var delta=med(d.slice(-3))-med(d.slice(0,3));
-    // Faixas largas de propósito. Com 7 questões e 3 de cada lado, UM erro que por acaso
-    // caiu no fim já move a média em ~33 pontos. Estreitar isso faria a página acusar
-    // queda em quem só teve azar na ordem dos erros. Um erro tardio fica em 80 e não
-    // dispara nada; dois erros tardios já é padrão, e aí sim.
-    if(delta>=0)   return 100;   // não caiu, ou melhorou
-    if(delta>=-25) return 80;
-    if(delta>=-50) return 55;
-    if(delta>=-75) return 30;
-    return 10;
+    var m1=med(ts.slice(0,3)), m2=med(ts.slice(-3));
+    if(m1<=0) return null;
+    var d=(m2-m1)/m1;                       // deriva relativa
+    if(d>1.00)  return {n:15, dir:'lento'};
+    if(d>0.50)  return {n:40, dir:'lento'};
+    if(d>0.20)  return {n:70, dir:'lento'};
+    if(d>=-0.20) return {n:100, dir:null};  // manteve o ritmo
+    if(d>=-0.50) return {n:70, dir:'rapido'};
+    return {n:35, dir:'rapido'};            // despachou as últimas
   }
+  function notaResistencia(){ var r=resistencia(); return r? r.n : null; }
 
   function tempoMedio(){
     var soma=0, n=0;
@@ -1489,16 +1554,37 @@
     // alternativa obviamente "certa", e era ela que segurava o eixo lá em cima.
     var bp=0; BEHAVIOR.forEach(function(B,i){ bp += (S.beh[i]!=null?B.o[S.beh[i]][1]:0); });
     var Yrel=Math.round(bp/(BEHAVIOR.length*2)*100);
-    var dec=notaDecisaoMedia(), cons=notaConstancia(), res=notaResistencia();
-    // 45 decisão + 20 constância + 20 resistência + 15 autorrelato. 85% medido.
+    var rit=notaRitmoMedia(), cons=notaConstancia(), RES=resistencia();
+    var res=RES? RES.n : null;
+    // 25 ritmo + 35 constância + 25 resistência + 15 autorrelato. 85% medido, 0% gabarito.
+    //
+    // O ritmo perdeu peso (era 45% como "decisão") porque é o componente que menos
+    // separa: sem o gabarito, quase todo mundo cai na faixa boa de segundos e tira perto
+    // de 100. É o platô que o comentário de 02/08 já descrevia — ele não tinha sumido,
+    // estava escondido atrás do acerto. Quem separa gente de gente é a DISPERSÃO: oscilar
+    // de uma questão para outra e derivar ao longo do teste. Somadas, elas são 60% do eixo.
+    //
     // Cada peso que falta (por falta de dado) é redistribuído entre os que sobraram,
     // para o eixo nunca sair menor só porque um componente não pôde ser calculado.
-    var partes=[[dec,0.45],[cons,0.20],[res,0.20],[Yrel,0.15]];
+    // TETO DE DEGENERESCÊNCIA. Achado no banco de prova do motor novo, e é um defeito que
+    // só existe depois de tirar o gabarito: constância e resistência medem REGULARIDADE, e
+    // quem chuta as sete em 5 segundos é perfeitamente regular. Sem trava, esse perfil
+    // tirava constância 80, resistência 100 e saía com execução 64 — acima de quem travou
+    // e oscilou de verdade. O mesmo valia para quem decide no fio do relógio nas sete.
+    //
+    // A regra: regularidade só conta como firmeza se o ritmo couber num ritmo de decisão.
+    // Abaixo disso ela não é evidência de execução, é evidência de não ter feito a tarefa.
+    if(rit!=null && rit<55){
+      var teto=rit+20;
+      if(cons!=null) cons=Math.min(cons,teto);
+      if(res!=null)  res =Math.min(res, teto);
+    }
+    var partes=[[rit,0.25],[cons,0.35],[res,0.25],[Yrel,0.15]];
     var soma=0, peso=0;
     partes.forEach(function(p){ if(p[0]!=null){ soma+=p[0]*p[1]; peso+=p[1]; } });
     var Y = peso? Math.round(soma/peso) : Yrel;
-    return {X:X,Y:Y,c:c,Yrel:Yrel,dec:dec,cons:cons,res:res,tmed:tempoMedio(),
-            estourou:estourouQuantas(), fora:segundosFora()};
+    return {X:X,Y:Y,c:c,Yrel:Yrel,rit:rit,cons:cons,res:res,resDir:(RES?RES.dir:null),
+            tmed:tempoMedio(), estourou:estourouQuantas(), fora:segundosFora()};
   }
 
   // Os cortes, terceira calibragem, agora em cima de DADO REAL e não de estimativa.
@@ -1519,7 +1605,39 @@
   // ATENÇÃO ao mexer aqui: baixar o CORTE_X faz 'forte' deixar de significar "acertou
   // as sete". Por isso 'forte' NÃO depende mais do corte, e sim de não ter perdido
   // nenhuma. Todo texto que diz "você acertou tudo" está pendurado em 'forte'.
-  var CORTE_X=71, CORTE_Y=72;
+  // 04/08 · CORTE_Y sobe de 72 para 84, e este número é PROVISÓRIO. Vale registrar por
+  // que, porque é o ponto fraco do desacoplamento e ele não deve ficar escondido.
+  //
+  // O CORTE_Y=72 foi calibrado contra os 12 e depois os 124 leads reais. Só que aquele Y
+  // era outra conta: 45% dele vinha do gabarito, e era dali que vinha boa parte do
+  // espalhamento. O Y novo não pode ser recalculado para os leads antigos (os tempos
+  // questão a questão nunca foram gravados, só a média), então a distribuição nova é,
+  // hoje, desconhecida. Manter 72 seria o pior dos mundos: corte de uma escala aplicado
+  // a outra, e quase todo mundo sairia "firme".
+  //
+  // O 84 foi posto por DOIS âncoras fracas, e é bom que se saiba que são fracas:
+  //   1. Onde o corte deve cair entre os perfis-modelo, que é decisão de projeto e não
+  //      palpite sobre a base. Quem responde 17,28,14,31,22,19,26 (variação real, sem
+  //      estouro e sem deriva) tira 74: os tempos dobram de uma questão para outra, e em
+  //      80 questões é exatamente esse balanço que estoura o relógio. Isso NÃO é firme.
+  //      Quem responde 22,19,26,21,24,20,23 tira 92, e isso é firme. O corte fica entre
+  //      os dois.
+  //   2. Uma população simulada de 500 (mediana 77, p75 85). Simulada é a palavra: a
+  //      forma da distribuição é invenção minha, não medição. Serve só para conferir que
+  //      o corte não caiu num extremo.
+  //
+  // O risco é o de sempre, e a história deste arquivo já o cometeu nas duas direções:
+  // corte que ninguém alcança e corte que todo mundo alcança não separam nada.
+  //
+  // COMO CORRIGIR DE VERDADE, em cinco minutos, quando houver ~60 leads no motor novo:
+  //   select percentile_cont(0.5) within group (order by eixo_pressao)
+  //     from leads where total_questoes = 7 and criado_em > '2026-08-04';
+  // e pôr o CORTE_Y na mediana. Os componentes vão gravados um a um (eixo_ritmo,
+  // eixo_constancia, eixo_resistencia) justamente para essa conferência: se um deles
+  // estiver colado no teto para todo mundo, o problema é a faixa dele, não o corte. E a
+  // coluna 'tempos' permite refazer a conta inteira sobre a base real, sem esperar mais
+  // um mês de tráfego a cada faixa que mudar.
+  var CORTE_X=71, CORTE_Y=84;
 
   // ===== A DISTÂNCIA =====
   // Substituiu o quadrante como manchete em 02/08/2026, depois da varredura de dores
@@ -1532,10 +1650,17 @@
   // e passa a dizer QUANTO ela perdeu e ONDE. O número é dela, então discrimina
   // sozinho, sem depender de acertar corte nenhum.
   //
-  // A separação matéria x execução não é retórica, é a mesma régua que notaDecisao()
-  // já usa: errar uma pegadinha depois de 18 segundos é ter lido, pesado e errado, o
-  // que é conteúdo. Errar em menos de 18 é não ter lido direito, o que é execução.
-  // Tempo estourado é execução por definição.
+  // A separação matéria x execução aqui é por QUESTÃO PERDIDA: errar uma pegadinha depois
+  // de 18 segundos é ter lido, pesado e errado, o que é conteúdo. Errar em menos de 18 é
+  // não ter lido direito, o que é execução. Tempo estourado é execução por definição.
+  //
+  // Este bloco OLHA O GABARITO, e isso está certo: ele não é o eixo Y, é a repartição das
+  // questões que a pessoa perdeu, e questão perdida só existe contra o gabarito. O
+  // desacoplamento de 04/08 vale para o EIXO de execução, que agora não consulta acerto
+  // nenhum. São duas perguntas diferentes e é de propósito que os limiares não batam:
+  // aqui a pergunta é "deu tempo de ler e pesar?" (18s, leitura generosa); no notaRitmo a
+  // pergunta é "esse ritmo foi bom?" (14 a 19s é aceitável, 20 a 28 é a faixa boa).
+  // Quinze segundos podem ser suficientes para ter lido e ainda assim um ritmo mediano.
   function perdaSeparada(){
     // Trava contra a leitura absurda, encontrada no teste com os leads reais: o
     // Deocleciano acertou 1 de 7 respondendo em 11 segundos, e a regra crua devolvia
@@ -1724,7 +1849,12 @@
   function causaPressao(r){
     if(!r) return 'o relógio te cobrou';
     if(r.estourou) return 'em '+r.estourou+(r.estourou>1?' questões o tempo acabou antes de você marcar':' questão o tempo acabou antes de você marcar');
-    if(r.res!=null && r.res<=55) return 'o seu rendimento caiu nas três últimas em relação às três primeiras';
+    // 04/08: a resistência virou deriva de TEMPO, e ela tem duas direções. Dizer
+    // "o seu rendimento caiu" para quem acelerou no fim é uma frase que o próprio
+    // leitor desmente olhando o bloco do relógio logo abaixo.
+    if(r.res!=null && r.res<=55) return r.resDir==='rapido'
+      ? 'você despachou as três últimas bem mais rápido do que as três primeiras'
+      : 'você foi ficando mais lento: as três últimas levaram bem mais tempo que as três primeiras';
     if(r.cons!=null && r.cons<=55) return 'o seu ritmo oscilou demais de uma questão para outra';
     if(r.tmed!=null && r.tmed>=33) return 'você decidiu no limite do relógio, questão após questão';
     if(r.tmed!=null && r.tmed<10) return 'você decidiu rápido demais para quem está lendo questão difícil';
@@ -2120,7 +2250,8 @@
     // regra do relógio: página que argumenta soa insegura e abre a porta para "na prova
     // eu teria mais tempo".
     var est=estourouQuantas(), fora=segundosFora(), lin=null, ruim=false;
-    var cons=notaConstancia(), res=notaResistencia(), tm=tempoMedio();
+    var cons=notaConstancia(), RES=resistencia(), tm=tempoMedio();
+    var res=RES? RES.n : null;
     var rapErr=null;
     CONTENT.forEach(function(Q,i){
       if(S.times[i]!=null && !S.estourou[i] && S.ans[i]!==Q.c && S.times[i]<=15 &&
@@ -2130,10 +2261,14 @@
       ruim=true;
       lin='O tempo acabou antes de você marcar em <b>'+est+'</b> '+(est>1?'questões':'questão')+'. Na prova, questão não respondida vale o mesmo que questão errada.';
     } else if(res!=null && res<=55){
-      // A queda ao longo do teste é o achado mais vendável daqui: é a prova, com o número
-      // da própria pessoa, de que o problema aparece com o tempo de prova.
+      // A deriva ao longo do teste é o achado mais vendável daqui: é a prova, com o número
+      // da própria pessoa, de que o problema aparece com o tempo de prova. 04/08: agora é
+      // deriva de TEMPO (não de acerto), então a frase precisa dizer o que foi medido de
+      // verdade, e em qual das duas direções.
       ruim=true;
-      lin='Você foi pior nas três últimas do que nas três primeiras. E aqui foram sete questões, não oitenta.';
+      lin = RES.dir==='rapido'
+        ? 'Suas três últimas saíram bem mais rápido do que as três primeiras. Acelerar no fim não é ganhar ritmo: é parar de conferir. E aqui foram sete questões, não oitenta.'
+        : 'Suas três últimas levaram bem mais tempo do que as três primeiras. O relógio já estava pesando no fim de sete questões, não de oitenta.';
     } else if(cons!=null && cons<=55){
       ruim=true;
       lin='Seu ritmo oscilou muito de uma questão para outra: em umas você decidiu quase na hora, em outras quase no limite. Não é lentidão, é irregularidade.';
@@ -2177,7 +2312,10 @@
   }
   function barraPressao(r){
     var alto=r.Y>=CORTE_Y;
-    var txt = alto? 'Firme' : (r.Y>=55? 'Irregular' : 'Instável');
+    // O 65 subiu junto com o CORTE_Y (era 55, quando o corte era 72). Rótulo intermediário
+    // precisa dividir a faixa que sobra, senão "Irregular" engole tudo abaixo do corte e a
+    // barra passa a dizer a mesma coisa para quem oscilou de leve e para quem chutou tudo.
+    var txt = alto? 'Firme' : (r.Y>=65? 'Irregular' : 'Instável');
     return {rot:'Firmeza sob o relógio', v:txt, cls:(alto?'ok':'no'), w:Math.max(6,Math.round(r.Y*0.96))};
   }
 
@@ -2339,7 +2477,10 @@
           ? 'As duas pontas cederam num grau parecido: a matéria em si e a firmeza para decidir com o tempo correndo.'
           : (maior==='conteúdo'
               ? 'As duas pontas cederam, e a matéria cedeu mais: a diferença entre elas aparece nas respostas que você errou tendo tempo de sobra.'
-              : 'As duas pontas cederam, e o que mais custou foi a execução: você errou mais no fim do relógio do que no começo dele.')};
+              // 04/08: dizia "você errou mais no fim do relógio do que no começo dele".
+              // Era herança do eixo acoplado, e agora o eixo de execução não olha acerto
+              // nenhum — a frase afirmava uma medição que não existe mais.
+              : 'As duas pontas cederam, e o que mais custou foi a execução: não é o quanto você acertou, é o jeito como o relógio mexeu com você de uma questão para outra.')};
     }
     if(cBaixo) return {
       nome:'conteúdo',
@@ -2348,7 +2489,7 @@
     if(pBaixo) return {
       nome:'execução',
       h1:'Hoje, o que mais tirou seus pontos foi a <em>execução da prova</em>.',
-      exp:'A matéria você tem. O que aparece nas suas respostas é o que acontece com ela sob o relógio: hesitação, decisão apressada, e o ponto que escapa por isso.'};
+      exp:'A matéria você tem. O que o teste pegou foi o relógio: o ritmo com que você decidiu, o quanto ele oscilou de uma questão para outra e o que mudou do começo para o fim.'};
     // "É o melhor resultado que este teste dá — e também o de menor alcance, porque uma
     // questão por matéria não alcança as outras 11" saiu do hero em 03/08: o alcance do
     // teste é a pergunta da seção 4, e antecipá-la aqui esvazia a seção inteira.
