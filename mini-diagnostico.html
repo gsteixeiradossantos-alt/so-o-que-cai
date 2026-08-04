@@ -2589,18 +2589,34 @@
     });
   }
 
-  // Barra fixa: só depois de 1,2 tela rolada, quando o primeiro CTA já saiu de vista.
+  // Barra fixa: só depois de a pessoa ter passado pela seção da oferta (04/08/2026).
+  //
+  // A régua anterior era rolagem pura: 1,2 tela e a barra subia. O #oferta fica muito
+  // mais abaixo que isso, então a barra aparecia ANTES da oferta e colhia o clique de
+  // quem ainda não sabia o que estava comprando. Não é teoria, é o que o banco mostrou:
+  // dos 13 leads que clicaram em comprar até aqui, 9 clicaram nela (`buy3`) e 6 estavam
+  // com `viu_oferta_em` nulo. A mediana entre virar lead e clicar era 1min13, e nenhum
+  // desses cliques virou venda. O único que comprou levou 11min28 e leu a página.
+  //
+  // Duas consequências, e a segunda é a que importa mais:
+  // 1. O clique volta a significar "li a oferta e quero", em vez de "vi um botão".
+  // 2. O InitiateCheckout é o alvo de otimização da campanha. Enquanto ele disparava
+  //    para quem só rolou 1,2 tela, a Meta estava aprendendo a caçar quem aperta botão,
+  //    não quem paga. Limpar o evento aqui é limpar o que a Meta aprende lá.
+  //
+  // Sem listener de rolagem: quem decide agora é o marcarOferta(), que já tem o seu.
+  // Uma vez revelada, a barra fica — a pessoa já viu a oferta, e a barra passa a ser
+  // o atalho de volta para o preço, que é a função para a qual ela foi feita.
+  var OFERTA_VISTA=false, revelarBarra=function(){};
   function ligarBarraFixa(){
-    var stk=document.getElementById('stk'), visivel=false;
-    if(!stk) return;
-    function checarBarra(){
-      var deve = window.scrollY > window.innerHeight*1.2;
-      if(deve!==visivel){ visivel=deve; stk.className='sticky'+(deve?' on':''); }
-    }
-    if(window._stk) window.removeEventListener('scroll', window._stk);
-    window._stk=checarBarra;
-    window.addEventListener('scroll', checarBarra, {passive:true});
-    checarBarra();
+    var stk=document.getElementById('stk');
+    if(!stk){ revelarBarra=function(){}; return; }
+    // A régua antiga deixava um listener de scroll por render. Ele não existe mais,
+    // mas uma renderização anterior pode ter deixado o dela pendurada na window.
+    if(window._stk){ window.removeEventListener('scroll', window._stk); window._stk=null; }
+    revelarBarra=function(){ stk.className='sticky on'; };
+    // Volta para a tela de solução depois de já ter visto a oferta: aparece de imediato.
+    if(OFERTA_VISTA) revelarBarra();
   }
 
   // ===== TELA 1: DIAGNÓSTICO =====
@@ -2852,6 +2868,10 @@
     var alvo=document.getElementById('oferta'), marcou=false;
     function marcarOferta(){
       if(marcou) return; marcou=true;
+      // A barra fixa é consequência disto, não de um tanto de rolagem. Ver a nota em
+      // ligarBarraFixa(): antes ela subia com 1,2 tela e colhia clique de quem nunca
+      // tinha chegado até aqui.
+      OFERTA_VISTA=true; revelarBarra();
       marcarPasso('oferta');
       if(typeof fbq!=='undefined'){
         try{ fbq('track','ViewContent',{content_name:'oferta',value:47,currency:'BRL'}); }catch(e){}
