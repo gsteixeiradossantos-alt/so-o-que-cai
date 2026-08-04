@@ -17,8 +17,8 @@ crava qual pesa mais; se a diferença for menor que 8 pontos, sai "em partes par
 1. **Você acertou 7 de 7. Excelente resultado.**
 2. **Hoje, o que mais tirou seus pontos foi conteúdo.**
 3. **Hoje, o que mais tirou seus pontos foi a execução da prova.**
-4. **Hoje você perde ponto por conteúdo e por execução — e conteúdo pesa mais.**
-5. **Hoje você perde ponto por conteúdo e por execução — e execução pesa mais.**
+4. **Hoje você perde ponto por conteúdo e por execução , e conteúdo pesa mais.**
+5. **Hoje você perde ponto por conteúdo e por execução , e execução pesa mais.**
 6. **Hoje você perde ponto por conteúdo e execução, em partes parecidas.**
 
 ---
@@ -65,7 +65,7 @@ Três desfechos por momento: acertou tudo · a matéria estava boa mas a execuç
 
 - Você ainda não prestou e acabou de ver o melhor resultado que este teste dá.
 - Você ainda não prestou, e o que te cobrou aqui não foi a matéria: foi a hora, no conforto de casa. No dia são 80 questões, cinco horas e a sala cheia. Ninguém nunca te cronometrou, e é isso que a prova faz primeiro.
-- Você ainda não prestou, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas e sem as outras 11 matérias no meio. Não é culpa sua e não é falta de estudo — a faculdade ensina o Direito inteiro em cinco anos, e a OAB cobra um pedaço pequeno dele em cinco horas. São duas coisas diferentes, e ninguém avisa.
+- Você ainda não prestou, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas e sem as outras 11 matérias no meio. Não é culpa sua e não é falta de estudo: a faculdade ensina o Direito inteiro em cinco anos, e a OAB cobra um pedaço pequeno dele em cinco horas. São duas coisas diferentes, e ninguém avisa.
 
 **Não passei na 1ª fase (uma vez)**
 
@@ -81,7 +81,7 @@ Três desfechos por momento: acertou tudo · a matéria estava boa mas a execuç
 
 **Passei na 1ª fase, parei na 2ª**
 
-- Você já venceu a 1ª fase, e acabou de mostrar que continua vencendo: acertou tudo. Então seja franco com você mesmo — o que te separa da carteira hoje é a 2ª fase, e não é disso que este teste trata.
+- Você já venceu a 1ª fase, e acabou de mostrar que continua vencendo: acertou tudo. Então seja franco com você mesmo: o que te separa da carteira hoje é a 2ª fase, e não é disso que este teste trata.
 - Você já venceu a 1ª fase, e a matéria aqui não foi o problema. O que apareceu foi a hora, e isso atravessa as duas fases: a 2ª também é cronometrada, e lá não existe alternativa para marcar.
 - Você já venceu a 1ª fase uma vez, mas hoje, sem consulta e com o relógio correndo, ela cobrou. Isso costuma ser tempo parado, e não perda do que você sabia: quem foca na 2ª passa meses sem tocar no conteúdo da 1ª.
 

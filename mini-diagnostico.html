@@ -1660,10 +1660,10 @@
       // resta — essa pessoa pode estar a três anos ou a três semanas da prova, e
       // "você está cedo" faz metade dela desconectar na hora.
       ponto = forte
-        ? 'Você ainda não prestou e acabou de ver o melhor resultado que este teste dá. O que ele não mede é o que acontece com esse acerto na questão 40, com três horas de prova nas costas — e é exatamente aí que pega quem sabe a matéria, justamente porque nunca foi medido.'
+        ? 'Você ainda não prestou e acabou de ver o melhor resultado que este teste dá. O que ele não mede é o que acontece com esse acerto na questão 40, com três horas de prova nas costas, e é exatamente aí que pega quem sabe a matéria, justamente porque nunca foi medido.'
         : sabe
         ? 'Você ainda não prestou, e o que te cobrou aqui não foi a matéria: foi a hora, no conforto de casa. No dia são 80 questões, cinco horas e a sala cheia. Ninguém nunca te cronometrou, e é isso que a prova faz primeiro.'
-        : 'Você ainda não prestou, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas e sem as outras 11 matérias no meio. Não é culpa sua e não é falta de estudo — a faculdade ensina o Direito inteiro em cinco anos, e a OAB cobra um pedaço pequeno dele em cinco horas. São duas coisas diferentes, e ninguém avisa.';
+        : 'Você ainda não prestou, e acabou de ver esse resultado no conforto de casa: sem sala cheia, sem cinco horas e sem as outras 11 matérias no meio. Não é culpa sua e não é falta de estudo: a faculdade ensina o Direito inteiro em cinco anos, e a OAB cobra um pedaço pequeno dele em cinco horas. São duas coisas diferentes, e ninguém avisa.';
       titulo = (forte||sabe)? 'Medir isso antes do dia' : 'Saber desde já em qual matéria você perde ponto';
       texto = (forte||sabe)? (faltam()+DIAG)
         : (DIAG + ' A maioria reprova sem nunca saber onde perdeu. Você acabou de descobrir que dá para saber antes.');
@@ -1674,7 +1674,7 @@
       // — ela já passou. O que sobra é verdadeiro e menor: tempo parado enferruja, e
       // se ela precisar refazer a 1ª, o que passou antes não passa sozinho de novo.
       ponto = forte
-        ? 'Você já venceu a 1ª fase, e acabou de mostrar que continua vencendo: acertou tudo. Então seja franco com você mesmo — o que te separa da carteira hoje é a 2ª fase, e não é disso que este teste trata.'
+        ? 'Você já venceu a 1ª fase, e acabou de mostrar que continua vencendo: acertou tudo. Então seja franco com você mesmo: o que te separa da carteira hoje é a 2ª fase, e não é disso que este teste trata.'
         : sabe
         ? 'Você já venceu a 1ª fase, e a matéria aqui não foi o problema. O que apareceu foi a hora, e isso atravessa as duas fases: a 2ª também é cronometrada, e lá não existe alternativa para marcar.'
         : 'Você já venceu a 1ª fase uma vez, mas hoje, sem consulta e com o relógio correndo, ela cobrou. Isso costuma ser tempo parado, e não perda do que você sabia: quem foca na 2ª passa meses sem tocar no conteúdo da 1ª.';
@@ -2062,7 +2062,7 @@
         nome:'conteúdo e execução',
         h1: quase
           ? 'Hoje você perde ponto por <em>conteúdo e execução</em>, em partes parecidas.'
-          : 'Hoje você perde ponto por conteúdo e por execução — e <em>'+maior+'</em> pesa mais.',
+          : 'Hoje você perde ponto por conteúdo e por execução, e <em>'+maior+'</em> pesa mais.',
         // Só o que a MEDIÇÃO diz. O princípio ("treinar só estratégia não recupera ponto
         // que falta de conteúdo") saiu daqui em 03/08: ele estava aqui E na abertura da
         // seção 2, quase palavra por palavra, porque as duas foram escritas no mesmo dia
@@ -2337,7 +2337,7 @@
           stackOferta()+bonusKit()+
           '<div class="fecho-obj">O objetivo não é fazer você estudar mais. É fazer você estudar o que precisa, e fazer a prova com uma estratégia melhor.</div>'+
           C.PAGA+
-          '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir — R$ 47</a>'+
+          '<a class="rbtn" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
           '<div class="rmicro">'+C.MICRO+'</div>'+
         '</div>'+
 
@@ -2364,7 +2364,7 @@
           '<h3>Faça o diagnóstico inteiro.<br>Só depois decida se valeu.</h3>'+
           '<p>Se em até 7 dias você concluir que ele não trouxe valor para a sua preparação, basta pedir o reembolso. Sem perguntas e sem discussão. O risco é meu, não seu.</p>'+
           C.PAGA+
-          '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir — R$ 47</a>'+
+          '<a class="rbtn" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
           '<div class="rmicro">'+C.MICRO_FIM+'</div>'+
         '</div>'+
 
