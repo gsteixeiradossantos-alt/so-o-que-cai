@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 <!-- ===== FACEBOOK PIXEL ===== -->
 <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -48,45 +48,53 @@
 </script>
 <!-- ===== fim Clarity ===== -->
 <style>
-  /* ===== TOKENS (handoff "Página de Vendas v2", 04/08/2026) =====
-     A paleta saiu do bege/ocre para navy/dourado/laranja, e a tipografia de
-     Spectral+Hanken+Space Mono para Source Serif 4 + Source Sans 3 + Cinzel.
-     Os NOMES das variáveis foram mantidos de propósito: aparecem em centenas de
-     regras, e renomear só para trocar valor seria risco sem ganho nenhum.
-       --navy   virou o navy principal do design (#14304A)
-       --ocre   virou o dourado escuro dos eyebrows em fundo claro (#B07B1E)
-       --ocre2  virou o laranja de ação (#E07B39)
-     Os tokens NOVOS (--navy2, --gold, --laranja2, --azul, --sec) são os que o
-     design introduziu e não tinham equivalente. */
+  /* ===== TOKENS =====
+     A ESTRUTURA da página de vendas vem do handoff "Página de Vendas v2" (04/08/2026),
+     mas COR, LOGO e TIPOGRAFIA são os da marca, e não os do handoff. O handoff propunha
+     navy/dourado/laranja com Source Serif 4 + Source Sans 3 + Cinzel; aplicado, isso
+     deixava o mini-diagnóstico como a única página do site nessa linguagem — landing,
+     oferta, metodologia e a área de membros inteira seguem em bege/ocre com
+     Spectral + Hanken Grotesk + Space Mono. A quebra apareceria nos dois piores
+     lugares: na entrada (landing -> diagnóstico) e logo depois de pagar
+     (checkout -> área de membros).
+     Os tokens abaixo são os originais da marca. Os quatro do fim existem porque a
+     estrutura nova pede papéis que a paleta não nomeava, e todos derivam do que já
+     havia: nenhuma cor nova entrou. */
   :root{
-    --paper:#F7F4EE; --card:#FFFFFF; --ink:#14304A; --muted2:#5B6B78; --muted:#A39B8A;
-    --line:#E3DCCD; --navy:#14304A; --navy2:#0E2233; --gold:#F0B429;
-    --ocre:#B07B1E; --ocre2:#E07B39; --laranja2:#C9662A; --azul:#BFDCEE;
-    --green:#4E7A4E; --green2:#3D663D; --sec:#5B6B78;
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
+    --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E; --ocre2:#C77A2B; --green:#3A7A5C;
     --red:#C0271A; --red2:#E8B4AE; --red3:#8E1A10;
+    /* Tokens que a estrutura nova pede e que a identidade do site não tinha nome para.
+       Todos derivam da paleta existente, não trazem cor nova:
+         --navy2  navy um tom abaixo, para o CTA final se destacar do resto
+         --gold   o ocre claro, que já era o ponto de destaque da marca
+         --azul   o cinza-azulado que a marca já usava para texto sobre navy
+         --sec    apelido de --muted2, porque o design chama de "secundário" */
+    --navy2:#0F1920; --gold:#C77A2B; --laranja2:#8C4D18; --azul:#B9BEC4;
+    --green2:#2C5C44; --sec:#574F45;
   }
   *{box-sizing:border-box;margin:0}
-  body{background:var(--paper);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
   a{color:var(--ocre)} a:hover{color:#8F6114}
   ::selection{background:var(--gold);color:var(--navy)}
   .wrap{max-width:560px;margin:0 auto;padding:40px 22px 64px}
   .brand{display:flex;align-items:center;gap:10px;margin-bottom:28px}
   .logo{display:flex;align-items:center}
   .logo svg{display:block;border-radius:8px}
-  .word{font-family:'Source Serif 4',serif;font-weight:600;font-size:21px}
-  .tag{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  h1{font-family:'Source Serif 4',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
+  .word{font-family:'Spectral',serif;font-weight:600;font-size:21px}
+  .tag{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
   h1 em{font-style:italic;color:var(--ocre)}
   .lead{font-size:16px;color:var(--muted2);margin-bottom:8px}
-  .prog{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
-  .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted2)}
+  .prog{font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+  .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted2)}
   .clock i{width:7px;height:7px;border-radius:50%;background:var(--ocre);animation:pulse 1s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
   /* Cronômetro regressivo. Era um relógio crescente de 11px escondido na barra de
      progresso: sumia na tela. Agora é o elemento mais visível da questão, porque a
      pressão do relógio é metade do que este teste mede. */
   .timer{text-align:center;margin-bottom:16px}
-  .timer .num{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:40px;line-height:1;
+  .timer .num{font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1;
     color:var(--red);font-variant-numeric:tabular-nums;display:inline-block;
     transition:transform .18s ease}
   .timer .bar{height:6px;border-radius:3px;background:var(--red2);overflow:hidden;margin-top:10px}
@@ -100,7 +108,7 @@
   @keyframes tictac{0%,100%{transform:scale(1.08)}50%{transform:scale(1.26)}}
   .timer.urgente .num{transform:scale(1.15);animation:tictac .9s infinite}
   .timer.urgente .bar i{background:var(--red3)}
-  .timer .rule{font-family:'Source Sans 3',sans-serif;font-size:9.5px;letter-spacing:.09em;
+  .timer .rule{font-family:'Hanken Grotesk',sans-serif;font-size:9.5px;letter-spacing:.09em;
     text-transform:uppercase;color:var(--muted);margin-top:8px}
   /* Progresso. Antes era uma linha cinza de 9,5px embaixo de um número vermelho de 40px:
      sumia. Só que saber que falta pouco é justamente o que segura quem cansa na quinta
@@ -112,7 +120,7 @@
   .confia{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:20px}
   .confia .autor{margin-top:0;background:none;border:none;padding:0;border-radius:0}
   .confia .dep{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted2);line-height:1.55}
-  .confia .dep .quem{display:block;margin-top:7px;font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .confia .dep .quem{display:block;margin-top:7px;font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .confia .gar{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted2);line-height:1.55}
   .confia .gar b{color:var(--green)}
   /* Tabela de custo, duas colunas. A esquerda é longa e cara, a direita é curta e barata:
@@ -123,17 +131,17 @@
   .custo .lin>div{padding:11px 13px;font-size:13.5px;line-height:1.42}
   .custo .lin>div:first-child{border-right:1px solid var(--line);color:var(--muted2)}
   .custo .lin>div:last-child{color:var(--ink);font-weight:500}
-  .custo .cab>div{font-family:'Source Sans 3',sans-serif;font-size:9.5px;letter-spacing:.08em;
+  .custo .cab>div{font-family:'Hanken Grotesk',sans-serif;font-size:9.5px;letter-spacing:.08em;
     text-transform:uppercase;padding:9px 13px;font-weight:700}
   .custo .cab>div:first-child{background:#F7E8E5;color:var(--red3)}
   .custo .cab>div:last-child{background:#E9F1EA;color:var(--green)}
   /* CTA enxuto logo depois do veredito. O preço só aparecia no 6º bloco de 7. */
   .ctaslim{margin:18px 0 6px}
-  .ctaslim .price{font-family:'Source Sans 3',sans-serif;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+  .ctaslim .price{font-family:'Hanken Grotesk',sans-serif;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
   .timer .prog7{display:flex;gap:4px;justify-content:center;margin-bottom:9px}
   .timer .prog7 i{width:18px;height:3px;border-radius:2px;background:var(--line)}
   .timer .prog7 i.ok{background:var(--ink)}
-  .timer .conta{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:.07em;
+  .timer .conta{font-family:'Hanken Grotesk',sans-serif;font-size:12px;letter-spacing:.07em;
     text-transform:uppercase;color:var(--ink);margin-bottom:6px}
   /* Cor sozinha não pode carregar o sinal, por daltonismo: o tamanho, a barra drenando
      e o próprio número já carregam em paralelo. Aqui só se desliga o movimento. */
@@ -163,10 +171,10 @@
   .load .tr i{display:block;height:100%;width:4%;border-radius:99px;
               background:linear-gradient(90deg,var(--ocre),var(--ocre2));
               transition:width .85s cubic-bezier(.35,0,.25,1)}
-  .load .pe{margin-top:22px;font-family:'Source Sans 3',sans-serif;font-size:11px;
+  .load .pe{margin-top:22px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;
             letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .qmat{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
+  .qmat{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
   .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
   .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.12s}
   .opt:hover{border-color:var(--ocre2)}
@@ -202,27 +210,32 @@
 
   .vtopo{background:var(--navy2);color:var(--paper);display:flex;justify-content:space-between;
          align-items:center;padding:14px 24px;gap:12px}
-  .vtopo .wm{font-family:'Cinzel',serif;font-weight:600;font-size:16px;letter-spacing:3px}
-  .vtopo .tg{font-size:12px;letter-spacing:2.5px;color:var(--azul);text-transform:uppercase}
+  .vtopo .wm{display:flex;align-items:center;gap:10px;font-family:'Spectral',serif;
+             font-weight:600;font-size:19px}
+  .vtopo .wm svg{display:block;border-radius:7px;flex:none}
+  .vtopo .tg{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+             color:var(--azul);text-transform:uppercase}
 
   /* ---- hero ---- */
   .vhero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);
          color:var(--paper);padding:56px 24px 64px}
   .vhero .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-  .vhero h1{font-family:'Source Serif 4',Georgia,serif;font-size:38px;line-height:1.2;
+  .vhero h1{font-family:'Spectral',Georgia,serif;font-size:38px;line-height:1.2;
             font-weight:700;text-wrap:pretty;margin:0}
   .vhero h1 em{font-style:italic;color:var(--gold)}
-  .eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:var(--ocre)}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;
+           text-transform:uppercase;font-weight:700;color:var(--ocre)}
   .eyebrow.gold{color:var(--gold)}
   .placar{display:flex;gap:16px;flex-wrap:wrap;align-items:stretch}
   /* O placar é cartão dourado porque é o número que a pessoa veio buscar: tem que
      ser a primeira coisa que o olho encontra depois da manchete. */
-  .placar .nota{flex:0 0 auto;background:var(--gold);color:var(--navy);border-radius:10px;
+  .placar .nota{flex:0 0 auto;background:var(--gold);color:var(--paper);border-radius:10px;
                 padding:20px 28px;display:flex;flex-direction:column;justify-content:center;
                 align-items:center;gap:2px}
-  .placar .nota .n{font-family:'Source Serif 4',Georgia,serif;font-size:52px;font-weight:700;line-height:1}
+  .placar .nota .n{font-family:'Spectral',Georgia,serif;font-size:52px;font-weight:700;line-height:1}
   .placar .nota .n span{font-size:26px;font-weight:400}
-  .placar .nota .lb{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+  .placar .nota .lb{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;
+                    text-transform:uppercase;font-weight:700}
   .placar .eixos{flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px}
   .placar .eixo{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
                 border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;
@@ -231,21 +244,23 @@
                   border-radius:4px;white-space:nowrap}
   .placar .eixo b.laranja{background:var(--ocre2);color:#fff}
   .placar .eixo b.azul{background:var(--azul);color:var(--navy)}
+  .placar .eixo b.laranja{background:var(--ocre);color:#fff}
   .vhero .lede{font-size:17px;line-height:1.6;color:var(--azul);max-width:600px;margin:0}
   .vhero .lede strong{color:var(--paper)}
   .vhero .lede.margem{font-size:15px;opacity:.85}
-  .vhero .micro{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(191,220,238,.6)}
+  .vhero .micro{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.13em;
+                text-transform:uppercase;color:rgba(185,190,196,.62)}
 
   /* ---- resumo flutuante ---- */
   .vresumo{max-width:760px;margin:-28px auto 0;padding:0 24px;position:relative;z-index:2}
   .cardres{background:var(--card);border:1px solid var(--line);border-radius:12px;
            box-shadow:0 8px 24px rgba(14,34,51,.10);padding:20px 24px;display:flex;
            justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .cardres .t{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .cardres .t{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:700}
   .cardres .s{font-size:14px;color:var(--sec);margin-top:4px}
 
   /* ---- botões ---- */
-  .btn-lar{display:inline-block;background:var(--ocre2);color:#fff;text-decoration:none;
+  .btn-lar{display:inline-block;background:var(--ocre);color:#fff;text-decoration:none;
            font-weight:700;font-size:15px;padding:12px 22px;border-radius:8px;
            white-space:nowrap;border:none;cursor:pointer;transition:.15s;text-align:center}
   .btn-lar:hover{background:var(--laranja2);color:#fff}
@@ -255,24 +270,24 @@
   .vsec{margin:0 auto;padding:56px 24px 8px;display:flex;flex-direction:column;gap:20px}
   .vsec.estreita{max-width:680px}
   .vsec.larga{max-width:960px}
-  .vsec h2{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
+  .vsec h2{font-family:'Spectral',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
   .vsec h2.grande{font-size:32px}
   .vsec h2.apos{margin-top:12px}
   .vsec .p{font-size:17px;line-height:1.65;margin:0}
   .vsec .p.sec{color:var(--sec)}
   .callout{background:var(--card);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;
-           padding:16px 20px;font-family:'Source Serif 4',Georgia,serif;font-size:19px;
+           padding:16px 20px;font-family:'Spectral',Georgia,serif;font-size:19px;
            font-weight:600;line-height:1.45}
   .obsgrid{display:flex;flex-direction:column;gap:12px}
   .obs{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
        display:flex;gap:14px;align-items:flex-start}
-  .obs i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  .obs i{font-style:normal;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;
          text-transform:uppercase;color:var(--ocre2);flex:0 0 84px;padding-top:3px}
   .obs p{font-size:15px;line-height:1.55;color:var(--sec);margin:0}
 
   /* ---- gabarito ---- */
   .gab{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .gab .mat{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  .gab .mat{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
             color:var(--ocre);padding:16px 18px 0}
   .gab .q{font-size:16px;line-height:1.5;font-weight:600;padding:8px 18px 14px}
   .gab .alt{margin:0 18px 8px;padding:10px 14px;border-radius:8px;background:var(--paper);
@@ -290,20 +305,21 @@
 
   /* ---- cartões ---- */
   .cardb{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
-  .cardb.pequeno h4{font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
+  .cardb.pequeno h4{font-family:'Spectral',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
   .cardb.pequeno p{font-size:14px;line-height:1.55;color:var(--sec);margin:0}
   .cardn{background:var(--navy);color:var(--paper);border-radius:10px;padding:22px 24px}
-  .cardn h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700;
+  .cardn h3{font-family:'Spectral',Georgia,serif;font-size:20px;font-weight:700;
             line-height:1.3;margin:8px 0 10px}
   .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
   .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
 
   /* ---- onde cedeu ---- */
   .cardn.cedeu{display:flex;flex-direction:column;gap:4px}
-  .cardn .cnum{font-family:'Source Serif 4',Georgia,serif;font-size:38px;font-weight:700;
+  .cardn .cnum{font-family:'Spectral',Georgia,serif;font-size:38px;font-weight:700;
                line-height:1;color:var(--gold)}
   .cardn .cnum span{font-size:20px;font-weight:400;color:var(--azul)}
-  .cardn .clb{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--azul)}
+  .cardn .clb{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;
+              text-transform:uppercase;color:var(--azul)}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
   .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
         padding:6px 14px;font-size:14px;font-weight:600;color:var(--ink)}
@@ -318,14 +334,15 @@
   /* ---- bônus ---- */
   .bonus{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
   .btopo{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-  .btopo .bk{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+  .btopo .bk{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;
+             letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
   .bdias{background:var(--ocre2);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;
          border-radius:999px;white-space:nowrap}
   .bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
   .bcard{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
          border-radius:10px;padding:14px 16px}
   .bcard .bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .bcard .bh b{font-family:'Source Serif 4',Georgia,serif;font-size:17px;color:var(--gold)}
+  .bcard .bh b{font-family:'Spectral',Georgia,serif;font-size:17px;color:var(--gold)}
   .bcard .bh i{font-style:normal;font-size:12px;color:var(--azul)}
   .bcard p{font-size:14px;line-height:1.55;color:var(--azul);margin-top:8px}
   .bpe{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(191,220,238,.8)}
@@ -333,30 +350,31 @@
   /* ---- preço ---- */
   .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
          padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
-  .preco .v{font-family:'Source Serif 4',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
-  .preco .v span{font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
+  .preco .v{font-family:'Spectral',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
+  .preco .v span{font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
   .micro2{font-size:13px;color:var(--sec)}
   .selo2{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--sec)}
 
   /* ---- depoimentos ---- */
   .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
   .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
-  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:34px;color:var(--gold);line-height:.6}
-  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;
+  .dep2 .asp{font-family:'Spectral',Georgia,serif;font-size:34px;color:var(--gold);line-height:.6}
+  .dep2 p{font-family:'Spectral',Georgia,serif;font-size:17px;font-weight:600;
           line-height:1.5;margin:10px 0 16px}
   .dep2 p b{font-weight:700}
   .dep2 .quem{display:flex;gap:10px;align-items:center}
   .dep2 .ini{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);
              display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
   .dep2 .nm{font-size:14px;font-weight:700}
-  .dep2 .cid{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--sec)}
+  .dep2 .cid{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;
+             letter-spacing:.1em;color:var(--sec)}
 
   /* ---- autor e garantia ---- */
   .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
   .autorlinha{display:flex;gap:14px;align-items:center;margin:12px 0}
   .autorlinha img{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0}
-  .autorlinha b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
-  .autorlinha i{font-style:normal;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sec)}
+  .autorlinha b{display:block;font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:700}
+  .autorlinha i{font-style:normal;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--sec)}
   .cardb p{font-size:15px;line-height:1.6;color:var(--sec);margin:0}
 
   /* ---- FAQ ---- */
@@ -373,7 +391,7 @@
   /* ---- CTA final ---- */
   .vfim{background:var(--navy2);color:var(--paper);padding:56px 24px;text-align:center;
         display:flex;flex-direction:column;gap:16px;align-items:center;margin-top:56px}
-  .vfim h2{font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:700;line-height:1.25}
+  .vfim h2{font-family:'Spectral',Georgia,serif;font-size:30px;font-weight:700;line-height:1.25}
   .vfim .pfim{font-size:16px;color:var(--azul)}
   .vfim .micro2{color:var(--azul)}
   .vfim .legal{font-size:12px;color:rgba(191,220,238,.55);max-width:520px;line-height:1.55}
@@ -393,7 +411,7 @@
   body.vendas .brand{display:none}
   /* O botão da barra fixa herdava o dourado antigo de .sticky a; na página de vendas
      ele é o mesmo laranja de ação de todos os outros CTAs. */
-  body.vendas .sticky a{background:var(--ocre2);border-radius:8px;padding:12px 22px;
+  body.vendas .sticky a{background:var(--ocre);border-radius:8px;padding:12px 22px;
     font-size:15px;font-weight:700}
   body.vendas .sticky a:hover{background:var(--laranja2)}
   @media(max-width:560px){
@@ -425,14 +443,14 @@
   .verdict.ochre{background:#FBF1E6;border-color:#E7CFA8}
   .verdict.mixed{background:#F1ECE0}
   .verdict.green{background:#E9F1EA;border-color:#BFD8C4}
-  .verdict .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
-  .verdict h2{font-family:'Source Serif 4',serif;font-weight:600;font-size:22px;margin-bottom:8px}
+  .verdict .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+  .verdict h2{font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px}
   .verdict p{font-size:15px;color:var(--muted2)}
   .plot{position:relative;width:100%;max-width:280px;margin:0 auto 18px;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:14px}
   .plot .vline,.plot .hline{position:absolute;background:var(--line)}
   .plot .vline{left:50%;top:8%;bottom:8%;width:1.5px}
   .plot .hline{top:50%;left:8%;right:8%;height:1.5px}
-  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Source Sans 3',sans-serif;letter-spacing:.03em;max-width:42%}
+  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Hanken Grotesk',sans-serif;letter-spacing:.03em;max-width:42%}
   .plot .tl{top:8px;left:10px}.plot .tr{top:8px;right:10px;text-align:right}
   .plot .bl{bottom:8px;left:10px}.plot .br{bottom:8px;right:10px;text-align:right}
   .plot .you{position:absolute;transform:translate(-50%,-50%)}
@@ -440,9 +458,9 @@
   .plot .ylab{font-size:9.5px}
   .center{text-align:center}
   .offer{background:var(--navy);color:#fff;border-radius:16px;padding:24px 20px;margin-top:8px;text-align:center}
-  .offer h3{font-family:'Source Serif 4',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
+  .offer h3{font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
   .offer p{font-size:14.5px;color:#C9C1B4;margin-bottom:16px}
-  .offer .price{font-family:'Source Sans 3',sans-serif;font-size:13px;color:#E7CFA8;margin-top:12px}
+  .offer .price{font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:#E7CFA8;margin-top:12px}
   .offer .btn{background:var(--ocre);}
   .offer .btn:hover{background:#8c4d18}
   .offer .alt{display:inline-block;margin-top:14px;font-size:13px;color:#C9C1B4;text-decoration:underline;cursor:pointer}
@@ -450,7 +468,7 @@
   .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
   /* gabarito comentado (amostra do relatório pago) */
   .gab{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 18px}
-  .gab .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+  .gab .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
   .gab .q{font-size:15px;font-weight:500;margin-bottom:10px}
   .gab .alt{font-size:14px;padding:9px 11px;border-radius:9px;margin-bottom:6px;border:1px solid var(--line);color:var(--muted2)}
   .gab .alt.certa{background:#E9F1EA;border-color:#BFD8C4;color:var(--ink);font-weight:500}
@@ -460,7 +478,7 @@
   /* bloco trancado (teaser do diagnóstico completo): o TÓPICO fica legível
      para dar curiosidade; só a RESPOSTA é rasurada. */
   .lockbox{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;background:var(--card)}
-  .lockbox .head{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 20px 4px}
+  .lockbox .head{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 20px 4px}
   .lockbox .inner{padding:6px 20px 16px}
   .lockbox .row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line)}
   .lockbox .row:last-child{border-bottom:none}
@@ -475,7 +493,7 @@
      lockbox que ganhou destaque visual: é ele que transforma "3 de 6" em um problema
      com nome, e é nome que a pessoa carrega para fora da página. */
   .lockbox .named{padding:12px 0 4px;border-bottom:1px solid var(--line)}
-  .lockbox .named .lab{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.1em;
+  .lockbox .named .lab{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.1em;
                        text-transform:uppercase;color:var(--muted2);margin-bottom:9px}
   .lockbox .named .chips{display:flex;flex-wrap:wrap;gap:7px}
   .lockbox .named .chips b{font-weight:600;font-size:13.5px;padding:5px 11px;border-radius:999px;
@@ -494,10 +512,10 @@
   .rhero{background:var(--navy);color:#fff;padding:20px 22px 34px}
   .rhero .in{max-width:600px;margin:0 auto}
   .rbrand{display:flex;align-items:center;gap:10px;margin-bottom:30px}
-  .rbrand .nm{font-family:'Source Serif 4',serif;font-weight:600;font-size:19px;color:#fff}
-  .rbrand .tg{font-family:'Source Sans 3',sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
-  .rkick{font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
-  .rh1{font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .rbrand .nm{font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#fff}
+  .rbrand .tg{font-family:'Hanken Grotesk',sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  .rkick{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
+  .rh1{font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
   .rh1 em{font-style:italic;color:#E7A85B}
   .rlead{font-size:16.5px;line-height:1.6;color:#C9C1B4;margin-bottom:20px;max-width:44ch;text-wrap:pretty}
   /* A tradução da distância para a régua da prova. Ganhou destaque próprio em
@@ -511,9 +529,9 @@
      Sem ele, a segunda tela começa do nada e perde o diagnóstico de vista. */
   .rrecap{background:var(--navy);color:#F3EEE4;padding:22px 20px 20px}
   .rrecap .in{max-width:600px;margin:0 auto}
-  .rrecap .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;letter-spacing:.12em;
+  .rrecap .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.12em;
              text-transform:uppercase;color:#8E9AA4;margin-bottom:8px}
-  .rrecap .h{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
+  .rrecap .h{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
              color:#F3EEE4;text-wrap:balance}
   .rrecap .h em{font-style:italic;color:var(--ocre2)}
   /* Bônus. Entrou em 02/08/2026, quando o Kit Reta Final deixou de ser bump de R$19 e
@@ -524,7 +542,7 @@
   /* O bloco .bonus antigo (tracejado ocre) saiu em 04/08/2026: o design novo tem
      um .bonus próprio, em cartão navy, definido lá em cima. Duas definições da mesma
      classe conviviam, e a de baixo vencia por ordem. */
-  .voltar{display:inline-block;margin-top:14px;font-family:'Source Sans 3',sans-serif;font-size:11px;
+  .voltar{display:inline-block;margin-top:14px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;
           letter-spacing:.07em;text-transform:uppercase;color:#8E9AA4;text-decoration:none;
           border-bottom:1px solid rgba(142,154,164,.4);padding-bottom:2px}
   .voltar:hover{color:#F3EEE4;border-color:#F3EEE4}
@@ -533,7 +551,7 @@
   .bars .b{display:flex;flex-direction:column;gap:7px}
   .bars .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
   .bars .hd span:first-child{font-size:13.5px;color:#C9C1B4}
-  .bars .v{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .bars .v{font-family:'Hanken Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
   .bars .v.ok{color:#7FB99A}
   .bars .v.no{color:#E7A85B}
   .bars .tr{height:8px;border-radius:4px;background:#2C3B48;overflow:hidden}
@@ -541,21 +559,21 @@
   .bars .b:nth-child(2) .tr i{animation-delay:.15s}
   .bars .tr i.ok{background:var(--green)}
   .bars .tr i.no{background:var(--ocre2)}
-  .bars .ft{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+  .bars .ft{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
   @keyframes fillbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   @media (prefers-reduced-motion: reduce){ .bars .tr i{animation:none} }
   .rbody{max-width:600px;margin:0 auto;padding:0 22px}
   .rsec{margin-top:44px}
-  .rkk{font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .rkk{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
   .rkk.v{color:var(--green)}
-  .rh3{font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(22px,5.6vw,27px);line-height:1.18;letter-spacing:-.015em;margin-bottom:14px;text-wrap:pretty}
+  .rh3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(22px,5.6vw,27px);line-height:1.18;letter-spacing:-.015em;margin-bottom:14px;text-wrap:pretty}
   .rp{font-size:16px;line-height:1.62;color:var(--muted2);margin-bottom:20px;text-wrap:pretty}
   .rp.forte{font-size:17.5px;color:var(--ink);margin-bottom:16px}
   .rp b{color:var(--ink)}
   .pull{border-left:3px solid var(--ocre);padding:4px 0 4px 18px;margin-bottom:4px}
-  .pull p{font-family:'Source Serif 4',serif;font-size:19px;line-height:1.42;color:var(--ink);text-wrap:pretty}
+  .pull p{font-family:'Spectral',serif;font-size:19px;line-height:1.42;color:var(--ink);text-wrap:pretty}
   .stack{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-  .stack .hd{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .stack .hd{font-family:'Hanken Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
   .stack .it{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px}
   .stack .it:last-of-type{margin-bottom:0}
   .stack .it svg{flex-shrink:0;margin-top:2px}
@@ -571,17 +589,17 @@
   .stack .mini li{position:relative;margin-bottom:4px;font-size:14px;line-height:1.45}
   .stack .mini li:before{content:'';position:absolute;left:-12px;top:8px;width:4px;height:4px;
                          border-radius:50%;background:var(--ocre2)}
-  .stack .tot .p{font-family:'Source Sans 3',sans-serif;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .stack .tot .p{font-family:'Hanken Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
   .rbtn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:20px;background:var(--ocre);color:#fff;border:none;border-radius:13px;padding:19px 22px;font:inherit;font-size:17.5px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 14px 30px -14px rgba(166,93,30,.85);transition:background .15s}
   .rbtn:hover{background:#8c4d18;color:#fff}
-  .rmicro{font-family:'Source Sans 3',sans-serif;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
+  .rmicro{font-family:'Hanken Grotesk',sans-serif;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
   /* Faixa de pagamento, 02/08/2026. O Pix estava dentro da microcopy de 11,5px, do
      mesmo tamanho de "acesso imediato". A Delzuita respondeu no WhatsApp que parou
      no checkout porque "só terei dinheiro dia 6", e o Reddit está cheio de gente
      dizendo que não tem como pagar cursinho: para esse público o Pix é o desbloqueio,
      porque não depende de cartão com limite. Merece linha própria e peso próprio. */
   .pag{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:12px;
-       font-family:'Source Sans 3',system-ui,sans-serif;font-size:14px;color:var(--muted2)}
+       font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:14px;color:var(--muted2)}
   .pag b{color:var(--ink);font-weight:600}
   .pag .pix{display:inline-flex;align-items:center;gap:5px;background:#E9F1EA;border:1px solid #BFD8C4;
             color:#2F6B4F;border-radius:999px;padding:4px 11px;font-weight:600;font-size:13px}
@@ -600,25 +618,25 @@
   .obs b{color:var(--ink);font-weight:600}
   .deps{display:flex;flex-direction:column;gap:14px}
   .dep2{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .dep2 .asp{font-family:'Source Serif 4',serif;font-size:34px;line-height:.6;color:var(--ocre2);height:18px}
-  .dep2 p{font-family:'Source Serif 4',serif;font-size:17.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
+  .dep2 .asp{font-family:'Spectral',serif;font-size:34px;line-height:.6;color:var(--ocre2);height:18px}
+  .dep2 p{font-family:'Spectral',serif;font-size:17.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
   .dep2 p b{font-weight:600;background:#F5E4CE;box-shadow:0 0 0 3px #F5E4CE}
   .dep2 .quem{display:flex;align-items:center;gap:11px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:#E9E0CE;color:var(--muted2);font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:#E9E0CE;color:var(--muted2);font-family:'Spectral',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .dep2 .nm{font-size:14.5px;font-weight:600;line-height:1.3}
-  .dep2 .cid{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .dep2 .cid{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px}
   .vid{position:relative;width:min(300px,78%);margin:0 auto;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--navy)}
   .vid video{width:100%;height:100%;object-fit:cover;display:block}
-  .vidleg{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
+  .vidleg{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
   .autor2{display:flex;align-items:flex-start;gap:16px}
   .autor2 img{width:76px;height:76px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex-shrink:0;border:2px solid var(--line)}
-  .autor2 .k{font-family:'Source Sans 3',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .autor2 .k{font-family:'Hanken Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
   .autor2 p{font-size:15px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
   .gar2{border-top:1px solid var(--line);margin-top:20px;padding-top:18px;font-size:14.5px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
   .gar2 b{color:var(--green)}
   .ofim{margin-top:44px;background:var(--navy);border-radius:20px;padding:30px 24px;text-align:center}
-  .ofim .k{font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:12px}
-  .ofim h3{font-family:'Source Serif 4',serif;font-weight:600;font-size:clamp(23px,6vw,29px);line-height:1.16;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .ofim .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:12px}
+  .ofim h3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,6vw,29px);line-height:1.16;color:#fff;margin-bottom:14px;text-wrap:pretty}
   .ofim p{font-size:15px;line-height:1.6;color:#C9C1B4;margin-bottom:22px;text-wrap:pretty}
   .ofim .rbtn{box-shadow:0 14px 30px -14px rgba(0,0,0,.8)}
   .ofim .rbtn:hover{background:var(--ocre2)}
@@ -637,7 +655,7 @@
   .sticky .in{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px}
   .sticky .t{flex:1;min-width:0}
   .sticky .t .a{font-size:14px;font-weight:600;line-height:1.25}
-  .sticky .t .b{font-family:'Source Sans 3',sans-serif;font-size:11px;color:var(--muted)}
+  .sticky .t .b{font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted)}
   .sticky a{background:var(--ocre);color:#fff;border-radius:11px;padding:14px 20px;font-size:15.5px;font-weight:600;text-decoration:none;white-space:nowrap}
   .sticky a:hover{background:#8c4d18;color:#fff}
   @media (prefers-reduced-motion: reduce){ .sticky{transition:none} }
@@ -2483,8 +2501,18 @@
     var html =
 
       // ===== BARRA DE MARCA =====
+      // A marca é o símbolo + "Só o que Cai" em Spectral, igual ao resto do site. O
+      // handoff trazia um wordmark em Cinzel versalete; ficaria bonito e seria a única
+      // página do site com outra marca.
       '<header class="vtopo">'+
-        '<div class="wm">SÓ O QUE CAI</div>'+
+        '<div class="wm">'+
+          '<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+
+            '<rect width="32" height="32" rx="8" fill="#F3EEE4"/>'+
+            '<g stroke="#15212B" stroke-width="2.4" fill="none"><circle cx="16" cy="16" r="7.2"/>'+
+            '<path d="M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4"/></g>'+
+            '<circle cx="16" cy="16" r="3" fill="#C77A2B"/></svg>'+
+          '<span>Só o que Cai</span>'+
+        '</div>'+
         '<div class="tg">1ª fase · OAB</div>'+
       '</header>'+
 
