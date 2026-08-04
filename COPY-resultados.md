@@ -17,8 +17,8 @@ crava qual pesa mais; se a diferença for menor que 8 pontos, sai "em partes par
 1. **Você acertou 7 de 7. Excelente resultado.**
 2. **Hoje, o que mais tirou seus pontos foi conteúdo.**
 3. **Hoje, o que mais tirou seus pontos foi a execução da prova.**
-4. **Hoje você perde ponto por conteúdo e por execução , e conteúdo pesa mais.**
-5. **Hoje você perde ponto por conteúdo e por execução , e execução pesa mais.**
+4. **Hoje você perde ponto por conteúdo e por execução, e conteúdo pesa mais.**
+5. **Hoje você perde ponto por conteúdo e por execução, e execução pesa mais.**
 6. **Hoje você perde ponto por conteúdo e execução, em partes parecidas.**
 
 ---
