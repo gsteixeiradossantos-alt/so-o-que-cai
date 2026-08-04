@@ -782,6 +782,10 @@
       var digits=tel.replace(/\D/g,'');
       if(!S.momento){ alert('Marque onde você está hoje para ver o resultado.'); return; }
       if(!nome || digits.length<10){ alert('Preencha o nome e um WhatsApp válido com DDD para ver o resultado.'); return; }
+      // Aconteceu de verdade em 03/08: a pessoa colou o e-mail no campo do nome, e o
+      // WhatsApp saiu "Oi, luissilva@uni9.edu.br!". Barrar aqui é mais barato do que
+      // consertar a mensagem depois de enviada.
+      if(nome.indexOf('@')>=0){ alert('No campo do nome, escreva só o seu nome. O e-mail vai no campo de baixo.'); return; }
       if(!email){ alert('Preencha o seu e-mail para ver o resultado.'); return; }
       if(!/.+@.+\..+/.test(email)){ alert('O e-mail parece inválido. Confira antes de continuar.'); return; }
       S.nome=nome; S.email=email; S.tel=tel;
