@@ -204,6 +204,56 @@
   .stack .it .qual{color:var(--muted);font-size:13.5px}
 
   /* ==========================================================================
+     ENTRADA DO MINI-DIAGNÓSTICO — handoff de 05/08/2026
+     Escopo em .ientra: paleta e tipografia próprias (iguais à página de vendas —
+     navy #14304A, dourado #F0B429, terracota #C9662A), sem tocar em h1/.lead/.btn
+     genéricos, que as outras telas do quiz (perguntas, formulário) continuam
+     usando. Troca a versão anterior, cujo problema era pôr a regra do relógio em
+     vermelho ANTES do botão: aqui ela desce para depois, em letra menor.
+     ========================================================================== */
+  .ientra{display:flex;flex-direction:column;gap:28px}
+  .ientra h1{font-family:'Source Serif 4',Georgia,serif;font-size:36px;line-height:1.15;
+             font-weight:700;margin:0;text-wrap:pretty;color:#14304A}
+  .ientra h1 em{font-style:italic;color:#C9662A}
+  .ientra .bloco1{display:flex;flex-direction:column;gap:18px}
+  .ientra .regua{display:flex;gap:14px;align-items:center;background:#fff;
+                 border:1px solid #E3DCCD;border-radius:12px;padding:16px 20px}
+  .ientra .regua .n{flex:0 0 auto;font-family:'Source Serif 4',Georgia,serif;
+                    font-size:28px;font-weight:700;color:#14304A;line-height:1}
+  .ientra .regua .n span{font-size:16px;font-weight:400;color:#5B6B78}
+  .ientra .regua p{margin:0;font-size:15px;line-height:1.5;color:#5B6B78}
+  .ientra .regua p b{color:#14304A}
+  .ientra .eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+                   color:#B07B1E;font-weight:700}
+  .ientra .errado{display:flex;flex-direction:column;gap:12px}
+  .ientra .egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .ientra .ecard{background:#fff;border:1px solid #E3DCCD;border-radius:12px;
+                 padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+  .ientra .ecard b{font-family:'Source Serif 4',Georgia,serif;font-size:16px;font-weight:700;color:#14304A}
+  .ientra .ecard p{margin:0;font-size:14px;line-height:1.55;color:#5B6B78}
+  .ientra .errado>p{margin:0;font-size:15px;line-height:1.6;color:#5B6B78}
+  .ientra .recebe{background:#14304A;color:#F7F4EE;border-radius:12px;padding:22px 24px;
+                  display:flex;flex-direction:column;gap:14px}
+  .ientra .recebe .eyebrow{color:#F0B429}
+  .ientra .recebe ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .ientra .recebe li{display:flex;gap:12px;align-items:baseline;font-size:15px;line-height:1.5}
+  .ientra .recebe li i{flex:0 0 auto;width:7px;height:7px;border-radius:50%;
+                       background:#F0B429;margin-top:7px}
+  .ientra .alivio{background:#F0EAD9;border-radius:12px;padding:18px 20px;
+                  font-size:15px;line-height:1.6;color:#14304A}
+  .ientra .cta{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+  .ientra .cta button{width:100%;border:none;background:#14304A;color:#F7F4EE;
+                      font-family:'Source Sans 3',sans-serif;font-size:18px;font-weight:700;
+                      padding:19px;border-radius:12px;cursor:pointer;transition:.15s}
+  .ientra .cta button:hover{background:#0E2233}
+  .ientra .pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .ientra .pills span{border:1px solid #E3DCCD;border-radius:999px;padding:5px 14px;
+                      font-size:12px;color:#5B6B78}
+  .ientra .regra{font-size:13px;line-height:1.55;color:#5B6B78;text-align:center;
+                 max-width:480px;margin:2px auto 0}
+  .ientra .regra b{color:#14304A}
+
+  /* ==========================================================================
      PÁGINA DE VENDAS v2 — handoff de 04/08/2026
      Escopo em body.vendas: o quiz continua com o layout e a paleta de sempre.
      Os tokens abaixo SOBRESCREVEM os de :root só dentro de body.vendas — CSS
@@ -1062,37 +1112,54 @@
     if(S.screen==='solucao') return result();
   }
 
+  // Redesenho de 05/08/2026 (handoff "Entrada Mini-Diagnóstico"). Troca a versão
+  // anterior, cujo problema era pôr a regra do relógio ("40 segundos por questão",
+  // "corre em dobro") em vermelho, no último parágrafo ANTES do botão — isso fazia
+  // a pessoa adiar ("faço depois com calma") e não voltar. A regra continua
+  // presente, mas agora DEPOIS do botão, em letra menor, enquadrada como
+  // qualidade da medição, não como ameaça.
+  //
+  // O H1 continua saindo de VARIANTES[VARIANTE] (o anúncio ainda escolhe a
+  // entrada, ?v= na URL). O bloco "a maioria corrige o problema errado" + a frase
+  // de fechamento são fixos e substituem lead/lead2: no texto antigo, para a
+  // variante padrão ('problema'), lead e lead2 diziam exatamente isso em prosa —
+  // aqui vira dois cartões mais a mesma frase de fechamento, não repetição nova.
+  //
+  // Número de matérias: o handoff deixou "cada matéria que decide a prova" sem
+  // número de propósito (Ética entra duas vezes no CONTENT, então "7 questões" e
+  // "6 matérias" são coisas diferentes) — mantido assim.
   function intro(){
     app.innerHTML =
-      // A entrada dizia "existem dois jeitos de reprovar: não saber a matéria, e saber e
-      // travar na hora". Era a tese dos dois eixos, e ela criava um funil que dizia três
-      // coisas diferentes em três degraus: o anúncio prometia a margem, a entrada
-      // prometia os eixos, o veredito voltava para a margem.
-      // Agora a entrada abre pela margem, com os dois culpados nomeados. Os eixos
-      // continuam sendo o que o teste MEDE, mas param de ser o que a página PROMETE.
-      // Os dois culpados vieram da varredura de relatos reais: "a FGV ama a
-      // literalidade" e "tava com tanto medo de errar que acabei errando mais".
-      // Headline e primeiro parágrafo saem de VARIANTES[VARIANTE]: o anúncio escolhe
-      // com quem a página abre a conversa. Sem ?v= na URL, sai 'repete', que é o texto
-      // que está aqui desde sempre.
-      '<h1>'+VARIANTES[VARIANTE].h1+'</h1>'+
-      '<p class="lead">'+VARIANTES[VARIANTE].lead+'</p>'+
-      // Segundo parágrafo, só nas variantes que têm. É onde mora a aposta da entrada
-      // quando a headline abre uma pergunta em vez de cravar uma afirmação.
-      (VARIANTES[VARIANTE].lead2 ? '<p class="lead">'+VARIANTES[VARIANTE].lead2+'</p>' : '')+
-      // A regra aparece uma vez, seca, e SÓ a regra. A versão anterior empilhava sete
-      // informações antes do botão, todas de restrição, no exato segundo em que a pessoa
-      // decide se começa. Saiu também o "todas são pegadinha": tempo é regra de jogo e
-      // precisa ser anunciado, dificuldade é o teste, e teste não se anuncia, senão a
-      // pessoa sai com a desculpa pronta de que errou porque era pegadinha.
-      // A página não explica e não defende o relógio: justificar abre a porta para
-      // "na prova eu teria mais tempo", que anula a dor.
-      // O tamanho anunciado passou a ser o tamanho real em 02/08/2026. Dizia "São 7
-      // questões" e vinham 7 questões, 3 situações e um cadastro: o ponto em que a
-      // pessoa acha que terminou é o degrau anterior à captura, e descobrir ali que
-      // falta mais é o pior lugar possível para quebrar um combinado.
-      '<p class="lead" style="margin-bottom:22px">São '+CONTENT.length+' questões, uma de cada matéria que decide a prova, e depois '+BEHAVIOR.length+' situações rápidas do dia a dia. <b style="color:var(--red)">Você tem '+LIMITE+' segundos em cada questão</b>: passou o tempo, a questão passa. Fora desta aba, o relógio corre em dobro.</p>'+
-      '<button class="btn full" id="go">Começar o mini-diagnóstico</button>';
+      '<div class="ientra">'+
+        '<div class="bloco1">'+
+          '<h1>'+VARIANTES[VARIANTE].h1+'</h1>'+
+          '<div class="regua"><div class="n">40<span>/80</span></div>'+
+            '<p>Você precisa de <b>40 acertos em 80</b> para passar a 1ª fase. Não de saber tudo. O problema é gastar as suas horas na matéria errada.</p>'+
+          '</div>'+
+        '</div>'+
+        '<div class="errado">'+
+          '<div class="eyebrow">A maioria corrige o problema errado</div>'+
+          '<div class="egrid">'+
+            '<div class="ecard"><b>Estudam cada vez mais…</b><p>…quando o que tira ponto é o nervosismo, a pressão do relógio e a forma como decidem na hora.</p></div>'+
+            '<div class="ecard"><b>Culpam a ansiedade…</b><p>…quando ainda falta dominar o conteúdo. Aqui, tática de prova não vira ponto nenhum.</p></div>'+
+          '</div>'+
+          '<p>Enquanto você não souber qual é o seu caso, qualquer estratégia pode estar te levando na direção errada.</p>'+
+        '</div>'+
+        '<div class="recebe">'+
+          '<div class="eyebrow">No fim, na mesma tela</div>'+
+          '<ul>'+
+            '<li><i></i>O seu placar em cada matéria que decide a prova</li>'+
+            '<li><i></i>Qual dos quatro perfis você é: se o que te derruba é conteúdo, a hora da prova, ou os dois</li>'+
+            '<li><i></i>A primeira coisa a corrigir, com nome de matéria</li>'+
+          '</ul>'+
+        '</div>'+
+        '<div class="alivio">Não tente acertar tudo. Responda como responderia no dia: <strong>errar aqui é de graça, e é o que torna o resultado útil.</strong></div>'+
+        '<div class="cta">'+
+          '<button id="go">Começar agora, é grátis</button>'+
+          '<div class="pills"><span>4 minutos</span><span>'+CONTENT.length+' questões</span><span>Resultado na hora</span></div>'+
+          '<div class="regra">Vale como prova de verdade: <b>'+LIMITE+' segundos por questão</b>, e o relógio corre em dobro se você sair da aba. É o relógio que separa "eu sabia" de "eu acertei".</div>'+
+        '</div>'+
+      '</div>';
     document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
   }
 
