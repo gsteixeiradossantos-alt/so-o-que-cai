@@ -728,11 +728,14 @@
   // própria página de vendas, para não descrever promessa em cima de promessa.
   var FAQ = [
     { q:'O que é o Mapa da Aprovação e como ele me ajuda?',
-      a:'É o que sai quando você termina as 24 questões cronometradas. Ele mostra como você foi em cada uma das 6 matérias do núcleo duro, separa o que você errou por não saber do que errou por travar no relógio, e devolve a ordem do que corrigir primeiro. Cada questão vem com o comentário de por que a banca escolheu a outra alternativa, e cada correção aponta o material da área do aluno que resolve aquilo. Ele não é uma nota: é a ordem do que fazer.' },
+      a:'É o relatório que sai no fim de duas partes: 24 questões das 6 matérias do núcleo duro, 4 por matéria, e 7 perguntas sobre como você se comporta na hora da prova. Ele cruza as duas e separa o que você errou por não saber a matéria do que você perde por correr, travar ou trocar resposta no último segundo. Daí sai a ordem do que corrigir primeiro, matéria por matéria, e cada correção aponta o material da área do aluno que resolve aquilo. Ele não é uma nota: é a ordem do que fazer.' },
     { q:'Funciona no celular?',
       a:'Sim. Tudo roda no navegador, sem instalar nada: questões, fichas e simulados.' },
+    // "cronometradas" saiu daqui em 04/08/2026: a tela de questão do diagnostico.html do
+    // app não tem cronômetro nenhum. Quem tem relógio é o mini-diagnóstico grátis (40s por
+    // questão) e os simulados. Prometer cronômetro no pago é prometer coisa que não existe.
     { q:'Quanto tempo leva?',
-      a:'As 24 questões cronometradas levam cerca de 40 minutos. O Mapa sai na hora, com a ordem das correções.' },
+      a:'Cerca de 40 minutos entre as 24 questões e as 7 perguntas de comportamento. Você pode parar e voltar depois: fica salvo de onde parou. O Mapa sai na hora, com a ordem das correções.' },
     { q:'Já estudo com outro curso. Isso substitui?',
       a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o seu estudo atual render ponto.' },
     { q:'E se eu não gostar?',
