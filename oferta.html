@@ -2,42 +2,32 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Em 20 minutos, descubra onde você perde ponto na 1ª fase da OAB. Um diagnóstico que te testa só no que mais cai e separa o que você não sabe do que sabe mas trava na prova.">
-<title>Só o que Cai · O Diagnóstico dos 2 Eixos da 1ª fase da OAB</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa da Aprovação · Só o que Cai · 1ª fase da OAB</title>
+<!-- ===== PÁGINA DE OFERTA AUTÔNOMA (05/08/2026) =====
+     Existe porque a oferta boa vivia SÓ dentro do mini-diagnóstico, depois das 7
+     questões: não havia link para mandar a quem já fez o teste, nem a quem só quer
+     ler antes. Esta página é a MESMA oferta, com o CSS e os blocos extraídos de
+     mini-diagnostico.html — sem a parte personalizada (manchete do resultado,
+     quadrante com o ponto da pessoa, bloco rasurado), que depende de ter respondido.
 
-<!-- ============================================================
-     PARA PREENCHER ANTES DE PUBLICAR (procure por cada item):
-     1. CHECKOUT_URL ...... no <script> final (link do Kiwify/Hotmart/Cakto)
-     2. DATA_PROVA ........ no <script> final (data do próximo exame, confira no edital da FGV)
-     3. FOTO .............. assets/gustavo.webp (troque o placeholder pela foto real)
-     4. PIXEL DO FACEBOOK . bloco comentado abaixo (troque SEU_PIXEL_ID e descomente)
-     5. MICROSOFT CLARITY . bloco comentado abaixo (troque SEU_CLARITY_ID e descomente)
-     6. IMAGEM OG ......... assets/og.png; ajuste og:url/og:image se mudar de domínio
-     7. DEPOIMENTOS ....... seção "Quem já fez" (placeholders [DEPOIMENTO]); use só reais
-     ============================================================ -->
-
-<meta property="og:type" content="website">
-<meta property="og:locale" content="pt_BR">
-<meta property="og:site_name" content="Só o que Cai">
-<meta property="og:title" content="Em 20 minutos, descubra onde você perde ponto na 1ª fase da OAB.">
-<meta property="og:description" content="Um diagnóstico que te testa só no que mais cai e separa o que você não sabe do que sabe mas trava na prova. Pare de estudar tudo.">
-<meta property="og:url" content="https://sooquecai.online/oferta.html">
-<!-- Desde 02/08/2026 esta página não é mais a porta de entrada: o mini-diagnóstico é.
-     Ela continua no ar como destino de quem já decidiu comprar, mas sai do índice:
-     indexada, competia com o mini-diagnóstico pela mesma busca e vendia R$47 sem
-     nunca oferecer o teste gratuito. O canonical aponta para a porta de entrada. -->
-<meta name="robots" content="noindex, follow">
-<link rel="canonical" href="https://sooquecai.online/mini-diagnostico.html">
+     REGRA DE MANUTENÇÃO: os blocos de venda (stackOferta, bonusKit, porqueHoje,
+     provas, depoimentos, objecaoDinheiro, FAQ) foram COPIADOS de lá. Mudou a
+     promessa em um, muda no outro — senão a pessoa lê uma coisa no teste e outra
+     aqui. O que muda com mais frequência é a lista de entregas: ela é promessa,
+     e prometer o inventário do Plano Completo por R$47 gera reembolso.
+     ================================================== -->
+<meta name="description" content="O Mapa da Aprovação mostra qual matéria estudar, em que ordem e o que dá para ignorar até a prova. Fichas das 6 matérias do núcleo, simulados, tática de prova e guia da FGV. R$ 47.">
+<meta property="og:title" content="Mapa da Aprovação · 1ª fase da OAB">
+<meta property="og:description" content="Não é mais conteúdo para estudar. É a rota que diz qual matéria, em que ordem, e o que você pode ignorar até o dia da prova.">
 <meta property="og:image" content="https://sooquecai.online/assets/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Em 20 minutos, descubra onde você perde ponto na 1ª fase da OAB.">
-<meta name="twitter:description" content="Um diagnóstico que te testa só no que mais cai e mostra onde você perde ponto.">
-<meta name="twitter:image" content="https://sooquecai.online/assets/og.png">
-
-<!-- ===== FACEBOOK PIXEL ===== -->
+<link rel="canonical" href="https://sooquecai.online/oferta.html">
+<meta property="og:url" content="https://sooquecai.online/oferta.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -48,625 +38,1102 @@
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1024990753668044&ev=PageView&noscript=1"/></noscript>
-<!-- ===== fim Facebook Pixel ===== -->
-
-<!-- ===== MICROSOFT CLARITY ===== -->
 <script type="text/javascript">
   (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
   t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","xewy5d060m");
 </script>
-<!-- ===== fim Clarity ===== -->
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
-
 <style>
+  /* ===== TOKENS =====
+     A ESTRUTURA da página de vendas vem do handoff "Página de Vendas v2" (04/08/2026),
+     mas COR, LOGO e TIPOGRAFIA são os da marca, e não os do handoff. O handoff propunha
+     navy/dourado/laranja com Source Serif 4 + Source Sans 3 + Cinzel; aplicado, isso
+     deixava o mini-diagnóstico como a única página do site nessa linguagem — landing,
+     oferta, metodologia e a área de membros inteira seguem em bege/ocre com
+     Spectral + Hanken Grotesk + Space Mono. A quebra apareceria nos dois piores
+     lugares: na entrada (landing -> diagnóstico) e logo depois de pagar
+     (checkout -> área de membros).
+     Os tokens abaixo são os originais da marca. Os quatro do fim existem porque a
+     estrutura nova pede papéis que a paleta não nomeava, e todos derivam do que já
+     havia: nenhuma cor nova entrou. */
   :root{
-    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --soft:#574F45;
-    --mut:#6B6357; --oat:#9A9488; --oat2:#A89F90; --line:#E3DBCB; --line2:#EDE6D8;
-    --navy:#15212B; --ochre:#A65D1E; --ochre2:#C77A2B; --ochre-w:#F0E6D4;
-    --green:#3A7A5C; --green-w:#E3EEE8; --green-d:#1E5C4A;
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45; --muted:#8A8378;
+    --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E; --ocre2:#C77A2B; --green:#3A7A5C;
+    --red:#C0271A; --red2:#E8B4AE; --red3:#8E1A10;
+    /* Tokens que a estrutura nova pede e que a identidade do site não tinha nome para.
+       Todos derivam da paleta existente, não trazem cor nova:
+         --navy2  navy um tom abaixo, para o CTA final se destacar do resto
+         --gold   o ocre claro, que já era o ponto de destaque da marca
+         --azul   o cinza-azulado que a marca já usava para texto sobre navy
+         --sec    apelido de --muted2, porque o design chama de "secundário" */
+    --navy2:#0F1920; --gold:#C77A2B; --laranja2:#8C4D18; --azul:#B9BEC4;
+    --green2:#2C5C44; --sec:#574F45;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
-  .page{max-width:760px;margin:0 auto;background:var(--paper);padding-bottom:84px;overflow:hidden}
-  .pad{padding-left:22px;padding-right:22px}
-  .mono{font-family:'Space Mono',monospace}
-  .serif{font-family:'Spectral',serif}
-  .kk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--oat)}
-  h1,h2,h3{font-family:'Spectral',serif;font-weight:600;letter-spacing:-.01em;line-height:1.14}
-  .em{font-style:italic;color:var(--ochre)}
-  p{text-wrap:pretty}
-  a{color:var(--ochre)}
-  a:hover{color:var(--ochre2)}
-
-  .btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--navy);color:#fff;font-family:'Hanken Grotesk';font-weight:600;font-size:17px;line-height:1.2;text-decoration:none;padding:18px 26px;border-radius:13px;box-shadow:0 14px 30px -14px rgba(21,33,43,.9);transition:transform .12s,background .15s;border:0;cursor:pointer;text-align:center}
-  .btn:hover{background:#1d2e3c;color:#fff}
-  .btn:active{transform:translateY(1px)}
-  .btn svg{width:18px;height:18px;flex-shrink:0;stroke:var(--ochre2)}
-  .btn.big{font-size:18px;padding:20px 26px}
-
-  /* selo de pagamento seguro + garantia, usado em todos os CTAs */
-  .seal{display:flex;align-items:center;justify-content:center;gap:8px 16px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--mut)}
-  .seal span{display:inline-flex;align-items:center;gap:6px}
-  .seal svg{width:14px;height:14px;stroke:var(--green);flex-shrink:0}
-  .seal .sep{width:1px;height:13px;background:var(--line);display:none}
-  @media(min-width:420px){.seal .sep{display:block}}
-
-  /* HEADER */
-  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 22px 0}
-  .brand{display:flex;align-items:center;gap:10px}
-  .brand .ic{width:28px;height:28px;border-radius:8px;background:var(--navy);display:grid;place-items:center}
-  .brand .ic i{width:9px;height:9px;border-radius:50%;background:var(--ochre2);display:block}
-  .brand .nm{font-family:'Spectral',serif;font-weight:600;font-size:17px}
-  .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8A8378}
-
-  /* HERO */
-  .hero{padding:22px 22px 4px}
-  .hero .kk{font-size:11px}
-  .hero h1{font-size:clamp(29px,7.6vw,52px);line-height:1.05;letter-spacing:-.022em;margin:12px 0 0;max-width:16ch}
-  .lede{font-size:16px;color:var(--soft);margin:14px 0 0;max-width:50ch}
-  .lede b{color:var(--ink);font-weight:600}
-  .hero .btn{margin-top:20px}
-  .hero .price-inline{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--mut);text-align:center;margin-top:10px}
-
-  .deliver{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px 16px 8px;margin-top:26px}
-  .deliver .hd{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);padding:14px 0 4px}
-  .deliver .row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--line2)}
-  .deliver .row:last-child{border-bottom:0}
-  .deliver .chk{width:21px;height:21px;border-radius:50%;background:var(--ochre-w);display:grid;place-items:center;flex-shrink:0;margin-top:1px}
-  .deliver .chk svg{width:12px;height:12px;stroke:var(--ochre)}
-  .deliver .row span{font-size:14.5px;color:#3A342C;font-weight:500;line-height:1.45}
-
-  .count{margin-top:20px;display:flex;align-items:center;gap:12px;justify-content:center;padding:13px 16px;background:#ECE4D5;border-radius:11px;flex-wrap:wrap}
-  .count .lbl{font-size:13px;color:var(--mut);max-width:30ch;text-align:center}
-  .count .clk{font-family:'Space Mono',monospace;font-weight:700;font-size:16px;color:var(--navy);white-space:nowrap}
-
-  section{padding:0 0 44px}
-  .h2{font-size:clamp(25px,5.4vw,33px);margin:10px 0 0;max-width:20ch}
-  .lead{font-size:16px;color:var(--soft);margin:16px 0 0;max-width:60ch}
-  .lead b{color:var(--ink);font-weight:600}
-
-  /* INIMIGO */
-  .enemy-wrap{padding:0 22px 44px}
-  .enemy{background:var(--navy);color:#D7DBDF;border-radius:20px;padding:32px 26px}
-  .enemy .kk{color:#D89A4E}
-  .enemy h2{color:#fff;font-size:clamp(24px,5.2vw,32px);line-height:1.16;margin:12px 0 0;max-width:22ch}
-  .enemy p{font-size:15.5px;color:#AEB4BB;margin-top:14px;max-width:58ch}
-  .enemy p.first{margin-top:18px}
-  .enemy p b{color:#fff;font-weight:600}
-  .enemy .punch{border-left:2px solid var(--ochre2);padding-left:16px;margin-top:22px}
-  .enemy .punch p{font-family:'Spectral',serif;font-style:italic;font-weight:500;font-size:19px;color:#E9C79A;max-width:38ch;line-height:1.4;margin:0}
-
-  /* RELATÓRIO 2 EIXOS */
-  .report{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px 18px 16px;margin-top:24px;box-shadow:0 18px 40px -28px rgba(21,33,43,.5)}
-  .report .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
-  .report .hd .t{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ochre)}
-  .report .hd .ex{font-family:'Space Mono',monospace;font-size:10px;color:var(--oat2);background:#F0E9DB;padding:3px 8px;border-radius:5px;flex-shrink:0}
-  .plot-row{display:flex;gap:8px}
-  .ylab{writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oat);display:flex;align-items:center;justify-content:center}
-  .plot{position:relative;width:100%;height:270px;background:#F4EEE2;border:1px solid #E6DECF;border-radius:12px;overflow:hidden}
-  .plot .q-tl{position:absolute;left:0;top:0;width:50%;height:50%;background:#FBE9D2;opacity:.6}
-  .plot .q-br{position:absolute;left:50%;right:0;top:50%;bottom:0;background:#E1EEE7;opacity:.7}
-  .plot .vline{position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #D8CFBE}
-  .plot .hline{position:absolute;top:50%;left:0;right:0;border-top:1px dashed #D8CFBE}
-  .plot .ql{position:absolute;font-size:11px;max-width:13ch;line-height:1.25}
-  .plot .ql.a{left:11px;top:9px;font-weight:600;color:var(--ochre)}
-  .plot .ql.b{right:11px;bottom:9px;font-weight:600;color:var(--green);text-align:right}
-  .plot .ql.c{left:11px;bottom:9px;font-weight:500;color:var(--oat)}
-  .plot .ql.d{right:11px;top:9px;font-weight:500;color:var(--oat);text-align:right}
-  .plot .you{position:absolute;left:32%;top:30%;transform:translate(-50%,-50%)}
-  .plot .you .dot{width:18px;height:18px;border-radius:50%;background:var(--ochre2);border:3px solid var(--card);box-shadow:0 3px 9px -2px rgba(199,122,43,.8)}
-  .plot .you .lab{position:absolute;left:24px;top:-2px;white-space:nowrap;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);padding:2px 7px;border-radius:6px}
-  .xlab{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oat);text-align:center;margin-top:9px}
-  .report .cap{font-size:13px;color:var(--mut);margin-top:14px;line-height:1.5}
-
-  /* PASSOS */
-  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
-  .step:last-child{border-bottom:0}
-  .step .n{font-family:'Space Mono',monospace;font-weight:700;font-size:15px;color:var(--ochre);width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);display:grid;place-items:center}
-  .step h3{font-size:18px;line-height:1.2}
-  .step p{font-size:14.5px;color:var(--soft);margin-top:5px;max-width:54ch}
-
-  /* RECEBE */
-  .grid{display:grid;gap:11px;margin-top:20px}
-  .item{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 18px;display:grid;grid-template-columns:24px 1fr;gap:13px;align-items:flex-start}
-  .item .chk{width:24px;height:24px;border-radius:7px;background:var(--ochre-w);display:grid;place-items:center;margin-top:2px}
-  .item .chk svg{width:13px;height:13px;stroke:var(--ochre)}
-  .item h3{font-size:16.5px;line-height:1.25}
-  .item p{font-size:13.5px;color:var(--soft);margin-top:4px}
-
-  /* item destacado: o relatório de 2 eixos é o que a pessoa mais quer */
-  .item.star{border:1.5px solid var(--ochre2);background:#FDF7EE;padding:20px;box-shadow:0 20px 44px -32px rgba(199,122,43,.85);grid-template-columns:1fr}
-  .item.star .badge{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ochre);padding:5px 10px;border-radius:6px}
-  .item.star h3{font-size:20px;margin-top:12px;line-height:1.2}
-  .item.star p{font-size:14.5px;margin-top:8px;color:#3A342C}
-  .item.star .mini{display:flex;align-items:flex-start;gap:9px;margin-top:12px;font-size:13.5px;color:var(--soft)}
-  .item.star .mini svg{width:14px;height:14px;stroke:var(--ochre);flex-shrink:0;margin-top:4px}
-
-  /* FUNDADOR */
-  .founder{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
-  .founder img{width:96px;height:116px;border-radius:13px;object-fit:cover;background:#E6DECF;flex-shrink:0}
-  .founder .ph{width:96px;height:116px;border-radius:13px;background:#E6DECF;flex-shrink:0;display:grid;place-items:center;color:var(--oat2);font-size:11px;font-family:'Space Mono',monospace;text-align:center;line-height:1.4}
-  .founder .bd{flex:1;min-width:240px}
-  .founder p{font-size:15px;color:var(--soft);margin-top:10px}
-  .founder .sig{font-family:'Spectral',serif;font-weight:600;font-style:italic;color:var(--ink);font-size:15px;margin-top:12px}
-
-  /* STATS */
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:20px}
-  .st{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px}
-  .st .n{font-family:'Space Mono',monospace;font-weight:700;font-size:27px;color:var(--navy);line-height:1}
-  .st .n small{font-size:13px;color:var(--oat2)}
-  .st .l{font-size:12.5px;color:var(--soft);margin-top:8px}
-  .barwrap{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:20px;margin-top:11px}
-  .barwrap .lab{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;margin-bottom:7px}
-  .barwrap .lab.b2{color:var(--soft);font-weight:500;margin:14px 0 7px}
-  .barwrap .lab .mono{color:var(--ochre)}
-  .barwrap .lab.b2 .mono{color:var(--soft)}
-  .bar{height:12px;border-radius:6px;background:#ECE4D5;overflow:hidden}
-  .bar i{display:block;height:100%;border-radius:6px}
-  .note{font-size:12px;color:var(--oat2);margin-top:14px}
-
-  /* DEPOIMENTOS */
-  .quotes{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-  .quote{background:var(--card);border:1px dashed #D8CFBE;border-radius:13px;padding:20px}
-  .quote p{font-family:'Spectral',serif;font-style:italic;font-size:14.5px;color:var(--soft);line-height:1.5}
-  .quote .who{font-size:12.5px;font-weight:600;color:var(--ink);margin-top:12px}
-
-  /* OFERTA */
-  .offer{background:var(--card);border:1.5px solid var(--ochre2);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:0 24px 50px -34px rgba(199,122,43,.6)}
-  .offer .kk{color:var(--ochre)}
-  .offer h2{font-size:clamp(22px,4.8vw,29px);line-height:1.18;margin:12px auto 0;max-width:24ch}
-  .incl{text-align:left;max-width:38ch;margin:20px auto 0;background:#F7F1E5;border:1px solid var(--line2);border-radius:14px;padding:16px 18px}
-  .incl .kk{color:var(--oat);margin-bottom:8px}
-  .incl ul{list-style:none;display:grid;gap:8px}
-  .incl li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:#3A342C;line-height:1.4}
-  .incl li svg{width:13px;height:13px;stroke:var(--ochre);flex-shrink:0;margin-top:5px}
-
-  /* ancoragem de preço com peso */
-  .anchor{margin:22px 0 4px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left}
-  .anchor .col{padding:16px 18px}
-  .anchor .h{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--oat);margin-bottom:8px}
-  .anchor .bad{background:#F4EFE4}
-  .anchor .bad .v{font-family:'Spectral',serif;font-weight:600;font-size:26px;color:var(--oat);text-decoration:line-through;text-decoration-color:#BFB4A2;text-decoration-thickness:2px;line-height:1}
-  .anchor .bad .sub{font-size:12.5px;color:var(--oat2);margin-top:8px;line-height:1.4}
-  .anchor .good{background:#fff;border-top:1px solid var(--line);position:relative}
-  .anchor .good .h{color:var(--ochre)}
-  .anchor .good .v{font-family:'Spectral',serif;font-weight:600;font-size:56px;color:var(--ochre);line-height:.92;letter-spacing:-.02em}
-  .anchor .good .v small{font-size:20px;letter-spacing:0;vertical-align:.42em;margin-right:2px}
-  .anchor .good .sub{font-size:13px;color:var(--soft);margin-top:8px;line-height:1.4}
-  .anchor .good .once{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);background:#ECE4D5;border-radius:6px;padding:4px 9px;margin-top:12px}
-  .offer .btn{margin-top:20px}
-
-  /* garantia proeminente */
-  .guarbox{display:flex;gap:14px;align-items:flex-start;text-align:left;background:var(--green-w);border:1.5px solid #BFD8C4;border-radius:16px;padding:18px;margin-top:18px}
-  .guarbox .shield{width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid #BFD8C4;display:grid;place-items:center;flex-shrink:0}
-  .guarbox .shield svg{width:20px;height:20px;stroke:var(--green-d)}
-  .guarbox .t{font-family:'Spectral',serif;font-weight:600;font-size:17px;color:#174437;line-height:1.2}
-  .guarbox p{font-size:13.5px;color:#1E5C4A;margin-top:6px;line-height:1.5}
-
-  /* FAQ */
-  .faq{display:grid;gap:9px;margin-top:16px}
-  details.q{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  details.q summary{padding:15px 18px;cursor:pointer;font-family:'Spectral',serif;font-weight:600;font-size:15.5px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
-  details.q summary::-webkit-details-marker{display:none}
-  details.q summary::after{content:"+";font-family:'Space Mono',monospace;color:var(--ochre);font-size:18px;flex-shrink:0}
-  details.q[open] summary::after{content:"\2013"}
-  details.q .a{padding:0 18px 16px;font-size:14px;color:var(--soft)}
-
-  /* CTA FINAL */
-  .final{text-align:center;padding:8px 22px 36px}
-  .final h2{font-size:clamp(26px,5.6vw,38px);line-height:1.12;letter-spacing:-.02em;max-width:17ch;margin:0 auto}
-  .final .btn{margin-top:22px}
-  .final .sub{font-size:13px;color:var(--mut);margin-top:12px}
-
-  footer{padding:22px 22px 34px;text-align:center;font-size:11.5px;color:var(--oat2);line-height:1.8;border-top:1px solid var(--line)}
-  footer a{color:var(--oat2)}
-
-  /* STICKY */
-  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(243,238,228,.94);backdrop-filter:blur(10px);border-top:1px solid #DDD4C3;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:760px;margin:0 auto;padding-bottom:max(10px,env(safe-area-inset-bottom))}
-  .sticky .pl{font-size:11.5px;color:var(--mut);line-height:1.25}
-  .sticky .pl b{font-family:'Spectral',serif;color:var(--ink);font-size:18px}
-  .sticky .btn{padding:13px 18px;font-size:14.5px;box-shadow:none;flex-shrink:0}
-  .sticky .btn svg{width:15px;height:15px}
-
-  /* ===== DESKTOP: vira site de tela cheia, não coluna de celular ===== */
-  @media(min-width:900px){
-    .page{max-width:1140px;padding-bottom:0}
-    .top{padding:30px 56px 0}
-    .pad{padding-left:56px;padding-right:56px}
-    .enemy-wrap{padding:0 56px 64px}
-    section{padding:0 0 68px}
-
-    /* HERO em 2 colunas: copy à esquerda, checklist de entregáveis à direita */
-    .hero{display:grid;grid-template-columns:1fr .86fr;column-gap:56px;align-items:center;padding:56px 56px 28px}
-    .hero>.kk{grid-column:1;grid-row:1}
-    .hero>h1{grid-column:1;grid-row:2}
-    .hero>.lede{grid-column:1;grid-row:3}
-    .hero>.btn{grid-column:1;grid-row:4;justify-self:start;padding-left:34px;padding-right:34px}
-    .hero>.price-inline{grid-column:1;grid-row:5;text-align:left}
-    .hero>.seal{grid-column:1;grid-row:6;justify-content:flex-start}
-    .hero>.count{grid-column:1;grid-row:7}
-    .hero>.deliver{grid-column:2;grid-row:1 / 8;align-self:center;margin-top:0}
-
-    /* A VIRADA: texto e gráfico de quadrante lado a lado */
-    .virada{display:grid;grid-template-columns:1fr 1fr;column-gap:52px;align-items:center}
-    .virada>.kk{grid-column:1;grid-row:1}
-    .virada>.h2{grid-column:1;grid-row:2}
-    .virada>.lead{grid-column:1;grid-row:3}
-    .virada>.report{grid-column:2;grid-row:1 / 4;align-self:center;margin-top:0}
-
-    /* grades em 2 colunas */
-    .steps{display:grid;grid-template-columns:1fr 1fr;gap:4px 44px}
-    .steps .step{border-bottom:0}
-    .grid{grid-template-columns:1fr 1fr}
-    .grid .item.star{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;column-gap:32px;align-items:center}
-    .grid .item.star .badge{grid-column:1}
-    .grid .item.star h3{grid-column:1;margin-top:10px}
-    .grid .item.star p{grid-column:1}
-    .grid .item.star .mini{grid-column:2;grid-row:auto}
-    .faq{grid-template-columns:1fr 1fr;align-items:start}
-
-    /* cartões de prosa/único centralizados para leitura confortável */
-    .enemy{max-width:900px;margin:0 auto}
-    .founder{max-width:840px;margin:0 auto}
-    .offer{max-width:780px;margin:0 auto;padding:36px 40px}
-    .anchor{display:grid;grid-template-columns:1fr 1.15fr}
-    .anchor .good{border-top:0;border-left:1px solid var(--line)}
-
-    /* barra fixa vira faixa cheia centralizada */
-    .sticky{max-width:none;justify-content:center;gap:34px}
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--ocre)} a:hover{color:#8F6114}
+  ::selection{background:var(--gold);color:var(--navy)}
+  .wrap{max-width:560px;margin:0 auto;padding:40px 22px 64px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+  .logo{display:flex;align-items:center}
+  .logo svg{display:block;border-radius:8px}
+  .word{font-family:'Spectral',serif;font-weight:600;font-size:21px}
+  .tag{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-family:'Spectral',serif;font-weight:600;font-size:27px;line-height:1.18;letter-spacing:-.01em;margin-bottom:12px}
+  h1 em{font-style:italic;color:var(--ocre)}
+  .lead{font-size:16px;color:var(--muted2);margin-bottom:8px}
+  .prog{font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+  .clock{display:inline-flex;align-items:center;gap:6px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted2)}
+  .clock i{width:7px;height:7px;border-radius:50%;background:var(--ocre);animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+  /* Cronômetro regressivo. Era um relógio crescente de 11px escondido na barra de
+     progresso: sumia na tela. Agora é o elemento mais visível da questão, porque a
+     pressão do relógio é metade do que este teste mede. */
+  .timer{text-align:center;margin-bottom:16px}
+  .timer .num{font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1;
+    color:var(--red);font-variant-numeric:tabular-nums;display:inline-block;
+    transition:transform .18s ease}
+  .timer .bar{height:6px;border-radius:3px;background:var(--red2);overflow:hidden;margin-top:10px}
+  .timer .bar i{display:block;height:100%;background:var(--red);border-radius:3px;
+    width:100%;transform-origin:left center}
+  /* Últimos 10s. Escala por transform e NÃO por font-size, para não empurrar o layout
+     e fazer a questão pular embaixo do dedo da pessoa.
+     Batida própria, e não o @keyframes pulse do pontinho: aquele vai a opacidade .2,
+     e num número de 40px isso lê como "apagando", que é o oposto de urgência. Aqui a
+     opacidade fica cheia e quem pulsa é a escala, como batimento. */
+  @keyframes tictac{0%,100%{transform:scale(1.08)}50%{transform:scale(1.26)}}
+  .timer.urgente .num{transform:scale(1.15);animation:tictac .9s infinite}
+  .timer.urgente .bar i{background:var(--red3)}
+  .timer .rule{font-family:'Hanken Grotesk',sans-serif;font-size:9.5px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--muted);margin-top:8px}
+  /* Progresso. Antes era uma linha cinza de 9,5px embaixo de um número vermelho de 40px:
+     sumia. Só que saber que falta pouco é justamente o que segura quem cansa na quinta
+     questão, e quem desiste no meio não vira lead. Os sete traços dizem isso sem texto. */
+  /* Bloco de confiança. O lead do funil B vem do anúncio direto para o quiz e NUNCA
+     passa pela landing: ele clica em pagar sem ter visto depoimento, garantia nem quem
+     está por trás. Tudo isso já existe, a um bloco de distância, e não estava sendo
+     trazido. Vai ANTES da oferta, porque confiança vem antes do pedido de dinheiro. */
+  .confia{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:20px}
+  .confia .autor{margin-top:0;background:none;border:none;padding:0;border-radius:0}
+  .confia .dep{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted2);line-height:1.55}
+  .confia .dep .quem{display:block;margin-top:7px;font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .confia .gar{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted2);line-height:1.55}
+  .confia .gar b{color:var(--green)}
+  /* Tabela de custo, duas colunas. A esquerda é longa e cara, a direita é curta e barata:
+     a assimetria é o argumento, e ela lê num segundo, o que nenhum parágrafo consegue. */
+  .custo{margin-top:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .custo .lin{display:grid;grid-template-columns:1fr 1fr}
+  .custo .lin+.lin{border-top:1px solid var(--line)}
+  .custo .lin>div{padding:11px 13px;font-size:13.5px;line-height:1.42}
+  .custo .lin>div:first-child{border-right:1px solid var(--line);color:var(--muted2)}
+  .custo .lin>div:last-child{color:var(--ink);font-weight:500}
+  .custo .cab>div{font-family:'Hanken Grotesk',sans-serif;font-size:9.5px;letter-spacing:.08em;
+    text-transform:uppercase;padding:9px 13px;font-weight:700}
+  .custo .cab>div:first-child{background:#F7E8E5;color:var(--red3)}
+  .custo .cab>div:last-child{background:#E9F1EA;color:var(--green)}
+  /* CTA enxuto logo depois do veredito. O preço só aparecia no 6º bloco de 7. */
+  .ctaslim{margin:18px 0 6px}
+  .ctaslim .price{font-family:'Hanken Grotesk',sans-serif;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
+  .timer .prog7{display:flex;gap:4px;justify-content:center;margin-bottom:9px}
+  .timer .prog7 i{width:18px;height:3px;border-radius:2px;background:var(--line)}
+  .timer .prog7 i.ok{background:var(--ink)}
+  .timer .conta{font-family:'Hanken Grotesk',sans-serif;font-size:12px;letter-spacing:.07em;
+    text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+  /* Cor sozinha não pode carregar o sinal, por daltonismo: o tamanho, a barra drenando
+     e o próprio número já carregam em paralelo. Aqui só se desliga o movimento. */
+  @media (prefers-reduced-motion: reduce){
+    .timer.urgente .num{animation:none}
+    .clock i{animation:none}
+    .load .mark{animation:none}
   }
+  /* Tela de apuração, entre o formulário e o resultado. Entrou em 02/08/2026 por dois
+     motivos, e o segundo é o que decidiu:
+     1. Resultado que aparece no mesmo instante do clique lê como tabela pronta. A pessoa
+        acabou de gastar 4 minutos cronometrados; ver o cálculo acontecer é o que faz o
+        resultado parecer dela.
+     2. O id do lead volta do banco DEPOIS do render, e é ele que monta o sck= no
+        checkout. Sem essa janela, quem clica em comprar rápido demais vai para a
+        Hotmart sem o rastreio que liga a venda ao lead.
+     Os três passos exibidos são os cálculos que de fato acontecem, na ordem em que
+     acontecem. Nada de "consultando a banca" ou coisa que a página não faz. */
+  .load{display:flex;flex-direction:column;align-items:center;justify-content:center;
+        text-align:center;min-height:56vh;padding:0 8px}
+  .load .mark{width:46px;height:46px;margin-bottom:26px;animation:respira 1.6s ease-in-out infinite}
+  @keyframes respira{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.09);opacity:1}}
+  .load .st{font-size:17px;font-weight:500;color:var(--ink);margin-bottom:20px;min-height:1.5em;
+            transition:opacity .25s}
+  .load .st.sai{opacity:0}
+  .load .tr{width:100%;max-width:290px;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+  .load .tr i{display:block;height:100%;width:4%;border-radius:99px;
+              background:linear-gradient(90deg,var(--ocre),var(--ocre2));
+              transition:width .85s cubic-bezier(.35,0,.25,1)}
+  .load .pe{margin-top:22px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;
+            letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .qbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+  .qmat{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ocre);margin-bottom:8px}
+  .qtext{font-size:18px;font-weight:500;line-height:1.4;margin-bottom:18px}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 15px;margin-bottom:9px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.12s}
+  .opt:hover{border-color:var(--ocre2)}
+  .opt.sel{border-color:var(--ocre);background:#FBF1E6}
+  /* O botão de confirmar da Parte 1 viveu poucas horas em 03/08/2026 e saiu no mesmo dia,
+     junto com a legenda .podetrocar: cobrava um clique por questão, sete no total, no
+     trecho mais barato de abandonar. O clique na alternativa voltou a fechar a questão. */
+  /* Vídeo em uma linha (03/08/2026). Era uma seção inteira, com título e legenda, o que
+     fazia dele um degrau no meio do fluxo. Agora é um convite: quem quer, clica; quem
+     não quer, continua. O <video> só entra no DOM depois do clique. */
+  .vidlinha{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:space-between;
+            margin-top:20px;padding:13px 16px;background:var(--card);border:1px solid var(--line);
+            border-radius:12px;font-size:14.5px;color:var(--muted2)}
+  .vidlinha a{color:var(--ocre);font-weight:600;text-decoration:none;white-space:nowrap}
+  .vidlinha a:hover{text-decoration:underline}
+  /* A frase que fecha a oferta antes do preço. Não é argumento novo: é o reenquadramento
+     do produto inteiro numa linha, e por isso fica colada no valor. */
+  .fecho-obj{margin-top:20px;padding:15px 17px;border-left:3px solid var(--ocre2);
+             background:rgba(199,122,43,.07);border-radius:0 10px 10px 0;
+             font-size:15.5px;line-height:1.55;color:var(--ink)}
+  /* Entrega entre parênteses, ao lado do resultado que ela produz. Cinza e menor: o que
+     o olho pega primeiro é o verbo; a entrega é a prova de que o verbo é possível. */
+  .stack .it .qual{color:var(--muted);font-size:13.5px}
 
+  /* ==========================================================================
+     ENTRADA DO MINI-DIAGNÓSTICO — handoff de 05/08/2026
+     Escopo em .ientra: paleta e tipografia próprias (iguais à página de vendas —
+     navy #14304A, dourado #F0B429, terracota #C9662A), sem tocar em h1/.lead/.btn
+     genéricos, que as outras telas do quiz (perguntas, formulário) continuam
+     usando. Troca a versão anterior, cujo problema era pôr a regra do relógio em
+     vermelho ANTES do botão: aqui ela desce para depois, em letra menor.
+     ========================================================================== */
+  .ientra{display:flex;flex-direction:column;gap:28px}
+  .ientra h1{font-family:'Source Serif 4',Georgia,serif;font-size:36px;line-height:1.15;
+             font-weight:700;margin:0;text-wrap:pretty;color:#14304A}
+  .ientra h1 em{font-style:italic;color:#C9662A}
+  .ientra .bloco1{display:flex;flex-direction:column;gap:18px}
+  .ientra .regua{display:flex;gap:14px;align-items:center;background:#fff;
+                 border:1px solid #E3DCCD;border-radius:12px;padding:16px 20px}
+  .ientra .regua .n{flex:0 0 auto;font-family:'Source Serif 4',Georgia,serif;
+                    font-size:28px;font-weight:700;color:#14304A;line-height:1}
+  .ientra .regua .n span{font-size:16px;font-weight:400;color:#5B6B78}
+  .ientra .regua p{margin:0;font-size:15px;line-height:1.5;color:#5B6B78}
+  .ientra .regua p b{color:#14304A}
+  .ientra .eyebrow{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+                   color:#B07B1E;font-weight:700}
+  .ientra .errado{display:flex;flex-direction:column;gap:12px}
+  .ientra .egrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .ientra .ecard{background:#fff;border:1px solid #E3DCCD;border-radius:12px;
+                 padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+  .ientra .ecard b{font-family:'Source Serif 4',Georgia,serif;font-size:16px;font-weight:700;color:#14304A}
+  .ientra .ecard p{margin:0;font-size:14px;line-height:1.55;color:#5B6B78}
+  .ientra .errado>p{margin:0;font-size:15px;line-height:1.6;color:#5B6B78}
+  .ientra .recebe{background:#14304A;color:#F7F4EE;border-radius:12px;padding:22px 24px;
+                  display:flex;flex-direction:column;gap:14px}
+  .ientra .recebe .eyebrow{color:#F0B429}
+  .ientra .recebe ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .ientra .recebe li{display:flex;gap:12px;align-items:baseline;font-size:15px;line-height:1.5}
+  .ientra .recebe li i{flex:0 0 auto;width:7px;height:7px;border-radius:50%;
+                       background:#F0B429;margin-top:7px}
+  .ientra .alivio{background:#F0EAD9;border-radius:12px;padding:18px 20px;
+                  font-size:15px;line-height:1.6;color:#14304A}
+  .ientra .cta{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+  .ientra .cta button{width:100%;border:none;background:#14304A;color:#F7F4EE;
+                      font-family:'Source Sans 3',sans-serif;font-size:18px;font-weight:700;
+                      padding:19px;border-radius:12px;cursor:pointer;transition:.15s}
+  .ientra .cta button:hover{background:#0E2233}
+  .ientra .pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .ientra .pills span{border:1px solid #E3DCCD;border-radius:999px;padding:5px 14px;
+                      font-size:12px;color:#5B6B78}
+  .ientra .regra{font-size:13px;line-height:1.55;color:#5B6B78;text-align:center;
+                 max-width:480px;margin:2px auto 0}
+  .ientra .regra b{color:#14304A}
+
+  /* ==========================================================================
+     PÁGINA DE VENDAS v2 — handoff de 04/08/2026
+     Escopo em body.vendas: o quiz continua com o layout e a paleta de sempre.
+     Os tokens abaixo SOBRESCREVEM os de :root só dentro de body.vendas — CSS
+     custom property em cascata, não rename global — porque as mesmas variáveis
+     (--navy, --ocre, --gold...) são usadas nas telas de pergunta com os valores
+     antigos. Reescrever :root mudaria o quiz inteiro; sobrescrever aqui muda só
+     esta tela. Cores e tipografia batendo com o handoff, literal:
+       navy #14304A · navy escuro (topo/CTA final) #0E2233 · dourado #F0B429
+       dourado escuro, eyebrow/link #B07B1E, hover #8F6114
+       laranja, ação/alerta #E07B39, hover #C9662A · azul claro #BFDCEE
+       fundo #F7F4EE · cartão #FFFFFF · borda #E3DCCD
+       texto principal #14304A · secundário #5B6B78 · riscado #A39B8A
+       Cinzel (wordmark) · Source Serif 4 (títulos e números) · Source Sans 3 (corpo)
+     ========================================================================== */
+  body.vendas{
+    --navy:#14304A; --navy2:#0E2233; --gold:#F0B429;
+    --ocre:#B07B1E; --ocre2:#E07B39; --laranja2:#C9662A;
+    --azul:#BFDCEE; --paper:#F7F4EE; --card:#FFFFFF; --line:#E3DCCD;
+    --ink:#14304A; --sec:#5B6B78; --muted:#A39B8A; --green:#4E7A4E;
+    background:var(--paper);padding-bottom:96px;
+    font-family:'Source Sans 3',sans-serif;
+  }
+  body.vendas .wrap{max-width:none;padding:0}
+
+  .vtopo{background:var(--navy2);color:var(--paper);display:flex;justify-content:space-between;
+         align-items:center;padding:14px 24px;gap:12px}
+  .vtopo .wm{display:flex;align-items:center;gap:10px}
+  .vtopo .wm svg{display:none}
+  .vtopo .wm span{font-family:'Cinzel',serif;font-weight:600;font-size:16px;
+                  letter-spacing:3px;text-transform:uppercase}
+  .vtopo .tg{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:2.5px;
+             color:var(--azul);text-transform:uppercase}
+
+  /* ---- hero ---- */
+  .vhero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);
+         color:var(--paper);padding:56px 24px 64px}
+  .vhero .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+  .vhero h1{font-family:'Source Serif 4',Georgia,serif;font-size:38px;line-height:1.2;
+            font-weight:700;text-wrap:pretty;margin:0}
+  .vhero h1 em{font-style:italic;color:var(--gold)}
+  .eyebrow{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:3px;
+           text-transform:uppercase;font-weight:700;color:var(--ocre)}
+  .eyebrow.gold{color:var(--gold)}
+  .placar{display:flex;gap:16px;flex-wrap:wrap;align-items:stretch}
+  /* O placar é cartão dourado porque é o número que a pessoa veio buscar: tem que
+     ser a primeira coisa que o olho encontra depois da manchete. */
+  .placar .nota{flex:0 0 auto;background:var(--gold);color:var(--navy);border-radius:10px;
+                padding:20px 28px;display:flex;flex-direction:column;justify-content:center;
+                align-items:center;gap:2px}
+  .placar .nota .n{font-family:'Source Serif 4',Georgia,serif;font-size:52px;font-weight:700;line-height:1}
+  .placar .nota .n span{font-size:26px;font-weight:400}
+  .placar .nota .lb{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:2px;
+                    text-transform:uppercase;font-weight:700}
+  .placar .eixos{flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px}
+  .placar .eixo{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
+                border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;
+                align-items:center;gap:12px;font-size:15px}
+  .placar .eixo b{font-size:12px;font-weight:700;letter-spacing:1.5px;padding:4px 10px;
+                  border-radius:4px;white-space:nowrap}
+  .placar .eixo b.laranja{background:var(--ocre2);color:#fff}
+  .placar .eixo b.azul{background:var(--azul);color:var(--navy)}
+  .vhero .lede{font-size:17px;line-height:1.6;color:var(--azul);max-width:600px;margin:0}
+  .vhero .lede strong{color:var(--paper)}
+  .vhero .lede.margem{font-size:15px;opacity:.85}
+  /* ---- perfil provável (04/08) ---- */
+  .vhero .perfil{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .vhero .perfil .pl{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:2px;
+                     text-transform:uppercase;color:rgba(191,220,238,.6)}
+  .vhero .perfil .pill{background:rgba(224,123,57,.2);border:1px solid var(--ocre2);
+                       color:var(--paper);border-radius:999px;padding:5px 14px;
+                       font-size:13px;font-weight:700}
+  .vhero .perfil .pt{font-size:13px;color:rgba(191,220,238,.75)}
+  .vhero .micro{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:2px;
+                text-transform:uppercase;color:rgba(191,220,238,.6)}
+
+  /* ---- resumo flutuante ---- */
+  .vresumo{max-width:760px;margin:-28px auto 0;padding:0 24px;position:relative;z-index:2}
+  .cardres{background:var(--card);border:1px solid var(--line);border-radius:12px;
+           box-shadow:0 8px 24px rgba(14,34,51,.10);padding:20px 24px;display:flex;
+           justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .cardres .t{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .cardres .s{font-size:14px;color:var(--sec);margin-top:4px}
+
+  /* ---- botões ---- */
+  .btn-lar{display:inline-block;background:var(--ocre2);color:#fff;text-decoration:none;
+           font-weight:700;font-size:15px;padding:12px 22px;border-radius:8px;
+           white-space:nowrap;border:none;cursor:pointer;transition:.15s;text-align:center}
+  .btn-lar:hover{background:var(--laranja2);color:#fff}
+  .btn-lar.grande{font-size:18px;padding:16px 36px;border-radius:10px;white-space:normal}
+
+  /* ---- seções ---- */
+  .vsec{margin:0 auto;padding:56px 24px 8px;display:flex;flex-direction:column;gap:20px}
+  .vsec.estreita{max-width:680px}
+  .vsec.larga{max-width:960px}
+  .vsec h2{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
+  .vsec h2.grande{font-size:32px}
+  .vsec h2.apos{margin-top:12px}
+  /* Seção de depoimentos: cabeçalho centralizado, igual ao handoff. */
+  .vsec.centro>.eyebrow, .vsec.centro>h2{text-align:center}
+  .vsec .p{font-size:17px;line-height:1.65;margin:0}
+  .vsec .p.sec{color:var(--sec)}
+  .callout{background:var(--card);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;
+           padding:16px 20px;font-family:'Source Serif 4',Georgia,serif;font-size:19px;
+           font-weight:600;line-height:1.45}
+  .obsgrid{display:flex;flex-direction:column;gap:12px}
+  .obs{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+       display:flex;gap:14px;align-items:flex-start}
+  .obs i{font-style:normal;font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;
+         text-transform:uppercase;color:var(--ocre2);flex:0 0 84px;padding-top:3px}
+  .obs p{font-size:15px;line-height:1.55;color:var(--sec);margin:0}
+
+  /* ---- a régua (04/08) ---- */
+  .regua{background:var(--navy);color:var(--paper);padding:56px 24px;margin-top:48px}
+  .regua .in{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+  .regua .rtop{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .regua .rnum{flex:0 0 auto;background:var(--gold);color:var(--navy);border-radius:12px;
+               padding:22px 30px;text-align:center}
+  .regua .rnum .n{font-family:'Source Serif 4',Georgia,serif;font-size:50px;font-weight:700;line-height:1}
+  .regua .rnum .n span{font-size:26px;font-weight:400}
+  .regua .rnum .lb{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:2px;
+                   text-transform:uppercase;font-weight:700;margin-top:4px}
+  .regua h2{flex:1;min-width:280px;font-family:'Source Serif 4',Georgia,serif;font-size:32px;
+            line-height:1.25;font-weight:700;margin:0}
+  .regua p{font-size:17px;line-height:1.6;color:var(--azul);max-width:640px;margin:0}
+  .regua .rcall{background:rgba(247,244,238,.07);border:1px solid rgba(191,220,238,.25);
+                border-radius:10px;padding:18px 22px;font-family:'Source Serif 4',Georgia,serif;
+                font-size:19px;line-height:1.5;font-weight:600}
+
+  /* ---- gabarito ---- */
+  .gab{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .gab .mat{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+            color:var(--ocre);padding:16px 18px 0}
+  .gab .q{font-size:16px;line-height:1.5;font-weight:600;padding:8px 18px 14px}
+  .gab .alt{margin:0 18px 8px;padding:10px 14px;border-radius:8px;background:var(--paper);
+            font-size:14.5px;line-height:1.45;border:1px solid transparent}
+  .gab .alt.sua{background:#FBEDE2;border-color:var(--ocre2)}
+  .gab .alt.certa{background:#EAF3EA;border-color:var(--green)}
+  .gab .notagab{padding:0 18px 8px;font-size:14px;color:var(--sec)}
+  .gab .exp{margin:6px 18px 14px;padding:14px 16px;background:var(--paper);border-radius:8px;
+            font-size:14.5px;line-height:1.6;color:var(--sec)}
+  .gab .exp b{color:var(--ink)}
+  .gabbtn{display:block;width:100%;background:var(--navy);color:var(--gold);border:none;
+          padding:14px 18px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;
+          text-align:center;transition:.15s}
+  .gabbtn:hover{background:var(--navy2)}
+
+  /* ---- cartões ---- */
+  .cardb{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  .cardb.pequeno h4{font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
+  .cardb.pequeno p{font-size:14px;line-height:1.55;color:var(--sec);margin:0}
+  .cardn{background:var(--navy);color:var(--paper);border-radius:10px;padding:22px 24px}
+  .cardn h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700;
+            line-height:1.3;margin:8px 0 10px}
+  .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
+  .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+
+  /* ---- rota em 5 etapas (04/08) ---- */
+  .rota{display:flex;flex-direction:column;gap:12px}
+  .rota .step{background:var(--card);border:1px solid var(--line);border-radius:12px;
+             padding:20px 24px;display:flex;gap:18px;align-items:flex-start}
+  .rota .step .n{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--navy);
+                 color:var(--gold);display:flex;align-items:center;justify-content:center;
+                 font-size:16px;font-weight:700}
+  .rota .step .tt{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .rota .step .tt b{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .rota .step .tt i{font-style:normal;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+                    color:var(--sec);font-weight:700}
+  .rota .step p{font-size:15px;line-height:1.55;color:var(--sec);margin:6px 0 0}
+
+  /* ---- quadrante dos 4 perfis (04/08) ---- */
+  .quad{background:var(--card);border:1px solid var(--line);border-radius:12px;
+       padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+  .quad .ax{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:1.5px;
+           text-transform:uppercase;color:var(--sec);font-weight:700}
+  .quad .ax.right{text-align:right}
+  .quad .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .quad .cell{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .quad .cell b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:700}
+  .quad .cell p{font-size:13px;line-height:1.5;color:var(--sec);margin-top:6px}
+  .quad .cell.green{background:#EAF3EA;border-color:#4E7A4E}
+  .quad .cell.here{background:#FBEDE2;border:2px solid var(--ocre2)}
+  .quad .cell .badge{display:inline-block;background:var(--ocre2);color:#fff;font-size:10px;
+                     font-weight:700;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;
+                     margin-left:6px;white-space:nowrap;vertical-align:middle}
+
+  /* ---- provas de tela (04/08) ----
+     Até aqui a única imagem da página era o rosto de quem assina: a oferta listava
+     seis entregas e não mostrava nenhuma delas. São prints da ferramenta real, e o
+     alinhamento ao topo é de propósito — as três têm alturas diferentes e forçar a
+     mesma altura cortaria justamente o miolo que serve de prova. */
+  .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+          gap:18px;margin-top:18px;align-items:start}
+  .provas figure{margin:0}
+  .provas img{display:block;width:100%;height:auto;border:1px solid var(--line);
+              border-radius:10px;background:var(--card)}
+  .provas figcaption{font-size:13px;line-height:1.5;color:var(--sec);margin-top:9px}
+  .provas figcaption b{color:var(--ink);font-weight:600}
+  .provas-nota{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:12px}
+
+  /* ---- onde cedeu ---- */
+  .cardn.cedeu{display:flex;flex-direction:column;gap:4px}
+  .cardn .cnum{font-family:'Source Serif 4',Georgia,serif;font-size:38px;font-weight:700;
+               line-height:1;color:var(--gold)}
+  .cardn .cnum span{font-size:20px;font-weight:400;color:var(--azul)}
+  .cardn .clb{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:1.5px;
+              text-transform:uppercase;color:var(--azul)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
+        padding:6px 14px;font-size:14px;font-weight:600;color:var(--ink)}
+  .chip.fraco{font-weight:400;color:var(--sec)}
+  .chip.fraco b{color:var(--ink)}
+  .riscado .ri{font-size:16px;line-height:1.5;color:var(--muted);text-decoration:line-through;
+               padding:7px 0;border-top:1px solid var(--line)}
+  .riscado .ri:first-child{border-top:none;padding-top:0}
+  .riscado .ripe{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+                 font-size:13px;line-height:1.55;color:var(--sec)}
+
+  /* ---- bônus ---- */
+  .bonus{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
+  .btopo{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .btopo .bk{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;
+             letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+  .bdias{background:var(--ocre2);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;
+         border-radius:4px;white-space:nowrap}
+  .bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
+  /* Cartão branco sobre o container navy, não translúcido-sobre-navy: a versão
+     anterior (rgba(247,244,238,.07) em cima de #14304A) lia como "tudo azul" —
+     baixo contraste entre título dourado e fundo quase-navy. Branco isola cada
+     cartão e devolve contraste de verdade ao título e ao corpo do texto. */
+  .bcard{background:#fff;border:1px solid rgba(255,255,255,.15);
+         border-radius:10px;padding:14px 16px}
+  .bcard .bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .bcard .bh b{font-family:'Source Serif 4',Georgia,serif;font-size:17px;color:var(--navy)}
+  .bcard .bh i{font-style:normal;font-size:12px;color:var(--sec)}
+  .bcard p{font-size:14px;line-height:1.55;color:var(--ink);margin-top:8px}
+  .bpe{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(191,220,238,.8)}
+
+  /* ---- preço ---- */
+  .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
+         padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .preco .v{font-family:'Source Serif 4',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
+  .preco .v span{font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
+  .micro2{font-size:13px;color:var(--sec)}
+  .selo2{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--sec)}
+
+  /* ---- por que hoje (04/08) ----
+     Fica antes do preço, não depois: é o último empurrão antes do CTA, não uma
+     justificativa depois do clique. A régua é calendário, nunca escassez de vaga
+     nem preço que sobe — o preço é dito igual nos três cartões: continua R$ 47.
+     Cartão navy translúcido, igual ao bloco de bônus: é a mesma família visual do
+     handoff (item 10 do README), navy #14304A com sub-cartões em rgba(247,244,238,.07). */
+  .hoje{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
+  .hoje .hk{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;
+            letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+  .hoje .hp{font-size:16px;line-height:1.6;color:var(--azul);margin-top:12px}
+  .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+  /* Mesmo ajuste de contraste do .bcard: branco sobre navy, não translúcido. */
+  .hcard{background:#fff;border:1px solid rgba(255,255,255,.15);
+         border-radius:10px;padding:16px 18px}
+  .hcard b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:700;color:var(--navy)}
+  .hcard p{font-size:14px;line-height:1.5;color:var(--sec);margin-top:6px}
+
+  /* ---- objeção de dinheiro (04/08) ----
+     Fica DEPOIS do preço, de propósito: quem já viu o valor e travou é quem
+     precisa desta saída, não quem ainda não chegou lá. Borda tracejada marca
+     que é conversa, não mais um argumento de venda. */
+  .objecao{background:var(--card);border:1px dashed var(--ocre);border-radius:12px;
+           padding:22px 24px;text-align:left}
+  .objecao h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700}
+  .objecao>p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px}
+  .objecao ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+  .objecao li{font-size:15px;line-height:1.55;color:var(--ink)}
+  .objecao li b{color:var(--ink)}
+  .objecao a.wa{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--ink)}
+  .objecao a.wa:hover{color:var(--ocre)}
+  .objecao .fine{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+                 font-size:13px;color:var(--sec);line-height:1.55}
+
+  /* ---- depoimentos ---- */
+  .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:28px;color:var(--gold);line-height:.6}
+  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:14.5px;font-weight:600;
+          line-height:1.5;margin:10px 0 16px}
+  .dep2 p b{font-weight:700}
+  .dep2 .quem{display:flex;gap:10px;align-items:center}
+  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);
+             display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
+  .dep2 .nm{font-size:14px;font-weight:700}
+  .dep2 .cid{font-family:'Source Sans 3',sans-serif;font-size:11px;text-transform:uppercase;
+             letter-spacing:1px;color:var(--sec)}
+
+  /* ---- autor e garantia ---- */
+  .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .autorlinha{display:flex;gap:14px;align-items:center;margin:12px 0}
+  .autorlinha img{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0}
+  .autorlinha b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .autorlinha i{font-style:normal;font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sec)}
+  .cardb p{font-size:15px;line-height:1.6;color:var(--sec);margin:0}
+
+  /* ---- FAQ ---- */
+  .faq{display:flex;flex-direction:column;gap:10px}
+  .fitem{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .fitem.on{border-color:var(--gold)}
+  .fq{width:100%;background:none;border:none;padding:16px 18px;font:inherit;font-size:16px;
+      font-weight:700;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;
+      align-items:center;gap:12px;text-align:left}
+  .fq i{font-style:normal;font-size:20px;color:var(--ocre);flex-shrink:0}
+  .fa{padding:0 18px 16px}
+  .fa p{font-size:15px;line-height:1.6;color:var(--sec);margin:0}
+
+  /* ---- CTA final ---- */
+  .vfim{background:var(--navy2);color:var(--paper);padding:56px 24px;text-align:center;
+        display:flex;flex-direction:column;gap:16px;align-items:center;margin-top:56px}
+  .vfim h2{font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:700;line-height:1.25}
+  .vfim .pfim{font-size:16px;color:var(--azul)}
+  .vfim .micro2{color:var(--azul)}
+  .vfim .legal{font-size:12px;color:rgba(191,220,238,.55);max-width:520px;line-height:1.55}
+
+  /* A marca do quiz (logo redondo + wordmark) sai na página de vendas: lá a marca é a
+     barra navy do topo, e as duas juntas davam dois cabeçalhos empilhados. */
+  body.vendas .brand{display:none}
   @media(max-width:560px){
-    .stats{grid-template-columns:1fr}
-    .quotes{grid-template-columns:1fr}
-    .founder .ph,.founder img{width:104px;height:124px}
+    .vhero{padding:40px 20px 48px}
+    .vhero h1{font-size:29px}
+    .vsec{padding:40px 20px 8px}
+    .vsec h2{font-size:22px} .vsec h2.grande{font-size:26px}
+    .preco .v{font-size:38px}
+    .vfim h2{font-size:24px}
+    .btn-lar{font-size:14px;padding:11px 16px}
+    .btn-lar.grande{font-size:16px;padding:14px 22px}
   }
-  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;border:none;border-radius:12px;padding:14px 22px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:.15s}
+  .btn:hover{background:#0d161d}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .btn.full{width:100%}
+  .back{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;margin-top:14px;padding:4px}
+  .autor{display:flex;align-items:flex-start;gap:13px;margin-top:20px;padding:16px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  .autor img{border-radius:50%;flex-shrink:0;object-fit:cover}
+  .autor p{font-size:13.5px;color:var(--muted2);line-height:1.5}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:13.5px;color:var(--muted2);margin-bottom:5px}
+  .field input{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:13px 14px;font:inherit;font-size:16px;color:var(--ink)}
+  .field input:focus{outline:none;border-color:var(--ocre)}
+  .small{font-size:12.5px;color:var(--muted);margin-top:10px}
+  /* resultado */
+  .verdict{border-radius:16px;padding:20px;margin:6px 0 18px;border:1px solid var(--line)}
+  .verdict.ochre{background:#FBF1E6;border-color:#E7CFA8}
+  .verdict.mixed{background:#F1ECE0}
+  .verdict.green{background:#E9F1EA;border-color:#BFD8C4}
+  .verdict .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+  .verdict h2{font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px}
+  .verdict p{font-size:15px;color:var(--muted2)}
+  .plot{position:relative;width:100%;max-width:280px;margin:0 auto 18px;aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  .plot .vline,.plot .hline{position:absolute;background:var(--line)}
+  .plot .vline{left:50%;top:8%;bottom:8%;width:1.5px}
+  .plot .hline{top:50%;left:8%;right:8%;height:1.5px}
+  .plot .ql{position:absolute;font-size:9.5px;color:var(--muted);font-family:'Hanken Grotesk',sans-serif;letter-spacing:.03em;max-width:42%}
+  .plot .tl{top:8px;left:10px}.plot .tr{top:8px;right:10px;text-align:right}
+  .plot .bl{bottom:8px;left:10px}.plot .br{bottom:8px;right:10px;text-align:right}
+  .plot .you{position:absolute;transform:translate(-50%,-50%)}
+  .plot .dot{width:15px;height:15px;border-radius:50%;background:var(--ocre);box-shadow:0 0 0 5px rgba(166,93,30,.18)}
+  .plot .ylab{font-size:9.5px}
+  .center{text-align:center}
+  .offer{background:var(--navy);color:#fff;border-radius:16px;padding:24px 20px;margin-top:8px;text-align:center}
+  .offer h3{font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px;color:#fff}
+  .offer p{font-size:14.5px;color:#C9C1B4;margin-bottom:16px}
+  .offer .price{font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:#E7CFA8;margin-top:12px}
+  .offer .btn{background:var(--ocre);}
+  .offer .btn:hover{background:#8c4d18}
+  .offer .alt{display:inline-block;margin-top:14px;font-size:13px;color:#C9C1B4;text-decoration:underline;cursor:pointer}
+  .offer .alt:hover{color:#fff}
+  .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
+  /* .gab (gabarito comentado) saiu daqui em 04/08/2026: era de uma amostra antiga
+     que nenhum JS emite mais (só gabarito(), que usa a definição de .gab lá em
+     cima, no bloco da página de vendas v2), e por vir depois no CSS vencia por
+     ordem — o cartão da questão comentada estava com o padding e as cores da
+     versão de 02/08, não do handoff atual. */
+  /* bloco trancado (teaser do diagnóstico completo): o TÓPICO fica legível
+     para dar curiosidade; só a RESPOSTA é rasurada. */
+  .lockbox{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;background:var(--card)}
+  .lockbox .head{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);padding:14px 20px 4px}
+  .lockbox .inner{padding:6px 20px 16px}
+  .lockbox .row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .lockbox .row:last-child{border-bottom:none}
+  .lockbox .row .t{color:var(--ink)}
+  /* O que as 5 questões já mostraram sai legível e verdadeiro. O que depende das
+     24 vira barra opaca: sem texto por baixo, não há valor falso nem screenshot
+     para comparar com o do colega. */
+  .lockbox .val{color:var(--ink);white-space:nowrap;font-weight:600;font-size:13.5px;text-align:right}
+  .lockbox .val.trava{display:inline-block;width:88px;height:10px;border-radius:5px;background:var(--muted2);opacity:.3;font-size:0}
+  /* Os NOMES das matérias em que a pessoa cedeu. Bloco próprio, de largura inteira,
+     porque .val é nowrap e uma lista de matérias estoura a linha. É o único item do
+     lockbox que ganhou destaque visual: é ele que transforma "3 de 6" em um problema
+     com nome, e é nome que a pessoa carrega para fora da página. */
+  .lockbox .named{padding:12px 0 4px;border-bottom:1px solid var(--line)}
+  .lockbox .named .lab{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.1em;
+                       text-transform:uppercase;color:var(--muted2);margin-bottom:9px}
+  .lockbox .named .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .lockbox .named .chips b{font-weight:600;font-size:13.5px;padding:5px 11px;border-radius:999px;
+                           background:rgba(199,122,43,.12);border:1px solid rgba(199,122,43,.34);color:var(--ocre2)}
+  .lockbox .cta{font-size:12px;color:var(--muted);padding:0 20px 14px}
+  /* ===== Resultado v3 (02/08/2026) · layout de página de vendas =====
+     Vem do handoff de design "Pagina de Venda - Resultado". Regra do ritmo: a página
+     inteira é papel, com EXATAMENTE dois blocos navy (o hero e a oferta final). Cada
+     navy é um momento; três seriam ruído. O texto e a ordem dos argumentos não mudaram:
+     mudou onde cada um respira. A tela de resultado sai do .wrap (que é estreito e tem
+     padding) para o hero poder sangrar de borda a borda. ===== */
+  body.res .wrap{max-width:none;margin:0;padding:0}
+  body.res .wrap>.brand{display:none}
+  body.res .wrap>.foot{display:none}
+  body.res{padding-bottom:96px}
+  .rhero{background:var(--navy);color:#fff;padding:20px 22px 34px}
+  .rhero .in{max-width:600px;margin:0 auto}
+  .rbrand{display:flex;align-items:center;gap:10px;margin-bottom:30px}
+  .rbrand .nm{font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#fff}
+  .rbrand .tg{font-family:'Hanken Grotesk',sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+  .rkick{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:14px}
+  .rh1{font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,8vw,42px);line-height:1.08;letter-spacing:-.022em;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .rh1 em{font-style:italic;color:#E7A85B}
+  .rlead{font-size:16.5px;line-height:1.6;color:#C9C1B4;margin-bottom:20px;max-width:44ch;text-wrap:pretty}
+  /* A tradução da distância para a régua da prova. Ganhou destaque próprio em
+     02/08/2026: na varredura de relatos reais, a margem é o único vocabulário que
+     esse público usa espontaneamente ("fico nos 38/39", "por uma maldita questão"),
+     e era a única coisa que a página não dizia. */
+  .rmarg{display:flex;gap:11px;align-items:flex-start;margin-bottom:26px;padding:13px 15px;
+         border-left:3px solid var(--ocre2);background:rgba(199,122,43,.10);border-radius:0 10px 10px 0;
+         font-size:15px;line-height:1.55;color:#E7CFA8;max-width:44ch}
+  /* Cabeçalho compacto da tela de oferta: reancora POR QUE ela está vendo isso.
+     Sem ele, a segunda tela começa do nada e perde o diagnóstico de vista. */
+  .rrecap{background:var(--navy);color:#F3EEE4;padding:22px 20px 20px}
+  .rrecap .in{max-width:600px;margin:0 auto}
+  .rrecap .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.12em;
+             text-transform:uppercase;color:#8E9AA4;margin-bottom:8px}
+  .rrecap .h{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:500;line-height:1.3;
+             color:#F3EEE4;text-wrap:balance}
+  .rrecap .h em{font-style:italic;color:var(--ocre2)}
+  /* Bônus. Entrou em 02/08/2026, quando o Kit Reta Final deixou de ser bump de R$19 e
+     passou a vir incluído: o acréscimo de 40% no pedido é atrito grande demais para um
+     público que espera o dia 5 do mês, e não havia nenhum outro material livre para
+     usar como bônus. A data sai por extenso do relógio, não é "hoje" solto: quem voltar
+     amanhã lê a data de amanhã e a página nunca prometeu prazo nenhum. */
+  /* O bloco .bonus antigo (tracejado ocre) saiu em 04/08/2026: o design novo tem
+     um .bonus próprio, em cartão navy, definido lá em cima. Duas definições da mesma
+     classe conviviam, e a de baixo vencia por ordem. */
+  .voltar{display:inline-block;margin-top:14px;font-family:'Hanken Grotesk',sans-serif;font-size:11px;
+          letter-spacing:.07em;text-transform:uppercase;color:#8E9AA4;text-decoration:none;
+          border-bottom:1px solid rgba(142,154,164,.4);padding-bottom:2px}
+  .voltar:hover{color:#F3EEE4;border-color:#F3EEE4}
+  .rlead b{color:#fff}
+  .bars{display:flex;flex-direction:column;gap:16px;padding:20px 18px;border:1px solid #2C3B48;border-radius:16px;background:#1B2934}
+  .bars .b{display:flex;flex-direction:column;gap:7px}
+  .bars .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .bars .hd span:first-child{font-size:13.5px;color:#C9C1B4}
+  .bars .v{font-family:'Hanken Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .bars .v.ok{color:#7FB99A}
+  .bars .v.no{color:#E7A85B}
+  .bars .tr{height:8px;border-radius:4px;background:#2C3B48;overflow:hidden}
+  .bars .tr i{display:block;height:100%;border-radius:4px;transform-origin:left center;animation:fillbar .9s cubic-bezier(.2,.7,.3,1) both}
+  .bars .b:nth-child(2) .tr i{animation-delay:.15s}
+  .bars .tr i.ok{background:var(--green)}
+  .bars .tr i.no{background:var(--ocre2)}
+  .bars .ft{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+  @keyframes fillbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @media (prefers-reduced-motion: reduce){ .bars .tr i{animation:none} }
+  .rbody{max-width:600px;margin:0 auto;padding:0 22px}
+  .rsec{margin-top:44px}
+  .rkk{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .rkk.v{color:var(--green)}
+  .rh3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(22px,5.6vw,27px);line-height:1.18;letter-spacing:-.015em;margin-bottom:14px;text-wrap:pretty}
+  .rp{font-size:16px;line-height:1.62;color:var(--muted2);margin-bottom:20px;text-wrap:pretty}
+  .rp.forte{font-size:17.5px;color:var(--ink);margin-bottom:16px}
+  .rp b{color:var(--ink)}
+  .pull{border-left:3px solid var(--ocre);padding:4px 0 4px 18px;margin-bottom:4px}
+  .pull p{font-family:'Spectral',serif;font-size:19px;line-height:1.42;color:var(--ink);text-wrap:pretty}
+  .stack{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .stack .hd{font-family:'Hanken Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .stack .it{display:flex;gap:11px;align-items:flex-start;margin-bottom:11px}
+  .stack .it:last-of-type{margin-bottom:0}
+  .stack .it svg{flex-shrink:0;margin-top:2px}
+  .stack .it div{font-size:14.5px;line-height:1.45;color:var(--muted2)}
+  .stack .it b{color:var(--ink)}
+  .stack .tot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+  .stack .tot span:first-child{font-size:14px;color:var(--muted2)}
+  /* Sub-lista dentro de um item da pilha (03/08/2026). Entrou quando a pilha deixou de
+     ser cinco linhas de uma frase e passou a descrever o que cada entrega faz: sem ela,
+     "cada questão explica: por que a sua resposta parecia correta; por que a banca..."
+     virava um parágrafo corrido de três orações que ninguém lê no celular. */
+  .stack .mini{margin:7px 0 0;padding-left:16px;list-style:none}
+  .stack .mini li{position:relative;margin-bottom:4px;font-size:14px;line-height:1.45}
+  .stack .mini li:before{content:'';position:absolute;left:-12px;top:8px;width:4px;height:4px;
+                         border-radius:50%;background:var(--ocre2)}
+  .stack .tot .p{font-family:'Hanken Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .rbtn{display:flex;align-items:center;justify-content:center;width:100%;margin-top:20px;background:var(--ocre);color:#fff;border:none;border-radius:13px;padding:19px 22px;font:inherit;font-size:17.5px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 14px 30px -14px rgba(166,93,30,.85);transition:background .15s}
+  .rbtn:hover{background:#8c4d18;color:#fff}
+  .rmicro{font-family:'Hanken Grotesk',sans-serif;font-size:11.5px;line-height:1.7;color:var(--muted);margin-top:10px;text-align:center}
+  /* Faixa de pagamento, 02/08/2026. O Pix estava dentro da microcopy de 11,5px, do
+     mesmo tamanho de "acesso imediato". A Delzuita respondeu no WhatsApp que parou
+     no checkout porque "só terei dinheiro dia 6", e o Reddit está cheio de gente
+     dizendo que não tem como pagar cursinho: para esse público o Pix é o desbloqueio,
+     porque não depende de cartão com limite. Merece linha própria e peso próprio. */
+  .pag{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:12px;
+       font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:14px;color:var(--muted2)}
+  .pag b{color:var(--ink);font-weight:600}
+  .pag .pix{display:inline-flex;align-items:center;gap:5px;background:#E9F1EA;border:1px solid #BFD8C4;
+            color:#2F6B4F;border-radius:999px;padding:4px 11px;font-weight:600;font-size:13px}
+  .ofim .pag{color:#E7CFA8}
+  .ofim .pag b{color:#fff}
+  .ofim .pag .pix{background:rgba(127,185,154,.16);border-color:rgba(127,185,154,.5);color:#9FD4B7}
+  /* Observações da leitura do teste. Em 03/08/2026 deixaram de ser blocos com cabeçalho
+     próprio (.it + .k em caixa alta) e viraram frases: o rótulo entra em negrito no meio
+     da linha. Com cabeçalho, cada observação anunciava um assunto novo e a seção "o que
+     isso significa" lia como cinco seções empilhadas. */
+  .viu{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+  /* .obs, .obs.ochre/.green, .deps e .dep2* saíram daqui em 04/08/2026: são do
+     resultado v3 (body.res), que não existe mais em lugar nenhum do JS — mas os
+     nomes de classe são os MESMOS que a página de vendas atual usa (body.vendas),
+     e por virem depois no CSS, venciam por ordem e pisavam no visual novo (o
+     .dep2 .asp virava var(--ocre2) em vez do dourado do handoff, por exemplo).
+     Definição real de .obs/.deps/.dep2 está lá em cima, no bloco da página de
+     vendas v2. Resto deste bloco (.vid etc.) continua em uso, então não sai. */
+  .vid{position:relative;width:min(300px,78%);margin:0 auto;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--navy)}
+  .vid video{width:100%;height:100%;object-fit:cover;display:block}
+  .vidleg{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
+  .autor2{display:flex;align-items:flex-start;gap:16px}
+  .autor2 img{width:76px;height:76px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex-shrink:0;border:2px solid var(--line)}
+  .autor2 .k{font-family:'Hanken Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .autor2 p{font-size:15px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
+  .gar2{border-top:1px solid var(--line);margin-top:20px;padding-top:18px;font-size:14.5px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
+  .gar2 b{color:var(--green)}
+  .ofim{margin-top:44px;background:var(--navy);border-radius:20px;padding:30px 24px;text-align:center}
+  .ofim .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ocre2);margin-bottom:12px}
+  .ofim h3{font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,6vw,29px);line-height:1.16;color:#fff;margin-bottom:14px;text-wrap:pretty}
+  .ofim p{font-size:15px;line-height:1.6;color:#C9C1B4;margin-bottom:22px;text-wrap:pretty}
+  .ofim .rbtn{box-shadow:0 14px 30px -14px rgba(0,0,0,.8)}
+  .ofim .rbtn:hover{background:var(--ocre2)}
+  .ofim .rmicro{color:#E7CFA8;margin-top:12px}
+  .selo{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:11px 14px;border:1px solid #2C3B48;border-radius:11px;background:#1B2934}
+  .selo svg{flex-shrink:0}
+  .selo span{font-size:13px;line-height:1.4;color:#C9C1B4;text-align:left}
+  .selo b{color:#7FB99A}
+  .upsell{display:inline-block;margin-top:18px;font-size:13.5px;color:#C9C1B4;text-decoration:underline}
+  .upsell:hover{color:#fff}
+  .rfoot{margin-top:28px;font-size:11.5px;line-height:1.5;color:var(--muted);text-align:center}
+  /* Barra fixa de compra. Só aparece depois de 1,2 tela de rolagem: antes disso o
+     primeiro CTA ainda está visível e a barra seria redundante e agressiva. */
+  .sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(243,238,228,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:20;transform:translateY(110%);transition:transform .28s cubic-bezier(.2,.7,.3,1)}
+  .sticky.on{transform:none}
+  .sticky .in{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  .sticky .t{flex:1;min-width:0}
+  .sticky .t .a{font-size:14px;font-weight:600;line-height:1.25}
+  .sticky .t .b{font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted)}
+  .sticky a{background:var(--ocre);color:#fff;border-radius:11px;padding:14px 20px;font-size:15.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+  .sticky a:hover{background:#8c4d18;color:#fff}
+  @media (prefers-reduced-motion: reduce){ .sticky{transition:none} }
 </style>
-<script id="hotmart_launcher_script">
-	(function(l,a,u,n,c,h,e,r){l['HotmartLauncherObject']=c;l[c]=l[c]||function(){
-	(l[c].q=l[c].q||[]).push(arguments)},l[c].l=1*new Date();h=a.createElement(u),
-	e=a.getElementsByTagName(u)[0];h.async=1;h.src=n;e.parentNode.insertBefore(h,e)
-	})(window,document,'script','//launcher.hotmart.com/launcher.js','hot');
-
-	hot('account','6da22c84-5ee5-3040-9f8f-6c11ce03851c');
-</script>
 </head>
-<body>
-<div class="page">
-
-  <!-- 1. HEADER -->
-  <header class="top">
-    <div class="brand"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span></div>
-    <span class="tag">1ª fase · OAB</span>
-  </header>
-
-  <!-- 2. HERO -->
-  <div class="hero">
-    <div class="kk" style="color:var(--ochre)">O Diagnóstico dos 2 Eixos</div>
-    <h1>Em 20 minutos, descubra <span class="em">onde</span> você perde ponto na 1ª fase.</h1>
-    <p class="lede">Você responde 24 questões só do que mais cai, conta como reage sob pressão, e recebe na hora o seu <b>Diagnóstico dos 2 Eixos</b>: de um lado o que você não sabe, do outro o que sabe mas trava na hora.</p>
-
-    <a class="btn big js-buy" href="#oferta">Quero meu diagnóstico · R$ 47
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <div class="price-inline">Pagamento único, resultado na hora</div>
-    <div class="seal">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pix ou cartão, compra segura</span>
-      <span class="sep"></span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>7 dias de garantia</span>
-    </div>
-
-    <div class="deliver">
-      <div class="hd">O que entra na sua compra</div>
-      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Simulado-diagnóstico de 24 questões, só do que mais cai</span></div>
-      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Raio-x de como você se comporta sob pressão</span></div>
-      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Relatório de dois eixos, com o seu nome, na hora</span></div>
-      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>Fichas do que mais cai e folha de tática de prova</span></div>
-      <div class="row"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><span>3 simulados para medir sua evolução até o exame</span></div>
-    </div>
-
-    <div class="count">
-      <span class="lbl">Falta para a 1ª fase do 47º Exame (06/09):</span>
-      <span class="clk" id="clk">-- d -- h -- m</span>
-      <span class="lbl" id="clkmath" style="max-width:52ch;flex-basis:100%"></span>
-    </div>
-  </div>
-
-  <!-- 3. INIMIGO -->
-  <div class="enemy-wrap">
-    <div class="enemy">
-      <div class="kk">Por que isso continua acontecendo</div>
-      <h2>O cursinho caro não vive de você passar. Vive de você voltar.</h2>
-      <p class="first">Você lembra do peso de fechar o caderno sem ter aprendido nada, com a casa inteira já dormindo. O passeio que seu filho pediu e você trocou por apostila. E, mesmo assim, a reprovação. De novo.</p>
-      <p>Eles cobram <b>mais de mil reais, mais mensalidade sem data para acabar</b>, e mandam você estudar tudo, todo dia, como se você não trabalhasse e não tivesse uma casa para tocar. Quanto mais aula empilham, mais parece que a culpa de reprovar é sua.</p>
-      <div class="punch"><p>Mandar estudar tudo é o conselho perfeito para quem ganha enquanto você continua matriculada.</p></div>
-    </div>
-  </div>
-
-  <!-- 4. A VIRADA + RELATÓRIO -->
-  <section class="pad virada">
-    <div class="kk">A virada</div>
-    <h2 class="h2">Talvez o seu problema não seja estudar mais.</h2>
-    <p class="lead">Existem dois jeitos de reprovar. Um todo mundo conhece: não saber o conteúdo. O outro, que ninguém te conta, é <b>saber e errar mesmo assim</b>: travar na questão difícil, ficar sem tempo, trocar a resposta certa por insegurança no último segundo. Estudar mais horas não conserta o segundo.</p>
-
-    <div class="report">
-      <div class="hd"><span class="t">O Diagnóstico dos 2 Eixos</span><span class="ex">exemplo</span></div>
-      <div class="plot-row">
-        <div class="ylab">Desempenho na prova</div>
-        <div style="flex:1">
-          <div class="plot">
-            <div class="q-tl"></div><div class="q-br"></div>
-            <div class="vline"></div><div class="hline"></div>
-            <div class="ql a">Sabe, mas trava sob pressão</div>
-            <div class="ql b">Pronta de verdade</div>
-            <div class="ql c">Lacuna de conteúdo</div>
-            <div class="ql d">Sabe e executa, falta tática</div>
-            <div class="you"><div class="dot"></div><div class="lab">você</div></div>
-          </div>
-          <div class="xlab">Domínio do conteúdo</div>
-        </div>
-      </div>
-      <p class="cap">No exemplo: a aprovação não está travada por falta de estudo, e sim por desempenho sob pressão. São problemas diferentes, com soluções diferentes, e é isso que o relatório aponta com o seu nome.</p>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:center;margin-top:26px">
-      <a class="btn js-buy" href="#oferta" style="display:inline-flex">Descobrir o meu eixo · R$ 47
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </section>
-
-  <!-- 5. COMO FUNCIONA -->
-  <section class="pad">
-    <div class="kk">Como funciona</div>
-    <h2 class="h2" style="margin-bottom:18px">Da compra ao seu plano, em poucos minutos.</h2>
-    <div class="steps">
-    <div class="step"><div class="n">1</div><div><h3>Você responde 24 questões</h3><p>Só das 6 matérias que decidem a prova, no estilo da banca. Nada de questão que quase não cai.</p></div></div>
-    <div class="step"><div class="n">2</div><div><h3>Faz o raio-x de como você prova</h3><p>Um questionário rápido sobre o que acontece com você na hora: tempo, travada, insegurança, pânico.</p></div></div>
-    <div class="step"><div class="n">3</div><div><h3>Recebe o relatório na hora</h3><p>Em dois eixos, com o seu nome: onde está a lacuna de conteúdo e onde está a de desempenho.</p></div></div>
-    <div class="step"><div class="n">4</div><div><h3>Recebe a prescrição e treina</h3><p>O que estudar primeiro, as fichas do que mais cai, a tática para o seu perfil, e os simulados.</p></div></div>
-    </div>
-  </section>
-
-  <!-- 6. O QUE VOCÊ RECEBE -->
-  <section class="pad">
-    <div class="kk">O que você recebe</div>
-    <h2 class="h2">Tudo voltado para o que decide a sua prova.</h2>
-    <div class="grid">
-      <div class="item star">
-        <span class="badge">O coração do produto</span>
-        <h3>Seu Diagnóstico dos 2 Eixos, com o seu nome</h3>
-        <p>Conteúdo e desempenho medidos separados, lado a lado, para parar de tratar nervosismo como falta de estudo, e o contrário. Sai na hora e fica seu para sempre.</p>
-        <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Mostra a sua posição nos dois eixos, sem rodeio</span></div>
-        <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Traz a prescrição: o que atacar primeiro, em que ordem</span></div>
-      </div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>O diagnóstico das 6 matérias do núcleo duro</h3><p>As que sozinhas valem quase metade da prova. É onde a aprovação se decide.</p></div></div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>As fichas do que mais cai</h3><p>Revisão condensada dos pontos quentes das suas matérias fracas. Lei seca, súmula e a pegadinha clássica.</p></div></div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>A folha de tática de prova para o seu perfil</h3><p>Gestão de tempo, a regra de pular e voltar, como cortar a espiral de pânico. O que decide o dia.</p></div></div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>3 simulados focados para medir sua evolução</h3><p>Liberados como checkpoints rumo ao exame, para você ver, em número, que está melhorando.</p></div></div>
-    </div>
-  </section>
-
-  <!-- 7. FUNDADOR -->
-  <section class="pad">
-    <div class="founder">
-      <img src="assets/gustavo.webp" width="96" height="116" loading="lazy" alt="Gustavo, advogado" style="object-position:center center">
-      <div class="bd">
-        <div class="kk">Quem está falando com você</div>
-        <p>Sou Gustavo, advogado. Quando estudei para a 1ª fase, enchi a mesa de apostila e, mesmo assim, quase me enrolei: não por não saber, mas por gastar as poucas horas que tinha na matéria errada e por congelar na questão difícil.</p>
-        <p>O dia em que separei duas coisas que eu tratava como uma só, o que eu não sabia e o que eu sabia mas errava sob pressão, tudo mudou. Parei de estudar mais e comecei a estudar certo. O Só o que Cai faz essa separação por você, em 20 minutos, e entrega o que eu levei meses para enxergar sozinho.</p>
-        <div class="sig">Gustavo, idealizador</div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:center;margin-top:24px">
-      <a class="btn js-buy" href="#oferta" style="display:inline-flex">Quero meu diagnóstico · R$ 47
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </section>
-
-  <!-- 8. NÃO É ACHISMO -->
-  <section class="pad">
-    <div class="kk">Não é achismo</div>
-    <h2 class="h2">A prova não cai espalhada por igual.</h2>
-    <p class="lead">Coloque as provas recentes lado a lado e o desenho aparece sozinho. Poucas matérias decidem quase tudo, e é exatamente nelas que o diagnóstico te testa.</p>
-    <div class="stats">
-      <div class="st"><div class="n">80<small> q</small></div><div class="l">na prova. Você precisa de 40, metade.</div></div>
-      <div class="st"><div class="n">~48<small>%</small></div><div class="l">da prova em 6 matérias do núcleo duro.</div></div>
-      <div class="st"><div class="n">~8</div><div class="l">questões de Ética, o maior peso individual.</div></div>
-    </div>
-    <div class="barwrap">
-      <div class="lab"><span>As 11 matérias principais concentram cerca de 78% dos pontos</span><span class="mono">78%</span></div>
-      <div class="bar"><i style="width:78%;background:var(--ochre2)"></i></div>
-      <div class="lab b2"><span>As outras valem juntas só cerca de 22%</span><span class="mono">22%</span></div>
-      <div class="bar"><i style="width:22%;background:#B6AE9F"></i></div>
-      <div class="note">Distribuição aproximada com base no edital e nas provas recentes. Varia de uma edição para outra.</div>
-    </div>
-  </section>
-
-  <!-- 8B. AVALIACAO DE ADVOGADOS APROVADOS · ativada em 2026-07-30, autorizacoes registradas no WhatsApp do Gustavo -->
-  <section class="pad">
-    <div class="kk">Quem conhece a prova, avaliou</div>
-    <h2 class="h2">Três colegas usaram esse jeito de estudar e passaram na 1ª fase.</h2>
-    <p class="lead">Quando o Gustavo dividiu o método com eles, ainda estavam prestando o exame, no mesmo lugar em que você está agora. Passaram. Hoje são advogados! Com o produto pronto, percorreram o Só o que Cai inteiro, do diagnóstico aos simulados. O que disseram:</p>
-    <div class="quotes" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:20px">
-      <div class="quote" style="border:1px solid var(--line)">
-        <p>"Eu passava horas lendo e continuava com dificuldade nas questões, e o diagnóstico expõe exatamente esse tipo de problema. As fichas de revisão e os simulados comentados são objetivos e facilitam muito a revisão. Fui, devagarinho, me sentindo mais confiante e segura para fazer a prova. Para quem não está conseguindo avançar, a proposta vale muito a pena."</p>
-        <div class="who">Luciana Maria, advogada · Nova Prata do Iguaçu/PR</div>
-      </div>
-      <div class="quote" style="border:1px solid var(--line)">
-        <p>"A parte que eu preferi é que ele indica o caminho a seguir e ajuda a aproveitar melhor o tempo de estudo. Em vez de tentar revisar tudo de novo, decidi ser mais metódica nos estudos. Isso fez muita diferença para mim e tornou minha preparação bem mais leve."</p>
-        <div class="who">Ana Paula, advogada · Dois Vizinhos/PR</div>
-      </div>
-      <div class="quote" style="border:1px solid var(--line)">
-        <p>"É diferente do que eu tinha visto para a OAB. Antes de te apresentar conteúdo, ele te faz entender o que é preciso corrigir, e isso muda a forma de estudar. A navegação é fácil, as informações são objetivas e os simulados ajudam a entender como as questões cobram."</p>
-        <div class="who">Luiz Henrique Wrublack, advogado · Francisco Beltrão/PR</div>
-      </div>
-    </div>
-    <p class="note" style="margin-top:12px">Avaliações publicadas com autorização.</p>
-  </section>
-
-  <!-- 9. O QUE VOCÊ VAI PERCEBER (depoimentos de ALUNOS entram aqui quando houver: print + nome + cidade, com autorização) -->
-  <section class="pad">
-    <div class="kk">O que muda na prática</div>
-    <h2 class="h2">O que você vai perceber nos primeiros minutos.</h2>
-    <div class="grid" style="margin-top:20px">
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Você entende por que continua errando as mesmas questões</h3></div></div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Você para de gastar hora com o que quase não aparece na prova</h3></div></div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Você descobre em qual dos dois eixos está perdendo ponto</h3></div></div>
-      <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Você sai com uma ordem clara do que estudar primeiro</h3></div></div>
-    </div>
-    <div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ochre2);border-radius:13px;padding:16px 18px;margin-top:14px">
-      <p style="font-size:14px;color:var(--soft);line-height:1.6"><b style="color:var(--ink)">Lançado nesta edição do exame.</b> Você entra com os primeiros alunos, que estão estudando agora. Enquanto os resultados deles não chegam, quem sustenta a proposta é a garantia: 7 dias para testar por dentro. Não serviu, devolvemos.</p>
-    </div>
-  </section>
-
-  <!-- 10. OFERTA -->
-  <section class="pad" id="oferta" style="scroll-margin-top:20px">
-    <div class="offer">
-      <div class="kk">A oferta</div>
-      <h2>Antes de gastar mais um ano e mais mil reais, gaste R$ 47 para saber onde você perde ponto.</h2>
-
-      <div class="incl">
-        <div class="kk">Tudo isto, numa compra só</div>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>O Diagnóstico dos 2 Eixos, com o seu nome</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>As fichas do que mais cai: lei seca, súmula, pegadinha</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>A folha de tática de prova para o seu perfil</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>3 simulados para medir a sua evolução</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>E o relatório fica seu para sempre</span></li>
-        </ul>
-      </div>
-
-      <div class="anchor">
-        <div class="col bad">
-          <div class="h">O caminho do cursinho</div>
-          <div class="v">R$ 1.000+</div>
-          <div class="sub">mais mensalidade sem data para acabar, mais um ano da sua vida, e a mesma ordem de estudo para todo mundo</div>
-        </div>
-        <div class="col good">
-          <div class="h">O caminho Só o que Cai</div>
-          <div class="v"><small>R$</small>47</div>
-          <div class="sub">o seu diagnóstico, a sua ordem de estudo, o relatório na hora</div>
-          <div class="once">pagamento único, sem mensalidade, acesso por 12 meses</div>
-        </div>
-      </div>
-
-      <a class="btn big js-buy" href="#oferta">Quero meu diagnóstico · R$ 47
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <div class="seal">
-        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pix ou cartão, ambiente seguro</span>
-        <span class="sep"></span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Checkout processado pela Hotmart</span>
-      </div>
-
-      <div class="guarbox">
-        <span class="shield"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
-        <div>
-          <div class="t">7 dias de garantia total</div>
-          <p>Faça o diagnóstico inteiro. Se em 7 dias você não achar que valeu, é só pedir: eu devolvo os R$ 47, sem discussão. O risco é meu, não seu.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 11. FAQ -->
-  <section class="pad">
-    <div class="kk">Perguntas</div>
-    <h2 class="h2">O que costumam perguntar.</h2>
-    <div class="faq">
-      <details class="q"><summary>Serve para quem já reprovou?</summary><div class="a">É feito exatamente para você. Quem já reprovou costuma ter base, o que falta é direção e desempenho na hora. O diagnóstico aponta os dois.</div></details>
-      <details class="q"><summary>E se eu não usar, como o curso que não assisti?</summary><div class="a">Não é mais um curso de 200 horas para você não assistir. São 20 minutos hoje, e o relatório é seu para sempre.</div></details>
-      <details class="q"><summary>Tenho medo de descobrir que estou pior do que pensava.</summary><div class="a">O relatório não é para te julgar. É para mostrar que o problema tem nome, e que dá para resolver com direção.</div></details>
-      <details class="q"><summary>Preciso ter estudado muito antes?</summary><div class="a">Você não precisa aprender Direito de novo, isso você já fez na faculdade. Serve para quem tem base e está mal direcionado, não para começar do zero.</div></details>
-      <details class="q"><summary>Quanto tempo leva?</summary><div class="a">O diagnóstico leva de 15 a 20 minutos, e o relatório sai na hora. Os simulados você faz quando quiser, rumo ao exame.</div></details>
-      <details class="q"><summary>É atualizado para o próximo exame?</summary><div class="a">Sim. Esta edição é montada para o próximo Exame de Ordem, com base nas provas mais recentes da banca.</div></details>
-      <details class="q"><summary>É seguro pagar?</summary><div class="a">É. O pagamento é processado pela plataforma de checkout, em ambiente seguro. Você escolhe pagar no Pix ou no cartão.</div></details>
-      <details class="q"><summary>Serve para o exame de qualquer estado?</summary><div class="a">Serve. A prova da 1ª fase é da FGV e é a mesma no país inteiro, então o diagnóstico vale onde quer que você preste o exame.</div></details>
-      <details class="q"><summary>E se eu não gostar?</summary><div class="a">Você tem 7 dias de garantia. Não serviu para você, devolvemos o valor, sem discussão.</div></details>
-    </div>
-  </section>
-
-  <!-- 12. CTA FINAL -->
-  <div class="final">
-    <h2>Pare de estudar tudo. Comece a estudar <span class="em">só o que cai</span>.</h2>
-    <a class="btn big js-buy" href="#oferta">Quero meu diagnóstico · R$ 47
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <div class="sub">Resultado na hora, no celular. Pagamento único, 7 dias de garantia.</div>
-  </div>
-
-  <!-- 13. RODAPÉ -->
-  <footer>
-    Só o que Cai · ferramenta de estudo por incidência para a 1ª fase da OAB<br>
-    Não é vinculado à FGV nem à OAB · Gustavo, idealizador
-  </footer>
-
-</div>
-
-<!-- CTA FIXO MOBILE -->
-<div class="sticky">
-  <div class="pl"><b>R$ 47</b><br>pagamento único · 12 meses de acesso</div>
-  <a class="btn js-buy" href="#oferta">Meu diagnóstico
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-</div>
-
+<body class="vendas">
+<div class="wrap"><div id="app"></div></div>
 <script>
-  // ======================= CONFIGURAR ANTES DE PUBLICAR =======================
-  // 1) Link do seu checkout (Kiwify, Hotmart, Cakto...). Vai em TODOS os botões de compra.
-  var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I?checkoutMode=10";
-  // 2) Data e hora reais do próximo Exame de Ordem (confira no edital oficial da FGV).
-  var DATA_PROVA = new Date("2026-09-06T13:00:00-03:00"); // 47º Exame, 1ª fase (FGV, provisório)
-  // ===========================================================================
+(function(){
+  'use strict';
 
-  // Aplica o link do checkout em todos os botões e dispara o evento do Pixel ao clicar.
-  //
-  // A trava de uma-vez-por-sessão entrou em 03/08/2026. Até aqui, TODO clique em
-  // qualquer botão .js-buy disparava um InitiateCheckout — e a página tem vários,
-  // todos apontando para o mesmo checkout. Quem clicava no do meio, voltava e
-  // clicava no do fim contava duas, três vezes. No pixel isso apareceu como
-  // InitiateCheckout em paridade com PageView nos dias 29/07, 30/07 e 01/08, que é
-  // sinal de contagem, não de gente.
-  //
-  // Esta página ficou órfã quando o funil passou a ser o mini-diagnóstico: nada mais
-  // aponta para ela, e por isso o sintoma sumiu sozinho. A trava vai aqui mesmo
-  // assim, porque link antigo, print e favorito continuam existindo, e o dia em que
-  // alguém cair aqui a poluição volta sem avisar.
-  //
-  // É a mesma trava do mini-diagnostico.html, de propósito: se as duas páginas
-  // contarem checkout de jeitos diferentes, o número do funil deixa de significar
-  // uma coisa só.
-  var icDisparado = false;
-  document.querySelectorAll('.js-buy').forEach(function(a){
-    a.setAttribute('href', CHECKOUT_URL);
-    a.addEventListener('click', function(){
-      if (icDisparado) return;
-      icDisparado = true;
-      if (typeof fbq !== 'undefined') { fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); }
-    });
+  var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I?checkoutMode=10";
+  var PRODUTO = 'Mapa da Aprovação';
+  var PARCELA = '6x de R$8,82';
+  var TOTAL_PARCELADO = 'R$52,92';
+
+  /* sck=oferta_pagina: sem isto, venda vinda daqui fica indistinguível da que veio
+     do mini-diagnóstico, e não dá para saber se a página autônoma vende. Quem chega
+     pelo WhatsApp com ?sck= próprio tem o dele respeitado logo abaixo. */
+  var SCK = 'oferta_pagina';
+  try {
+    var q = new URLSearchParams(location.search).get('sck');
+    if (q) SCK = q;
+  } catch (e) {}
+  var COMPRA = CHECKOUT_URL + '&sck=' + encodeURIComponent(SCK);
+
+  var esc = function(s){ return String(s).replace(/[&<>"]/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];}); };
+function porExtenso(d){
+    var M=['janeiro','fevereiro','março','abril','maio','junho','julho',
+           'agosto','setembro','outubro','novembro','dezembro'];
+    return d.getDate()+' de '+M[d.getMonth()];
+  }
+var DATA_PROVA=new Date(2026,8,6); // 06/09/2026 — mesma constante de mini-diagnostico.html
+function diasParaProva(){
+    var d=Math.ceil((DATA_PROVA-new Date())/86400000);
+    return d>0? d : null;
+  }
+var FAQ = [
+    { q:'Como funciona, na prática?',
+      a:'São cinco etapas, na ordem, dentro da área do aluno no navegador. Primeiro você responde 24 questões (10 a 15 minutos) mais 7 perguntas sobre a sua hora de prova. Na hora que termina, sai o seu Relatório dos Dois Eixos: onde você está, o placar em cada matéria do núcleo duro e as prescrições nomeando as suas matérias fracas e os temas exatos onde perdeu ponto. Aí você usa as fichas dessas matérias, mede com os simulados e fecha com a folha de tática de prova. Cada etapa só existe porque a anterior te diz o que fazer nela.' },
+    { q:'Eu estudo só o que cai mesmo? Só os temas mais cobrados?',
+      a:'É a proposta. As fichas cobrem as 6 matérias do núcleo duro, que sozinhas valem 70% da prova, e o Relatório te diz quais dessas 6 são as suas fracas. Você estuda essas primeiro, não uma lista genérica de "mais cobrados".' },
+    { q:'Isto é um curso de OAB?',
+      a:'Não, e essa é a diferença. Não tem vídeoaula para assistir, nem aula com horário, nem mensalidade. O que você compra é a direção: o exame que descobre onde o ponto está vazando, mais os materiais para tapar exatamente esses vazamentos. Você pode continuar no curso que já faz: o Mapa diz em que ordem usar o tempo.' },
+    { q:'Preciso saber tudo para passar?',
+      a:'Não. Você precisa de 40 acertos em 80. Metade da prova pode dar errado e você ainda passa a 1ª fase. Todo o material existe para te levar a essa linha com o menor esforço possível.' },
+    { q:'Quanto tempo leva?',
+      a:'Cerca de 40 minutos entre as 24 questões e as 7 perguntas de comportamento. Você pode parar e voltar depois: fica salvo de onde parou. O Relatório sai na hora que você termina.' },
+    { q:'Não tenho os R$ 47 hoje. Tem outra forma?',
+      a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora) ou boleto, que você gera hoje e paga até o vencimento. Se nenhuma das duas resolver, me manda mensagem no WhatsApp que eu respondo pessoalmente. O preço não muda em outro dia: sempre foi R$ 47.' },
+    { q:'Quais são as formas de pagamento?',
+      a:'Pix, cartão de crédito em até 6x e boleto à vista. O acesso chega assim que o pagamento é confirmado, no Pix e no cartão em minutos.' },
+    { q:'Já estudo com outro curso. Isso substitui?',
+      a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto. A maioria das pessoas usa os dois juntos.' },
+    { q:'E as outras 11 matérias, fora do núcleo duro?',
+      a:'O diagnóstico e as fichas deste material cobrem as 6 matérias do núcleo duro, que são as de maior peso, e o Relatório avisa isso com clareza: ele mediu essas 6, a prova cobra 17. Se depois você quiser as fichas das outras 11, existe o Plano Completo. Mas a ordem certa é começar pelas que mais valem ponto.' },
+    { q:'Sou iniciante / faz tempo que parei. Vale para mim?',
+      a:'Vale, e costuma valer mais: quanto menos claro está o que falta, mais tempo se perde estudando na ordem errada. O exame mede de onde você parte, sem exigir preparo prévio.' },
+    { q:'Posso refazer o diagnóstico depois?',
+      a:'Pode, e é recomendado. Depois de estudar as fichas e fazer os simulados, você refaz e vê o seu ponto se mover no gráfico. É a forma mais direta de saber se o esforço virou ponto.' },
+    { q:'Funciona no celular?',
+      a:'Sim. Roda no navegador, sem instalar nada: questões, fichas e simulados.' },
+    { q:'Por quanto tempo tenho acesso?',
+      a:'12 meses, com pagamento único. Não é assinatura e não renova sozinho.' },
+    { q:'E se eu não gostar?',
+      a:'Você tem 7 dias para pedir reembolso, sem perguntas. Dá para usar o material inteiro antes de decidir.' }
+  ];
+function depoimentos(){
+    var D=[
+      {ini:'LM', nome:'Luciana Maria', cid:'Advogada · Nova Prata do Iguaçu/PR',
+       a:'Eu passava horas lendo e continuava com dificuldade nas questões, e ', g:'o diagnóstico expõe exatamente esse tipo de problema',
+       b:'. As fichas de revisão e os simulados comentados são objetivos e facilitam muito a revisão. Fui, devagarinho, me sentindo mais confiante e segura para fazer a prova. Para quem não está conseguindo avançar, a proposta vale muito a pena.'},
+      {ini:'AP', nome:'Ana Paula', cid:'Advogada · Dois Vizinhos/PR',
+       a:'A parte que eu preferi é que ', g:'ele indica o caminho a seguir e ajuda a aproveitar melhor o tempo de estudo',
+       b:'. Em vez de tentar revisar tudo de novo, decidi ser mais metódica nos estudos. Isso fez muita diferença para mim e tornou minha preparação bem mais leve.'},
+      {ini:'LH', nome:'Luiz Henrique Wrublack', cid:'Advogado · Francisco Beltrão/PR',
+       a:'É diferente do que eu tinha visto para a OAB. ', g:'Antes de te apresentar conteúdo, ele te faz entender o que é preciso corrigir',
+       b:', e isso muda a forma de estudar. A navegação é fácil, as informações são objetivas e os simulados ajudam a entender como as questões cobram.'}
+    ];
+    return '<div class="deps">'+D.map(function(d){
+      return '<div class="dep2"><div class="asp">&ldquo;</div>'+
+        '<p>'+esc(d.a)+'<b>'+esc(d.g)+'</b>'+esc(d.b)+'</p>'+
+        '<div class="quem"><span class="ini">'+esc(d.ini)+'</span><div>'+
+          '<div class="nm">'+esc(d.nome)+'</div><div class="cid">'+esc(d.cid)+'</div>'+
+        '</div></div></div>';
+    }).join('')+'</div>';
+  }
+function objecaoDinheiro(){
+    var msg=encodeURIComponent('Oi! Vi o Mapa da Aprovação (R$ 47) e queria falar sobre o pagamento.');
+    return '<div class="objecao">'+
+      '<h3>E se hoje os R$ 47 não caberem?</h3>'+
+      '<p>Acontece, e não tem nada de errado nisso. Três saídas, na ordem que costuma resolver:</p>'+
+      '<ul>'+
+        '<li><b>'+PARCELA+' no cartão.</b> Menos de nove reais por mês, com o acesso liberado na hora.</li>'+
+        '<li><b>Boleto.</b> Você gera hoje e paga até o vencimento; o preço continua R$ 47.</li>'+
+        '<li><b>Me manda mensagem.</b> Se nenhuma das duas resolver, eu respondo pessoalmente e a gente vê o que dá para fazer.</li>'+
+      '</ul>'+
+      '<a class="wa" href="https://wa.me/5546999223332?text='+msg+'" target="_blank" rel="noopener">Falar comigo no WhatsApp →</a>'+
+      '<div class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só semana que vem, entre semana que vem: a única coisa que muda é quanto de prova o material ainda cobre.</div>'+
+    '</div>';
+  }
+function bonusKit(){
+    var d=diasParaProva();
+    // A pressão fica SÓ sobre o Kit, e por um motivo verdadeiro: ele cobre a reta
+    // final, então vale menos a cada dia. O preço nunca entra na pressão. A frase
+    // anterior era "depois de hoje eu não garanto", e ela fazia o oposto do
+    // pretendido: para quem não pode pagar hoje, transformava "não posso agora" em
+    // "então já perdi" — e quem perdeu não volta. A única resposta qualitativa do
+    // funil inteiro foi exatamente essa pessoa, que disse "só terei dinheiro dia 6".
+    return '<div class="bonus">'+
+      '<div class="btopo">'+
+        '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva os dois</div>'+
+        (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
+      '</div>'+
+      '<div class="bgrid">'+
+        // Entrega UMA das seis regras, não três (04/08/2026). Listar metade do guia na
+        // própria página de vendas resolvia a curiosidade sem custo: quem lia já saía com
+        // o essencial e o bônus virava repetição do que acabou de ler. Uma regra prova
+        // que existe conteúdo real ali; as outras cinco continuam sendo o motivo de
+        // entrar. E o enquadramento muda de truque para método, porque é isso que
+        // sustenta preço: decorar três macetes qualquer post entrega de graça.
+        '<div class="bcard"><div class="bh"><b>Guia de leitura da FGV</b>'+
+          '<i>vinha só no Plano Completo</i></div>'+
+          '<p>Uma das seis regras: ler a última linha antes do resto, que é onde a banca inverte o pedido. As outras cinco vêm junto. Não é decorar macete, é entender como a FGV monta a questão e ter o que fazer quando ela aparecer.</p></div>'+
+        '<div class="bcard"><div class="bh"><b>Kit Reta Final</b>'+
+          '<i>vendido por R$ 19</i></div>'+
+          '<p>O plano das últimas três semanas, o checklist da véspera e do dia, a estratégia das 80 questões e o protocolo anti-branco.</p></div>'+
+      '</div>'+
+      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. Os bônus eu não garanto, e o Kit cobre menos prova a cada dia que passa.</div>'+
+    '</div>';
+  }
+function stackOferta(){
+    // Ordenada por RESULTADO, não por mecanismo: o rótulo é o verbo que a pessoa
+    // executa, e a entrega vem em cinza logo abaixo como prova de que o verbo é
+    // possível. Ninguém compra ficha; compra saber o que corrigir.
+    // Números conferidos contra a tabela real de entregas (05/08/2026), não estimados.
+    // Se o Diagnóstico R$47 mudar de entrega, ESTE texto muda junto: aqui é promessa.
+    var blocos=[
+      // Sem "cronometradas" e sem "com precisão" (04/08/2026): o diagnóstico do app não
+      // tem cronômetro, e "com precisão" é adjetivo que não corresponde a medida nenhuma.
+      // O que ele faz de fato: 24 de conteúdo mais 7 de comportamento, e é o cruzamento
+      // das duas partes que separa o erro de matéria do erro de hora.
+      ['Saiba exatamente o que corrigir',
+       '24 questões nas 6 matérias do núcleo e 7 perguntas sobre a sua hora de prova. É o cruzamento das duas que diz se o ponto foi embora por matéria ou por execução.'],
+      ['Entenda por que errou',
+       'Cada questão explica por que a sua resposta parecia correta, por que a banca escolheu outra e qual detalhe da lei fez a diferença.'],
+      ['Corrija o que está faltando',
+       'Fichas das 6 matérias do núcleo duro, que sozinhas valem 70% da prova: a regra, a súmula aplicável e a pegadinha que mais reprova candidatos.'],
+      ['Faça a prova melhor',
+       'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada.'],
+      ['Confirme que evoluiu',
+       'Três simulados focados, 24 questões cada, batendo só no núcleo duro, para medir se os pontos voltaram antes do dia da prova.'],
+      ['Organize tudo',
+       'Guia de leitura da FGV, o plano das últimas 3 semanas e o checklist do dia da prova.']
+    ];
+    return '<div class="grade">'+blocos.map(function(b){
+      return '<div class="cardb pequeno"><h4>'+esc(b[0])+'</h4><p>'+esc(b[1])+'</p></div>';
+    }).join('')+'</div>';
+  }
+function provas(){
+    var itens=[
+      ['mapa.webp',     'O Mapa da Aprovação',   'Onde você cai nos dois eixos, com o seu nome no ponto.'],
+      ['ficha.webp',    'As fichas',             'A regra, a súmula do STJ e a pegadinha, matéria por matéria.'],
+      ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
+    ];
+    return '<div class="eyebrow" style="margin-top:8px">Veja por dentro, antes de comprar</div>'+
+    '<div class="provas">'+itens.map(function(i){
+      return '<figure>'+
+        // assets/TELAS, não assets/produto: o .gitignore deste repo tem a regra `produto/`
+        // (material interno mora no repo privado so-o-que-cai-produto, este aqui é público).
+        // A regra casaria com assets/produto/ e as imagens sumiriam do deploy sem erro
+        // nenhum: o commit passa, o site sobe e o bloco fica com três quadrados quebrados.
+        '<img src="assets/telas/'+i[0]+'" alt="'+esc(i[1])+'" loading="lazy" decoding="async">'+
+        '<figcaption><b>'+esc(i[1])+'.</b> '+esc(i[2])+'</figcaption>'+
+      '</figure>';
+    }).join('')+'</div>'+
+    '<p class="provas-nota">Telas reais do que você recebe. O relatório sai com o seu nome e com as suas matérias.</p>';
+  }
+function porqueHoje(){
+    var d=diasParaProva();
+    return '<div class="hoje">'+
+      '<div class="hk">Por que hoje, '+esc(hojeExtenso())+', e não depois</div>'+
+      '<p class="hp">Não é escassez de vaga nem preço que sobe: o preço é R$ 47 hoje e vai ser R$ 47 depois. O que muda é o calendário'+
+        (d? ' — faltam '+d+' dias para a prova' : '')+
+        ', e a cada semana que passa sobram menos horas para redistribuir entre as matérias que você errou.</p>'+
+      '<div class="hgrid">'+
+        '<div class="hcard"><b>Hoje</b><p>Dá para reorganizar a ordem das matérias e ainda medir se funcionou, nos simulados.</p></div>'+
+        '<div class="hcard"><b>Em 3 semanas</b><p>Ainda dá para corrigir as matérias fracas, mas sem muito tempo de conferir o resultado antes da prova.</p></div>'+
+        '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática e o checklist do dia. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function hojeExtenso(){ return porExtenso(new Date()); }
+
+  var html =
+      /* ===== HERO — no lugar da manchete do resultado ===== */
+      '<section class="vsec larga">' +
+        '<div class="eyebrow">1ª fase da OAB</div>' +
+        /* A frase-mestra da página, pedida em 05/08/2026. Ela ataca a objeção mais
+           cara do funil — "preciso estudar tudo e comprar mais livros" — e é o
+           resumo do que o produto faz. Por isso é o H1, não um subtítulo. */
+        '<h1 class="grande">Você não precisa estudar tudo. Precisa saber <em>o que</em> estudar.</h1>' +
+        '<p class="p">O <strong>' + PRODUTO + '</strong> é a rota que diz qual matéria, em que ordem, e o que você pode ignorar até o dia da prova. Ele parte de um diagnóstico seu e organiza o resto do material em volta do que encontrar. Por <strong>R$ 47</strong>, acesso imediato.</p>' +
+        '<p class="p">Ainda não fez o mini-diagnóstico gratuito? <a href="mini-diagnostico.html">Comece por ele</a>: são 7 questões, 4 minutos, e o resultado sai na hora.</p>' +
+      '</section>' +
+
+      /* ===== A RÉGUA ===== */
+      '<section class="regua"><div class="in">' +
+        '<div class="eyebrow gold">Antes de estudar mais, lembre da régua</div>' +
+        '<div class="rtop">' +
+          '<div class="rnum"><div class="n">40<span>/80</span></div><div class="lb">linha de corte</div></div>' +
+          '<h2>Você precisa de 40 acertos em 80. Não de saber tudo.</h2>' +
+        '</div>' +
+        '<p>Metade da prova pode dar errado e você ainda passa. O problema nunca foi o tamanho do conteúdo: é gastar as poucas horas que você tem na matéria errada, ou tratar como falta de conteúdo o que na verdade é travar na hora.</p>' +
+        '<div class="rcall">Quem não sabe qual dos dois é o problema estuda mais da mesma coisa e continua perdendo o mesmo ponto.</div>' +
+      '</div></section>' +
+
+      /* ===== O QUE É — a rota em 5 etapas (sem o quadrante, que precisa do resultado) ===== */
+      '<section class="vsec larga">' +
+        '<div class="eyebrow">O que é o ' + PRODUTO + '</div>' +
+        '<h2 class="grande">Você responde uma vez, e o material se organiza em volta do seu resultado.</h2>' +
+        '<p class="p">São cinco etapas, e cada uma só existe porque a anterior te diz o que fazer nela.</p>' +
+        '<div class="rota">' +
+          '<div class="step"><div class="n">1</div><div><div class="tt"><b>Diagnóstico</b><i>24 questões · 10 a 15 min</i></div>' +
+            '<p>Questões do núcleo duro mais perguntas sobre a sua hora de prova. Sem esta etapa, todo o resto do material vira chute.</p></div></div>' +
+          '<div class="step"><div class="n">2</div><div><div class="tt"><b>O seu Relatório dos Dois Eixos</b><i>sai na hora, com o seu nome</i></div>' +
+            '<p>Onde você está nos dois eixos, o seu placar em cada matéria do núcleo duro e as prescrições nomeando as suas matérias fracas e os temas exatos onde você perdeu ponto.</p></div></div>' +
+          '<div class="step"><div class="n">3</div><div><div class="tt"><b>Fichas do que mais cai</b><i>6 matérias do núcleo duro</i></div>' +
+            '<p>A regra, a súmula aplicável e a pegadinha que mais reprova, nas 6 matérias que sozinhas valem 70% da prova.</p></div></div>' +
+          '<div class="step"><div class="n">4</div><div><div class="tt"><b>Simulados</b><i>3 focados, 24 questões cada</i></div>' +
+            '<p>Meça se melhorou, em número. Pode refazer o diagnóstico depois e ver o seu ponto se mover no gráfico.</p></div></div>' +
+          '<div class="step"><div class="n">5</div><div><div class="tt"><b>Tática e reta final</b><i>folha de tática + guia da FGV</i></div>' +
+            '<p>Não perca na hora o ponto que você já tem: quando insistir, quando pular, como dividir as cinco horas e como não trocar resposta certa por errada.</p></div></div>' +
+        '</div>' +
+        '<div class="cardb">' +
+          '<div class="eyebrow" style="color:var(--ocre2)">O que o Mapa não é</div>' +
+          '<div class="riscado" style="margin-top:10px">' +
+            '<div class="ri">Um curso com centenas de videoaulas para assistir</div>' +
+            '<div class="ri">Mensalidade, assinatura ou aula ao vivo com horário</div>' +
+            '<div class="ri">Mais material para somar à pilha que você já tem</div>' +
+            '<div class="ri">Promessa de aprovação</div>' +
+          '</div>' +
+          '<div class="ripe">Você não precisa trocar de curso nem parar o que já está fazendo. O Mapa diz <strong style="color:var(--ink)">em que ordem</strong> usar o tempo que você já tem. A direção é nossa; a aprovação é sua.</div>' +
+        '</div>' +
+        provas() +
+      '</section>' +
+
+      /* ===== A OFERTA ===== */
+      '<section class="vsec larga" id="oferta">' +
+        '<div class="eyebrow">O que você recebe</div>' +
+        '<h2 class="grande">' + PRODUTO + '</h2>' +
+        '<p class="p">Por <strong>R$ 47</strong>, acesso imediato. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>' +
+        stackOferta() +
+        bonusKit() +
+        porqueHoje() +
+        '<div class="preco">' +
+          '<div class="v">R$ 47 <span>no Pix · ou ' + PARCELA + ' no cartão (' + TOTAL_PARCELADO + ')</span></div>' +
+          '<a class="btn-lar grande" href="' + COMPRA + '" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>' +
+          '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>' +
+          '<div class="selo2">Seus dados não são vendidos</div>' +
+        '</div>' +
+        objecaoDinheiro() +
+      '</section>' +
+
+      /* ===== DEPOIMENTOS ===== */
+      '<section class="vsec larga centro">' +
+        '<div class="eyebrow">Quem já fez</div>' +
+        '<h2>Três pessoas que estavam onde você está agora</h2>' +
+        depoimentos() +
+      '</section>' +
+
+      /* ===== AUTORIDADE e RISCO ===== */
+      '<section class="vsec larga"><div class="duo">' +
+        '<div class="cardb">' +
+          '<div class="eyebrow">Quem criou isto</div>' +
+          '<div class="autorlinha">' +
+            '<img src="assets/gustavo.webp" alt="Gustavo, advogado" width="72" height="72" loading="lazy">' +
+            '<div><b>Gustavo</b><i>Advogado</i></div>' +
+          '</div>' +
+          '<p>“Gustavo, advogado. Também passei pela fase de estudar demais e ainda assim errar as questões erradas. Este diagnóstico nasceu justamente para separar falta de conteúdo de erro de execução.”</p>' +
+        '</div>' +
+        '<div class="cardn">' +
+          '<div class="eyebrow gold">Sem risco</div>' +
+          '<h3>Use o material inteiro. Só depois decida se valeu.</h3>' +
+          '<p>Se em até 7 dias você concluir que ele não trouxe valor, basta pedir o reembolso. Sem perguntas e sem discussão. O risco é meu, não seu.</p>' +
+        '</div>' +
+      '</div></section>' +
+
+      /* ===== FAQ ===== */
+      '<section class="vsec estreita">' +
+        '<div class="eyebrow">Perguntas rápidas</div>' +
+        '<div class="faq">' + FAQ.map(function(f,i){
+          return '<div class="fitem" data-i="' + i + '">' +
+            '<button class="fq" type="button"><span>' + esc(f.q) + '</span><i>+</i></button>' +
+            '<div class="fa" hidden><p>' + esc(f.a) + '</p></div>' +
+          '</div>';
+        }).join('') + '</div>' +
+      '</section>' +
+
+      /* ===== CTA FINAL ===== */
+      '<section class="vfim">' +
+        '<h2>40 acertos em 80. A direção é nossa; a aprovação é sua.</h2>' +
+        '<div class="pfim">R$ 47 à vista no Pix · ou ' + PARCELA + ' no cartão</div>' +
+        '<a class="btn-lar grande" href="' + COMPRA + '" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>' +
+        '<div class="micro2">pagamento único · acesso na hora · garantia de 7 dias</div>' +
+        '<div class="legal">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>' +
+      '</section>';
+
+  document.getElementById('app').innerHTML = html;
+
+  /* FAQ: mesmo comportamento do mini-diagnóstico (abre um, fecha o resto). */
+  document.querySelectorAll('.fitem .fq').forEach(function(b){
+    b.onclick = function(){
+      var item = b.parentNode, corpo = item.querySelector('.fa'), aberto = !corpo.hidden;
+      document.querySelectorAll('.fitem .fa').forEach(function(x){ x.hidden = true; });
+      document.querySelectorAll('.fitem .fq i').forEach(function(x){ x.textContent = '+'; });
+      corpo.hidden = aberto;
+      item.querySelector('.fq i').textContent = aberto ? '+' : '−';
+    };
   });
 
-  // Contador regressivo (dias, horas, minutos) + a matemática que o dia não conta sozinho:
-  // as últimas 3 semanas são reta final (revisão), então o prazo real para fechar lacunas
-  // é menor, e em horas úteis (1h/dia) é menor ainda.
-  function tick(){
-    var el = document.getElementById('clk'), sub = document.getElementById('clkmath');
-    var diff = DATA_PROVA - new Date();
-    if (diff < 0){ el.textContent = 'o exame está chegando'; if (sub) sub.textContent = ''; return; }
-    var d = Math.floor(diff/864e5), h = Math.floor(diff%864e5/36e5), m = Math.floor(diff%36e5/6e4);
-    el.textContent = d + 'd ' + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm';
-    if (sub){
-      if (d > 21){
-        var uteis = d - 21, semanas = Math.max(1, Math.round(uteis / 7));
-        sub.textContent = 'Descontando as 3 semanas de reta final, você tem ' + semanas + ' semana' + (semanas > 1 ? 's' : '') + ' para fechar as suas lacunas. A 1 hora por dia, são cerca de ' + uteis + ' horas úteis. Estudar tudo não cabe. Estudar o certo, cabe.';
-      } else {
-        sub.textContent = 'Você já está na reta final: agora é revisão certeira e simulado, não matéria nova.';
-      }
-    }
-  }
-  tick(); setInterval(tick, 20000);
+  /* InitiateCheckout uma vez só. Aqui NÃO há LEAD_ID (a pessoa pode chegar sem ter
+     feito o teste), então o clique não vai para /api/clique — o que este endpoint
+     grava é a coluna do lead, e sem lead não há linha para gravar. */
+  var icDisparado = false;
+  ['buy0','buy'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', function(){
+      if (icDisparado) return;
+      icDisparado = true;
+      try { fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); } catch(e) {}
+    });
+  });
+})();
 </script>
 </body>
 </html>
