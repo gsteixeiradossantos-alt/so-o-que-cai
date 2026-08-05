@@ -23,6 +23,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<!-- Fontes da página de vendas (body.vendas), handoff de 04/08/2026: Cinzel só no
+     wordmark do topo, Source Serif 4 para títulos e números, Source Sans 3 para o
+     corpo. O quiz continua em Spectral/Hanken Grotesk/Space Mono, acima. -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- ===== FACEBOOK PIXEL ===== -->
 <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -201,40 +205,57 @@
 
   /* ==========================================================================
      PÁGINA DE VENDAS v2 — handoff de 04/08/2026
-     Escopo em body.vendas: o quiz continua com o layout estreito de sempre, e
-     nada daqui vaza para as telas de pergunta. Os tokens (:root) já são os novos,
-     então o quiz herda a paleta e a tipografia sem herdar a estrutura.
+     Escopo em body.vendas: o quiz continua com o layout e a paleta de sempre.
+     Os tokens abaixo SOBRESCREVEM os de :root só dentro de body.vendas — CSS
+     custom property em cascata, não rename global — porque as mesmas variáveis
+     (--navy, --ocre, --gold...) são usadas nas telas de pergunta com os valores
+     antigos. Reescrever :root mudaria o quiz inteiro; sobrescrever aqui muda só
+     esta tela. Cores e tipografia batendo com o handoff, literal:
+       navy #14304A · navy escuro (topo/CTA final) #0E2233 · dourado #F0B429
+       dourado escuro, eyebrow/link #B07B1E, hover #8F6114
+       laranja, ação/alerta #E07B39, hover #C9662A · azul claro #BFDCEE
+       fundo #F7F4EE · cartão #FFFFFF · borda #E3DCCD
+       texto principal #14304A · secundário #5B6B78 · riscado #A39B8A
+       Cinzel (wordmark) · Source Serif 4 (títulos e números) · Source Sans 3 (corpo)
      ========================================================================== */
-  body.vendas{background:var(--paper);padding-bottom:96px}
+  body.vendas{
+    --navy:#14304A; --navy2:#0E2233; --gold:#F0B429;
+    --ocre:#B07B1E; --ocre2:#E07B39; --laranja2:#C9662A;
+    --azul:#BFDCEE; --paper:#F7F4EE; --card:#FFFFFF; --line:#E3DCCD;
+    --ink:#14304A; --sec:#5B6B78; --muted:#A39B8A; --green:#4E7A4E;
+    background:var(--paper);padding-bottom:96px;
+    font-family:'Source Sans 3',sans-serif;
+  }
   body.vendas .wrap{max-width:none;padding:0}
 
   .vtopo{background:var(--navy2);color:var(--paper);display:flex;justify-content:space-between;
          align-items:center;padding:14px 24px;gap:12px}
-  .vtopo .wm{display:flex;align-items:center;gap:10px;font-family:'Spectral',serif;
-             font-weight:600;font-size:19px}
-  .vtopo .wm svg{display:block;border-radius:7px;flex:none}
-  .vtopo .tg{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+  .vtopo .wm{display:flex;align-items:center;gap:10px}
+  .vtopo .wm svg{display:none}
+  .vtopo .wm span{font-family:'Cinzel',serif;font-weight:600;font-size:16px;
+                  letter-spacing:3px;text-transform:uppercase}
+  .vtopo .tg{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:2.5px;
              color:var(--azul);text-transform:uppercase}
 
   /* ---- hero ---- */
   .vhero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);
          color:var(--paper);padding:56px 24px 64px}
   .vhero .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-  .vhero h1{font-family:'Spectral',Georgia,serif;font-size:38px;line-height:1.2;
+  .vhero h1{font-family:'Source Serif 4',Georgia,serif;font-size:38px;line-height:1.2;
             font-weight:700;text-wrap:pretty;margin:0}
   .vhero h1 em{font-style:italic;color:var(--gold)}
-  .eyebrow{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;
+  .eyebrow{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:3px;
            text-transform:uppercase;font-weight:700;color:var(--ocre)}
   .eyebrow.gold{color:var(--gold)}
   .placar{display:flex;gap:16px;flex-wrap:wrap;align-items:stretch}
   /* O placar é cartão dourado porque é o número que a pessoa veio buscar: tem que
      ser a primeira coisa que o olho encontra depois da manchete. */
-  .placar .nota{flex:0 0 auto;background:var(--gold);color:var(--paper);border-radius:10px;
+  .placar .nota{flex:0 0 auto;background:var(--gold);color:var(--navy);border-radius:10px;
                 padding:20px 28px;display:flex;flex-direction:column;justify-content:center;
                 align-items:center;gap:2px}
-  .placar .nota .n{font-family:'Spectral',Georgia,serif;font-size:52px;font-weight:700;line-height:1}
+  .placar .nota .n{font-family:'Source Serif 4',Georgia,serif;font-size:52px;font-weight:700;line-height:1}
   .placar .nota .n span{font-size:26px;font-weight:400}
-  .placar .nota .lb{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;
+  .placar .nota .lb{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:2px;
                     text-transform:uppercase;font-weight:700}
   .placar .eixos{flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px}
   .placar .eixo{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
@@ -244,23 +265,22 @@
                   border-radius:4px;white-space:nowrap}
   .placar .eixo b.laranja{background:var(--ocre2);color:#fff}
   .placar .eixo b.azul{background:var(--azul);color:var(--navy)}
-  .placar .eixo b.laranja{background:var(--ocre);color:#fff}
   .vhero .lede{font-size:17px;line-height:1.6;color:var(--azul);max-width:600px;margin:0}
   .vhero .lede strong{color:var(--paper)}
   .vhero .lede.margem{font-size:15px;opacity:.85}
-  .vhero .micro{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.13em;
-                text-transform:uppercase;color:rgba(185,190,196,.62)}
+  .vhero .micro{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:2px;
+                text-transform:uppercase;color:rgba(191,220,238,.6)}
 
   /* ---- resumo flutuante ---- */
   .vresumo{max-width:760px;margin:-28px auto 0;padding:0 24px;position:relative;z-index:2}
   .cardres{background:var(--card);border:1px solid var(--line);border-radius:12px;
            box-shadow:0 8px 24px rgba(14,34,51,.10);padding:20px 24px;display:flex;
            justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-  .cardres .t{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:700}
+  .cardres .t{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
   .cardres .s{font-size:14px;color:var(--sec);margin-top:4px}
 
   /* ---- botões ---- */
-  .btn-lar{display:inline-block;background:var(--ocre);color:#fff;text-decoration:none;
+  .btn-lar{display:inline-block;background:var(--ocre2);color:#fff;text-decoration:none;
            font-weight:700;font-size:15px;padding:12px 22px;border-radius:8px;
            white-space:nowrap;border:none;cursor:pointer;transition:.15s;text-align:center}
   .btn-lar:hover{background:var(--laranja2);color:#fff}
@@ -270,24 +290,24 @@
   .vsec{margin:0 auto;padding:56px 24px 8px;display:flex;flex-direction:column;gap:20px}
   .vsec.estreita{max-width:680px}
   .vsec.larga{max-width:960px}
-  .vsec h2{font-family:'Spectral',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
+  .vsec h2{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
   .vsec h2.grande{font-size:32px}
   .vsec h2.apos{margin-top:12px}
   .vsec .p{font-size:17px;line-height:1.65;margin:0}
   .vsec .p.sec{color:var(--sec)}
   .callout{background:var(--card);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;
-           padding:16px 20px;font-family:'Spectral',Georgia,serif;font-size:19px;
+           padding:16px 20px;font-family:'Source Serif 4',Georgia,serif;font-size:19px;
            font-weight:600;line-height:1.45}
   .obsgrid{display:flex;flex-direction:column;gap:12px}
   .obs{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
        display:flex;gap:14px;align-items:flex-start}
-  .obs i{font-style:normal;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;
+  .obs i{font-style:normal;font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;
          text-transform:uppercase;color:var(--ocre2);flex:0 0 84px;padding-top:3px}
   .obs p{font-size:15px;line-height:1.55;color:var(--sec);margin:0}
 
   /* ---- gabarito ---- */
   .gab{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .gab .mat{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  .gab .mat{font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
             color:var(--ocre);padding:16px 18px 0}
   .gab .q{font-size:16px;line-height:1.5;font-weight:600;padding:8px 18px 14px}
   .gab .alt{margin:0 18px 8px;padding:10px 14px;border-radius:8px;background:var(--paper);
@@ -305,10 +325,10 @@
 
   /* ---- cartões ---- */
   .cardb{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
-  .cardb.pequeno h4{font-family:'Spectral',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
+  .cardb.pequeno h4{font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
   .cardb.pequeno p{font-size:14px;line-height:1.55;color:var(--sec);margin:0}
   .cardn{background:var(--navy);color:var(--paper);border-radius:10px;padding:22px 24px}
-  .cardn h3{font-family:'Spectral',Georgia,serif;font-size:20px;font-weight:700;
+  .cardn h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700;
             line-height:1.3;margin:8px 0 10px}
   .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
   .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
@@ -329,10 +349,10 @@
 
   /* ---- onde cedeu ---- */
   .cardn.cedeu{display:flex;flex-direction:column;gap:4px}
-  .cardn .cnum{font-family:'Spectral',Georgia,serif;font-size:38px;font-weight:700;
+  .cardn .cnum{font-family:'Source Serif 4',Georgia,serif;font-size:38px;font-weight:700;
                line-height:1;color:var(--gold)}
   .cardn .cnum span{font-size:20px;font-weight:400;color:var(--azul)}
-  .cardn .clb{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;
+  .cardn .clb{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:1.5px;
               text-transform:uppercase;color:var(--azul)}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
   .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;
@@ -348,15 +368,15 @@
   /* ---- bônus ---- */
   .bonus{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
   .btopo{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-  .btopo .bk{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;
-             letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
+  .btopo .bk{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;
+             letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
   .bdias{background:var(--ocre2);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;
-         border-radius:999px;white-space:nowrap}
+         border-radius:4px;white-space:nowrap}
   .bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:16px}
-  .bcard{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
+  .bcard{background:rgba(247,244,238,.07);border:1px solid rgba(191,220,238,.25);
          border-radius:10px;padding:14px 16px}
   .bcard .bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .bcard .bh b{font-family:'Spectral',Georgia,serif;font-size:17px;color:var(--gold)}
+  .bcard .bh b{font-family:'Source Serif 4',Georgia,serif;font-size:17px;color:var(--gold)}
   .bcard .bh i{font-style:normal;font-size:12px;color:var(--azul)}
   .bcard p{font-size:14px;line-height:1.55;color:var(--azul);margin-top:8px}
   .bpe{margin-top:14px;font-size:13px;line-height:1.6;color:rgba(191,220,238,.8)}
@@ -364,60 +384,63 @@
   /* ---- preço ---- */
   .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
          padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
-  .preco .v{font-family:'Spectral',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
-  .preco .v span{font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
+  .preco .v{font-family:'Source Serif 4',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
+  .preco .v span{font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
   .micro2{font-size:13px;color:var(--sec)}
   .selo2{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--sec)}
 
   /* ---- por que hoje (04/08) ----
      Fica antes do preço, não depois: é o último empurrão antes do CTA, não uma
      justificativa depois do clique. A régua é calendário, nunca escassez de vaga
-     nem preço que sobe — o preço é dito igual nos três cartões: continua R$ 47. */
-  .hoje{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px}
-  .hoje .hk{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;
-            letter-spacing:.13em;text-transform:uppercase;color:var(--ocre)}
-  .hoje .hp{font-size:15px;line-height:1.6;color:var(--sec);margin-top:12px}
+     nem preço que sobe — o preço é dito igual nos três cartões: continua R$ 47.
+     Cartão navy translúcido, igual ao bloco de bônus: é a mesma família visual do
+     handoff (item 10 do README), navy #14304A com sub-cartões em rgba(247,244,238,.07). */
+  .hoje{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
+  .hoje .hk{font-family:'Source Sans 3',sans-serif;font-size:12px;font-weight:700;
+            letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+  .hoje .hp{font-size:16px;line-height:1.6;color:var(--azul);margin-top:12px}
   .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
-  .hcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-  .hcard b{display:block;font-family:'Spectral',Georgia,serif;font-size:18px;font-weight:700;color:var(--ocre2)}
-  .hcard p{font-size:13.5px;line-height:1.5;color:var(--sec);margin-top:6px}
+  .hcard{background:rgba(247,244,238,.07);border:1px solid rgba(191,220,238,.25);
+         border-radius:10px;padding:16px 18px}
+  .hcard b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:700;color:var(--gold)}
+  .hcard p{font-size:14px;line-height:1.5;color:var(--azul);margin-top:6px}
 
   /* ---- objeção de dinheiro (04/08) ----
      Fica DEPOIS do preço, de propósito: quem já viu o valor e travou é quem
      precisa desta saída, não quem ainda não chegou lá. Borda tracejada marca
      que é conversa, não mais um argumento de venda. */
-  .objecao{background:var(--card);border:1px dashed var(--ocre2);border-radius:12px;
+  .objecao{background:var(--card);border:1px dashed var(--ocre);border-radius:12px;
            padding:22px 24px;text-align:left}
-  .objecao h3{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:700}
-  .objecao>p{font-size:14.5px;line-height:1.6;color:var(--sec);margin-top:10px}
+  .objecao h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700}
+  .objecao>p{font-size:15px;line-height:1.6;color:var(--ink);margin-top:10px}
   .objecao ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
-  .objecao li{font-size:14.5px;line-height:1.55;color:var(--sec)}
+  .objecao li{font-size:15px;line-height:1.55;color:var(--ink)}
   .objecao li b{color:var(--ink)}
-  .objecao a.wa{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--ocre)}
-  .objecao a.wa:hover{color:var(--ocre2)}
+  .objecao a.wa{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--ink)}
+  .objecao a.wa:hover{color:var(--ocre)}
   .objecao .fine{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
-                 font-size:12.5px;color:var(--muted);line-height:1.55}
+                 font-size:13px;color:var(--sec);line-height:1.55}
 
   /* ---- depoimentos ---- */
   .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
   .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
-  .dep2 .asp{font-family:'Spectral',Georgia,serif;font-size:34px;color:var(--gold);line-height:.6}
-  .dep2 p{font-family:'Spectral',Georgia,serif;font-size:17px;font-weight:600;
+  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:34px;color:var(--gold);line-height:.6}
+  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;
           line-height:1.5;margin:10px 0 16px}
   .dep2 p b{font-weight:700}
   .dep2 .quem{display:flex;gap:10px;align-items:center}
   .dep2 .ini{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);
              display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
   .dep2 .nm{font-size:14px;font-weight:700}
-  .dep2 .cid{font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;
-             letter-spacing:.1em;color:var(--sec)}
+  .dep2 .cid{font-family:'Source Sans 3',sans-serif;font-size:11px;text-transform:uppercase;
+             letter-spacing:1px;color:var(--sec)}
 
   /* ---- autor e garantia ---- */
   .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
   .autorlinha{display:flex;gap:14px;align-items:center;margin:12px 0}
   .autorlinha img{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0}
-  .autorlinha b{display:block;font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:700}
-  .autorlinha i{font-style:normal;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--sec)}
+  .autorlinha b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .autorlinha i{font-style:normal;font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sec)}
   .cardb p{font-size:15px;line-height:1.6;color:var(--sec);margin:0}
 
   /* ---- FAQ ---- */
@@ -434,7 +457,7 @@
   /* ---- CTA final ---- */
   .vfim{background:var(--navy2);color:var(--paper);padding:56px 24px;text-align:center;
         display:flex;flex-direction:column;gap:16px;align-items:center;margin-top:56px}
-  .vfim h2{font-family:'Spectral',Georgia,serif;font-size:30px;font-weight:700;line-height:1.25}
+  .vfim h2{font-family:'Source Serif 4',Georgia,serif;font-size:30px;font-weight:700;line-height:1.25}
   .vfim .pfim{font-size:16px;color:var(--azul)}
   .vfim .micro2{color:var(--azul)}
   .vfim .legal{font-size:12px;color:rgba(191,220,238,.55);max-width:520px;line-height:1.55}
@@ -462,7 +485,7 @@
   body.vendas .brand{display:none}
   /* O botão da barra fixa herdava o dourado antigo de .sticky a; na página de vendas
      ele é o mesmo laranja de ação de todos os outros CTAs. */
-  body.vendas .sticky a{background:var(--ocre);border-radius:8px;padding:12px 22px;
+  body.vendas .sticky a{background:var(--ocre2);border-radius:8px;padding:12px 22px;
     font-size:15px;font-weight:700}
   body.vendas .sticky a:hover{background:var(--laranja2)}
   @media(max-width:560px){
@@ -517,15 +540,11 @@
   .offer .alt{display:inline-block;margin-top:14px;font-size:13px;color:#C9C1B4;text-decoration:underline;cursor:pointer}
   .offer .alt:hover{color:#fff}
   .foot{margin-top:28px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.5}
-  /* gabarito comentado (amostra do relatório pago) */
-  .gab{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 18px}
-  .gab .k{font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
-  .gab .q{font-size:15px;font-weight:500;margin-bottom:10px}
-  .gab .alt{font-size:14px;padding:9px 11px;border-radius:9px;margin-bottom:6px;border:1px solid var(--line);color:var(--muted2)}
-  .gab .alt.certa{background:#E9F1EA;border-color:#BFD8C4;color:var(--ink);font-weight:500}
-  .gab .alt.sua{border-color:#D9A05B;background:#FBF1E6}
-  .gab .exp{font-size:14px;color:var(--muted2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
-  .gab .exp b{color:var(--ink)}
+  /* .gab (gabarito comentado) saiu daqui em 04/08/2026: era de uma amostra antiga
+     que nenhum JS emite mais (só gabarito(), que usa a definição de .gab lá em
+     cima, no bloco da página de vendas v2), e por vir depois no CSS vencia por
+     ordem — o cartão da questão comentada estava com o padding e as cores da
+     versão de 02/08, não do handoff atual. */
   /* bloco trancado (teaser do diagnóstico completo): o TÓPICO fica legível
      para dar curiosidade; só a RESPOSTA é rasurada. */
   .lockbox{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;background:var(--card)}
@@ -662,20 +681,13 @@
      da linha. Com cabeçalho, cada observação anunciava um assunto novo e a seção "o que
      isso significa" lia como cinco seções empilhadas. */
   .viu{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-  .obs{border-left:3px solid var(--muted);padding:1px 0 1px 15px;
-       font-size:15px;line-height:1.55;color:var(--muted2);text-wrap:pretty}
-  .obs.ochre{border-left-color:var(--ocre)}
-  .obs.green{border-left-color:var(--green)}
-  .obs b{color:var(--ink);font-weight:600}
-  .deps{display:flex;flex-direction:column;gap:14px}
-  .dep2{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .dep2 .asp{font-family:'Spectral',serif;font-size:34px;line-height:.6;color:var(--ocre2);height:18px}
-  .dep2 p{font-family:'Spectral',serif;font-size:17.5px;line-height:1.5;color:var(--ink);text-wrap:pretty}
-  .dep2 p b{font-weight:600;background:#F5E4CE;box-shadow:0 0 0 3px #F5E4CE}
-  .dep2 .quem{display:flex;align-items:center;gap:11px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:#E9E0CE;color:var(--muted2);font-family:'Spectral',serif;font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .dep2 .nm{font-size:14.5px;font-weight:600;line-height:1.3}
-  .dep2 .cid{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  /* .obs, .obs.ochre/.green, .deps e .dep2* saíram daqui em 04/08/2026: são do
+     resultado v3 (body.res), que não existe mais em lugar nenhum do JS — mas os
+     nomes de classe são os MESMOS que a página de vendas atual usa (body.vendas),
+     e por virem depois no CSS, venciam por ordem e pisavam no visual novo (o
+     .dep2 .asp virava var(--ocre2) em vez do dourado do handoff, por exemplo).
+     Definição real de .obs/.deps/.dep2 está lá em cima, no bloco da página de
+     vendas v2. Resto deste bloco (.vid etc.) continua em uso, então não sai. */
   .vid{position:relative;width:min(300px,78%);margin:0 auto;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--navy)}
   .vid video{width:100%;height:100%;object-fit:cover;display:block}
   .vidleg{font-family:'Hanken Grotesk',sans-serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px}
