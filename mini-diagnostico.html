@@ -720,11 +720,19 @@
   // FAQ. Regra: cada pergunta é uma dúvida OPERACIONAL que trava a compra. Nenhuma
   // repete argumento já feito na página — isso seria responder pela quinta vez uma
   // pergunta que já tem dono, que é o problema que o inventário existe para impedir.
+  //
+  // A primeira pergunta é a exceção, aberta em 04/08/2026. O produto passou a se chamar
+  // "Diagnóstico Completo + Mapa da Aprovação" e a página nunca dizia, em lugar nenhum,
+  // o que o Mapa É. Isso não é repetir argumento: é a definição do que se está vendendo,
+  // e ela faltava. A resposta foi escrita conferindo o app (diagnostico.html), não a
+  // própria página de vendas, para não descrever promessa em cima de promessa.
   var FAQ = [
+    { q:'O que é o Mapa da Aprovação e como ele me ajuda?',
+      a:'É o que sai quando você termina as 24 questões cronometradas. Ele mostra como você foi em cada uma das 6 matérias do núcleo duro, separa o que você errou por não saber do que errou por travar no relógio, e devolve a ordem do que corrigir primeiro. Cada questão vem com o comentário de por que a banca escolheu a outra alternativa, e cada correção aponta o material da área do aluno que resolve aquilo. Ele não é uma nota: é a ordem do que fazer.' },
     { q:'Funciona no celular?',
       a:'Sim. Tudo roda no navegador, sem instalar nada: questões, fichas e simulados.' },
-    { q:'Quanto tempo leva o Diagnóstico Completo?',
-      a:'As 24 questões cronometradas levam cerca de 40 minutos. O Mapa da Aprovação sai na hora, com a ordem das correções.' },
+    { q:'Quanto tempo leva?',
+      a:'As 24 questões cronometradas levam cerca de 40 minutos. O Mapa sai na hora, com a ordem das correções.' },
     { q:'Já estudo com outro curso. Isso substitui?',
       a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o seu estudo atual render ponto.' },
     { q:'E se eu não gostar?',
@@ -2396,9 +2404,15 @@
         (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
       '</div>'+
       '<div class="bgrid">'+
+        // Entrega UMA das seis regras, não três (04/08/2026). Listar metade do guia na
+        // própria página de vendas resolvia a curiosidade sem custo: quem lia já saía com
+        // o essencial e o bônus virava repetição do que acabou de ler. Uma regra prova
+        // que existe conteúdo real ali; as outras cinco continuam sendo o motivo de
+        // entrar. E o enquadramento muda de truque para método, porque é isso que
+        // sustenta preço: decorar três macetes qualquer post entrega de graça.
         '<div class="bcard"><div class="bh"><b>Guia de leitura da FGV</b>'+
           '<i>vinha só no Plano Completo</i></div>'+
-          '<p>As seis regras contra o erro de leitura da banca: ler a última linha primeiro, caçar as negativas, eliminar duas antes de decidir.</p></div>'+
+          '<p>Uma das seis regras: ler a última linha antes do resto, que é onde a banca inverte o pedido. As outras cinco vêm junto. Não é decorar macete, é entender como a FGV monta a questão e ter o que fazer quando ela aparecer.</p></div>'+
         '<div class="bcard"><div class="bh"><b>Kit Reta Final</b>'+
           '<i>vendido por R$ 19</i></div>'+
           '<p>O plano das últimas três semanas, o checklist da véspera e do dia, a estratégia das 80 questões e o protocolo anti-branco.</p></div>'+
