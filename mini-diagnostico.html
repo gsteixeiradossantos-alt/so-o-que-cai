@@ -268,6 +268,14 @@
   .vhero .lede{font-size:17px;line-height:1.6;color:var(--azul);max-width:600px;margin:0}
   .vhero .lede strong{color:var(--paper)}
   .vhero .lede.margem{font-size:15px;opacity:.85}
+  /* ---- perfil provável (04/08) ---- */
+  .vhero .perfil{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .vhero .perfil .pl{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:2px;
+                     text-transform:uppercase;color:rgba(191,220,238,.6)}
+  .vhero .perfil .pill{background:rgba(224,123,57,.2);border:1px solid var(--ocre2);
+                       color:var(--paper);border-radius:999px;padding:5px 14px;
+                       font-size:13px;font-weight:700}
+  .vhero .perfil .pt{font-size:13px;color:rgba(191,220,238,.75)}
   .vhero .micro{font-family:'Source Sans 3',sans-serif;font-size:10px;letter-spacing:2px;
                 text-transform:uppercase;color:rgba(191,220,238,.6)}
 
@@ -293,6 +301,8 @@
   .vsec h2{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
   .vsec h2.grande{font-size:32px}
   .vsec h2.apos{margin-top:12px}
+  /* Seção de depoimentos: cabeçalho centralizado, igual ao handoff. */
+  .vsec.centro>.eyebrow, .vsec.centro>h2{text-align:center}
   .vsec .p{font-size:17px;line-height:1.65;margin:0}
   .vsec .p.sec{color:var(--sec)}
   .callout{background:var(--card);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;
@@ -475,8 +485,8 @@
   /* ---- depoimentos ---- */
   .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
   .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
-  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:34px;color:var(--gold);line-height:.6}
-  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;
+  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:28px;color:var(--gold);line-height:.6}
+  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:14.5px;font-weight:600;
           line-height:1.5;margin:10px 0 16px}
   .dep2 p b{font-weight:700}
   .dep2 .quem{display:flex;gap:10px;align-items:center}
@@ -513,32 +523,9 @@
   .vfim .micro2{color:var(--azul)}
   .vfim .legal{font-size:12px;color:rgba(191,220,238,.55);max-width:520px;line-height:1.55}
 
-  /* ---- barra fixa ---- */
-  /* NÃO devolver `transform:none` aqui (removido em 04/08/2026). Esta regra tem
-     especificidade 0,2,1 e vencia o `.sticky{transform:translateY(110%)}` que esconde a
-     barra, então na página de vendas ela ficava visível desde o primeiro pixel, e a
-     classe `.on` do JS não controlava nada. Era isso, e não a régua de rolagem, que
-     colhia o clique de quem tinha acabado de terminar o quiz: 9 dos 13 primeiros cliques
-     em comprar vieram daqui, 6 sem nunca ter chegado ao #oferta, mediana de 1min13 entre
-     virar lead e clicar, nenhuma venda. Quem mostra e esconde a barra é o
-     marcarOferta(), via classe `.on`. Sem transform nesta regra, a base volta a valer. */
-  body.vendas .sticky{position:fixed;left:0;right:0;bottom:0;background:var(--card);
-    border-top:2px solid var(--gold);box-shadow:0 -6px 20px rgba(14,34,51,.12);z-index:50;
-    padding:10px 0}
-  body.vendas .sticky .in{max-width:960px;margin:0 auto;padding:0 20px;display:flex;
-    justify-content:space-between;align-items:center;gap:14px}
-  body.vendas .sticky .a{font-size:14px;font-weight:700;color:var(--ink)}
-  body.vendas .sticky .b{font-size:12px;color:var(--sec)}
-
-
   /* A marca do quiz (logo redondo + wordmark) sai na página de vendas: lá a marca é a
      barra navy do topo, e as duas juntas davam dois cabeçalhos empilhados. */
   body.vendas .brand{display:none}
-  /* O botão da barra fixa herdava o dourado antigo de .sticky a; na página de vendas
-     ele é o mesmo laranja de ação de todos os outros CTAs. */
-  body.vendas .sticky a{background:var(--ocre2);border-radius:8px;padding:12px 22px;
-    font-size:15px;font-weight:700}
-  body.vendas .sticky a:hover{background:var(--laranja2)}
   @media(max-width:560px){
     .vhero{padding:40px 20px 48px}
     .vhero h1{font-size:29px}
@@ -546,7 +533,6 @@
     .vsec h2{font-size:22px} .vsec h2.grande{font-size:26px}
     .preco .v{font-size:38px}
     .vfim h2{font-size:24px}
-    body.vendas .sticky .b{display:none}
     .btn-lar{font-size:14px;padding:11px 16px}
     .btn-lar.grande{font-size:16px;padding:14px 22px}
   }
@@ -812,58 +798,60 @@
   var LEAD_ID = null;
 
   // Nome do produto. Em um lugar só porque ele aparece no hero, no resumo, na oferta,
-  // na barra fixa e no FAQ — e já mudou duas vezes em 24 horas.
+  // na barra fixa e no FAQ — e já mudou três vezes.
   // 03/08: era "diagnóstico completo", que vendia o mesmo substantivo que a pessoa
   //        acabou de consumir de graça.
   // 03/08: virou "Plano de Recuperação da 1ª Fase", que resolvia isso mas lia como curso
   //        e jogava fora o diferencial, que é o diagnóstico.
   // 04/08: "Diagnóstico Completo + Mapa da Aprovação" (handoff). Mantém a continuidade
   //        com o mini-diagnóstico e nomeia o que vem depois dele.
+  // 05/08: volta a ser só "Mapa da Aprovação", nome já atualizado na Hotmart também.
   // ATENÇÃO: o nome do produto na Hotmart tem que acompanhar, senão a pessoa clica em
   // comprar e cai num checkout com outro nome, no exato momento do cartão.
-  var PRODUTO = 'Diagnóstico Completo + Mapa da Aprovação';
+  var PRODUTO = 'Mapa da Aprovação';
 
   // FAQ. Regra: cada pergunta é uma dúvida OPERACIONAL que trava a compra. Nenhuma
   // repete argumento já feito na página — isso seria responder pela quinta vez uma
   // pergunta que já tem dono, que é o problema que o inventário existe para impedir.
   //
-  // A primeira pergunta é a exceção, aberta em 04/08/2026. O produto passou a se chamar
-  // "Diagnóstico Completo + Mapa da Aprovação" e a página nunca dizia, em lugar nenhum,
-  // o que o Mapa É. Isso não é repetir argumento: é a definição do que se está vendendo,
-  // e ela faltava. A resposta foi escrita conferindo o app (diagnostico.html), não a
-  // própria página de vendas, para não descrever promessa em cima de promessa.
+  // 05/08/2026: lista voltou a ser as 14 perguntas exatas do handoff (mesma ordem),
+  // a pedido. As RESPOSTAS não são cópia cega: onde o handoff cita fato que não é
+  // mais verdade nesta página, a resposta foi reescrita para o fato real —
+  //   - "cronometradas" não existe: o diagnóstico pago não tem cronômetro.
+  //   - PARCELA/TOTAL_PARCELADO no lugar de "6x de R$8,82" hardcoded.
+  // O upsell do Plano Completo (R$127) tinha saído da página em 03/08, mas voltou em
+  // 05/08: um comentário anterior achava que as 17 matérias já vinham todas no R$47,
+  // e a tabela real de entregas (conferida contra a área do aluno) mostra que não —
+  // o R$47 é só o Diagnóstico, com as 6 matérias do núcleo duro. As perguntas "eu
+  // estudo só o que cai mesmo?" e "e as outras 11 matérias?" respondem com o fato
+  // certo, igual ao handoff original.
   var FAQ = [
-    { q:'O que é o Mapa da Aprovação e como ele me ajuda?',
-      a:'É o relatório que sai no fim de duas partes: 24 questões das 6 matérias do núcleo duro, 4 por matéria, e 7 perguntas sobre como você se comporta na hora da prova. Ele cruza as duas e separa o que você errou por não saber a matéria do que você perde por correr, travar ou trocar resposta no último segundo. Daí sai a ordem do que corrigir primeiro, matéria por matéria, e cada correção aponta o material da área do aluno que resolve aquilo. Ele não é uma nota: é a ordem do que fazer.' },
-    // As 4 primeiras são as que mais convertem (mesma régua do handoff, item 15 do
-    // README): explicam o mecanismo antes de qualquer objeção de preço ou logística.
-    { q:'Eu estudo só o que cai mesmo?',
-      a:'É a proposta. As fichas seguem a mesma lógica do diagnóstico: você não estuda as 17 matérias com o mesmo peso, estuda primeiro as que o Relatório aponta como fracas — e só depois o resto.' },
+    { q:'Como funciona, na prática?',
+      a:'São cinco etapas, na ordem, dentro da área do aluno no navegador. Primeiro você responde 24 questões (10 a 15 minutos) mais 7 perguntas sobre a sua hora de prova. Na hora que termina, sai o seu Relatório dos Dois Eixos: onde você está, o placar em cada matéria do núcleo duro e as prescrições nomeando as suas matérias fracas e os temas exatos onde perdeu ponto. Aí você usa as fichas dessas matérias, mede com os simulados e fecha com a folha de tática de prova. Cada etapa só existe porque a anterior te diz o que fazer nela.' },
+    { q:'Eu estudo só o que cai mesmo? Só os temas mais cobrados?',
+      a:'É a proposta. As fichas cobrem as 6 matérias do núcleo duro, que sozinhas valem 70% da prova, e o Relatório te diz quais dessas 6 são as suas fracas. Você estuda essas primeiro, não uma lista genérica de "mais cobrados".' },
     { q:'Isto é um curso de OAB?',
-      a:'Não, e essa é a diferença. Não tem vídeoaula pra assistir nem mensalidade: você faz o diagnóstico, recebe a ordem do que corrigir e usa as fichas, os simulados e a folha de tática pra fechar isso. Pode continuar no curso que já faz — o Mapa diz em que ordem usar o tempo que sobra.' },
+      a:'Não, e essa é a diferença. Não tem vídeoaula para assistir, nem aula com horário, nem mensalidade. O que você compra é a direção: o exame que descobre onde o ponto está vazando, mais os materiais para tapar exatamente esses vazamentos. Você pode continuar no curso que já faz: o Mapa diz em que ordem usar o tempo.' },
     { q:'Preciso saber tudo para passar?',
-      a:'Não. A 1ª fase tem 80 questões e o corte é 40 acertos: metade da prova pode dar errado e você ainda passa. O Mapa existe pra te levar até essa linha gastando o mínimo de tempo possível, não pra você dominar o edital inteiro.' },
-    { q:'Funciona no celular?',
-      a:'Sim. Tudo roda no navegador, sem instalar nada: questões, fichas e simulados.' },
-    // "cronometradas" saiu daqui em 04/08/2026: a tela de questão do diagnostico.html do
-    // app não tem cronômetro nenhum. Quem tem relógio é o mini-diagnóstico grátis (40s por
-    // questão) e os simulados. Prometer cronômetro no pago é prometer coisa que não existe.
+      a:'Não. Você precisa de 40 acertos em 80. Metade da prova pode dar errado e você ainda passa a 1ª fase. Todo o material existe para te levar a essa linha com o menor esforço possível.' },
     { q:'Quanto tempo leva?',
-      a:'Cerca de 40 minutos entre as 24 questões e as 7 perguntas de comportamento. Você pode parar e voltar depois: fica salvo de onde parou. O Mapa sai na hora, com a ordem das correções.' },
+      a:'Cerca de 40 minutos entre as 24 questões e as 7 perguntas de comportamento. Você pode parar e voltar depois: fica salvo de onde parou. O Relatório sai na hora que você termina.' },
+    { q:'Não tenho os R$ 47 hoje. Tem outra forma?',
+      a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora) ou boleto, que você gera hoje e paga até o vencimento. Se nenhuma das duas resolver, me manda mensagem no WhatsApp que eu respondo pessoalmente. O preço não muda em outro dia: sempre foi R$ 47.' },
     { q:'Quais são as formas de pagamento?',
-      a:'Pix, cartão em até 6x e boleto. No Pix e no cartão o acesso libera na hora; no boleto, depois da compensação.' },
+      a:'Pix, cartão de crédito em até 6x e boleto à vista. O acesso chega assim que o pagamento é confirmado, no Pix e no cartão em minutos.' },
     { q:'Já estudo com outro curso. Isso substitui?',
-      a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o seu estudo atual render ponto.' },
-    { q:'Sou iniciante ou faz tempo que parei. Vale para mim?',
-      a:'Vale, e costuma valer mais: quanto menos claro está o que falta, mais fácil é estudar na ordem errada. O diagnóstico mede de onde você parte, sem exigir preparo prévio nenhum.' },
+      a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto. A maioria das pessoas usa os dois juntos.' },
+    { q:'E as outras 11 matérias, fora do núcleo duro?',
+      a:'O diagnóstico e as fichas deste material cobrem as 6 matérias do núcleo duro, que são as de maior peso, e o Relatório avisa isso com clareza: ele mediu essas 6, a prova cobra 17. Se depois você quiser as fichas das outras 11, existe o Plano Completo. Mas a ordem certa é começar pelas que mais valem ponto.' },
+    { q:'Sou iniciante / faz tempo que parei. Vale para mim?',
+      a:'Vale, e costuma valer mais: quanto menos claro está o que falta, mais tempo se perde estudando na ordem errada. O exame mede de onde você parte, sem exigir preparo prévio.' },
     { q:'Posso refazer o diagnóstico depois?',
-      a:'Pode. Depois de estudar as fichas e fazer os simulados, é refazer e ver se o seu ponto no gráfico se moveu. É a forma mais direta de saber se o esforço virou ponto.' },
+      a:'Pode, e é recomendado. Depois de estudar as fichas e fazer os simulados, você refaz e vê o seu ponto se mover no gráfico. É a forma mais direta de saber se o esforço virou ponto.' },
+    { q:'Funciona no celular?',
+      a:'Sim. Roda no navegador, sem instalar nada: questões, fichas e simulados.' },
     { q:'Por quanto tempo tenho acesso?',
       a:'12 meses, com pagamento único. Não é assinatura e não renova sozinho.' },
-    { q:'É seguro pagar?',
-      a:'É. O pagamento é processado pela Hotmart, em ambiente seguro, e você escolhe Pix, cartão ou boleto.' },
-    { q:'É atualizado para a próxima prova?',
-      a:'Sim. O conteúdo é revisado com base nas provas mais recentes da banca, não numa edição antiga parada no tempo.' },
     { q:'E se eu não gostar?',
       a:'Você tem 7 dias para pedir reembolso, sem perguntas. Dá para usar o material inteiro antes de decidir.' }
   ];
@@ -2555,27 +2543,22 @@
   }
 
 
-  // Reescrita em 03/08/2026. A pilha antiga listava cinco linhas de uma frase, e quatro
-  // delas começavam pela palavra "diagnóstico", "gabarito", "fichas" — nomes de arquivo.
-  // O inventário real do produto é MUITO maior do que ela dizia: são 17 matérias de
-  // fichas (79 subtemas com regra, súmula e pegadinha), 5 simulados sobre um banco de
-  // 248 questões, mais cronograma, plano de estudo, guia da FGV, kit reta final e
-  // mentalidade. A página vendia um relatório e entregava um sistema inteiro.
-  //
-  // Números conferidos arquivo por arquivo em 03/08/2026, não estimados:
-  //   assets/fichas.js ....... 17 matérias, 79 subtemas
-  //   assets/simulados.js .... 5 (3 focados + 2 completos)
-  //   assets/banco-de-questoes.js ... 248 questões
-  // Se algum desses mudar, ESTE texto muda junto: aqui é promessa de entrega.
+  // Reescrita em 03/08/2026, e CORRIGIDA em 05/08/2026: a versão anterior descrevia o
+  // inventário TOTAL do produto (17 matérias de fichas, 5 simulados, 248 questões —
+  // números batidos contra assets/fichas.js, assets/simulados.js e
+  // assets/banco-de-questoes.js), mas esses arquivos somam TODOS os planos, não só o
+  // que o R$47 entrega. A tabela real ("Mapa dos três planos", conferida contra a área
+  // do aluno) mostra que o R$47 é o Diagnóstico: 6 matérias do núcleo duro (70% da
+  // prova) e 3 simulados focados (24 questões cada). As outras 11 matérias, os 2
+  // simulados completos de 80 questões, o cronograma personalizado e "cabeça para a
+  // prova" são exclusivos do Plano Completo (R$127) — este site não vende esse tier.
+  // Prometer o inventário inteiro por R$47 aqui gera reembolso.
   function stackOferta(){
     // Ordenada por RESULTADO, não por mecanismo: o rótulo é o verbo que a pessoa
     // executa, e a entrega vem em cinza logo abaixo como prova de que o verbo é
     // possível. Ninguém compra ficha; compra saber o que corrigir.
-    // Números conferidos arquivo por arquivo em 03/08/2026, não estimados:
-    //   assets/fichas.js ............. 17 matérias, 79 subtemas
-    //   assets/simulados.js .......... 5 (3 focados + 2 completos)
-    //   assets/banco-de-questoes.js .. 248 questões
-    // Se algum mudar, ESTE texto muda junto: aqui é promessa de entrega.
+    // Números conferidos contra a tabela real de entregas (05/08/2026), não estimados.
+    // Se o Diagnóstico R$47 mudar de entrega, ESTE texto muda junto: aqui é promessa.
     var blocos=[
       // Sem "cronometradas" e sem "com precisão" (04/08/2026): o diagnóstico do app não
       // tem cronômetro, e "com precisão" é adjetivo que não corresponde a medida nenhuma.
@@ -2586,13 +2569,13 @@
       ['Entenda por que errou',
        'Cada questão explica por que a sua resposta parecia correta, por que a banca escolheu outra e qual detalhe da lei fez a diferença.'],
       ['Corrija o que está faltando',
-       'Fichas das 17 matérias: a regra, a súmula aplicável e a pegadinha que mais reprova candidatos.'],
+       'Fichas das 6 matérias do núcleo duro, que sozinhas valem 70% da prova: a regra, a súmula aplicável e a pegadinha que mais reprova candidatos.'],
       ['Faça a prova melhor',
        'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada.'],
       ['Confirme que evoluiu',
-       'Cinco simulados, mais de 240 questões, para medir se os pontos voltaram antes do dia da prova.'],
+       'Três simulados focados, 24 questões cada, batendo só no núcleo duro, para medir se os pontos voltaram antes do dia da prova.'],
       ['Organize tudo',
-       'Cronograma de execução, guia da FGV, materiais da reta final e a organização da revisão.']
+       'Guia de leitura da FGV, o plano das últimas 3 semanas e o checklist do dia da prova.']
     ];
     return '<div class="grade">'+blocos.map(function(b){
       return '<div class="cardb pequeno"><h4>'+esc(b[0])+'</h4><p>'+esc(b[1])+'</p></div>';
@@ -2624,7 +2607,8 @@
       ['ficha.webp',    'As fichas',             'A regra, a súmula do STJ e a pegadinha, matéria por matéria.'],
       ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
     ];
-    return '<div class="provas">'+itens.map(function(i){
+    return '<div class="eyebrow" style="margin-top:8px">Veja por dentro, antes de comprar</div>'+
+    '<div class="provas">'+itens.map(function(i){
       return '<figure>'+
         // assets/TELAS, não assets/produto: o .gitignore deste repo tem a regra `produto/`
         // (material interno mora no repo privado so-o-que-cai-produto, este aqui é público).
@@ -2691,24 +2675,36 @@
   // é a distância até o corte de cada eixo, não o valor bruto — os cortes são diferentes
   // (71 e 72) e as escalas não são intercambiáveis.
   //
+  // Nome do perfil (um dos 4 do Mapa), mesma régua CORTE_X/CORTE_Y usada em
+  // gargalo(r) e na manchete. Extraída à parte (04/08) porque virou dependência
+  // de dois lugares: o quadrante e a pill "perfil provável" do hero — os dois
+  // têm que sempre concordar, então os dois chamam a mesma função.
+  function perfilNome(r){
+    var hiX=r.X>=CORTE_X, hiY=r.Y>=CORTE_Y;
+    if(hiX&&hiY) return 'Pronta de verdade';
+    if(!hiX&&hiY) return 'Falta conteúdo';
+    if(hiX&&!hiY) return 'Sabe mas trava';
+    return 'Conteúdo e tática';
+  }
+
   // O quadrante dos 4 perfis (04/08). No handoff é estático ("você está aqui" sempre
   // em "Conteúdo e tática"); aqui usa a MESMA régua do resto da página (CORTE_X/
   // CORTE_Y), então o perfil marcado bate com a manchete e com gargalo(r) — os três
   // usam exatamente os mesmos dois booleanos.
   function quadrante(r){
-    var hiX=r.X>=CORTE_X, hiY=r.Y>=CORTE_Y;
-    function cel(nome, classe, texto, aqui){
-      return '<div class="cell'+(classe?' '+classe:'')+(aqui?' here':'')+'">'+
-        '<b>'+nome+(aqui?' <span class="badge">VOCÊ ESTÁ AQUI</span>':'')+'</b>'+
+    var nome=perfilNome(r);
+    function cel(n, classe, texto){
+      return '<div class="cell'+(classe?' '+classe:'')+(n===nome?' here':'')+'">'+
+        '<b>'+n+(n===nome?' <span class="badge">VOCÊ ESTÁ AQUI</span>':'')+'</b>'+
         '<p>'+texto+'</p></div>';
     }
     return '<div class="quad">'+
       '<div class="ax">↑ firmeza sob o relógio</div>'+
       '<div class="grid2">'+
-        cel('Falta conteúdo','', 'Você decide bem, só não sabe a matéria. Fichas primeiro, tática depois.', !hiX&&hiY)+
-        cel('Pronta de verdade','green', 'As duas pontas firmes. Aqui o trabalho é manutenção e simulado.', hiX&&hiY)+
-        cel('Conteúdo e tática','', 'As duas pontas cederam. A ordem importa muito: conteúdo de maior peso primeiro.', !hiX&&!hiY)+
-        cel('Sabe mas trava','', 'A matéria está lá, o relógio derruba. Aqui estudar mais não resolve.', hiX&&!hiY)+
+        cel('Falta conteúdo','', 'Você decide bem, só não sabe a matéria. Fichas primeiro, tática depois.')+
+        cel('Pronta de verdade','green', 'As duas pontas firmes. Aqui o trabalho é manutenção e simulado.')+
+        cel('Conteúdo e tática','', 'As duas pontas cederam. A ordem importa muito: conteúdo de maior peso primeiro.')+
+        cel('Sabe mas trava','', 'A matéria está lá, o relógio derruba. Aqui estudar mais não resolve.')+
       '</div>'+
       '<div class="ax right">domínio do conteúdo →</div>'+
     '</div>';
@@ -2828,9 +2824,10 @@
   //    Meta para o /api/clique repetir o checkout pela Conversions API.
   var icDisparado=false;
   function ligarCompra(){
-    // 'buy2' saiu da lista em 03/08 junto com o link do Plano Completo. Sobraram os três
-    // que apontam para o mesmo checkout de R$47: meio da oferta, bloco final e barra fixa.
-    ['buy0','buy','buy3'].forEach(function(id){
+    // 'buy2' saiu da lista em 03/08 junto com o link do Plano Completo. 'buy3' saiu em
+    // 05/08 junto com a barra fixa. Sobraram os dois que apontam para o checkout de
+    // R$47: meio da oferta e bloco final.
+    ['buy0','buy'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -2859,35 +2856,10 @@
     });
   }
 
-  // Barra fixa: só depois de a pessoa ter passado pela seção da oferta (04/08/2026).
-  //
-  // A régua anterior era rolagem pura: 1,2 tela e a barra subia. O #oferta fica muito
-  // mais abaixo que isso, então a barra aparecia ANTES da oferta e colhia o clique de
-  // quem ainda não sabia o que estava comprando. Não é teoria, é o que o banco mostrou:
-  // dos 13 leads que clicaram em comprar até aqui, 9 clicaram nela (`buy3`) e 6 estavam
-  // com `viu_oferta_em` nulo. A mediana entre virar lead e clicar era 1min13, e nenhum
-  // desses cliques virou venda. O único que comprou levou 11min28 e leu a página.
-  //
-  // Duas consequências, e a segunda é a que importa mais:
-  // 1. O clique volta a significar "li a oferta e quero", em vez de "vi um botão".
-  // 2. O InitiateCheckout é o alvo de otimização da campanha. Enquanto ele disparava
-  //    para quem só rolou 1,2 tela, a Meta estava aprendendo a caçar quem aperta botão,
-  //    não quem paga. Limpar o evento aqui é limpar o que a Meta aprende lá.
-  //
-  // Sem listener de rolagem: quem decide agora é o marcarOferta(), que já tem o seu.
-  // Uma vez revelada, a barra fica — a pessoa já viu a oferta, e a barra passa a ser
-  // o atalho de volta para o preço, que é a função para a qual ela foi feita.
-  var OFERTA_VISTA=false, revelarBarra=function(){};
-  function ligarBarraFixa(){
-    var stk=document.getElementById('stk');
-    if(!stk){ revelarBarra=function(){}; return; }
-    // A régua antiga deixava um listener de scroll por render. Ele não existe mais,
-    // mas uma renderização anterior pode ter deixado o dela pendurada na window.
-    if(window._stk){ window.removeEventListener('scroll', window._stk); window._stk=null; }
-    revelarBarra=function(){ stk.className='sticky on'; };
-    // Volta para a tela de solução depois de já ter visto a oferta: aparece de imediato.
-    if(OFERTA_VISTA) revelarBarra();
-  }
+  // Barra fixa saiu da página (05/08/2026), a pedido: o preço já aparece no resumo
+  // logo após o hero, no meio da oferta e no CTA final — a barra era um quarto
+  // lugar dizendo a mesma coisa. marcarOferta() continua registrando o passo e o
+  // ViewContent, que servem independente de barra nenhuma existir.
 
   // ===== TELA 1: DIAGNÓSTICO =====
   // Nenhum preço, nenhum botão de compra, nenhum depoimento. Só o que o teste achou.
@@ -2969,6 +2941,11 @@
                                                   : '. Na outra o tempo acabou antes de você marcar.'))
                        : '.')+' '+esc(g.exp))+'</p>'+
         (traduzMargem()? '<p class="lede margem">'+esc(traduzMargem())+'</p>' : '')+
+        '<div class="perfil">'+
+          '<span class="pl">Perfil provável</span>'+
+          '<span class="pill">'+esc(perfilNome(r))+'</span>'+
+          '<span class="pt">um dos quatro perfis do Mapa</span>'+
+        '</div>'+
         '<div class="micro">O teste mede esses dois fatores separadamente</div>'+
       '</div></section>'+
 
@@ -3032,25 +3009,26 @@
         '<div class="rcall">Quem não sabe qual dos dois é o problema estuda mais da mesma coisa e continua perdendo o mesmo ponto.</div>'+
       '</div></section>'+
 
-      // ===== O QUE É O MAPA DA APROVAÇÃO (04/08) =====
+      // ===== O QUE É O MAPA DA APROVAÇÃO (04/08, números corrigidos 05/08) =====
       // Item 8 do handoff inteiro faltava: a rota em 5 etapas, o quadrante dos 4
       // perfis (aqui com o ponto REAL da pessoa, não fixo como no protótipo) e "o
       // que o Mapa não é". Sem esta seção a página pulava direto da régua para o
       // preço, sem nunca explicar QUE PRODUTO é esse — só o que ele mede e quanto
-      // custa. Números adaptados ao inventário real (17 matérias, 5 simulados/248
-      // questões — ver nota da stackOferta()), não aos do handoff estático (6/3/24).
+      // custa. Números batidos contra a tabela real de entregas do R$47 (mesma nota
+      // da stackOferta()): 6 matérias do núcleo duro, 3 simulados focados. As outras
+      // 11 matérias e os 2 simulados completos são do Plano Completo, R$127.
       '<section class="vsec larga">'+
         '<div class="eyebrow">O que é o Mapa da Aprovação</div>'+
-        '<h2 class="grande">Não é mais conteúdo para estudar. É a rota que diz qual matéria, em que ordem — e o que você pode ignorar até o dia da prova.</h2>'+
+        '<h2 class="grande">Não é mais conteúdo para estudar. É a rota que diz qual matéria, em que ordem, e o que você pode ignorar até o dia da prova.</h2>'+
         '<p class="p">O Mapa da Aprovação é um sistema em cinco etapas, e cada etapa só existe porque a anterior te diz o que fazer nela. Você responde uma vez, e o resto do material se organiza em volta do seu resultado.</p>'+
         '<div class="rota">'+
           '<div class="step"><div class="n">1</div><div><div class="tt"><b>Diagnóstico</b><i>24 questões · 10 a 15 min</i></div>'+
             '<p>Questões do núcleo duro mais perguntas sobre a sua hora de prova. Sem esta etapa, todo o resto do material vira chute.</p></div></div>'+
           '<div class="step"><div class="n">2</div><div><div class="tt"><b>O seu Relatório dos Dois Eixos</b><i>sai na hora, com o seu nome</i></div>'+
             '<p>Onde você está nos dois eixos, o seu placar em cada matéria do núcleo duro e as prescrições nomeando as suas matérias fracas e os temas exatos onde você perdeu ponto.</p></div></div>'+
-          '<div class="step"><div class="n">3</div><div><div class="tt"><b>Fichas do que mais cai</b><i>17 matérias</i></div>'+
-            '<p>Você começa pelas suas matérias fracas: a regra, a súmula aplicável e a pegadinha que mais reprova. As outras ficam para depois — mas ficam, não faltam.</p></div></div>'+
-          '<div class="step"><div class="n">4</div><div><div class="tt"><b>Simulados</b><i>5, mais de 240 questões</i></div>'+
+          '<div class="step"><div class="n">3</div><div><div class="tt"><b>Fichas do que mais cai</b><i>6 matérias do núcleo duro</i></div>'+
+            '<p>A regra, a súmula aplicável e a pegadinha que mais reprova, nas 6 matérias que sozinhas valem 70% da prova.</p></div></div>'+
+          '<div class="step"><div class="n">4</div><div><div class="tt"><b>Simulados</b><i>3 focados, 24 questões cada</i></div>'+
             '<p>Meça se melhorou, em número. Pode refazer o diagnóstico depois e ver o seu ponto se mover no gráfico.</p></div></div>'+
           '<div class="step"><div class="n">5</div><div><div class="tt"><b>Tática e reta final</b><i>folha de tática + guia da FGV</i></div>'+
             '<p>Não perca na hora o ponto que você já tem: quando insistir, quando pular, como dividir as cinco horas e como não trocar resposta certa por errada.</p></div></div>'+
@@ -3089,7 +3067,7 @@
       '</section>'+
 
       // ===== 6. DEPOIMENTOS — evidência social =====
-      '<section class="vsec larga">'+
+      '<section class="vsec larga centro">'+
         '<div class="eyebrow">Quem já fez</div>'+
         '<h2>Três pessoas que estavam onde você está agora</h2>'+
         depoimentos()+
@@ -3128,23 +3106,15 @@
 
       // ===== CTA FINAL =====
       '<section class="vfim">'+
-        '<h2>Estudar o que precisa, não estudar mais.</h2>'+
+        '<h2>40 acertos em 80. A direção é nossa; a aprovação é sua.</h2>'+
         '<div class="pfim">R$ 47 à vista no Pix · ou '+PARCELA+' no cartão</div>'+
         '<a class="btn-lar grande" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
         '<div class="micro2">pagamento único · acesso na hora · garantia de 7 dias</div>'+
         '<div class="legal">Não é vinculado à FGV nem à OAB. Não promete aprovação: mostra direção. Seus dados não são vendidos.</div>'+
-      '</section>'+
-
-      // ===== BARRA FIXA =====
-      '<div class="sticky" id="stk"><div class="in">'+
-        '<div class="t"><div class="a">Diagnóstico Completo</div>'+
-          '<div class="b">R$ 47 no Pix · ou '+PARCELA+'</div></div>'+
-        '<a class="btn-lar" href="'+C.buyUrl+'" id="buy3" data-v="47">Quero descobrir o que corrigir</a>'+
-      '</div></div>';
+      '</section>';
 
     app.innerHTML = html;
     ligarCompra();
-    ligarBarraFixa();
 
     // Vídeo sob demanda: só entra no DOM quando pedido.
     var vp2=document.getElementById('vplay'), vw=document.getElementById('vwrap');
@@ -3192,10 +3162,6 @@
     var alvo=document.getElementById('oferta'), marcou=false;
     function marcarOferta(){
       if(marcou) return; marcou=true;
-      // A barra fixa é consequência disto, não de um tanto de rolagem. Ver a nota em
-      // ligarBarraFixa(): antes ela subia com 1,2 tela e colhia clique de quem nunca
-      // tinha chegado até aqui.
-      OFERTA_VISTA=true; revelarBarra();
       marcarPasso('oferta');
       if(typeof fbq!=='undefined'){
         try{ fbq('track','ViewContent',{content_name:'oferta',value:47,currency:'BRL'}); }catch(e){}
