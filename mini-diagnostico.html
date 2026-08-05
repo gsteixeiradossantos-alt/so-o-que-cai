@@ -2008,8 +2008,8 @@
   // 1. NUNCA consolar. "Você está cedo, e isso é vantagem" tira a urgência inteira e a
   //    pessoa fecha a aba tranquila. Se ela errou, o fato é que hoje ela não passaria.
   // 2. NUNCA falar por metáfora. "Um mapa do que cai" não significa nada para quem está
-  //    no primeiro contato. Dizer o que a pessoa recebe: 24 questões cronometradas, a
-  //    porcentagem em cada uma das 6, o nome da que derruba.
+  //    no primeiro contato. Dizer o que a pessoa recebe: 24 questões nas 6 matérias, a
+  //    porcentagem em cada uma delas, o nome da que derruba.
   // A urgência aqui é sempre REAL: a data da prova e o próprio placar dela.
   // 02/08 · v3: devolve CAMPOS, não HTML. O layout novo usa os dois tempos em lugares
   // diferentes da página: o "ponto" vira pull-quote logo abaixo do diagnóstico, e o
@@ -2038,10 +2038,14 @@
     // Começa em "Elas" porque o título da seção acabou de dizer "As 24 questões".
     // Antes o número aparecia três vezes na mesma altura de tela: no título, aqui, e no
     // primeiro item da lista. A terceira repetição não aumenta desejo nenhum.
-    var DIAG='Elas são cronometradas, nas 6 matérias que decidem a prova, e o relatório sai na hora, com o seu nome.';
+    // "Cronometradas" saiu daqui em 04/08/2026. O diagnostico.html do app não tem
+    // cronômetro: são 24 questões de conteúdo sem relógio, mais 7 perguntas de
+    // comportamento. Quem tem relógio é este mini-diagnóstico e os simulados. A frase
+    // ganha no lugar o que o produto de fato faz e o grátis não: 4 por matéria, nas 6.
+    var DIAG='São 4 por matéria, nas 6 que decidem a prova, e mais 7 perguntas sobre como você se comporta na hora. O relatório sai na hora, com o seu nome.';
     // Para quem não perdeu matéria, a oferta não pode prometer "descubra onde você perde
     // ponto": ela acabou de não perder nenhum. Responde a pergunta que o veredito deixou.
-    var DIAG_F='Elas são cronometradas, nas mesmas 6 matérias, e o relatório responde isso com número: onde o seu rendimento começa a cair, e em qual matéria.';
+    var DIAG_F='São 4 por matéria, nas mesmas 6, e o relatório responde isso com número: onde o seu rendimento começa a cair, e em qual matéria.';
     if(forte||sabe) DIAG=DIAG_F;
     var ponto, titulo, texto;
     if(reprovouMais()){
@@ -2447,8 +2451,12 @@
     //   assets/banco-de-questoes.js .. 248 questões
     // Se algum mudar, ESTE texto muda junto: aqui é promessa de entrega.
     var blocos=[
+      // Sem "cronometradas" e sem "com precisão" (04/08/2026): o diagnóstico do app não
+      // tem cronômetro, e "com precisão" é adjetivo que não corresponde a medida nenhuma.
+      // O que ele faz de fato: 24 de conteúdo mais 7 de comportamento, e é o cruzamento
+      // das duas partes que separa o erro de matéria do erro de hora.
       ['Saiba exatamente o que corrigir',
-       '24 questões cronometradas medem com precisão onde você perde ponto e confirmam o seu perfil.'],
+       '24 questões nas 6 matérias do núcleo e 7 perguntas sobre a sua hora de prova. É o cruzamento das duas que diz se o ponto foi embora por matéria ou por execução.'],
       ['Entenda por que errou',
        'Cada questão explica por que a sua resposta parecia correta, por que a banca escolheu outra e qual detalhe da lei fez a diferença.'],
       ['Corrija o que está faltando',
