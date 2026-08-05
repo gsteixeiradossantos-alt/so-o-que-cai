@@ -350,6 +350,35 @@
   .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
   .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
 
+  /* ---- rota em 5 etapas (04/08) ---- */
+  .rota{display:flex;flex-direction:column;gap:12px}
+  .rota .step{background:var(--card);border:1px solid var(--line);border-radius:12px;
+             padding:20px 24px;display:flex;gap:18px;align-items:flex-start}
+  .rota .step .n{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--navy);
+                 color:var(--gold);display:flex;align-items:center;justify-content:center;
+                 font-size:16px;font-weight:700}
+  .rota .step .tt{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .rota .step .tt b{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .rota .step .tt i{font-style:normal;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+                    color:var(--sec);font-weight:700}
+  .rota .step p{font-size:15px;line-height:1.55;color:var(--sec);margin:6px 0 0}
+
+  /* ---- quadrante dos 4 perfis (04/08) ---- */
+  .quad{background:var(--card);border:1px solid var(--line);border-radius:12px;
+       padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+  .quad .ax{font-family:'Source Sans 3',sans-serif;font-size:11px;letter-spacing:1.5px;
+           text-transform:uppercase;color:var(--sec);font-weight:700}
+  .quad .ax.right{text-align:right}
+  .quad .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .quad .cell{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .quad .cell b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:700}
+  .quad .cell p{font-size:13px;line-height:1.5;color:var(--sec);margin-top:6px}
+  .quad .cell.green{background:#EAF3EA;border-color:#4E7A4E}
+  .quad .cell.here{background:#FBEDE2;border:2px solid var(--ocre2)}
+  .quad .cell .badge{display:inline-block;background:var(--ocre2);color:#fff;font-size:10px;
+                     font-weight:700;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;
+                     margin-left:6px;white-space:nowrap;vertical-align:middle}
+
   /* ---- provas de tela (04/08) ----
      Até aqui a única imagem da página era o rosto de quem assina: a oferta listava
      seis entregas e não mostrava nenhuma delas. São prints da ferramenta real, e o
@@ -2662,6 +2691,29 @@
   // é a distância até o corte de cada eixo, não o valor bruto — os cortes são diferentes
   // (71 e 72) e as escalas não são intercambiáveis.
   //
+  // O quadrante dos 4 perfis (04/08). No handoff é estático ("você está aqui" sempre
+  // em "Conteúdo e tática"); aqui usa a MESMA régua do resto da página (CORTE_X/
+  // CORTE_Y), então o perfil marcado bate com a manchete e com gargalo(r) — os três
+  // usam exatamente os mesmos dois booleanos.
+  function quadrante(r){
+    var hiX=r.X>=CORTE_X, hiY=r.Y>=CORTE_Y;
+    function cel(nome, classe, texto, aqui){
+      return '<div class="cell'+(classe?' '+classe:'')+(aqui?' here':'')+'">'+
+        '<b>'+nome+(aqui?' <span class="badge">VOCÊ ESTÁ AQUI</span>':'')+'</b>'+
+        '<p>'+texto+'</p></div>';
+    }
+    return '<div class="quad">'+
+      '<div class="ax">↑ firmeza sob o relógio</div>'+
+      '<div class="grid2">'+
+        cel('Falta conteúdo','', 'Você decide bem, só não sabe a matéria. Fichas primeiro, tática depois.', !hiX&&hiY)+
+        cel('Pronta de verdade','green', 'As duas pontas firmes. Aqui o trabalho é manutenção e simulado.', hiX&&hiY)+
+        cel('Conteúdo e tática','', 'As duas pontas cederam. A ordem importa muito: conteúdo de maior peso primeiro.', !hiX&&!hiY)+
+        cel('Sabe mas trava','', 'A matéria está lá, o relógio derruba. Aqui estudar mais não resolve.', hiX&&!hiY)+
+      '</div>'+
+      '<div class="ax right">domínio do conteúdo →</div>'+
+    '</div>';
+  }
+
   // "Execução" no lugar de "a hora da prova": é mais preciso e é a palavra que o resto da
   // página usa para o eixo Y.
   function gargalo(r){
@@ -2980,13 +3032,49 @@
         '<div class="rcall">Quem não sabe qual dos dois é o problema estuda mais da mesma coisa e continua perdendo o mesmo ponto.</div>'+
       '</div></section>'+
 
+      // ===== O QUE É O MAPA DA APROVAÇÃO (04/08) =====
+      // Item 8 do handoff inteiro faltava: a rota em 5 etapas, o quadrante dos 4
+      // perfis (aqui com o ponto REAL da pessoa, não fixo como no protótipo) e "o
+      // que o Mapa não é". Sem esta seção a página pulava direto da régua para o
+      // preço, sem nunca explicar QUE PRODUTO é esse — só o que ele mede e quanto
+      // custa. Números adaptados ao inventário real (17 matérias, 5 simulados/248
+      // questões — ver nota da stackOferta()), não aos do handoff estático (6/3/24).
+      '<section class="vsec larga">'+
+        '<div class="eyebrow">O que é o Mapa da Aprovação</div>'+
+        '<h2 class="grande">Não é mais conteúdo para estudar. É a rota que diz qual matéria, em que ordem — e o que você pode ignorar até o dia da prova.</h2>'+
+        '<p class="p">O Mapa da Aprovação é um sistema em cinco etapas, e cada etapa só existe porque a anterior te diz o que fazer nela. Você responde uma vez, e o resto do material se organiza em volta do seu resultado.</p>'+
+        '<div class="rota">'+
+          '<div class="step"><div class="n">1</div><div><div class="tt"><b>Diagnóstico</b><i>24 questões · 10 a 15 min</i></div>'+
+            '<p>Questões do núcleo duro mais perguntas sobre a sua hora de prova. Sem esta etapa, todo o resto do material vira chute.</p></div></div>'+
+          '<div class="step"><div class="n">2</div><div><div class="tt"><b>O seu Relatório dos Dois Eixos</b><i>sai na hora, com o seu nome</i></div>'+
+            '<p>Onde você está nos dois eixos, o seu placar em cada matéria do núcleo duro e as prescrições nomeando as suas matérias fracas e os temas exatos onde você perdeu ponto.</p></div></div>'+
+          '<div class="step"><div class="n">3</div><div><div class="tt"><b>Fichas do que mais cai</b><i>17 matérias</i></div>'+
+            '<p>Você começa pelas suas matérias fracas: a regra, a súmula aplicável e a pegadinha que mais reprova. As outras ficam para depois — mas ficam, não faltam.</p></div></div>'+
+          '<div class="step"><div class="n">4</div><div><div class="tt"><b>Simulados</b><i>5, mais de 240 questões</i></div>'+
+            '<p>Meça se melhorou, em número. Pode refazer o diagnóstico depois e ver o seu ponto se mover no gráfico.</p></div></div>'+
+          '<div class="step"><div class="n">5</div><div><div class="tt"><b>Tática e reta final</b><i>folha de tática + guia da FGV</i></div>'+
+            '<p>Não perca na hora o ponto que você já tem: quando insistir, quando pular, como dividir as cinco horas e como não trocar resposta certa por errada.</p></div></div>'+
+        '</div>'+
+        quadrante(r)+
+        '<div class="cardb">'+
+          '<div class="eyebrow" style="color:var(--ocre2)">O que o Mapa não é</div>'+
+          '<div class="riscado" style="margin-top:10px">'+
+            '<div class="ri">Um curso com centenas de videoaulas para assistir</div>'+
+            '<div class="ri">Mensalidade, assinatura ou aula ao vivo com horário</div>'+
+            '<div class="ri">Mais material para somar à pilha que você já tem</div>'+
+            '<div class="ri">Promessa de aprovação</div>'+
+          '</div>'+
+          '<div class="ripe">Você não precisa trocar de curso nem parar o que já está fazendo. O Mapa diz <strong style="color:var(--ink)">em que ordem</strong> usar o tempo que você já tem. A direção é nossa; a aprovação é sua.</div>'+
+        '</div>'+
+        provas()+
+      '</section>'+
+
       // ===== 5. A OFERTA =====
       '<section class="vsec larga" id="oferta">'+
         '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
         '<h2 class="grande">'+PRODUTO+'</h2>'+
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
-        provas()+
         bonusKit()+
         porqueHoje()+
         // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
