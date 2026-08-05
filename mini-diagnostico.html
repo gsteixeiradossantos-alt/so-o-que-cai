@@ -313,6 +313,20 @@
   .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
   .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
 
+  /* ---- provas de tela (04/08) ----
+     Até aqui a única imagem da página era o rosto de quem assina: a oferta listava
+     seis entregas e não mostrava nenhuma delas. São prints da ferramenta real, e o
+     alinhamento ao topo é de propósito — as três têm alturas diferentes e forçar a
+     mesma altura cortaria justamente o miolo que serve de prova. */
+  .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+          gap:18px;margin-top:18px;align-items:start}
+  .provas figure{margin:0}
+  .provas img{display:block;width:100%;height:auto;border:1px solid var(--line);
+              border-radius:10px;background:var(--card)}
+  .provas figcaption{font-size:13px;line-height:1.5;color:var(--sec);margin-top:9px}
+  .provas figcaption b{color:var(--ink);font-weight:600}
+  .provas-nota{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:12px}
+
   /* ---- onde cedeu ---- */
   .cardn.cedeu{display:flex;flex-direction:column;gap:4px}
   .cardn .cnum{font-family:'Spectral',Georgia,serif;font-size:38px;font-weight:700;
@@ -354,6 +368,35 @@
   .preco .v span{font-family:'Hanken Grotesk',sans-serif;font-size:15px;font-weight:400;color:var(--sec)}
   .micro2{font-size:13px;color:var(--sec)}
   .selo2{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--sec)}
+
+  /* ---- por que hoje (04/08) ----
+     Fica antes do preço, não depois: é o último empurrão antes do CTA, não uma
+     justificativa depois do clique. A régua é calendário, nunca escassez de vaga
+     nem preço que sobe — o preço é dito igual nos três cartões: continua R$ 47. */
+  .hoje{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px}
+  .hoje .hk{font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;
+            letter-spacing:.13em;text-transform:uppercase;color:var(--ocre)}
+  .hoje .hp{font-size:15px;line-height:1.6;color:var(--sec);margin-top:12px}
+  .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+  .hcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .hcard b{display:block;font-family:'Spectral',Georgia,serif;font-size:18px;font-weight:700;color:var(--ocre2)}
+  .hcard p{font-size:13.5px;line-height:1.5;color:var(--sec);margin-top:6px}
+
+  /* ---- objeção de dinheiro (04/08) ----
+     Fica DEPOIS do preço, de propósito: quem já viu o valor e travou é quem
+     precisa desta saída, não quem ainda não chegou lá. Borda tracejada marca
+     que é conversa, não mais um argumento de venda. */
+  .objecao{background:var(--card);border:1px dashed var(--ocre2);border-radius:12px;
+           padding:22px 24px;text-align:left}
+  .objecao h3{font-family:'Spectral',Georgia,serif;font-size:19px;font-weight:700}
+  .objecao>p{font-size:14.5px;line-height:1.6;color:var(--sec);margin-top:10px}
+  .objecao ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+  .objecao li{font-size:14.5px;line-height:1.55;color:var(--sec)}
+  .objecao li b{color:var(--ink)}
+  .objecao a.wa{display:inline-block;margin-top:12px;font-size:14px;font-weight:700;color:var(--ocre)}
+  .objecao a.wa:hover{color:var(--ocre2)}
+  .objecao .fine{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+                 font-size:12.5px;color:var(--muted);line-height:1.55}
 
   /* ---- depoimentos ---- */
   .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
@@ -2473,6 +2516,84 @@
     }).join('')+'</div>';
   }
 
+  // Prints da ferramenta real, logo abaixo da lista de entregas (04/08/2026).
+  //
+  // Por que existe: até hoje a única imagem da página era o rosto de quem assina. A
+  // oferta prometia seis coisas e não mostrava nenhuma, então a dúvida silenciosa de
+  // quem lê "17 matérias de fichas, 5 simulados, 248 questões" por R$ 47 ficava sem
+  // resposta: isso é só um PDF? A página respondia com adjetivo.
+  //
+  // Pela regra do inventário (cada bloco acrescenta um TIPO novo de evidência), este é
+  // o único tipo que faltava: prova visual. Os outros já estavam cobertos — número do
+  // próprio teste, questão comentada, texto, rosto.
+  //
+  // São PRINTS, não maquete. Tirados das telas reais (diagnostico.html, ficha.html e
+  // simulado.html do app), com o conteúdo que está no ar, na resolução de celular. Isso
+  // é regra e não gosto: mockup 3D flutuando e foto de gente sorrindo com notebook são
+  // o vocabulário visual de infoproduto genérico, e nenhum dos dois responde a dúvida.
+  // Uma pessoa segurando um celular não prova que existe ficha de súmula lá dentro.
+  //
+  // Cada print vira PROMESSA: o que aparece aqui é o que o comprador encontra ao entrar.
+  // Se alguma dessas telas mudar, o print muda junto — igual aos números da stackOferta.
+  function provas(){
+    var itens=[
+      ['mapa.webp',     'O Mapa da Aprovação',   'Onde você cai nos dois eixos, com o seu nome no ponto.'],
+      ['ficha.webp',    'As fichas',             'A regra, a súmula do STJ e a pegadinha, matéria por matéria.'],
+      ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
+    ];
+    return '<div class="provas">'+itens.map(function(i){
+      return '<figure>'+
+        // assets/TELAS, não assets/produto: o .gitignore deste repo tem a regra `produto/`
+        // (material interno mora no repo privado so-o-que-cai-produto, este aqui é público).
+        // A regra casaria com assets/produto/ e as imagens sumiriam do deploy sem erro
+        // nenhum: o commit passa, o site sobe e o bloco fica com três quadrados quebrados.
+        '<img src="assets/telas/'+i[0]+'" alt="'+esc(i[1])+'" loading="lazy" decoding="async">'+
+        '<figcaption><b>'+esc(i[1])+'.</b> '+esc(i[2])+'</figcaption>'+
+      '</figure>';
+    }).join('')+'</div>'+
+    '<p class="provas-nota">Telas reais do que você recebe. O relatório sai com o seu nome e com as suas matérias.</p>';
+  }
+
+
+  // Calendário como urgência, nunca escassez falsa (04/08/2026). O handoff da página de
+  // vendas pedia este bloco antes do preço, com 3 cartões (hoje / 3 semanas / véspera).
+  // O texto nunca promete que o preço sobe nem que a vaga acaba, porque nenhuma das
+  // duas coisas é verdade: R$ 47 continua R$ 47 amanhã. O que muda de verdade é quanto
+  // do material ainda cabe no tempo que falta, e é isso que os três cartões medem.
+  function porqueHoje(){
+    var d=diasParaProva();
+    return '<div class="hoje">'+
+      '<div class="hk">Por que hoje, '+esc(hojeExtenso())+', e não depois</div>'+
+      '<p class="hp">Não é escassez de vaga nem preço que sobe: o preço é R$ 47 hoje e vai ser R$ 47 depois. O que muda é o calendário'+
+        (d? ' — faltam '+d+' dias para a prova' : '')+
+        ', e a cada semana que passa sobram menos horas para redistribuir entre as matérias que você errou.</p>'+
+      '<div class="hgrid">'+
+        '<div class="hcard"><b>Hoje</b><p>Dá para reorganizar a ordem das matérias e ainda medir se funcionou, nos simulados.</p></div>'+
+        '<div class="hcard"><b>Em 3 semanas</b><p>Ainda dá para corrigir as matérias fracas, mas sem muito tempo de conferir o resultado antes da prova.</p></div>'+
+        '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática e o checklist do dia. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  // Objeção de dinheiro tratada de frente, com saída de verdade (04/08/2026). Fica
+  // DEPOIS do preço porque é para quem já viu o valor e travou, não para quem ainda
+  // não chegou lá. O link do WhatsApp usa o mesmo número que o app já usa para
+  // notificação (so-o-que-cai-app/api/teste-whats.js), e vem com a mensagem pronta
+  // para a pessoa não precisar escrever do zero.
+  function objecaoDinheiro(){
+    var msg=encodeURIComponent('Oi! Vi o Mapa da Aprovação (R$ 47) e queria falar sobre o pagamento.');
+    return '<div class="objecao">'+
+      '<h3>E se hoje os R$ 47 não caberem?</h3>'+
+      '<p>Acontece, e não tem nada de errado nisso. Três saídas, na ordem que costuma resolver:</p>'+
+      '<ul>'+
+        '<li><b>'+PARCELA+' no cartão.</b> Menos de nove reais por mês, com o acesso liberado na hora.</li>'+
+        '<li><b>Boleto.</b> Você gera hoje e paga até o vencimento; o preço continua R$ 47.</li>'+
+        '<li><b>Me manda mensagem.</b> Se nenhuma das duas resolver, eu respondo pessoalmente e a gente vê o que dá para fazer.</li>'+
+      '</ul>'+
+      '<a class="wa" href="https://wa.me/5546999223332?text='+msg+'" target="_blank" rel="noopener">Falar comigo no WhatsApp →</a>'+
+      '<div class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só semana que vem, entre semana que vem: a única coisa que muda é quanto de prova o material ainda cobre.</div>'+
+    '</div>';
+  }
 
   // Qual eixo está segurando a pessoa hoje. A tela de oferta abre nomeando isto, então
   // precisa ser a MESMA régua do resto da página (CORTE_X / CORTE_Y), senão o topo
@@ -2543,9 +2664,19 @@
     // Checkout pré-preenchido com o que a pessoa já digitou: ela não encara o formulário
     // vazio de novo (é onde o funil perde gente).
     var digits=S.tel.replace(/\D/g,'');
+    // O checkout brasileiro espera DDD + número, sem o 55. Mandar com DDI fazia a
+    // Hotmart descartar o campo: no painel de abandono de 04/08/2026, 15 dos 16
+    // registros vinham com "Telefone: –", e o único preenchido foi digitado à mão
+    // pela própria pessoa. Sem telefone lá, o recuperador automático da Hotmart
+    // não tem por onde falar com quem abandonou.
+    var telLocal=(digits.length>11&&digits.indexOf('55')===0)?digits.slice(2):digits;
+    // Duas grafias de propósito: a documentação da Hotmart usa minúsculas, o código
+    // aqui usava camelCase, e não dá para saber qual ela lê sem testar. Parâmetro
+    // que ela não reconhece é ignorado, então mandar os dois não custa nada.
     var fill='&name='+encodeURIComponent(S.nome)+
       (S.email?'&email='+encodeURIComponent(S.email):'')+
-      (digits?'&phoneNumber='+encodeURIComponent(digits):'');
+      (telLocal?'&phonenumber='+encodeURIComponent(telLocal)+
+                '&phoneNumber='+encodeURIComponent(telLocal):'');
     // O trecho em itálico do título. Se 'hl' não estiver dentro de 'lab', o título sai
     // reto em vez de quebrar: substituição só acontece quando encontra.
     var h1=esc(q.lab);
@@ -2786,7 +2917,9 @@
         '<h2 class="grande">'+PRODUTO+'</h2>'+
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
+        provas()+
         bonusKit()+
+        porqueHoje()+
         // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
         // tratamento: é o ponto onde a decisão acontece.
         '<div class="preco">'+
@@ -2795,6 +2928,7 @@
           '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
           '<div class="selo2">Seus dados não são vendidos</div>'+
         '</div>'+
+        objecaoDinheiro()+
       '</section>'+
 
       // ===== 6. DEPOIMENTOS — evidência social =====
