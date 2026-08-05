@@ -397,9 +397,17 @@
   .vfim .legal{font-size:12px;color:rgba(191,220,238,.55);max-width:520px;line-height:1.55}
 
   /* ---- barra fixa ---- */
+  /* NÃO devolver `transform:none` aqui (removido em 04/08/2026). Esta regra tem
+     especificidade 0,2,1 e vencia o `.sticky{transform:translateY(110%)}` que esconde a
+     barra, então na página de vendas ela ficava visível desde o primeiro pixel, e a
+     classe `.on` do JS não controlava nada. Era isso, e não a régua de rolagem, que
+     colhia o clique de quem tinha acabado de terminar o quiz: 9 dos 13 primeiros cliques
+     em comprar vieram daqui, 6 sem nunca ter chegado ao #oferta, mediana de 1min13 entre
+     virar lead e clicar, nenhuma venda. Quem mostra e esconde a barra é o
+     marcarOferta(), via classe `.on`. Sem transform nesta regra, a base volta a valer. */
   body.vendas .sticky{position:fixed;left:0;right:0;bottom:0;background:var(--card);
     border-top:2px solid var(--gold);box-shadow:0 -6px 20px rgba(14,34,51,.12);z-index:50;
-    transform:none;padding:10px 0}
+    padding:10px 0}
   body.vendas .sticky .in{max-width:960px;margin:0 auto;padding:0 20px;display:flex;
     justify-content:space-between;align-items:center;gap:14px}
   body.vendas .sticky .a{font-size:14px;font-weight:700;color:var(--ink)}
