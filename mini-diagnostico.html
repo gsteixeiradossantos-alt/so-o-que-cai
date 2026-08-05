@@ -692,10 +692,10 @@
              color:#F3EEE4;text-wrap:balance}
   .rrecap .h em{font-style:italic;color:var(--ocre2)}
   /* Bônus. Entrou em 02/08/2026, quando o Kit Reta Final deixou de ser bump de R$19 e
-     passou a vir incluído: o acréscimo de 40% no pedido é atrito grande demais para um
-     público que espera o dia 5 do mês, e não havia nenhum outro material livre para
-     usar como bônus. A data sai por extenso do relógio, não é "hoje" solto: quem voltar
-     amanhã lê a data de amanhã e a página nunca prometeu prazo nenhum. */
+     passou a vir incluído. Em 05/08/2026 o Kit SAIU do bloco (voltou a ser bump pago
+     no checkout) e ficou só o Guia de leitura da FGV. A data sai por extenso do
+     relógio, não é "hoje" solto: quem voltar amanhã lê a data de amanhã e a página
+     nunca prometeu prazo nenhum. */
   /* O bloco .bonus antigo (tracejado ocre) saiu em 04/08/2026: o design novo tem
      um .bonus próprio, em cartão navy, definido lá em cima. Duas definições da mesma
      classe conviviam, e a de baixo vencia por ordem. */
@@ -2566,29 +2566,31 @@
   }
   function hojeExtenso(){ return porExtenso(new Date()); }
 
-  // Os dois bônus do R$47, ambos com origem e ambos conferidos contra os arquivos do
-  // app. Nunca prometer aqui coisa que não esteja lá dentro.
+  // O bônus do R$47, com origem real e conferido contra os arquivos do app.
+  // Nunca prometer aqui coisa que não esteja lá dentro.
   //
-  // O Kit Reta Final era bump de R$19 e virou bônus em 02/08/2026.
-  // O Guia de leitura da FGV desceu do Plano Completo no mesmo dia, e é o mais
-  // importante dos dois para a tese da página: a dor tem dois culpados, a palavra que
-  // a banca troca e a trava na hora, e este guia é a única peça do produto inteiro que
-  // ataca os dois. As regras de leitura contra a literalidade da FGV, e "a resposta
-  // que você não deve trocar" contra a trava.
+  // O Guia de leitura da FGV desceu do Plano Completo em 02/08/2026, e é o mais
+  // importante para a tese da página: a dor tem dois culpados, a palavra que a banca
+  // troca e a trava na hora, e este guia é a única peça do produto inteiro que ataca
+  // os dois. As regras de leitura contra a literalidade da FGV, e "a resposta que
+  // você não deve trocar" contra a trava. O valor dele é dito com a origem REAL,
+  // nunca com preço inventado: ele não tinha preço próprio, então diz de onde veio.
   //
-  // O valor de cada um é dito com a origem REAL, nunca com preço inventado: o Kit tem
-  // preço próprio porque era vendido; o Guia não tem, então diz de onde veio.
-  function bonusKit(){
+  // O Kit Reta Final SAIU deste bloco em 05/08/2026: voltou a ser bump pago de R$19
+  // no checkout (decisão do dia, junto com o checkout vestido). Entre 02/08 e 05/08
+  // ele foi prometido aqui como bônus, e quem comprou nesse intervalo mantém
+  // kit=true na base. A página não fala mais dele: quem quiser encontra o bump no
+  // próprio checkout e o convite de upgrade dentro da área do aluno.
+  function bonusGuia(){
     var d=diasParaProva();
-    // A pressão fica SÓ sobre o Kit, e por um motivo verdadeiro: ele cobre a reta
-    // final, então vale menos a cada dia. O preço nunca entra na pressão. A frase
-    // anterior era "depois de hoje eu não garanto", e ela fazia o oposto do
-    // pretendido: para quem não pode pagar hoje, transformava "não posso agora" em
-    // "então já perdi" — e quem perdeu não volta. A única resposta qualitativa do
-    // funil inteiro foi exatamente essa pessoa, que disse "só terei dinheiro dia 6".
+    // O preço nunca entra na pressão. A frase anterior era "depois de hoje eu não
+    // garanto", e ela fazia o oposto do pretendido: para quem não pode pagar hoje,
+    // transformava "não posso agora" em "então já perdi" — e quem perdeu não volta.
+    // A única resposta qualitativa do funil inteiro foi exatamente essa pessoa, que
+    // disse "só terei dinheiro dia 6".
     return '<div class="bonus">'+
       '<div class="btopo">'+
-        '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva os dois</div>'+
+        '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva o Guia junto</div>'+
         (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
       '</div>'+
       '<div class="bgrid">'+
@@ -2601,11 +2603,8 @@
         '<div class="bcard"><div class="bh"><b>Guia de leitura da FGV</b>'+
           '<i>vinha só no Plano Completo</i></div>'+
           '<p>Uma das seis regras: ler a última linha antes do resto, que é onde a banca inverte o pedido. As outras cinco vêm junto. Não é decorar macete, é entender como a FGV monta a questão e ter o que fazer quando ela aparecer.</p></div>'+
-        '<div class="bcard"><div class="bh"><b>Kit Reta Final</b>'+
-          '<i>vendido por R$ 19</i></div>'+
-          '<p>O plano das últimas três semanas, o checklist da véspera e do dia, a estratégia das 80 questões e o protocolo anti-branco.</p></div>'+
       '</div>'+
-      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. Os bônus eu não garanto, e o Kit cobre menos prova a cada dia que passa.</div>'+
+      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. O bônus eu não garanto.</div>'+
     '</div>';
   }
 
@@ -2640,9 +2639,11 @@
       ['Faça a prova melhor',
        'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada.'],
       ['Confirme que evoluiu',
-       'Três simulados focados, 24 questões cada, batendo só no núcleo duro, para medir se os pontos voltaram antes do dia da prova.'],
-      ['Organize tudo',
-       'Guia de leitura da FGV, o plano das últimas 3 semanas e o checklist do dia da prova.']
+       'Três simulados focados, 24 questões cada, batendo só no núcleo duro, para medir se os pontos voltaram antes do dia da prova.']
+      // O 6º cartão ("Organize tudo") saiu em 05/08/2026: prometia o plano das
+      // últimas 3 semanas e o checklist do dia, que são o conteúdo do Kit Reta
+      // Final — e o Kit voltou a ser bump pago nesse dia. O Guia da FGV, que
+      // também aparecia nele, tem cartão próprio no bloco de bônus logo abaixo.
     ];
     return '<div class="grade">'+blocos.map(function(b){
       return '<div class="cardb pequeno"><h4>'+esc(b[0])+'</h4><p>'+esc(b[1])+'</p></div>';
@@ -2704,7 +2705,7 @@
       '<div class="hgrid">'+
         '<div class="hcard"><b>Hoje</b><p>Dá para reorganizar a ordem das matérias e ainda medir se funcionou, nos simulados.</p></div>'+
         '<div class="hcard"><b>Em 3 semanas</b><p>Ainda dá para corrigir as matérias fracas, mas sem muito tempo de conferir o resultado antes da prova.</p></div>'+
-        '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática e o checklist do dia. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
+        '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática de prova. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
       '</div>'+
     '</div>';
   }
@@ -3125,7 +3126,7 @@
         '<h2 class="grande">'+PRODUTO+'</h2>'+
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
-        bonusKit()+
+        bonusGuia()+
         porqueHoje()+
         // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
         // tratamento: é o ponto onde a decisão acontece.

@@ -907,17 +907,17 @@ function objecaoDinheiro(){
       '<div class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só semana que vem, entre semana que vem: a única coisa que muda é quanto de prova o material ainda cobre.</div>'+
     '</div>';
   }
-function bonusKit(){
+// O Kit Reta Final SAIU do bloco em 05/08/2026: voltou a ser bump pago de R$19 no
+// checkout e não pode mais ser prometido de graça. Ficou só o Guia (mesma edição
+// feita na mini-diagnostico.html no mesmo dia — manter as duas em espelho).
+function bonusGuia(){
     var d=diasParaProva();
-    // A pressão fica SÓ sobre o Kit, e por um motivo verdadeiro: ele cobre a reta
-    // final, então vale menos a cada dia. O preço nunca entra na pressão. A frase
-    // anterior era "depois de hoje eu não garanto", e ela fazia o oposto do
-    // pretendido: para quem não pode pagar hoje, transformava "não posso agora" em
-    // "então já perdi" — e quem perdeu não volta. A única resposta qualitativa do
-    // funil inteiro foi exatamente essa pessoa, que disse "só terei dinheiro dia 6".
+    // O preço nunca entra na pressão. A frase anterior era "depois de hoje eu não
+    // garanto", e ela fazia o oposto do pretendido: para quem não pode pagar hoje,
+    // transformava "não posso agora" em "então já perdi" — e quem perdeu não volta.
     return '<div class="bonus">'+
       '<div class="btopo">'+
-        '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva os dois</div>'+
+        '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva o Guia junto</div>'+
         (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
       '</div>'+
       '<div class="bgrid">'+
@@ -930,11 +930,8 @@ function bonusKit(){
         '<div class="bcard"><div class="bh"><b>Guia de leitura da FGV</b>'+
           '<i>vinha só no Plano Completo</i></div>'+
           '<p>Uma das seis regras: ler a última linha antes do resto, que é onde a banca inverte o pedido. As outras cinco vêm junto. Não é decorar macete, é entender como a FGV monta a questão e ter o que fazer quando ela aparecer.</p></div>'+
-        '<div class="bcard"><div class="bh"><b>Kit Reta Final</b>'+
-          '<i>vendido por R$ 19</i></div>'+
-          '<p>O plano das últimas três semanas, o checklist da véspera e do dia, a estratégia das 80 questões e o protocolo anti-branco.</p></div>'+
       '</div>'+
-      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. Os bônus eu não garanto, e o Kit cobre menos prova a cada dia que passa.</div>'+
+      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. O bônus eu não garanto.</div>'+
     '</div>';
   }
 function stackOferta(){
@@ -957,9 +954,9 @@ function stackOferta(){
       ['Faça a prova melhor',
        'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada.'],
       ['Confirme que evoluiu',
-       'Três simulados focados, 24 questões cada, batendo só no núcleo duro, para medir se os pontos voltaram antes do dia da prova.'],
-      ['Organize tudo',
-       'Guia de leitura da FGV, o plano das últimas 3 semanas e o checklist do dia da prova.']
+       'Três simulados focados, 24 questões cada, batendo só no núcleo duro, para medir se os pontos voltaram antes do dia da prova.']
+      // O 6º cartão ("Organize tudo") saiu em 05/08/2026: prometia o conteúdo do
+      // Kit Reta Final, que voltou a ser bump pago. O Guia tem cartão no bloco de bônus.
     ];
     return '<div class="grade">'+blocos.map(function(b){
       return '<div class="cardb pequeno"><h4>'+esc(b[0])+'</h4><p>'+esc(b[1])+'</p></div>';
@@ -994,7 +991,7 @@ function porqueHoje(){
       '<div class="hgrid">'+
         '<div class="hcard"><b>Hoje</b><p>Dá para reorganizar a ordem das matérias e ainda medir se funcionou, nos simulados.</p></div>'+
         '<div class="hcard"><b>Em 3 semanas</b><p>Ainda dá para corrigir as matérias fracas, mas sem muito tempo de conferir o resultado antes da prova.</p></div>'+
-        '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática e o checklist do dia. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
+        '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática de prova. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
       '</div>'+
     '</div>';
   }
@@ -1076,7 +1073,7 @@ function porqueHoje(){
         '<h2 class="grande">' + PRODUTO + '</h2>' +
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>' +
         stackOferta() +
-        bonusKit() +
+        bonusGuia() +
         porqueHoje() +
         '<div class="preco">' +
           '<div class="v">R$ 47 <span>no Pix · ou ' + PARCELA + ' no cartão (' + TOTAL_PARCELADO + ')</span></div>' +
