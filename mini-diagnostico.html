@@ -2664,13 +2664,14 @@
   // checkout continuava vendendo o mesmo item como order bump pago (R$19): pelo
   // menos uma compradora pagou os R$19 por algo que a página já dizia ter dado de
   // graça. Este bloco existe só para criar desejo por um item nomeado antes do
-  // carrinho -- descreve o que é e diz o preço real, sem "grátis" e sem "incluso".
+  // carrinho -- descreve o que é, sem preço e sem "grátis"/"incluso" (06/08: preço
+  // e "à parte" saíram do texto, a pedido -- fica só a descrição do conteúdo).
   // Cartão neutro (.cardb), de propósito diferente do .bonus navy do Guia: o Guia É
   // bônus, o Kit não é, e a diferença visual precisa ficar clara.
   function mencaoKit(){
     return '<div class="cardb" style="margin-top:14px">'+
-      '<div class="eyebrow" style="margin-bottom:8px">Também no carrinho, à parte</div>'+
-      '<p style="margin:0"><b>Kit Reta Final</b> — R$ 19. O plano das últimas três semanas, semana a semana, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
+      '<div class="eyebrow" style="margin-bottom:8px">Também no carrinho</div>'+
+      '<p style="margin:0"><b>Kit Reta Final</b> — O plano das últimas três semanas, semana a semana, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
     '</div>';
   }
 
