@@ -2004,9 +2004,15 @@
     var d=Math.ceil((DATA_PROVA-new Date())/86400000);
     return d>0? d : null;
   }
+  /* Concordância em um lugar só (06/08/2026). Na véspera a página dizia
+     "Faltam 1 dias para a prova", num dia em que o tráfego é o maior do ano.
+     Tudo que conta dias passa por aqui. */
+  function diasFrase(d){
+    return d === 1 ? 'Falta 1 dia para a prova' : 'Faltam ' + d + ' dias para a prova';
+  }
   function faltam(){
     var d=diasParaProva();
-    return d? 'Faltam '+d+' dias para a prova. ' : '';
+    return d? diasFrase(d) + '. ' : '';
   }
 
   // Números do exame, confirmados pelo Gustavo em 02/08/2026. ATUALIZAR a cada edição:
@@ -2652,7 +2658,7 @@
     return '<div class="bonus">'+
       '<div class="btopo">'+
         '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva o Guia junto</div>'+
-        (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
+        (d? '<span class="bdias">'+diasFrase(d)+'</span>' : '')+
       '</div>'+
       '<div class="bgrid">'+
         // Entrega UMA das seis regras, não três (04/08/2026). Listar metade do guia na
@@ -2694,8 +2700,8 @@
     var d = diasParaProva();
     var faixa = d
       ? (d > 21
-          ? 'Faltam ' + d + ' dias para a prova. As últimas 21 são as que mais decidem, e é delas que este plano trata.'
-          : 'Faltam ' + d + ' dias para a prova. Você já está dentro da janela que este plano cobre.')
+          ? diasFrase(d) + '. As últimas 21 são as que mais decidem, e é delas que este plano trata.'
+          : diasFrase(d) + '. Você já está dentro da janela que este plano cobre.')
       : 'É o plano da reta final, semana a semana.';
     return '<div class="cardb kitdestaque" style="margin-top:14px">'+
       '<div class="eyebrow gold" style="margin-bottom:8px">Também no carrinho</div>'+
@@ -2811,17 +2817,23 @@
   // não chegou lá. O link do WhatsApp usa o mesmo número que o app já usa para
   // notificação (so-o-que-cai-app/api/teste-whats.js), e vem com a mensagem pronta
   // para a pessoa não precisar escrever do zero.
+  /* 06/08/2026: o bloco tinha TRÊS saídas e duas eram falsas.
+     - Boleto saiu do checkout em 28/07 e não vai voltar (decisão do Gustavo).
+       Prometer meio de pagamento que não existe é a pior quebra possível: a
+       pessoa decide comprar, chega no checkout e não acha o que foi prometido.
+     - O convite para conversar no WhatsApp saiu a pedido dele: não quer abrir
+       negociação de preço por mensagem.
+     Sobrou a saída que é verdadeira e que os próprios leads pediram: parcelar.
+     As três únicas respostas que a régua já recebeu foram todas a mesma coisa
+     ("só terei dinheiro dia 6", "recebo no fim do mês", "tive que comprar
+     remédio"), e nenhuma disse que achou caro. */
   function objecaoDinheiro(){
-    var msg=encodeURIComponent('Oi! Vi o Mapa da Aprovação (R$ 47) e queria falar sobre o pagamento.');
     return '<div class="objecao">'+
       '<h3>E se hoje os R$ 47 não caberem?</h3>'+
-      '<p>Acontece, e não tem nada de errado nisso. Três saídas, na ordem que costuma resolver:</p>'+
+      '<p>Acontece, e não tem nada de errado nisso.</p>'+
       '<ul>'+
         '<li><b>'+PARCELA+' no cartão.</b> Menos de nove reais por mês, com o acesso liberado na hora.</li>'+
-        '<li><b>Boleto.</b> Você gera hoje e paga até o vencimento; o preço continua R$ 47.</li>'+
-        '<li><b>Me manda mensagem.</b> Se nenhuma das duas resolver, eu respondo pessoalmente e a gente vê o que dá para fazer.</li>'+
       '</ul>'+
-      '<a class="wa" href="https://wa.me/5546999223332?text='+msg+'" target="_blank" rel="noopener">Falar comigo no WhatsApp →</a>'+
       '<div class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só semana que vem, entre semana que vem: a única coisa que muda é quanto de prova o material ainda cobre.</div>'+
     '</div>';
   }

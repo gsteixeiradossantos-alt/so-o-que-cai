@@ -902,16 +902,12 @@ function depoimentos(){
     }).join('')+'</div>';
   }
 function objecaoDinheiro(){
-    var msg=encodeURIComponent('Oi! Vi o Mapa da Aprovação (R$ 47) e queria falar sobre o pagamento.');
     return '<div class="objecao">'+
       '<h3>E se hoje os R$ 47 não caberem?</h3>'+
-      '<p>Acontece, e não tem nada de errado nisso. Três saídas, na ordem que costuma resolver:</p>'+
+      '<p>Acontece, e não tem nada de errado nisso.</p>'+
       '<ul>'+
         '<li><b>'+PARCELA+' no cartão.</b> Menos de nove reais por mês, com o acesso liberado na hora.</li>'+
-        '<li><b>Boleto.</b> Você gera hoje e paga até o vencimento; o preço continua R$ 47.</li>'+
-        '<li><b>Me manda mensagem.</b> Se nenhuma das duas resolver, eu respondo pessoalmente e a gente vê o que dá para fazer.</li>'+
       '</ul>'+
-      '<a class="wa" href="https://wa.me/5546999223332?text='+msg+'" target="_blank" rel="noopener">Falar comigo no WhatsApp →</a>'+
       '<div class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só semana que vem, entre semana que vem: a única coisa que muda é quanto de prova o material ainda cobre.</div>'+
     '</div>';
   }
@@ -926,7 +922,7 @@ function bonusGuia(){
     return '<div class="bonus">'+
       '<div class="btopo">'+
         '<div class="bk">Quem entrar hoje, '+hojeExtenso()+', leva o Guia junto</div>'+
-        (d? '<span class="bdias">Faltam '+d+' dias para a prova</span>' : '')+
+        (d? '<span class="bdias">'+(d===1?'Falta 1 dia para a prova':'Faltam '+d+' dias para a prova')+'</span>' : '')+
       '</div>'+
       '<div class="bgrid">'+
         // Entrega UMA das seis regras, não três (04/08/2026). Listar metade do guia na
