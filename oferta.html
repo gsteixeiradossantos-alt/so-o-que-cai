@@ -858,6 +858,14 @@ var FAQ = [
       a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora). Se o parcelado não resolver, me manda mensagem no WhatsApp que eu respondo pessoalmente. O preço não muda em outro dia: sempre foi R$ 47.' },
     { q:'Quais são as formas de pagamento?',
       a:'Pix e cartão de crédito em até 6x. O acesso chega assim que o pagamento é confirmado, em minutos.' },
+    // Duas dúvidas operacionais que travavam a compra e não tinham resposta na página
+    // (06/08/2026). Ambas conferidas contra o código, não escritas de memória: o fluxo
+    // de entrada está em acesso.html e api/entrar.js (sem senha, e-mail da compra,
+    // LIMITE_DISPOSITIVOS = 3) e o prazo de acesso vem do webhook (365 dias).
+    { q:'Como o acesso chega depois que eu pago?',
+      a:'Assim que o pagamento é confirmado, você recebe a confirmação e entra em app.sooquecai.online com o mesmo e-mail que usou na compra. Não tem senha para criar nem para lembrar: o sistema confere o e-mail e libera na hora. Dá para usar em até 3 aparelhos, e o acesso vale por 12 meses.' },
+    { q:'Vale para o Exame de setembro ou para o próximo?',
+      a:'Para os dois. O material trata do que se repete em toda 1ª fase, as 6 matérias do núcleo duro e a tática de prova, e não de uma edição específica. Como o acesso vale 12 meses, quem presta em setembro usa agora e quem vai prestar em janeiro tem o tempo inteiro de preparação pela frente.' },
     { q:'Já estudo com outro curso. Isso substitui?',
       a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto. A maioria das pessoas usa os dois juntos.' },
     { q:'E as outras 11 matérias, fora do núcleo duro?',
@@ -1096,10 +1104,11 @@ function porqueHoje(){
         '<div class="cardb">' +
           '<div class="eyebrow">Quem criou isto</div>' +
           '<div class="autorlinha">' +
-            '<img src="assets/gustavo.webp" alt="Gustavo, advogado" width="72" height="72" loading="lazy">' +
-            '<div><b>Gustavo</b><i>Advogado</i></div>' +
+            // Nome completo e inscrição desde 06/08/2026, espelhando a mini-diagnostico.
+            '<img src="assets/gustavo.webp" alt="Gustavo S. Teixeira dos Santos, advogado" width="72" height="72" loading="lazy">' +
+            '<div><b>Gustavo S. Teixeira dos Santos</b><i>Advogado, OAB/PR 112.743</i></div>' +
           '</div>' +
-          '<p>“Gustavo, advogado. Também passei pela fase de estudar demais e ainda assim errar as questões erradas. Este diagnóstico nasceu justamente para separar falta de conteúdo de erro de execução.”</p>' +
+          '<p>“Também passei pela fase de estudar demais e ainda assim errar as questões erradas. Este diagnóstico nasceu justamente para separar falta de conteúdo de erro de execução.”</p>' +
         '</div>' +
         '<div class="cardn">' +
           '<div class="eyebrow gold">Sem risco</div>' +
