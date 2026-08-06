@@ -3259,6 +3259,30 @@
       window.addEventListener('resize', conferir);
       conferir();
     }
+
+    // Marca que chegou até o BOTÃO de comprar (06/08/2026), não só o topo da
+    // seção da oferta. A seção é longa (depoimentos, FAQ, preço, e só depois
+    // o botão): viu_oferta_em sozinho não distingue quem parou logo no início
+    // da oferta de quem leu tudo e não chegou a ver o botão. #buy0 é o
+    // primeiro CTA que aparece na seção (ver ligarCompra()). Mesmo padrão de
+    // scroll do bloco acima — sem IntersectionObserver, pelo mesmo motivo.
+    var alvoCta=document.getElementById('buy0'), marcouCta=false;
+    function marcarCta(){
+      if(marcouCta) return; marcouCta=true;
+      marcarPasso('oferta_cta');
+    }
+    if(alvoCta){
+      var conferirCta=function(){
+        if(alvoCta.getBoundingClientRect().top < window.innerHeight*0.85){
+          marcarCta();
+          window.removeEventListener('scroll', conferirCta);
+          window.removeEventListener('resize', conferirCta);
+        }
+      };
+      window.addEventListener('scroll', conferirCta, {passive:true});
+      window.addEventListener('resize', conferirCta);
+      conferirCta();
+    }
   }
 
   render();
