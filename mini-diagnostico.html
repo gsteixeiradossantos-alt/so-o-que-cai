@@ -1173,7 +1173,12 @@
           '<div class="regra">Vale como prova de verdade: <b>'+LIMITE+' segundos por questão</b>, e o relógio corre em dobro se você sair da aba. É o relógio que separa "eu sabia" de "eu acertei".</div>'+
         '</div>'+
       '</div>';
-    document.getElementById('go').onclick = function(){ S.screen='content'; render(); window.scrollTo(0,0); };
+    document.getElementById('go').onclick = function(){
+      // O degrau que faltava: visita -> começou o teste. Cruzar com as visualizações de
+      // página da campanha no Gerenciador dá a taxa de entrada, que hoje é chute.
+      marcarPixel('ComecouTeste');
+      S.screen='content'; render(); window.scrollTo(0,0);
+    };
   }
 
   // Desliga relógio e ouvintes de aba. Chamada em toda saída da Parte 1, senão o
@@ -1246,6 +1251,10 @@
     function fechar(){ encerrada=true; pararRelogio(); }
 
     function avancar(){
+      // i é o índice da questão que ACABOU de ser encerrada, então questao vai 1-based:
+      // quem some entre `QuizProgresso questao=3` e `questao=4` desistiu na quarta.
+      // Serve para julgar a regra dos 40 segundos com dado, e não por opinião.
+      marcarPixel('QuizProgresso', { questao: i+1, total: CONTENT.length });
       if(i+1<CONTENT.length){ S.ci=i+1; } else { S.screen='behavior'; S.bi=0; }
       render(); window.scrollTo(0,0);
     }
@@ -1319,7 +1328,9 @@
         S.beh[i] = parseInt(b.getAttribute('data-j'),10);
         setTimeout(function(){
           if(i+1<BEHAVIOR.length){ S.bi=i+1; render(); }
-          else { S.screen='form'; render(); }
+          // Chegou no formulário: é o último degrau antes do lead, e a distância entre
+          // este evento e o `Lead` do pixel é o custo real dos quatro campos obrigatórios.
+          else { marcarPixel('ChegouFormulario'); S.screen='form'; render(); }
           window.scrollTo(0,0);
         }, 160);
       };
@@ -1587,6 +1598,27 @@
   // fetch normal basta; sendBeacon fica como caminho principal só por simetria com
   // marcarClique e porque é mais barato para o navegador. Falhar não pode afetar
   // nada: a troca de tela acontece independentemente do resultado.
+  // ===== FUNIL PRÉ-LEAD (06/08/2026) =====
+  // marcarPasso() só serve DEPOIS que o lead existe: sem LEAD_ID ele enfileira, e quem
+  // abandona antes do formulário nunca chega a ter id, então some da medição. Era o
+  // único degrau do funil sem número nenhum: quantos chegam na página e não começam o
+  // teste, e em que questão desistem os que começam.
+  //
+  // Vai pelo pixel, não pelo banco, de propósito: o pré-lead não tem chave para costurar
+  // com `leads`, e criar tabela/endpoint anônimo custaria migração em produção (gated) e
+  // uma função serverless (são 10 de 12 no plano). O pixel responde a pergunta que
+  // importa aqui, que é TAXA por campanha, e o Events Manager já quebra por anúncio.
+  //
+  // Três eventos por sessão, não um por questão: `QuizProgresso` leva a questão como
+  // parâmetro, então a curva de abandono sai da distribuição do mesmo evento em vez de
+  // sete nomes diferentes poluindo o dataset.
+  //
+  // ATENÇÃO ao ler: estes eventos NÃO são venda e não entram em nenhuma conta de CAC.
+  // A régua de venda continua sendo linha em `compradores`, no Supabase.
+  function marcarPixel(evento, dados){
+    try{ if(window.fbq) fbq('trackCustom', evento, dados||{}); }catch(e){}
+  }
+
   function marcarPasso(passo){
     if(!LEAD_ID){ return enfileirar(function(){ marcarPasso(passo); }); }
     try{
