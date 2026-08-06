@@ -860,6 +860,19 @@
   // comprar e cai num checkout com outro nome, no exato momento do cartão.
   var PRODUTO = 'Mapa da Aprovação';
 
+  // Parcelamento real do checkout, informado pelo Gustavo em 02/08/2026.
+  // ATENÇÃO ao escrever qualquer texto com isso: 6 x 8,82 = R$52,92, ou seja, o
+  // parcelado TEM juros. Nunca escrever "sem juros" ao lado. Substituiu a divisão por
+  // dia, que era um número derivado por retórica; este é uma opção de pagamento de
+  // verdade e faz o mesmo trabalho de deixar o valor pequeno.
+  // (Declarados AQUI, antes do FAQ, desde 05/08/2026: o FAQ concatena PARCELA na
+  // carga do script, e com a declaração lá embaixo a resposta da objeção de
+  // dinheiro imprimia "Tem: undefined no cartão".)
+  var PARCELA='6x de R$8,82';
+  // 6 x 8,82. Escrito na página de propósito: esconder o total é o que faz o leitor
+  // desconfiar do parcelado, e mostrar empurra para o Pix.
+  var TOTAL_PARCELADO='R$52,92';
+
   // FAQ. Regra: cada pergunta é uma dúvida OPERACIONAL que trava a compra. Nenhuma
   // repete argumento já feito na página — isso seria responder pela quinta vez uma
   // pergunta que já tem dono, que é o problema que o inventário existe para impedir.
@@ -887,9 +900,9 @@
     { q:'Quanto tempo leva?',
       a:'Cerca de 40 minutos entre as 24 questões e as 7 perguntas de comportamento. Você pode parar e voltar depois: fica salvo de onde parou. O Relatório sai na hora que você termina.' },
     { q:'Não tenho os R$ 47 hoje. Tem outra forma?',
-      a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora) ou boleto, que você gera hoje e paga até o vencimento. Se nenhuma das duas resolver, me manda mensagem no WhatsApp que eu respondo pessoalmente. O preço não muda em outro dia: sempre foi R$ 47.' },
+      a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora). Se o parcelado não resolver, me manda mensagem no WhatsApp que eu respondo pessoalmente. O preço não muda em outro dia: sempre foi R$ 47.' },
     { q:'Quais são as formas de pagamento?',
-      a:'Pix, cartão de crédito em até 6x e boleto à vista. O acesso chega assim que o pagamento é confirmado, no Pix e no cartão em minutos.' },
+      a:'Pix e cartão de crédito em até 6x. O acesso chega assim que o pagamento é confirmado, em minutos.' },
     { q:'Já estudo com outro curso. Isso substitui?',
       a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto. A maioria das pessoas usa os dois juntos.' },
     { q:'E as outras 11 matérias, fora do núcleo duro?',
@@ -1946,16 +1959,10 @@
   // a taxa muda e o intervalo entre exames também. Número errado aqui é caro, porque o
   // candidato sabe exatamente quanto pagou e quanto esperou.
   var TAXA_EXAME='R$350', ESPERA_EXAME='4 meses';
-
-  // Parcelamento real do checkout, informado pelo Gustavo em 02/08/2026.
-  // ATENÇÃO ao escrever qualquer texto com isso: 6 x 8,82 = R$52,92, ou seja, o
-  // parcelado TEM juros. Nunca escrever "sem juros" ao lado. Substituiu a divisão por
-  // dia, que era um número derivado por retórica; este é uma opção de pagamento de
-  // verdade e faz o mesmo trabalho de deixar o valor pequeno.
-  var PARCELA='6x de R$8,82';
-  // 6 x 8,82. Escrito na página de propósito: esconder o total é o que faz o leitor
-  // desconfiar do parcelado, e mostrar empurra para o Pix.
-  var TOTAL_PARCELADO='R$52,92';
+  // PARCELA/TOTAL_PARCELADO moraram aqui até 05/08/2026 e subiram para antes do
+  // FAQ: o array do FAQ os concatena na carga do script, e declarados aqui embaixo
+  // eles ainda eram undefined na hora — a resposta da objeção de dinheiro imprimia
+  // "Tem: undefined no cartão". Declaração única, agora lá em cima.
 
   // A comparação de custo, em duas colunas. Esquerda longa e cara, direita curta e
   // barata: a assimetria é o argumento inteiro. Muda pelo MOMENTO da pessoa, porque o
