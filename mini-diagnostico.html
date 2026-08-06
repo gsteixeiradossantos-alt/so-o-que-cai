@@ -844,6 +844,9 @@
   // Marca na linha do lead que ele clicou em comprar. Em 02/08/2026 havia 29 cliques
   // em comprar e zero venda, e nenhuma forma de saber QUEM clicou: o pixel só conta.
   var CLIQUE_URL = "https://app.sooquecai.online/api/clique";
+  // Devolve o diagnostico de quem volta por link, quando a memoria local nao
+  // existe (voltou por outro navegador). Ver telaReencontro().
+  var RESULTADO_URL = "https://app.sooquecai.online/api/resultado";
   // ======================
 
   // Id da linha do lead no banco, devolvido por /api/lead. Usado para (a) mandar
@@ -3485,9 +3488,98 @@
       marcarPixel('VoltouAoResultado', { origem:'link-local' });
       return abrirResultadoGuardado(m);
     }
-    // Camada 2 fica para o endpoint /api/resultado. Enquanto ele não existe,
-    // a pessoa cai na entrada normal em vez de ver uma tela quebrada.
+
+    // CAMADA 2: outro navegador. Pede o diagnóstico ao servidor e monta a tela
+    // de reencontro. Assíncrono, então a entrada normal é desenhada primeiro e
+    // trocada quando a resposta chega: se a rede falhar, a pessoa fica numa
+    // página inteira em vez de olhar para um vazio esperando carregar.
+    fetch(RESULTADO_URL + '?r=' + encodeURIComponent(alvo))
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ if(d && d.id) telaReencontro(d); })
+      .catch(function(){});
     return false;
+  }
+
+  /* Tela de reencontro (06/08/2026).
+
+     Não é a tela de resultado original e não finge ser: a base guarda o
+     RESULTADO (acertos, eixos, perfil, matérias), não as respostas uma a uma,
+     então o gabarito comentado não tem como voltar aqui. O que ela faz é o
+     essencial: a pessoa reencontra o próprio diagnóstico em vez de cair num
+     checkout que não sabe quem ela é.
+
+     A oferta abaixo é a MESMA da tela original, montada pelas mesmas funções.
+     Nada de copy paralela: duas versões da oferta divergiriam na primeira
+     mudança de preço. */
+  function telaReencontro(d){
+    LEAD_ID = d.id;
+    S.nome = d.nome || ''; S.email = d.email || ''; S.tel = d.telefone || '';
+    S.momento = d.momento || '';
+
+    var digits = String(d.telefone||'').replace(/\D/g,'');
+    var telLocal = (digits.length>11 && digits.indexOf('55')===0) ? digits.slice(2) : digits;
+    var fill = '&name='+encodeURIComponent(S.nome)+
+               (S.email?'&email='+encodeURIComponent(S.email):'')+
+               (telLocal?'&phonenumber='+encodeURIComponent(telLocal)+
+                         '&phoneNumber='+encodeURIComponent(telLocal):'');
+    var buyUrl = CHECKOUT_URL + fill;
+
+    var quando = '';
+    try{
+      var dt = new Date(d.criado_em);
+      quando = dt.getDate()+' de '+['janeiro','fevereiro','março','abril','maio','junho','julho',
+        'agosto','setembro','outubro','novembro','dezembro'][dt.getMonth()];
+    }catch(e){}
+
+    var mats = String(d.errou_em||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean);
+
+    app.innerHTML =
+      '<div class="vwrap">'+
+        '<section class="vsec estreita">'+
+          '<div class="eyebrow">Você já esteve aqui</div>'+
+          '<h2 class="grande">'+(S.nome? esc(S.nome)+', ' : '')+'este é o seu diagnóstico'+
+            (quando? ' de '+esc(quando) : '')+'.</h2>'+
+          (d.acertos!=null && d.total!=null
+            ? '<p class="p">Você acertou <strong>'+d.acertos+' de '+d.total+'</strong>'+
+              (d.perfil? '. '+esc(d.perfil)+'.' : '.')+'</p>'
+            : '')+
+          (mats.length
+            ? '<div class="callout">Onde o ponto vazou: <strong>'+mats.map(esc).join(', ')+'</strong>.</div>'
+            : '')+
+          // Honestidade sobre o que esta tela não traz. Sem isso, quem lembra do
+          // gabarito acha que a página perdeu, e perder confiança aqui custa a venda.
+          '<p class="p sec">O gabarito comentado questão a questão fica no aparelho em que você fez o teste. '+
+            'Se quiser rever tudo, dá para <a href="'+location.pathname+'" style="text-decoration:underline">refazer o teste</a>.</p>'+
+          '<div class="ctaslim">'+
+            '<a class="btn-lar" href="'+buyUrl+'" id="buyslim" data-v="47">Ver o Mapa da Aprovação: R$ 47</a>'+
+            '<div class="price">Pix ou cartão, acesso na hora.</div>'+
+          '</div>'+
+        '</section>'+
+
+        '<section class="vsec larga" id="oferta">'+
+          '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
+          '<h2 class="grande">'+PRODUTO+'</h2>'+
+          stackOferta()+
+          provas()+
+          bonusGuia()+
+          porqueHoje()+
+          '<div class="preco">'+
+            '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
+            '<a class="btn-lar grande" href="'+buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+            '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
+          '</div>'+
+        '</section>'+
+
+        '<section class="vsec larga centro">'+
+          '<div class="eyebrow">Quem já fez</div>'+
+          depoimentos()+
+        '</section>'+
+      '</div>';
+
+    window.scrollTo(0,0);
+    ligarCompra();
+    marcarPasso('oferta');
+    marcarPixel('VoltouAoResultado', { origem:'link-servidor' });
   }
 
   if(!tentarRestaurarPeloLink()) render();
