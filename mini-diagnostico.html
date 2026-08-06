@@ -140,6 +140,19 @@
   .custo .cab>div:first-child{background:#F7E8E5;color:var(--red3)}
   .custo .cab>div:last-child{background:#E9F1EA;color:var(--green)}
   /* CTA enxuto logo depois do veredito. O preço só aparecia no 6º bloco de 7. */
+  /* Faixa de quem ja fez o teste (06/08/2026). Discreta: e um aviso, nao uma
+     barreira. Os dois botoes tem o MESMO peso visual de proposito, porque
+     refazer o teste e comportamento de gente interessada e nao pode parecer
+     a opcao secundaria. */
+  .voltafaixa{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);
+              border-radius:12px;padding:14px 16px;margin:0 0 20px}
+  .voltafaixa .vf-t{font-size:14px;color:var(--ink);line-height:1.5}
+  .voltafaixa .vf-b{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .voltafaixa button{font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:600;
+                     padding:8px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--line2, #C9C1B4);
+                     background:transparent;color:var(--ink)}
+  .voltafaixa #vf-ver{background:var(--navy);border-color:var(--navy);color:#fff}
+  .voltafaixa button:hover{border-color:var(--gold)}
   .ctaslim{margin:18px 0 6px}
   .ctaslim .price{font-family:'Hanken Grotesk',sans-serif;font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
   .timer .prog7{display:flex;gap:4px;justify-content:center;margin-bottom:9px}
@@ -1435,7 +1448,11 @@
       if(bar) bar.style.width='100%';
       setTimeout(function(){
         if(S.screen!=='loading') return;   // guarda contra entrega dupla
-        S.screen='result'; render(); window.scrollTo(0,0);
+        S.screen='result';
+        // Guarda o resultado ANTES do render: se a pessoa fechar a aba no meio da
+        // leitura, a memoria ja existe e o link da mensagem vai encontrar algo.
+        guardarResultado();
+        render(); window.scrollTo(0,0);
       }, 260);
     }
   }
@@ -2940,7 +2957,10 @@
     // 'buy2' saiu da lista em 03/08 junto com o link do Plano Completo. 'buy3' saiu em
     // 05/08 junto com a barra fixa. Sobraram os dois que apontam para o checkout de
     // R$47: meio da oferta e bloco final.
-    ['buy0','buy'].forEach(function(id){
+    // 'buyslim' entrou em 06/08/2026: e o atalho colado no veredito. Precisa estar
+    // aqui para receber o mesmo tratamento dos outros, principalmente o sck (sem
+    // ele a venda vinda do atalho ficaria sem atribuicao) e o eventID do checkout.
+    ['buyslim','buy0','buy'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -3082,6 +3102,22 @@
           (vp? '<div class="obs"><i>'+esc(vp.k)+'</i><p>'+vp.p+'</p></div>' : '')+
         '</div>' : '')+
         (L? '<p class="p sec">'+esc(podar(L.ponto))+'</p>' : '')+
+        // ===== ATALHO PARA QUEM JÁ DECIDIU (06/08/2026) =====
+        // Entre o veredito e a oferta havia QUATRO blocos, e 61% dos leads sumiam no
+        // caminho (39% chegavam à seção da oferta). Este atalho não substitui nem
+        // encurta a oferta lá embaixo: ele só para de obrigar quem já se convenceu no
+        // resultado a rolar a página inteira para conseguir pagar.
+        //
+        // Fica AQUI, colado no veredito, porque é o ponto de maior interesse da
+        // pessoa: ela acabou de ler o que está errado com o estudo dela. O .ctaslim
+        // já existia no CSS desde o desenho antigo e nunca tinha sido usado.
+        //
+        // Discreto de propósito: uma linha e um preço, sem repetir a promessa. Quem
+        // quiser entender antes de comprar continua rolando e encontra tudo.
+        '<div class="ctaslim">'+
+          '<a class="btn-lar" href="'+C.buyUrl+'" id="buyslim" data-v="47">Ver o Mapa da Aprovação: R$ 47</a>'+
+          '<div class="price">Pix ou cartão, acesso na hora. Ou continue lendo o seu diagnóstico abaixo.</div>'+
+        '</div>'+
       '</section>'+
 
       // ===== 3. QUESTÃO COMENTADA — prova do método =====
@@ -3162,15 +3198,21 @@
           '</div>'+
           '<div class="ripe">Você não precisa trocar de curso nem parar o que já está fazendo. O Mapa diz <strong style="color:var(--ink)">em que ordem</strong> usar o tempo que você já tem. A direção é nossa; a aprovação é sua.</div>'+
         '</div>'+
-        provas()+
       '</section>'+
 
       // ===== 5. A OFERTA =====
+      // provas() estava na secao 4, solta, ANTES do preco. Veio para dentro da oferta
+      // em 06/08/2026: print do produto e prova de entrega, e prova serve no momento
+      // da decisao, nao dois blocos antes dela.
       '<section class="vsec larga" id="oferta">'+
         '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
         '<h2 class="grande">'+PRODUTO+'</h2>'+
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
+        // As telas reais do produto entram logo depois da lista de entregas: a lista
+        // diz o que a pessoa recebe, e o print prova que aquilo existe. Ficavam duas
+        // secoes acima, antes de qualquer preco, onde nao respondiam a nenhuma duvida.
+        provas()+
         bonusGuia()+
         mencaoKit()+
         porqueHoje()+
@@ -3331,7 +3373,125 @@
     }
   }
 
-  render();
+  /* ===================================================================
+     MEMÓRIA DO RESULTADO (06/08/2026)
+     -------------------------------------------------------------------
+     O problema: a régua manda a pessoa direto para o checkout, e quem
+     respondeu 7 questões reencontra uma tela de pagamento sem nada do que
+     fez. 18 cliques de retorno, zero vendas.
+
+     REGRA DE OURO: a página NUNCA sequestra a pessoa.
+     - Entrada normal (anúncio, link na bio, endereço digitado): tela de
+       sempre, teste começa do zero. Se houver resultado guardado, aparece
+       uma faixa discreta oferecendo rever OU refazer.
+     - Só com ?r=<id> (o link que a própria pessoa clicou na mensagem) a
+       página abre direto no resultado.
+
+     Por que a faixa e não a restauração automática: 9,2% das pessoas
+     refazem o teste, e elas clicam em comprar 60% MAIS que a média
+     (17,2% contra 10,7%). Refazer é comportamento de gente interessada;
+     bloquear isso custaria venda.
+
+     O que fica guardado é o mínimo para remontar a tela, e some em 30
+     dias. Nada aqui é enviado para lugar nenhum: é só deste navegador.
+     =================================================================== */
+  var MEM = 'soqc-resultado-v1';
+  var MEM_DIAS = 30;
+
+  function guardarResultado(){
+    try{
+      localStorage.setItem(MEM, JSON.stringify({
+        quando: Date.now(),
+        lead: LEAD_ID,
+        // S inteiro não: só o que result() precisa para remontar a tela.
+        s: { ans:S.ans, times:S.times, estourou:S.estourou, fora:S.fora, sel:S.sel,
+             selT:S.selT, ansPrim:S.ansPrim, trocas:S.trocas, beh:S.beh,
+             nome:S.nome, email:S.email, tel:S.tel, momento:S.momento }
+      }));
+    }catch(e){}
+  }
+
+  function lerResultado(){
+    try{
+      var m = JSON.parse(localStorage.getItem(MEM) || 'null');
+      if(!m || !m.s || !m.quando) return null;
+      if(Date.now() - m.quando > MEM_DIAS*24*60*60*1000){ localStorage.removeItem(MEM); return null; }
+      return m;
+    }catch(e){ return null; }
+  }
+
+  // Restaura o estado e abre a tela de resultado. Usada nos dois caminhos:
+  // no clique da faixa e na chegada por ?r=<id>.
+  function abrirResultadoGuardado(m){
+    if(!m || !m.s) return false;
+    Object.keys(m.s).forEach(function(k){ S[k] = m.s[k]; });
+    if(m.lead) LEAD_ID = m.lead;
+    S.screen = 'result';
+    render();
+    window.scrollTo(0,0);
+    return true;
+  }
+
+  // A faixa. Fica no topo da tela de entrada, some depois de escolher, e o
+  // botão de refazer é tão visível quanto o de rever: a pessoa decide.
+  function faixaDeVolta(){
+    if(S.screen !== 'intro') return;
+    var m = lerResultado();
+    if(!m) return;
+    var dt = new Date(m.quando);
+    var quando = dt.getDate() + ' de ' + ['janeiro','fevereiro','março','abril','maio','junho','julho',
+      'agosto','setembro','outubro','novembro','dezembro'][dt.getMonth()];
+    var acertos = null;
+    // A resposta certa mora em CONTENT[i].c (não .r). Errar isso não quebraria a
+    // página, porque está dentro do try, mas a faixa diria "acertou 0 de 7" para
+    // todo mundo, que é pior que não dizer nada.
+    try{ acertos = Object.keys(m.s.ans||{}).filter(function(k){ return m.s.ans[k]===CONTENT[k].c; }).length; }catch(e){}
+
+    var box = document.createElement('div');
+    box.className = 'voltafaixa';
+    box.innerHTML =
+      '<div class="vf-t">Você já fez este teste em ' + quando +
+        (acertos!==null ? ', e acertou ' + acertos + ' de ' + CONTENT.length : '') + '.</div>' +
+      '<div class="vf-b">' +
+        '<button type="button" id="vf-ver">Ver o meu resultado</button>' +
+        '<button type="button" id="vf-refazer">Fazer o teste de novo</button>' +
+      '</div>';
+    app.insertBefore(box, app.firstChild);
+    document.getElementById('vf-ver').onclick = function(){
+      marcarPixel('VoltouAoResultado', { origem:'faixa' });
+      abrirResultadoGuardado(m);
+    };
+    document.getElementById('vf-refazer').onclick = function(){
+      marcarPixel('RefezOTeste');
+      box.remove();
+    };
+  }
+
+  /* Chegada pelo link da mensagem: ?r=<id>. Duas camadas, e a ordem importa.
+     1) Mesmo navegador: o que está guardado aqui é sempre mais completo (traz
+        o gabarito questão a questão) e não depende de rede.
+     2) Navegador diferente (o caso comum: fez o teste vindo do Instagram e
+        volta pelo link do WhatsApp): pede o diagnóstico ao servidor, que
+        remonta o que a base guarda. Sem o gabarito, porque a base guarda o
+        resultado e não as respostas uma a uma.
+     Se as duas falharem, não trava nada: cai na tela de entrada normal. */
+  function tentarRestaurarPeloLink(){
+    var alvo = null;
+    try{ alvo = new URLSearchParams(location.search).get('r'); }catch(e){}
+    if(!alvo) return false;
+
+    var m = lerResultado();
+    if(m && String(m.lead) === String(alvo).split('-')[0]){
+      marcarPixel('VoltouAoResultado', { origem:'link-local' });
+      return abrirResultadoGuardado(m);
+    }
+    // Camada 2 fica para o endpoint /api/resultado. Enquanto ele não existe,
+    // a pessoa cai na entrada normal em vez de ver uma tela quebrada.
+    return false;
+  }
+
+  if(!tentarRestaurarPeloLink()) render();
+  faixaDeVolta();
 </script>
 </body>
 </html>
