@@ -2639,6 +2639,20 @@
     '</div>';
   }
 
+  // Menção do Kit Reta Final (06/08/2026) -- NÃO é bônus e não promete inclusão.
+  // Entre 02 e 05/08 a página prometia o Kit como incluído no R$47 enquanto o
+  // checkout continuava vendendo o mesmo item como order bump pago (R$19): pelo
+  // menos uma compradora pagou os R$19 por algo que a página já dizia ter dado de
+  // graça. Este bloco existe só para criar desejo por um item nomeado antes do
+  // carrinho -- descreve o que é e diz o preço real, sem "grátis" e sem "incluso".
+  // Cartão neutro (.cardb), de propósito diferente do .bonus navy do Guia: o Guia É
+  // bônus, o Kit não é, e a diferença visual precisa ficar clara.
+  function mencaoKit(){
+    return '<div class="cardb" style="margin-top:14px">'+
+      '<div class="eyebrow" style="margin-bottom:8px">Também no carrinho, à parte</div>'+
+      '<p style="margin:0"><b>Kit Reta Final</b> — R$ 19. O plano das últimas três semanas, semana a semana, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
+    '</div>';
+  }
 
   // Reescrita em 03/08/2026, e CORRIGIDA em 05/08/2026: a versão anterior descrevia o
   // inventário TOTAL do produto (17 matérias de fichas, 5 simulados, 248 questões —
@@ -3158,6 +3172,7 @@
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
         bonusGuia()+
+        mencaoKit()+
         porqueHoje()+
         // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
         // tratamento: é o ponto onde a decisão acontece.
