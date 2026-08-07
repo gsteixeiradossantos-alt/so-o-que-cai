@@ -4,255 +4,889 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Só o que Cai · Plano Completo</title>
+<title>Plano Completo · Só o que Cai</title>
+<!-- ===== PÁGINA DE UPSELL DO PLANO COMPLETO (reescrita em 07/08/2026) =====
+
+     A versão anterior (02/08) tinha quatro furos, todos confirmados na página viva:
+
+     1. NÃO EXISTIA UM ÚNICO LINK DE CHECKOUT. Os dois <a href> apontavam para
+        "#oferta". O único caminho de compra era o widget de funil da Hotmart, que é
+        um <iframe> para pay.hotmart.com/funnel. Fora do fluxo ele renderiza uma
+        caixa preta dizendo "É necessário haver uma compra em andamento para
+        carregar este formulário" — e o fallback que existia era anulado, porque o
+        script contava QUALQUER filho renderizado como sucesso, inclusive o erro.
+        Quem pagou no Pix (Pix não deixa cartão salvo, então o one-click nunca
+        serviu essas pessoas) chegava aqui e não tinha como comprar.
+     2. Não sabia quem era a pessoa, num funil em que todo o resto é personalizado.
+     3. Zero instrumentação: nenhum pixel, nenhum evento, nenhuma gravação.
+     4. Prometia o que o produto não faz, e contradizia a página de vendas.
+
+     REGRA QUE NÃO SE NEGOCIA: o botão #buy3 existe no HTML estático, desde o
+     primeiro paint, e NUNCA depende do widget. Toda falha da sonda cai no lado
+     seguro (botão direto), nunca no lado "página sem caminho de compra".
+
+     REGRA DE MANUTENÇÃO: os blocos de venda (depoimentos, garantia, objeção de
+     dinheiro, "por que hoje") foram copiados de mini-diagnostico.html. Mudou a
+     promessa em um, muda no outro: a mesma pessoa lê os dois em sequência, com
+     quinze minutos de diferença.
+
+     O QUE ESTA PÁGINA NÃO PODE DIZER (auditado contra o código do app em 07/08):
+     - "o sistema monta o calendário assim que você termina o diagnóstico": é
+       MANUAL, a pessoa entra em cronograma.html, escolhe horas e data, clica.
+     - "recalcula sozinho quando o prazo aperta": só recalcula se apertar de novo.
+     - "as fichas de 17 das 20 disciplinas" como entrega nova: 6 já são do R$47.
+     - "plano por carga semanal" como personalizado: plano-de-estudo.html não tem
+       uma linha de JavaScript, são três textos fixos.
+     - vídeos: o array VIDEOS em mentalidade.html está vazio.
+     - o par 38 questões / 40 acertos / 48%: contradiz a página do R$47, que diz
+       que as mesmas 6 matérias valem 70% da prova. O argumento agora é de
+       COBERTURA (mediu 6, a prova cobra 17), que é conferível e convive com o
+       outro.
+     ======================================================================== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500;1,600&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
+<script>
+  /* Pixel próprio, o mesmo da página de vendas.
+     PROIBIDO NESTA PÁGINA: qualquer evento Purchase, e qualquer pixel nativo da
+     Hotmart. O Purchase já vem pela CAPI do webhook-hotmart.js, e o pixel nativo
+     da Hotmart chegou a triplicar Purchase até ser removido em 05/08/2026. Se
+     alguém reintroduzir, a conta de CAC volta a mentir. */
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1024990753668044'); fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1024990753668044&ev=PageView&noscript=1"/></noscript>
 <style>
-  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--soft:#574F45;--mut:#6B6357;--oat:#9A9488;--oat2:#A89F90;--line:#E3DBCB;--navy:#15212B;--ochre:#A65D1E;--ochre2:#C77A2B;--ochre-w:#F0E6D4;--green:#3A7A5C;--green-w:#E3EEE8;--green-d:#1E5C4A}
+  /* Tokens da página de VENDAS (os mesmos de body.vendas em mini-diagnostico.html).
+     A pessoa sai de lá e chega aqui em quinze minutos: duas caras diferentes leem
+     como dois produtos, ou pior, como página falsa. */
+  :root{
+    --navy:#14304A; --navy2:#0E2233; --gold:#F0B429;
+    --ocre:#B07B1E; --ocre2:#E07B39; --laranja2:#C9662A;
+    --azul:#BFDCEE; --paper:#F7F4EE; --card:#FFFFFF; --line:#E3DCCD;
+    --ink:#14304A; --sec:#5B6B78; --muted:#A39B8A;
+    --green:#4E7A4E; --green-w:#E6F0E6; --green-d:#2F5A38; --green-l:#C4DCC8;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
-  h1,h2,h3{font-family:'Spectral',serif;font-weight:600;letter-spacing:-.01em;line-height:1.14}
-  .em{font-style:italic;color:var(--ochre)}
-  .wrap{max-width:660px;margin:0 auto;padding:0 20px 56px}
-  .kk{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre)}
-  a{color:var(--ochre)}
-  a:hover{color:var(--ochre2)}
-  .top{display:flex;align-items:center;gap:10px;padding:18px 0 6px}
-  .top .ic{width:28px;height:28px;border-radius:8px;background:var(--navy);display:grid;place-items:center}
-  .top .ic i{width:8px;height:8px;border-radius:50%;background:var(--ochre2);display:block}
-  .top .nm{font-family:'Spectral',serif;font-weight:600;font-size:17px}
-  .top .tg{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--oat);margin-left:auto}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Sans 3',sans-serif;
+       line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:24px}
+  a{color:var(--ocre)}
 
-  /* confirmação da compra anterior, bem visível (ansiedade pós-compra) */
-  .ok{background:var(--green-w);border:1.5px solid #BFD8C4;border-radius:16px;padding:18px;margin-top:14px}
-  .ok .hd{display:flex;gap:12px;align-items:center}
-  .ok .badge{width:34px;height:34px;border-radius:10px;background:#fff;border:1px solid #BFD8C4;display:grid;place-items:center;flex-shrink:0}
-  .ok .badge svg{width:18px;height:18px;stroke:var(--green-d)}
-  .ok .t{font-family:'Spectral',serif;font-weight:600;font-size:19px;color:#174437;line-height:1.15}
-  .ok p{font-size:14px;color:var(--green-d);margin-top:10px}
-  .ok ul{list-style:none;display:grid;gap:7px;margin-top:12px;padding-top:12px;border-top:1px solid #C9DED0}
-  .ok li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--green-d);line-height:1.4}
-  .ok li svg{width:13px;height:13px;stroke:var(--green-d);flex-shrink:0;margin-top:4px}
+  .vtopo{background:var(--navy2);color:var(--paper);display:flex;justify-content:space-between;
+         align-items:center;padding:14px 24px;gap:12px}
+  .vtopo .wm span{font-family:'Cinzel',serif;font-weight:600;font-size:16px;
+                  letter-spacing:3px;text-transform:uppercase}
+  .vtopo .tg{font-size:12px;letter-spacing:2.5px;color:var(--azul);text-transform:uppercase}
 
-  /* bloco de oferta: deixa explícito que esta página é uma proposta de compra,
-     não a continuação do que a pessoa acabou de adquirir */
-  .oferta{background:linear-gradient(180deg,#FBF1E2,#F6E8D2);border:2px solid var(--ochre2);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 20px 44px -32px rgba(199,122,43,.85)}
-  .oferta .tagline{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--ochre);border-radius:6px;padding:5px 10px}
-  .oferta .tagline svg{width:12px;height:12px;stroke:#fff}
-  .oferta h2{font-size:clamp(19px,4.6vw,25px);margin-top:13px;color:#4A2C0B;line-height:1.18}
-  .oferta p{font-size:15px;color:#6B4A1E;margin-top:10px;line-height:1.5}
-  .oferta p b{color:#4A2C0B;font-weight:700}
-  .oferta .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:17px;padding-top:16px;border-top:1px solid #E5CDA6}
-  .oferta .pv{font-family:'Spectral',serif;font-weight:600;font-size:36px;color:var(--ochre);line-height:1;letter-spacing:-.02em}
-  .oferta .pv small{font-size:16px;vertical-align:.42em;margin-right:2px}
-  .oferta .pv em{display:block;font-family:'Hanken Grotesk',sans-serif;font-style:normal;font-size:12.5px;font-weight:500;color:#6B4A1E;letter-spacing:0;margin-top:5px}
-  .oferta .go{margin-left:auto;display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-weight:600;font-size:15px;text-decoration:none;padding:13px 20px;border-radius:11px}
-  .oferta .go:hover{background:#1d2e3c;color:#fff}
-  @media(max-width:460px){.oferta .go{margin-left:0;width:100%;justify-content:center}}
+  .vsec{margin:0 auto;padding:44px 24px 8px;display:flex;flex-direction:column;gap:20px}
+  .vsec.estreita{max-width:680px}
+  .vsec.larga{max-width:960px}
+  .vsec.topo{padding-top:28px}
+  .vsec h2{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:700;line-height:1.25}
+  .vsec h2.grande{font-size:32px}
+  .vsec.centro>.eyebrow,.vsec.centro>h2{text-align:center}
+  .vsec .p{font-size:17px;line-height:1.65;margin:0}
+  .eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:var(--ocre)}
+  .eyebrow.gold{color:var(--gold)}
 
-  /* barra fixa: o preço e o caminho para os botões seguem a pessoa na rolagem */
-  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(21,33,43,.975);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 -8px 28px rgba(0,0,0,.24);transform:translateY(115%);transition:transform .22s ease}
-  .sticky.on{transform:none}
-  .sticky .txt b{font-family:'Spectral',serif;font-weight:600;font-size:16.5px;display:block;line-height:1.1}
-  .sticky .txt small{display:block;font-size:11.5px;color:#AEB4BB;margin-top:3px}
-  .sticky a{margin-left:auto;background:var(--ochre2);color:var(--navy);font-weight:700;font-size:14px;text-decoration:none;padding:11px 17px;border-radius:10px;white-space:nowrap}
-  .sticky a:hover{background:#D98A38;color:var(--navy)}
-  @media(prefers-reduced-motion:reduce){.sticky{transition:none}}
+  .btn-lar{display:inline-block;background:var(--ocre2);color:#fff;text-decoration:none;
+           font-weight:700;font-size:15px;padding:12px 22px;border-radius:8px;
+           border:none;cursor:pointer;transition:.15s;text-align:center}
+  .btn-lar:hover{background:var(--laranja2);color:#fff}
+  .btn-lar.grande{font-size:18px;padding:16px 30px;border-radius:10px;width:100%;max-width:420px}
 
-  h1{font-size:clamp(26px,6.2vw,39px);margin:22px 0 0}
-  .lede{font-size:16.5px;color:var(--soft);margin-top:14px}
-  .lede b{color:var(--ink);font-weight:600}
+  /* Confirmação da compra anterior. Fica escondida por padrão e só é revelada
+     quando o contexto de funil se confirma: quem chega por link do e-mail não
+     acabou de comprar nada, e dizer que acabou seria mentira de serviço. */
+  .ok{background:var(--green-w);border:1.5px solid var(--green-l);border-radius:12px;padding:18px 20px}
+  .ok .t{font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:19px;
+         color:var(--green-d);line-height:1.25}
+  .ok ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:12px;
+         padding-top:12px;border-top:1px solid var(--green-l)}
+  .ok li{font-size:14px;color:var(--green-d);line-height:1.45;padding-left:18px;position:relative}
+  .ok li::before{content:"";position:absolute;left:0;top:7px;width:9px;height:5px;
+                 border-left:2px solid var(--green-d);border-bottom:2px solid var(--green-d);
+                 transform:rotate(-45deg)}
+  .okslim{font-size:13.5px;color:var(--green-d);background:var(--green-w);
+          border:1px solid var(--green-l);border-radius:8px;padding:9px 14px}
 
-  /* o cartão navy é o herói da página */
-  .hero-card{background:var(--navy);border-radius:22px;padding:34px 26px;margin-top:26px;color:#fff;box-shadow:0 34px 64px -34px rgba(21,33,43,.95);position:relative;overflow:hidden}
-  .hero-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--ochre),var(--ochre2))}
-  .hero-card .kk{color:var(--ochre2)}
-  .hero-card h2{color:#fff;font-size:clamp(23px,5.4vw,31px);margin-top:12px;line-height:1.14}
-  .hero-card p{color:#AEB4BB;font-size:15.5px;margin-top:12px}
-  .hero-card .minis{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:12px}
-  .hero-card .mini{display:flex;gap:10px;align-items:flex-start}
-  .hero-card .mini svg{width:16px;height:16px;stroke:var(--ochre2);flex-shrink:0;margin-top:3px}
-  .hero-card .mini span{font-size:14.5px;color:#D7DBDF;line-height:1.45}
-  .hero-card .stamp{display:inline-block;font-family:'Space Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);background:var(--ochre2);border-radius:6px;padding:4px 9px;margin-top:20px}
+  .moldura{background:var(--card);border:1px solid var(--line);border-radius:12px;
+           padding:20px 22px;border-left:3px solid var(--ocre2)}
+  .moldura h3{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700;
+              line-height:1.3;margin-top:8px}
+  .moldura p{font-size:15px;line-height:1.6;color:var(--sec);margin-top:10px}
+  .moldura p b{color:var(--ink)}
 
-  .list{margin-top:24px;display:grid;gap:11px}
-  .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px 19px;display:grid;grid-template-columns:24px 1fr;gap:14px;align-items:flex-start}
-  .item .chk{width:24px;height:24px;border-radius:7px;background:var(--ochre-w);display:grid;place-items:center;margin-top:2px}
-  .item .chk svg{width:13px;height:13px;stroke:var(--ochre)}
-  .item h3{font-size:16.5px;line-height:1.25}
-  .item p{font-size:14px;color:var(--soft);margin-top:5px}
-  .item .novo{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ochre);border-radius:5px;padding:2px 7px;margin-left:7px;vertical-align:2px;white-space:nowrap}
+  .vhero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);
+         color:var(--paper);padding:48px 24px 52px;margin-top:28px}
+  .vhero .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+  .vhero h1{font-family:'Source Serif 4',Georgia,serif;font-size:38px;line-height:1.2;
+            font-weight:700;text-wrap:pretty}
+  .vhero h1 em{font-style:italic;color:var(--gold)}
+  .vhero .p{font-size:16.5px;line-height:1.65;color:var(--azul)}
+  .vhero .p b{color:var(--paper);font-weight:600}
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .num{background:#fff;border-radius:10px;padding:16px 18px}
+  .num b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:34px;
+         font-weight:700;line-height:1;color:var(--navy)}
+  .num span{display:block;font-size:13.5px;line-height:1.45;color:var(--sec);margin-top:6px}
+  .notaped{font-size:12.5px;line-height:1.5;color:rgba(191,220,238,.75)}
 
-  .price{background:var(--card);border:1.5px solid var(--ochre2);border-radius:20px;padding:28px 20px;margin-top:26px;text-align:center;box-shadow:0 24px 50px -34px rgba(199,122,43,.6)}
-  .price .v{font-family:'Spectral',serif;font-weight:600;font-size:52px;color:var(--ochre);line-height:1;letter-spacing:-.02em}
-  .price .v small{font-size:20px;vertical-align:.42em;margin-right:2px}
-  .price .sub{font-size:13.5px;color:var(--soft);margin-top:8px}
-  .price .warn{font-size:13px;color:var(--mut);margin-top:14px;line-height:1.5}
-  .price .keep{font-size:13px;color:var(--soft);background:#F4EFE4;border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin-top:16px;line-height:1.45}
+  .ctaslim{text-align:center;margin:2px 0}
+  .ctaslim .price{font-size:12px;color:var(--sec);margin-top:9px}
 
-  /* área do widget da Hotmart: nunca fica um buraco na página */
-  .funnel{min-height:150px;margin-top:20px}
-  #hotmart-sales-funnel:empty{display:none}
-  .fb{border:1px dashed #D8CFBE;background:#F6F1E6;border-radius:14px;padding:18px 16px;text-align:center}
-  .fb .sk{height:52px;border-radius:12px;background:linear-gradient(90deg,#E7E0D2,#F1EBDE,#E7E0D2);background-size:200% 100%;animation:sh 1.4s linear infinite}
-  .fb .sk2{height:44px;margin-top:10px;opacity:.6}
-  .fb .msg{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--oat);margin-top:14px}
-  .fb .late{font-size:13px;color:var(--mut);line-height:1.5;margin-top:12px;display:none}
-  .fb.late .sk,.fb.late .msg{display:none}
-  .fb.late .late{display:block}
-  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
-  @media(prefers-reduced-motion:reduce){.fb .sk{animation:none}}
+  .cardb{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  .cardb.pequeno h4{font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:6px}
+  .cardb.pequeno p{font-size:14px;line-height:1.55;color:var(--sec)}
+  .cardn{background:var(--navy);color:var(--paper);border-radius:10px;padding:22px 24px}
+  .cardn h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700;
+            line-height:1.3;margin:8px 0 10px}
+  .cardn p{font-size:15px;line-height:1.6;color:var(--azul)}
+  .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .honesto{background:#FBF6EA;border:1px dashed var(--ocre);border-radius:12px;padding:18px 20px}
+  .honesto p{font-size:14.5px;line-height:1.6;color:var(--ink)}
+  .honesto p b{font-weight:700}
 
-  #botao-compra{margin-top:20px}
-  .fallback{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--navy);color:#fff;font-weight:600;font-size:17px;text-decoration:none;padding:17px 26px;border-radius:13px;border:0;cursor:pointer;width:100%}
-  .fallback:hover{background:#1d2e3c}
+  .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;align-items:start}
+  .provas img{display:block;width:100%;height:auto;border:1px solid var(--line);
+              border-radius:10px;background:var(--card)}
+  .provas figcaption{font-size:13px;line-height:1.5;color:var(--sec);margin-top:9px}
+  .provas figcaption b{color:var(--ink);font-weight:600}
+  .provas-nota{font-size:12.5px;line-height:1.5;color:var(--muted)}
 
-  .no{display:block;text-align:center;margin-top:20px;font-size:14px;color:var(--mut);text-decoration:underline;text-underline-offset:3px}
-  .guar{display:inline-flex;align-items:center;gap:8px;background:var(--green-w);color:var(--green-d);font-size:13px;font-weight:600;padding:10px 16px;border-radius:30px;margin-top:16px}
-  .guar svg{width:15px;height:15px;stroke:var(--green-d)}
-  footer{margin-top:32px;text-align:center;font-size:11.5px;color:var(--oat2);line-height:1.7}
+  .riscado .ri{font-size:16px;line-height:1.5;color:var(--muted);text-decoration:line-through;
+               padding:7px 0;border-top:1px solid var(--line)}
+  .riscado .ri:first-child{border-top:none;padding-top:0}
+  .riscado .ripe{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+                 font-size:14px;line-height:1.6;color:var(--sec)}
+  .riscado .ripe b{color:var(--ink)}
+  .riscado .ripe+.ripe{margin-top:12px}
+
+  .hoje{background:var(--navy);border-radius:12px;padding:24px 26px;color:var(--paper)}
+  .hoje .hk{font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+  .hoje .hp{font-size:16px;line-height:1.6;color:var(--azul);margin-top:12px}
+  .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+  .hcard{background:#fff;border-radius:10px;padding:16px 18px}
+  .hcard b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:700;color:var(--navy)}
+  .hcard p{font-size:14px;line-height:1.5;color:var(--sec);margin-top:6px}
+  .hpe{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);
+       font-size:14.5px;line-height:1.6;color:rgba(191,220,238,.9)}
+
+  .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
+         padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .preco .v{font-family:'Source Serif 4',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
+  /* O parcelado vai em linha própria: colado ao "R$ 127" ele envolvia em volta do
+     número grande no celular, e o total ficava parecendo parte do preço à vista. */
+  .preco .v span{display:block;font-family:'Source Sans 3',sans-serif;font-size:15px;
+                 font-weight:400;color:var(--sec);margin-top:10px;line-height:1.45}
+  .micro2{font-size:13px;color:var(--sec)}
+  .selo2{border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:13px;color:var(--sec)}
+  .compara{font-size:13.5px;line-height:1.6;color:var(--sec);max-width:46ch}
+
+  /* O widget da Hotmart nasce FORA DA TELA e só entra aqui se a sonda validar o
+     iframe. Assim ninguém nunca vê a caixa preta de erro piscando. */
+  #funil-fora{position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
+  #funil-vivo{width:100%;max-width:420px}
+  .oualt{font-size:13.5px;line-height:1.5;color:var(--sec);max-width:44ch}
+  .avisomail{font-size:13px;line-height:1.55;color:var(--sec);max-width:46ch;
+             border-top:1px solid var(--line);padding-top:12px}
+
+  .objecao{background:var(--card);border:1px dashed var(--ocre);border-radius:12px;padding:22px 24px}
+  .objecao h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700}
+  .objecao>p{font-size:15px;line-height:1.6;margin-top:10px}
+  .objecao ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:9px}
+  .objecao li{font-size:15px;line-height:1.55}
+  .objecao .fine{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+                 font-size:13px;color:var(--sec);line-height:1.55}
+
+  .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
+  .dep2 .asp{font-family:'Source Serif 4',Georgia,serif;font-size:28px;color:var(--gold);line-height:.6}
+  .dep2 p{font-family:'Source Serif 4',Georgia,serif;font-size:14.5px;font-weight:600;
+          line-height:1.5;margin:10px 0 16px}
+  .dep2 .quem{display:flex;gap:10px;align-items:center}
+  .dep2 .ini{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);
+             display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
+  .dep2 .nm{font-size:14px;font-weight:700}
+  .dep2 .cid{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--sec)}
+
+  .duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .autorlinha{display:flex;gap:14px;align-items:center;margin:12px 0}
+  .autorlinha img{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0}
+  .autorlinha b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700}
+  .autorlinha i{font-style:normal;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--sec)}
+  .cardn .gpe{font-size:13.5px;line-height:1.55;color:var(--azul);margin-top:12px;
+              padding-top:12px;border-top:1px solid rgba(255,255,255,.18)}
+
+  .faq{display:flex;flex-direction:column;gap:10px}
+  .fitem{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .fitem.on{border-color:var(--gold)}
+  .fq{width:100%;background:none;border:none;padding:16px 18px;font:inherit;font-size:16px;
+      font-weight:700;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;
+      align-items:center;gap:12px;text-align:left}
+  .fq i{font-style:normal;font-size:20px;color:var(--ocre);flex-shrink:0}
+  .fa{padding:0 18px 16px}
+  .fa p{font-size:15px;line-height:1.6;color:var(--sec)}
+
+  .fecho{max-width:680px;margin:36px auto 0;padding:0 24px;text-align:center}
+  .fecho p{font-size:14.5px;line-height:1.6;color:var(--sec)}
+  footer{margin-top:28px;text-align:center;font-size:12px;color:var(--muted);line-height:1.7;padding:0 24px}
+
+  @media(max-width:560px){
+    .vhero{padding:36px 20px 40px}
+    .vhero h1{font-size:28px}
+    .vsec{padding:34px 20px 8px}
+    .vsec h2{font-size:22px} .vsec h2.grande{font-size:26px}
+    .preco{padding:26px 18px}
+    .preco .v{font-size:36px}
+    .btn-lar.grande{font-size:16px;padding:14px 20px}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top"><span class="ic"><i></i></span><span class="nm">Só o que Cai</span><span class="tg">Proposta de upgrade</span></div>
 
-  <div class="ok">
-    <div class="hd">
-      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span>
-      <span class="t">Compra confirmada. O seu diagnóstico já é seu.</span>
-    </div>
+<header class="vtopo">
+  <span class="wm"><span>Só o que Cai</span></span>
+  <span class="tg" id="tgtopo">Plano Completo</span>
+</header>
+
+<section class="vsec estreita topo">
+  <!-- Bloco verde: escondido até o contexto de funil se confirmar. -->
+  <div class="ok" id="confirma" hidden>
+    <div class="t">Compra confirmada. O Mapa da Aprovação já é seu.</div>
     <ul>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>O acesso ao diagnóstico está garantido e chega no seu e-mail em instantes.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Nada nesta página muda ou substitui o que você acabou de comprar.</span></li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Leia com calma. Se disser não, o seu material continua liberado do mesmo jeito.</span></li>
+      <li>O acesso chega no seu e-mail em instantes, com o endereço de entrada.</li>
+      <li>Nada nesta página muda, substitui ou cancela o que você acabou de comprar.</li>
+      <li>Se disser não aqui, o seu material continua liberado do mesmo jeito, com a garantia de 7 dias.</li>
+      <li>Se você marcou o Kit Reta Final no carrinho, ele entra no mesmo acesso.</li>
     </ul>
   </div>
 
-  <div class="oferta">
-    <span class="tagline"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>Leia antes de sair</span>
-    <h2>Esta página é uma oferta de compra. Ela não faz parte do que você já pagou.</h2>
-    <p>Aqui, e só aqui, você pode <b>acrescentar o Plano Completo à compra que acabou de fazer</b>, em um clique, no mesmo pagamento. É opcional. Se você fechar esta página, nada acontece com o seu material.</p>
-    <div class="row">
-      <div class="pv"><small>R$</small>127<em>pagamento único, 12 meses de acesso</em></div>
-      <a class="go" href="#oferta">Ver a oferta
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-      </a>
+  <div class="moldura" id="moldura">
+    <span class="eyebrow" id="molduraK">Upgrade</span>
+    <h3 id="molduraH">Você já tem o Mapa da Aprovação. Esta página é sobre o que ele não cobre.</h3>
+    <p id="molduraP">O Plano Completo é o nível acima. Não é outro login nem outra assinatura: ele entra no mesmo cadastro que você já usa.</p>
+  </div>
+</section>
+
+<section class="vhero">
+  <div class="in">
+    <span class="eyebrow gold">A conta que ninguém te faz</span>
+    <h1>Este diagnóstico mediu <em>6 matérias</em>. A prova cobra <em>17</em>.</h1>
+    <p class="p" id="heroP1">As 7 questões que você respondeu passaram por Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal. São as 6 do núcleo duro, e é por elas que o diagnóstico começa: valem 70% da prova.</p>
+    <p class="p">O que ele não tocou foram as outras: Trabalho, Processo do Trabalho, Tributário, Administrativo, Empresarial, Consumidor, Ambiental, ECA, Internacional, Direitos Humanos e Filosofia do Direito. <b>São onze, e é nelas que estão os pontos que fecham a conta dos 40.</b></p>
+    <p class="p" id="heroErrou" hidden></p>
+    <div class="nums">
+      <div class="num"><b>6</b><span>matérias medidas neste diagnóstico</span></div>
+      <div class="num"><b>17</b><span>matérias que a prova cobra em todo exame</span></div>
+      <div class="num"><b>11</b><span>matérias que você ainda não mediu</span></div>
+    </div>
+    <p class="notaped">O edital lista 20 disciplinas. Financeiro, Previdenciário e Eleitoral somam pouquíssimas questões e ficam de fora de propósito, aqui e no material. Sobram 17, que aparecem em todo exame.</p>
+  </div>
+</section>
+
+<section class="vsec estreita">
+  <div class="ctaslim">
+    <a class="btn-lar" id="buy2" data-v="127" href="https://pay.hotmart.com/O106944368L?checkoutMode=10">Quero o Plano Completo: R$ 127</a>
+    <div class="price" id="precoslim">Pix ou cartão, acesso na hora. Ou continue lendo o que entra nele.</div>
+  </div>
+</section>
+
+<section class="vsec larga">
+  <span class="eyebrow">O que entra no seu acesso</span>
+  <h2 class="grande" id="entregaH2">As 11 matérias que faltam, dois simulados no tamanho da prova e o calendário até o dia 6 de setembro.</h2>
+  <div class="grade">
+    <div class="cardb pequeno">
+      <h4>Mais 11 matérias de fichas</h4>
+      <p>Trabalho, Processo do Trabalho, Tributário, Administrativo, Empresarial, Consumidor, Ambiental, ECA, Internacional, Direitos Humanos e Filosofia do Direito. Mesmo formato das que você já tem: a regra, a súmula aplicável e a pegadinha que mais reprova. Com elas você passa de 6 matérias para 17.</p>
+    </div>
+    <div class="cardb pequeno">
+      <h4>Dois simulados completos de 80 questões</h4>
+      <p>No tamanho da prova, cronometrados, com gabarito comentado. São 160 questões ao todo, e nenhuma se repete de um simulado para o outro.</p>
+    </div>
+    <div class="cardb pequeno">
+      <h4>Cronograma dia a dia até a prova</h4>
+      <p id="cronoP">Você abre a página, diz quantas horas tem por dia e a data da prova, e clica em gerar. Ele monta o calendário começando pelas suas matérias fracas e sai pronto para imprimir.</p>
+    </div>
+    <div class="cardb pequeno">
+      <h4>Cabeça para a prova</h4>
+      <p id="cabecaP">Os protocolos de nervosismo, de branco e de desânimo, que mudam conforme os dias que faltam.</p>
+    </div>
+    <div class="cardb pequeno">
+      <h4>O upgrade é no mesmo cadastro</h4>
+      <p>Não é outro login nem mensalidade. O seu acesso vira Plano Completo na hora, e o prazo é renovado por 12 meses.</p>
     </div>
   </div>
+  <div class="honesto">
+    <p><b>Duas coisas ditas do jeito que são.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho: se o seu tempo por dia mudar, você gera de novo, e leva menos de um minuto. E para ele sair com as suas matérias, faça o diagnóstico de 24 questões dentro do app, no mesmo aparelho em que for estudar. O teste de 7 questões que te trouxe até aqui mora em outro endereço e não conversa com o gerador. Sem esse passo, o cronograma sai equilibrado pelas matérias de maior peso, e a própria página avisa quando isso acontece.</p>
+  </div>
+</section>
 
-  <div class="kk" style="margin-top:26px">A conta que ninguém te faz</div>
-  <h1>O núcleo duro tem cerca de <span class="em">38 questões</span>. A aprovação exige <span class="em">40</span>.</h1>
-  <p class="lede">As 6 matérias que decidem a prova valem cerca de 48% dela, algo perto de 38 das 80 questões. Isso significa que, mesmo <b>acertando todas elas</b>, ainda faltam pontos para a linha de corte. Os pontos que faltam estão nas outras disciplinas, e é isso que o <b>Plano Completo</b> te entrega, junto com o plano de estudo para chegar lá.</p>
+<section class="vsec larga">
+  <span class="eyebrow">Veja por dentro</span>
+  <div class="provas">
+    <figure>
+      <img src="assets/telas/ficha.webp" alt="Uma ficha de matéria" loading="lazy" decoding="async">
+      <figcaption><b>As fichas.</b> A regra, a súmula do STJ e a pegadinha, agora nas 17 matérias.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/telas/simulado.webp" alt="Um simulado cronometrado" loading="lazy" decoding="async">
+      <figcaption><b>Os simulados.</b> No tamanho da prova, cronometrado, com o comentário de cada questão.</figcaption>
+    </figure>
+  </div>
+  <p class="provas-nota">Telas reais do que entra no seu acesso.</p>
+</section>
 
-  <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-top:18px">
-    <div style="display:flex;flex-wrap:wrap;gap:22px">
-      <div><div style="font-family:'Spectral',serif;font-weight:600;font-size:30px;color:var(--ochre);line-height:1">~38</div><div style="font-size:13px;color:var(--mut);margin-top:3px">questões no núcleo duro</div></div>
-      <div><div style="font-family:'Spectral',serif;font-weight:600;font-size:30px;color:var(--ochre);line-height:1">40</div><div style="font-size:13px;color:var(--mut);margin-top:3px">acertos para passar</div></div>
-      <div><div style="font-family:'Spectral',serif;font-weight:600;font-size:30px;color:var(--ochre);line-height:1">~42</div><div style="font-size:13px;color:var(--mut);margin-top:3px">questões fora do núcleo, onde estão os pontos que faltam</div></div>
+<section class="vsec estreita">
+  <h2>O que o Plano Completo não é</h2>
+  <div class="cardb riscado">
+    <div class="ri">Um curso com videoaulas para assistir</div>
+    <div class="ri">Mensalidade, assinatura ou aula com horário marcado</div>
+    <div class="ri">Uma segunda compra do que você já tem</div>
+    <div class="ri">Promessa de aprovação</div>
+    <p class="ripe"><b>E ele não é o Kit Reta Final.</b> O Kit é o item de R$ 19 do carrinho: o plano das últimas três semanas, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco. Se você marcou o Kit, ele já é seu e continua sendo, independente do que decidir aqui. Se não marcou, ele não entra nesta compra: são coisas diferentes, e o Plano Completo não inclui o Kit.</p>
+    <p class="ripe">Você não precisa trocar de curso nem parar o que já está fazendo. O Plano Completo diz <b>em que ordem</b> usar o tempo que sobrou. A direção é nossa; a aprovação é sua.</p>
+  </div>
+</section>
+
+<section class="vsec estreita">
+  <div class="hoje" id="hoje"></div>
+</section>
+
+<section class="vsec estreita" id="oferta">
+  <div class="preco">
+    <span class="eyebrow" id="precoK">Subir para o Plano Completo</span>
+    <div class="v">R$ 127 <span id="parcela">no Pix · ou 6x de R$ 23,83 no cartão (R$ 142,98)</span></div>
+    <p class="compara">Para comparar com honestidade: um cursinho de reta final passa de R$ 1.000, e a inscrição do exame que você já pagou custou R$ 350.</p>
+
+    <!-- Quando a sonda validar o widget, ele é movido para cá. Enquanto isso, este
+         nó fica vazio e não ocupa espaço. -->
+    <div id="funil-vivo"></div>
+    <p class="oualt" id="oualt" hidden>Pagou no Pix e não tem cartão salvo? Use o botão abaixo: é o mesmo Plano Completo, num checkout normal.</p>
+
+    <a class="btn-lar grande" id="buy3" data-v="127" href="https://pay.hotmart.com/O106944368L?checkoutMode=10">Quero o Plano Completo: R$ 127</a>
+
+    <div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>
+    <div class="selo2">Seus dados não são vendidos</div>
+    <p class="avisomail" id="avisomail">No checkout, confirme o e-mail: ele precisa ser o mesmo que você usou na compra do Mapa, senão o seu acesso vai parar em dois cadastros diferentes.</p>
+  </div>
+
+  <div class="objecao">
+    <h3>E se hoje os R$ 127 não couberem?</h3>
+    <p>Acontece, e não tem nada de errado nisso.</p>
+    <ul>
+      <li><b>6x de R$ 23,83 no cartão.</b> Com o acesso liberado na hora.</li>
+    </ul>
+    <p class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só no mês que vem, o Plano Completo continua aqui, e os 12 meses passam a contar de lá. A única coisa que muda é quanto da prova de setembro ele ainda alcança.</p>
+  </div>
+</section>
+
+<section class="vsec larga centro">
+  <span class="eyebrow">Quem já usou</span>
+  <h2>Fichas e simulados, na palavra de quem usou</h2>
+  <div class="deps">
+    <div class="dep2">
+      <div class="asp">&ldquo;</div>
+      <p>Eu passava horas lendo e continuava com dificuldade nas questões, e <b>o diagnóstico expõe exatamente esse tipo de problema</b>. As fichas de revisão e os simulados comentados são objetivos e facilitam muito a revisão. Fui, devagarinho, me sentindo mais confiante e segura para fazer a prova. Para quem não está conseguindo avançar, a proposta vale muito a pena.</p>
+      <div class="quem"><span class="ini">LM</span><div><div class="nm">Luciana Maria</div><div class="cid">Advogada · Nova Prata do Iguaçu/PR</div></div></div>
     </div>
-    <p style="font-size:13px;color:var(--oat2);margin-top:14px;line-height:1.5">Distribuição aproximada, com base no edital e nas provas recentes da banca. Varia de uma edição para outra.</p>
-  </div>
-
-  <p class="lede" style="margin-top:22px">O seu diagnóstico continua sendo o mapa, e ele já é seu. O Plano Completo é o caminho: as fichas das disciplinas que faltam, os simulados no tamanho da prova de verdade e o calendário do que fazer em cada dia até lá.</p>
-
-  <div class="hero-card">
-    <div class="kk">O que muda</div>
-    <h2>O seu cronograma, dia a dia, montado pelo seu resultado.</h2>
-    <p>Assim que você termina o diagnóstico, o sistema lê as suas matérias fracas e o seu eixo, pergunta quanto tempo você tem por dia, e monta o calendário até a data da prova.</p>
-    <div class="minis">
-      <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Começa pelas matérias que você errou, não por uma ordem genérica.</span></div>
-      <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Se você trava na hora, ele te dá questões cronometradas. Se falta conteúdo, te dá ficha e teoria.</span></div>
-      <div class="mini"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg><span>Faltando 60 dias ou 20, ele recalcula sozinho e ajusta a reta final.</span></div>
+    <div class="dep2">
+      <div class="asp">&ldquo;</div>
+      <p>A parte que eu preferi é que <b>ele indica o caminho a seguir e ajuda a aproveitar melhor o tempo de estudo</b>. Em vez de tentar revisar tudo de novo, decidi ser mais metódica nos estudos. Isso fez muita diferença para mim e tornou minha preparação bem mais leve.</p>
+      <div class="quem"><span class="ini">AP</span><div><div class="nm">Ana Paula</div><div class="cid">Advogada · Dois Vizinhos/PR</div></div></div>
     </div>
-    <span class="stamp">O coração do Plano Completo</span>
+    <div class="dep2">
+      <div class="asp">&ldquo;</div>
+      <p>É diferente do que eu tinha visto para a OAB. <b>Antes de te apresentar conteúdo, ele te faz entender o que é preciso corrigir</b>, e isso muda a forma de estudar. A navegação é fácil, as informações são objetivas e os simulados ajudam a entender como as questões cobram.</p>
+      <div class="quem"><span class="ini">LH</span><div><div class="nm">Luiz Henrique Wrublack</div><div class="cid">Advogado · Francisco Beltrão/PR</div></div></div>
+    </div>
   </div>
+</section>
 
-  <div class="list">
-    <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Seu cronograma personalizado<span class="novo">exclusivo</span></h3><p>O calendário dia a dia até a prova, gerado a partir do seu diagnóstico. Você imprime ou salva em PDF.</p></div></div>
-    <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Simulados completos de 80 questões<span class="novo">exclusivo</span></h3><p>No formato do exame, cronometrados, com gabarito comentado. É o treino que mostra, em número, se você está melhorando.</p></div></div>
-    <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>As fichas de 17 das 20 disciplinas</h3><p>Não só o núcleo duro. Todas as de maior incidência, no formato regra, súmula e pegadinha. Ficam de fora só Financeiro, Previdenciário e Eleitoral, historicamente de pouquíssimas questões.</p></div></div>
-    <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Cabeça para a prova<span class="novo">exclusivo</span></h3><p>O protocolo que muda conforme os dias que faltam: o que fazer no mês, na semana e na véspera para chegar inteiro no dia. O Guia de leitura da FGV saiu daqui em 02/08/2026 e passou a vir junto do diagnóstico de R$47.</p></div></div>
-    <div class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span><div><h3>Tudo que já vem no diagnóstico</h3><p>O relatório de dois eixos, a folha de tática de prova e os 3 simulados focados continuam com você.</p></div></div>
-  </div>
-
-  <div class="price" id="oferta">
-    <div class="kk">Adicionar à sua compra</div>
-    <div class="v" style="margin-top:12px"><small>R$</small>127</div>
-    <div class="sub">pagamento único, sem mensalidade, acesso na hora por 12 meses</div>
-    <p style="font-size:13.5px;color:var(--soft);max-width:44ch;margin:14px auto 0;line-height:1.55">Para comparar com honestidade: um cursinho de reta final passa de R$ 1.000, e a inscrição do exame que você já pagou custou R$ 350. O plano que organiza as suas semanas até a prova custa menos que qualquer um dos dois.</p>
-
-    <!-- BOTÕES DE COMPRA · widget de funil da Hotmart (1 clique).
-         Ele renderiza sozinho o "Quero adquirir" e o "Perder a oportunidade".
-         Só funciona quando a pessoa chega aqui pelo fluxo do funil, logo após a
-         compra do diagnóstico; aberta solta, a área fica vazia (é esperado), então
-         o bloco .fb abaixo segura o layout até o widget aparecer. -->
-    <div class="funnel">
-      <div id="hotmart-sales-funnel"></div>
-      <div class="fb" id="funnel-fallback">
-        <div class="sk"></div>
-        <div class="sk sk2"></div>
-        <div class="msg">Carregando as opções de compra</div>
-        <p class="late">As opções de compra em um clique aparecem aqui quando você chega por dentro do fluxo da sua compra. Se elas não carregarem, o link do Plano Completo também está no e-mail de confirmação e na sua área de compras da Hotmart.</p>
+<section class="vsec larga">
+  <div class="duo">
+    <div class="cardb">
+      <span class="eyebrow">Quem criou isto</span>
+      <div class="autorlinha">
+        <img src="assets/gustavo.webp" alt="Gustavo S. Teixeira dos Santos, advogado" width="72" height="72" loading="lazy">
+        <div><b>Gustavo S. Teixeira dos Santos</b><i>Advogado, OAB/PR 112.743</i></div>
       </div>
+      <p style="font-size:15px;line-height:1.6;color:var(--sec)">Também passei pela fase de estudar demais e ainda assim errar as questões erradas. Este diagnóstico nasceu justamente para separar falta de conteúdo de erro de execução.</p>
     </div>
-    <noscript><p class="warn">Ative o JavaScript para concluir a sua compra em um clique.</p></noscript>
-
-    <div><span class="guar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>7 dias de garantia, igual ao diagnóstico</span></div>
-    <p class="keep">Dizer não aqui não mexe em nada: o diagnóstico que você acabou de comprar continua liberado, com garantia de 7 dias.</p>
-    <p class="warn">A compra em um clique, sem digitar cartão de novo, só existe aqui dentro do fluxo da sua compra. Se você sair desta página, o Plano Completo continua disponível, mas aí é um checkout separado, do zero.</p>
+    <div class="cardn">
+      <span class="eyebrow gold">Sem risco</span>
+      <h3>Use o Plano Completo inteiro. Só depois decida se valeu.</h3>
+      <p>Se em até 7 dias você concluir que ele não trouxe valor, basta pedir o reembolso. Sem perguntas e sem discussão. O risco é meu, não seu.</p>
+      <p class="gpe">O reembolso do Plano Completo não mexe no Mapa da Aprovação: são compras separadas.</p>
+    </div>
   </div>
+</section>
 
-  <footer>
-    Só o que Cai · ferramenta de estudo por incidência para a 1ª fase da OAB<br>
-    Não é vinculado à FGV nem à OAB · não promete aprovação, entrega direção
-  </footer>
+<section class="vsec estreita">
+  <h2>Perguntas que costumam travar aqui</h2>
+  <div class="faq" id="faq"></div>
+</section>
+
+<div class="fecho" id="fecho" hidden>
+  <p>Prefere continuar só com o Mapa? Tudo bem. O seu acesso está em <a href="https://app.sooquecai.online">app.sooquecai.online</a> e não muda em nada.</p>
 </div>
 
-<div class="sticky" id="barra">
-  <div class="txt"><b>Plano Completo por R$ 127</b><small>oferta opcional, adicionada à compra de agora</small></div>
-  <a href="#oferta">Ver a oferta</a>
-</div>
+<footer>
+  Só o que Cai · ferramenta de estudo por incidência para a 1ª fase da OAB<br>
+  Não é vinculado à FGV nem à OAB · não promete aprovação, entrega direção
+</footer>
 
-<script src="https://checkout.hotmart.com/lib/hotmart-checkout-elements.js"></script>
 <script>
-  checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel');
-</script>
-<script>
-  // Segura o layout enquanto o widget da Hotmart não renderiza:
-  // quando ele aparece, o bloco de espera sai; se demorar, vira uma explicação calma.
-  (function(){
-    var alvo = document.getElementById('hotmart-sales-funnel');
-    var espera = document.getElementById('funnel-fallback');
-    if(!alvo || !espera) return;
-    function checa(){
-      if(alvo.childElementCount > 0){ espera.style.display = 'none'; return true; }
-      return false;
+(function(){
+  'use strict';
+
+  var CHECKOUT = 'https://pay.hotmart.com/O106944368L?checkoutMode=10';
+  var RESULTADO_URL = 'https://app.sooquecai.online/api/resultado';
+  var CLIQUE_URL = 'https://app.sooquecai.online/api/clique';
+  var MEM = 'soqc-resultado-v1';          // mesma chave e mesmo domínio do mini-diagnóstico
+  var MEM_DIAS = 30;
+  var VIAS = ['email','whats','app','bio'];
+
+  var LEAD_ID = null;
+  var PESSOA = { nome:null, email:null, tel:null, errou:null, acertos:null, total:null, quando:null };
+  var CONTEXTO = null;                    // 'funil' ou 'link'
+  var VIA = null;
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  /* ---------- calendário ----------
+     Urgência REAL, tirada do edital, nunca inventada. ATUALIZAR a cada edição.
+     A variante de d===null não é detalhe: sem ela a página mente sozinha a partir
+     de 07/09, e ela vai continuar no ar. */
+  var DATA_PROVA = new Date(2026,8,6);    // 06/09/2026, domingo
+  function diasParaProva(){
+    var d = Math.ceil((DATA_PROVA - new Date())/86400000);
+    return d > 0 ? d : null;
+  }
+  function diasFrase(d){
+    return d === 1 ? 'Falta 1 dia para a prova' : 'Faltam ' + d + ' dias para a prova';
+  }
+  var MES = ['janeiro','fevereiro','março','abril','maio','junho','julho',
+             'agosto','setembro','outubro','novembro','dezembro'];
+  function porExtenso(dt){ return dt.getDate() + ' de ' + MES[dt.getMonth()]; }
+
+  /* ---------- memória e personalização ----------
+     Regra que impede texto quebrado: toda personalização é uma FRASE INTEIRA, nunca
+     um buraco no meio de uma frase. Sem nome, a frase sai correta do mesmo jeito. */
+  function primeiroNome(n){
+    if(!n) return null;
+    var t = String(n).trim().split(/\s+/)[0] || '';
+    if(!t || t.indexOf('@') >= 0 || /\d/.test(t)) return null;
+    return t.slice(0,18);
+  }
+
+  function lerMemoria(){
+    try{
+      var m = JSON.parse(localStorage.getItem(MEM) || 'null');
+      if(!m || !m.quando) return null;
+      if(Date.now() - m.quando > MEM_DIAS*24*60*60*1000) return null;
+      return m;
+    }catch(e){ return null; }
+  }
+
+  function daMemoria(){
+    var m = lerMemoria();
+    if(!m) return false;
+    var s = m.s || {};
+    PESSOA.nome = primeiroNome(s.nome);
+    PESSOA.tel = s.tel || null;
+    PESSOA.errou = Array.isArray(m.errou) ? m.errou : null;
+    PESSOA.acertos = (typeof m.acertos === 'number') ? m.acertos : null;
+    PESSOA.total = (typeof m.total === 'number') ? m.total : null;
+    PESSOA.quando = m.quando || null;
+    // E-MAIL DE PROPÓSITO FORA DAQUI. O webhook casa a compra por e-mail: se o
+    // upsell for pago com um e-mail diferente do da compra do R$47, a pessoa ganha
+    // um segundo cadastro em 'completo' e o primeiro fica em 'diagnostico'. A
+    // memória local pode ser de outra pessoa do mesmo aparelho, ou de 20 dias
+    // atrás. Só o link assinado prova de quem é o e-mail.
+    if(m.lead) LEAD_ID = m.lead;
+    return true;
+  }
+
+  // Camada que atravessa aparelho: ?r=<id>-<assinatura>, validado no servidor.
+  // É o único caminho em que o e-mail é confiável o bastante para pré-preencher.
+  function doLinkAssinado(){
+    var alvo = new URLSearchParams(location.search).get('r');
+    if(!alvo) return;
+    fetch(RESULTADO_URL + '?r=' + encodeURIComponent(alvo))
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(!d || !d.id) return;
+        LEAD_ID = d.id;
+        PESSOA.nome = primeiroNome(d.nome) || PESSOA.nome;
+        PESSOA.email = d.email || null;
+        PESSOA.tel = d.telefone || PESSOA.tel;
+        PESSOA.acertos = (typeof d.acertos === 'number') ? d.acertos : PESSOA.acertos;
+        PESSOA.total = (typeof d.total_questoes === 'number') ? d.total_questoes : PESSOA.total;
+        if(d.errou_em && d.errou_em !== 'nenhuma'){
+          PESSOA.errou = String(d.errou_em).split(',').map(function(x){ return x.trim(); }).filter(Boolean);
+        }
+        aplicarPessoa();
+        montarCheckout();
+      })
+      .catch(function(){});
+  }
+
+  function aplicarPessoa(){
+    if(PESSOA.nome){
+      $('heroP1').innerHTML = esc(PESSOA.nome) + ', as 7 questões que você respondeu passaram por '
+        + 'Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal. São as 6 do núcleo '
+        + 'duro, e é por elas que o diagnóstico começa: valem 70% da prova.';
     }
-    if(checa()) return;
-    var t = setInterval(function(){ if(checa()) clearInterval(t); }, 400);
-    setTimeout(function(){ clearInterval(t); if(!checa()) espera.classList.add('late'); }, 7000);
-  })();
-</script>
-<script>
-  // Barra fixa com o preço: aparece assim que o bloco de oferta do topo sai da
-  // tela e some quando a pessoa chega no bloco de compra, para não competir com ele.
-  (function(){
-    var barra = document.getElementById('barra');
-    var alvo  = document.getElementById('oferta');
-    var topo  = document.querySelector('.oferta');
-    if(!barra || !alvo || !topo) return;
-    function ajusta(){
-      var fimDoTopo = topo.getBoundingClientRect().bottom < 0;
-      var compraNaTela = alvo.getBoundingClientRect().top < window.innerHeight - 80;
-      barra.classList.toggle('on', fimDoTopo && !compraNaTela);
+    // Frase inteira, ou nada. Some se a pessoa acertou as 7, ou se não sabemos.
+    if(PESSOA.errou && PESSOA.errou.length){
+      var lista = PESSOA.errou.map(function(m){ return esc(m); });
+      var texto = lista.length === 1 ? lista[0]
+                : lista.slice(0,-1).join(', ') + ' e ' + lista[lista.length-1];
+      $('heroErrou').innerHTML = 'No seu teste, os pontos foram embora em <b>' + texto
+        + '</b>. As outras onze matérias você ainda não testou.';
+      $('heroErrou').hidden = false;
     }
-    ajusta();
-    window.addEventListener('scroll', ajusta, {passive:true});
-    window.addEventListener('resize', ajusta);
-  })();
+  }
+
+  /* ---------- checkout ----------
+     Mesma construção do mini-diagnostico.html: o 55 sai do telefone porque a Hotmart
+     descartava o campo com ele (15 de 16 registros de abandono vinham sem telefone),
+     e as duas grafias vão de propósito. */
+  function montarCheckout(){
+    var q = '';
+    if(PESSOA.nome) q += '&name=' + encodeURIComponent(PESSOA.nome);
+    if(PESSOA.email) q += '&email=' + encodeURIComponent(PESSOA.email);
+    if(PESSOA.tel){
+      var d = String(PESSOA.tel).replace(/\D/g,'');
+      var local = (d.length > 11 && d.indexOf('55') === 0) ? d.slice(2) : d;
+      if(local) q += '&phonenumber=' + encodeURIComponent(local) + '&phoneNumber=' + encodeURIComponent(local);
+    }
+    var sckManual = new URLSearchParams(location.search).get('sck');
+    var sck = sckManual || ('up127-' + (CONTEXTO || 'link') + (VIA ? '-' + VIA : '') + (LEAD_ID ? '-' + LEAD_ID : ''));
+    q += '&sck=' + encodeURIComponent(sck);
+
+    ['buy2','buy3'].forEach(function(id){
+      var el = $(id);
+      if(el) el.href = CHECKOUT + q;
+    });
+
+    // O aviso do e-mail só faz sentido quando NÃO estamos pré-preenchendo o e-mail.
+    var av = $('avisomail');
+    if(av) av.hidden = !!PESSOA.email;
+  }
+
+  /* ---------- instrumentação ---------- */
+  function pixel(evento, dados){
+    try{ if(window.fbq) fbq('trackCustom', evento, dados || {}); }catch(e){}
+  }
+  function lerCookie(nome){
+    var m = document.cookie.match('(^|;)\\s*' + nome + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : null;
+  }
+
+  var icDisparado = false;
+  function ligarCompra(){
+    ['buy2','buy3'].forEach(function(id){
+      var el = $(id);
+      if(!el) return;
+      el.addEventListener('click', function(){
+        var extras = null;
+        if(!icDisparado){
+          icDisparado = true;
+          extras = {
+            ic_event_id: 'ic127-' + (LEAD_ID || 'x') + '-' + Date.now().toString(36),
+            fbp: lerCookie('_fbp'),
+            fbc: lerCookie('_fbc')
+          };
+          try{ if(window.fbq) fbq('track','InitiateCheckout',{value:127,currency:'BRL'},{eventID:extras.ic_event_id}); }catch(e){}
+        }
+        marcarClique(id, extras);
+      });
+    });
+  }
+
+  // ATENÇÃO: daqui NUNCA se manda passo:'oferta' nem passo:'oferta_cta'. Essas
+  // colunas do banco significam "viu a oferta do R$47" e alimentam a única medida
+  // do degrau mais importante do funil principal. Escrever nelas a partir do upsell
+  // destruiria essa medida em silêncio.
+  function marcarClique(botao, extras){
+    if(!LEAD_ID) return;                  // sem lead_id o endpoint devolve 400
+    var corpo = { lead_id: LEAD_ID, botao: botao, oferta: '127' };
+    if(extras){
+      corpo.ic_event_id = extras.ic_event_id;
+      if(extras.fbp) corpo.fbp = extras.fbp;
+      if(extras.fbc) corpo.fbc = extras.fbc;
+    }
+    try{
+      var txt = JSON.stringify(corpo);
+      if(navigator.sendBeacon){
+        navigator.sendBeacon(CLIQUE_URL, new Blob([txt], {type:'text/plain'}));
+      } else {
+        fetch(CLIQUE_URL, {method:'POST', headers:{'Content-Type':'text/plain'}, body:txt, keepalive:true});
+      }
+    }catch(e){}
+  }
+
+  var viuOferta = false;
+  function marcarOferta(){
+    if(viuOferta) return;
+    var alvo = $('oferta');
+    if(!alvo) return;
+    if(alvo.getBoundingClientRect().top < window.innerHeight * 0.85){
+      viuOferta = true;
+      try{ if(window.fbq) fbq('track','ViewContent',{content_name:'plano-completo',value:127,currency:'BRL'}); }catch(e){}
+      window.removeEventListener('scroll', marcarOferta);
+      window.removeEventListener('resize', marcarOferta);
+    }
+  }
+
+  /* ---------- o widget da Hotmart ----------
+     Ele é um <iframe> para pay.hotmart.com/funnel. Sem uma compra em andamento, o
+     src vem com 'undefined' e o iframe renderiza a caixa preta de erro. O conteúdo
+     é de outro domínio, então NÃO dá para inspecionar por dentro: o src é o único
+     sinal confiável que temos.
+
+     Por isso ele nasce fora da tela e só é trazido para dentro do bloco de preço
+     quando a sonda valida o src. Em qualquer outro desfecho, o container é
+     REMOVIDO do DOM, não escondido. */
+  function tentarWidget(){
+    var fora = document.createElement('div');
+    fora.id = 'funil-fora';
+    var alvo = document.createElement('div');
+    alvo.id = 'hotmart-sales-funnel';
+    fora.appendChild(alvo);
+    document.body.appendChild(fora);
+
+    var s = document.createElement('script');
+    s.src = 'https://checkout.hotmart.com/lib/hotmart-checkout-elements.js';
+    s.onload = function(){
+      try{ window.checkoutElements.init('salesFunnel').mount('#hotmart-sales-funnel'); }
+      catch(e){ desistir(); return; }
+      sondar();
+    };
+    s.onerror = desistir;
+    document.head.appendChild(s);
+
+    var fim = Date.now() + 4000, t = null;
+
+    function desistir(){
+      if(t) clearInterval(t);
+      if(fora.parentNode) fora.parentNode.removeChild(fora);
+    }
+
+    // Critério apertado de propósito. Não basta "o src não contém undefined": um src
+    // sem token, ou com token vazio, também carrega a caixa preta de erro, e o
+    // conteúdo do iframe é de outro domínio, então não dá para olhar por dentro.
+    // Exigimos um parâmetro de verdade na query, com valor não vazio e sem
+    // 'undefined'. Na dúvida, desistir: o custo de desistir à toa é perder o
+    // one-click para uma pessoa; o custo de aceitar à toa é ela ver uma tela de erro
+    // no lugar do botão de comprar.
+    function srcServe(src){
+      if(!src || src.indexOf('undefined') >= 0) return false;
+      var q = src.split('?')[1];
+      if(!q) return false;
+      return q.split('&').some(function(par){
+        var p = par.split('=');
+        return p.length > 1 && p[1] && p[1] !== 'undefined' && p[1] !== 'null';
+      });
+    }
+
+    function sondar(){
+      t = setInterval(function(){
+        var f = alvo.querySelector('iframe');
+        var src = f && f.getAttribute('src');
+        if(src){
+          clearInterval(t);
+          if(!srcServe(src)){ desistir(); return; }
+          adotar();
+          return;
+        }
+        if(Date.now() > fim) desistir();
+      }, 250);
+    }
+
+    function adotar(){
+      var casa = $('funil-vivo');
+      if(!casa){ desistir(); return; }
+      fora.removeAttribute('id');
+      fora.removeAttribute('style');
+      fora.style.width = '100%';
+      casa.appendChild(fora);
+      $('oualt').hidden = false;
+      // O botão direto abre em aba nova quando o one-click está vivo, para não
+      // matar o token do funil se a pessoa voltar atrás.
+      var b3 = $('buy3');
+      if(b3){ b3.target = '_blank'; b3.rel = 'noopener'; }
+      pixel('Upsell127WidgetDisponivel');
+    }
+  }
+
+  /* ---------- os dois contextos ---------- */
+  function resolverContexto(){
+    var q = new URLSearchParams(location.search);
+    var via = q.get('via');
+    if(via && VIAS.indexOf(via) >= 0){
+      VIA = via;
+      CONTEXTO = 'link';
+      return;
+    }
+    CONTEXTO = 'funil';
+  }
+
+  function vestirContexto(){
+    if(CONTEXTO === 'funil'){
+      // Se a pessoa já rolou, a confirmação vira uma linha compacta lá no bloco de
+      // preço: revelar um cartão inteiro acima do que ela está lendo empurraria a
+      // página para baixo no meio da leitura.
+      if(window.scrollY <= 40){
+        $('confirma').hidden = false;
+      } else {
+        var linha = document.createElement('div');
+        linha.className = 'okslim';
+        linha.textContent = 'A sua compra do Mapa da Aprovação está confirmada.';
+        var preco = document.querySelector('.preco');
+        if(preco) preco.insertBefore(linha, preco.firstChild);
+      }
+      $('tgtopo').textContent = 'Proposta de upgrade';
+      $('molduraK').textContent = 'Leia antes de sair';
+      $('molduraH').textContent = 'Esta página é uma oferta. Ela não faz parte do que você acabou de pagar.';
+      $('molduraP').innerHTML = 'Aqui, e só aqui, você pode <b>acrescentar o Plano Completo à compra de agora</b>. É opcional. Fechar esta página não tira nada de você.';
+      $('precoK').textContent = 'Adicionar ao seu acesso';
+      $('precoslim').textContent = 'Pix ou cartão, acesso na hora. Ou continue lendo o que entra nele.';
+      tentarWidget();
+      // O fecho de recusa só aparece se o widget não vier: quando ele existe, já
+      // traz a recusa dele, e duas saídas seriam pior que uma.
+      setTimeout(function(){
+        if(!document.querySelector('#funil-vivo iframe')) $('fecho').hidden = false;
+      }, 4500);
+    } else {
+      $('tgtopo').textContent = 'Plano Completo';
+      $('fecho').hidden = false;
+    }
+    pixel('Upsell127Aberto', {
+      contexto: CONTEXTO,
+      conhece: !!PESSOA.nome,
+      dias: diasParaProva() || 0
+    });
+  }
+
+  /* ---------- bloco de calendário ---------- */
+  function montarHoje(){
+    var d = diasParaProva();
+    var el = $('hoje');
+    if(!d){
+      // A partir de 07/09 a prova já passou e a página continua no ar.
+      el.innerHTML =
+        '<div class="hk">A prova de setembro já passou</div>'+
+        '<p class="hp">As inscrições do 48º Exame abrem em 28 de setembro. O Plano Completo vale 12 meses a partir da compra, e o cronograma passa a ser montado para a data nova. Desta vez dá para começar pelo começo, e não pela reta final.</p>';
+      return;
+    }
+    var reta = Math.min(21, d), base = d - reta;
+    el.innerHTML =
+      '<div class="hk">Por que hoje, '+esc(porExtenso(new Date()))+', e não em outubro</div>'+
+      '<p class="hp">Não é escassez de vaga nem preço que sobe: R$ 127 hoje e R$ 127 depois. O que muda é o calendário. '+esc(diasFrase(d))+', que é dia 6 de setembro, um domingo.</p>'+
+      '<div class="hgrid">'+
+        '<div class="hcard"><b>Hoje</b><p>'+
+          (base > 0
+            ? 'Os '+d+' dias comportam as duas coisas: '+base+' dias de base nas matérias que você não mediu e '+reta+' de reta final. Os dois simulados de 80 cabem, com dias sobrando para revisar os erros de cada um.'
+            : 'Os '+d+' dias que faltam são todos de reta final. Dá para revisar as matérias que você não mediu e fazer os dois simulados de 80, com o cronograma organizando a ordem.')+
+        '</p></div>'+
+        '<div class="hcard"><b>Em duas semanas</b><p>Sobra a reta final. Dá para revisar, não dá para aprender matéria nova com calma, e um dos simulados provavelmente fica sem revisão.</p></div>'+
+        '<div class="hcard"><b>Na véspera</b><p>Sobra Cabeça para a prova e a folha de tática. Ajuda, e é a menor parte do que você pagaria.</p></div>'+
+      '</div>'+
+      '<p class="hpe">Se você só puder entrar depois de setembro, entre depois. Os 12 meses começam a contar no dia da compra, e as inscrições do 48º Exame abrem em 28 de setembro. O preço vai ser o mesmo. O que não volta é o mês que você tem agora.</p>';
+  }
+
+  // Frases que dependem dos dias e vivem fora do bloco de calendário.
+  function ajustarDias(){
+    var d = diasParaProva();
+    if(!d){
+      $('entregaH2').textContent = 'As 11 matérias que faltam, dois simulados no tamanho da prova e o calendário até a sua próxima prova.';
+      return;
+    }
+    var reta = Math.min(21, d), base = d - reta;
+    if(base > 0){
+      $('cronoP').innerHTML = 'Você abre a página, diz quantas horas tem por dia e a data da prova, e clica em gerar. Ele monta o calendário começando pelas suas matérias fracas e sai pronto para imprimir. Hoje, com '+d+' dias, ele divide o seu tempo em '+base+' dias de base e '+reta+' de reta final.';
+    } else {
+      $('cronoP').innerHTML = 'Você abre a página, diz quantas horas tem por dia e a data da prova, e clica em gerar. Ele monta o calendário começando pelas suas matérias fracas e sai pronto para imprimir. Com '+d+' dias, ele monta tudo como reta final.';
+    }
+    $('cabecaP').innerHTML = 'Os protocolos de nervosismo, de branco e de desânimo, que mudam conforme os dias que faltam. Com '+d+' dias você já entra na fase de reta final.';
+  }
+
+  /* ---------- FAQ ---------- */
+  function montarFaq(){
+    var d = diasParaProva();
+    var reta = d ? Math.min(21,d) : 21, base = d ? d - reta : 0;
+    var prazo = d
+      ? (base > 0
+          ? 'Dá, e o material assume isso: o gerador trata os últimos 21 dias como reta final, e hoje ele divide os seus '+d+' dias em '+base+' de base e '+reta+' de reta. O que não dá é começar a descobrir matéria fraca na última semana.'
+          : 'Dá, e o material assume isso: com '+d+' dias o gerador monta tudo como reta final, na ordem das suas matérias fracas. O que não dá é começar a descobrir matéria fraca na última semana.')
+      : 'O cronograma é montado para a data da prova que você informar, então ele se ajusta ao prazo que você tiver pela frente.';
+
+    var FAQ = [
+      ['Eu acabei de comprar o Mapa. Isso é a mesma coisa?',
+       'Não. O Mapa mede e explica. O Plano Completo é o material das 11 matérias que o Mapa não cobre, mais os dois simulados de 80 e o cronograma. Entra por cima do que você já tem, no mesmo login.'],
+      ['Preciso pagar de novo o que já paguei?',
+       'Não. Os R$ 127 são só o upgrade. O seu acesso muda de nível e o prazo é renovado por 12 meses a partir de agora.'],
+      ['O Kit Reta Final está incluído?',
+       'Não. O Kit é o item de R$ 19 do carrinho e continua separado. Se você marcou lá, ele já é seu.'],
+      [d ? 'Dá tempo em '+d+' dias?' : 'Dá tempo de usar?', prazo],
+      ['O cronograma se monta sozinho?',
+       'Não. Você informa as horas por dia e a data da prova e clica em gerar. Leva menos de um minuto e sai pronto para imprimir. Se o seu tempo mudar, você gera de novo.'],
+      ['E se eu não gostar?',
+       '7 dias de garantia, sem perguntas. O reembolso do Plano Completo não mexe no Mapa da Aprovação.']
+    ];
+
+    $('faq').innerHTML = FAQ.map(function(f,i){
+      return '<div class="fitem" data-i="'+i+'">'+
+        '<button class="fq" type="button">'+esc(f[0])+'<i>+</i></button>'+
+        '<div class="fa" hidden><p>'+esc(f[1])+'</p></div>'+
+      '</div>';
+    }).join('');
+
+    $('faq').addEventListener('click', function(ev){
+      var b = ev.target.closest('.fq');
+      if(!b) return;
+      var item = b.parentNode, abrindo = item.querySelector('.fa').hidden;
+      // Um aberto por vez, igual à página de vendas.
+      Array.prototype.forEach.call($('faq').children, function(x){
+        x.classList.remove('on');
+        x.querySelector('.fa').hidden = true;
+        x.querySelector('.fq i').textContent = '+';
+      });
+      if(abrindo){
+        item.classList.add('on');
+        item.querySelector('.fa').hidden = false;
+        item.querySelector('.fq i').textContent = '−';
+      }
+    });
+  }
+
+  /* ---------- partida ---------- */
+  resolverContexto();
+  daMemoria();
+  aplicarPessoa();
+  montarCheckout();
+  montarHoje();
+  ajustarDias();
+  montarFaq();
+  ligarCompra();
+  vestirContexto();
+  doLinkAssinado();     // assíncrono: reescreve nome e checkout se o servidor responder
+
+  marcarOferta();
+  window.addEventListener('scroll', marcarOferta, {passive:true});
+  window.addEventListener('resize', marcarOferta);
+})();
 </script>
 </body>
 </html>

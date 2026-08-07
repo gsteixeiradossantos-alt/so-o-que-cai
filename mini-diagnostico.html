@@ -1470,6 +1470,19 @@
     }
   }
 
+  // Matérias em que o ponto foi embora, na ordem em que apareceram, com a contagem
+  // quando foi mais de uma ("Civil (2)"). Extraída de saveLead em 07/08/2026 porque a
+  // memória local passou a precisar do mesmo dado, para a página do Plano Completo
+  // poder dizer em que matéria a pessoa vazou ponto. Duas cópias deste laço
+  // divergiriam na primeira vez que CONTENT mudasse de ordem.
+  function materiasErradas(){
+    var conta = {}, ordem = [];
+    CONTENT.forEach(function(qq,i){
+      if(S.ans[i]!==qq.c){ if(!conta[qq.mat]){ conta[qq.mat]=0; ordem.push(qq.mat); } conta[qq.mat]++; }
+    });
+    return ordem.map(function(m){ return conta[m]>1 ? m+' ('+conta[m]+')' : m; });
+  }
+
   function saveLead(){
     var lead={ nome:S.nome, email:S.email, tel:S.tel, momento:S.momento, ans:S.ans, beh:S.beh, ts:new Date().toISOString() };
     try{ var all=JSON.parse(localStorage.getItem('soqc_leads')||'[]'); all.push(lead); localStorage.setItem('soqc_leads', JSON.stringify(all)); }catch(e){}
@@ -1478,11 +1491,7 @@
     // chega só um nome e um telefone, e não dá para saber quem o anúncio trouxe.
     var R = compute();
     var Q = quadrant(R.X, R.Y, R);
-    var conta = {}, ordem = [];
-    CONTENT.forEach(function(qq,i){
-      if(S.ans[i]!==qq.c){ if(!conta[qq.mat]){ conta[qq.mat]=0; ordem.push(qq.mat); } conta[qq.mat]++; }
-    });
-    var erradas = ordem.map(function(m){ return conta[m]>1 ? m+' ('+conta[m]+')' : m; });
+    var erradas = materiasErradas();
     var tsoma = 0, tn = 0;
     CONTENT.forEach(function(_,i){ if(S.times[i]!=null){ tsoma += S.times[i]; tn++; } });
 
@@ -1542,8 +1551,17 @@
     // Guarda o id devolvido. Chega depois do render do resultado, e tudo bem: quem
     // usa o id é o clique no botão de comprar, que só acontece depois de ler a página.
     function guardarId(resp){
-      return resp.json().then(function(j){ if(j && j.id){ LEAD_ID=j.id; drenarPendentes(); } return true; })
-                        .catch(function(){ return true; });
+      return resp.json().then(function(j){
+        if(j && j.id){
+          LEAD_ID=j.id; drenarPendentes();
+          // Regrava a memória agora que o id existe. Sem isto, quem estivesse em rede
+          // ruim ficava com memória sem lead id: entregar() tem teto de espera e
+          // renderiza assim mesmo, e a gravação de lá guardava lead:null para sempre.
+          // Memória sem id é upsell sem instrumentação e sem sck (07/08/2026).
+          if(S.screen==='result') guardarResultado();
+        }
+        return true;
+      }).catch(function(){ return true; });
     }
 
     // 1) Base própria (Supabase, via /api/lead na Vercel). É a fonte de verdade:
@@ -3446,9 +3464,20 @@
 
   function guardarResultado(){
     try{
+      // 07/08/2026: o resumo (acertos, total, matérias erradas) passou a ser gravado
+      // junto. Não é para esta página, que recalcula tudo a partir de S: é para a
+      // página do Plano Completo, que vive no mesmo domínio, lê esta mesma chave e
+      // precisa saber em que matéria o ponto vazou. Sem isto ela teria que carregar
+      // uma cópia do array CONTENT inteiro só para traduzir índice em matéria, e essa
+      // cópia quebraria em silêncio na primeira vez que as 7 questões mudassem.
+      var R = null;
+      try{ R = compute(); }catch(e){}
       localStorage.setItem(MEM, JSON.stringify({
         quando: Date.now(),
         lead: LEAD_ID,
+        acertos: R ? R.c : null,
+        total: CONTENT.length,
+        errou: materiasErradas(),
         // S inteiro não: só o que result() precisa para remontar a tela.
         s: { ans:S.ans, times:S.times, estourou:S.estourou, fora:S.fora, sel:S.sel,
              selT:S.selT, ansPrim:S.ansPrim, trocas:S.trocas, beh:S.beh,
