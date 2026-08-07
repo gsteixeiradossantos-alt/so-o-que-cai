@@ -385,51 +385,6 @@
   </div>
 </section>
 
-<!-- ===== O MECANISMO =====
-     Bloco próprio, fora do grid de entregas, porque o cronograma não é um item
-     de lista: é o que torna a promessa possível. E ele abre admitindo o que o
-     gerador realmente faz, que é NÃO colocar as 11 matérias no plano de quem tem
-     30 dias (qtdSec cai a zero abaixo de 35 dias, em qualquer carga horária).
-     Antes desta seção a página vendia "as 11 matérias" e o produto entregava um
-     calendário só de núcleo duro. A contradição era do texto, não do gerador: em
-     30 dias, estudar matéria nova custa os pontos que a pessoa já tem. -->
-<section class="vsec estreita">
-  <div class="mecan">
-    <span class="eyebrow gold">O que decide a sua ordem</span>
-    <h2 class="grande" id="mecanH2">Você não vai estudar as 11 matérias no tempo que falta. E não é para estudar.</h2>
-    <p class="p">Quem tenta aprender onze matérias novas na reta final perde os pontos que já tinha no núcleo duro, e a conta não fecha. <b>O cronograma existe para tomar essa decisão no seu lugar</b>: ele olha os dias que faltam, as suas matérias fracas e as horas que você tem, e escolhe o que entra e o que fica de fora.</p>
-
-    <div class="prazos" id="prazos"></div>
-    <p class="notap" id="prazoNota">Os três são o mesmo gerador, com a data da prova mudada. Ele não encolhe o plano: muda o que o plano faz.</p>
-
-    <!-- Como se faz, em três passos. Substitui a ideia de um GIF de tela: aqui o
-         texto é nítido em qualquer tela, funciona no celular, não pesa e não
-         obriga ninguém a esperar um laço de animação chegar na parte que importa. -->
-    <div class="passos">
-      <div class="passo"><b>1</b><span>Você diz quantas horas tem por dia e confirma a data da prova</span></div>
-      <div class="passo"><b>2</b><span>Aperta gerar. Leva menos de um minuto</span></div>
-      <div class="passo"><b>3</b><span>O calendário sai pronto, dia a dia, e você marca o que já fez</span></div>
-    </div>
-
-    <!-- Largura inteira, e não um terço de grid: era a única tela que a pessoa
-         não consegue imaginar sozinha e estava pequena demais para ser lida. -->
-    <!-- Começa como imagem parada e vira o GIF depois de carregar, e só para quem
-         não pediu menos movimento no sistema. Assim os 132 KB do GIF não pesam no
-         primeiro paint, e quem tem sensibilidade a movimento fica com a versão
-         estática, que conta a mesma coisa. O alt cobre os dois casos. -->
-    <figure class="telona">
-      <img src="assets/telas/cronograma.webp" data-anim="assets/telas/cronograma.gif"
-           alt="O cronograma sendo gerado: escolher as horas por dia, apertar gerar, e marcar os dias como feitos"
-           loading="lazy" decoding="async">
-      <figcaption>Você escolhe as horas, aperta gerar, e marca o que já fez. Cada linha traz a matéria, o recorte dentro dela e quantas questões.</figcaption>
-    </figure>
-
-    <div class="cardb" style="margin-top:18px">
-      <h4 style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:8px">E se eu não conseguir seguir?</h4>
-      <p style="font-size:15px;line-height:1.6;color:var(--sec)">Você já tentou se organizar antes, e provavelmente largou. Todo mundo larga o plano que não cabe no dia. Por isso o cronograma não te entrega um mês: entrega <b>um dia de cada vez</b>, com a matéria, o recorte e quantas questões, no tamanho das horas que você disse ter. E cada dia tem um botão de feito, para você ver a barra andar. Não é motivação, é a única coisa que faz alguém voltar no dia seguinte.</p>
-    </div>
-  </div>
-</section>
 
 <section class="vsec larga">
   <span class="eyebrow">O que entra no seu acesso</span>
@@ -487,6 +442,61 @@
   </div>
 </section>
 
+<!-- ===== O MECANISMO =====
+     Bloco próprio, fora do grid de entregas, porque o cronograma não é um item
+     de lista: é o que torna a promessa possível. E ele abre admitindo o que o
+     gerador realmente faz, que é NÃO colocar as 11 matérias no plano de quem tem
+     30 dias (qtdSec cai a zero abaixo de 35 dias, em qualquer carga horária).
+     Antes desta seção a página vendia "as 11 matérias" e o produto entregava um
+     calendário só de núcleo duro. A contradição era do texto, não do gerador: em
+     30 dias, estudar matéria nova custa os pontos que a pessoa já tem.
+
+     POSIÇÃO (mudou em 07/08, à noite): este bloco vinha logo depois do herói, e
+     ali ele chegava cedo demais. A sequência que a pessoa lia era: você não mediu
+     11 matérias, você não vai estudar as 11, aqui estão as 11. Acende o desejo,
+     apaga o desejo, oferece. Agora ele vem DEPOIS da entrega e da tabela, quando
+     a pergunta "mas dá tempo disso tudo?" já nasceu sozinha na cabeça de quem
+     leu a lista. Responder antes de a pergunta existir soa como desculpa;
+     responder depois é alívio. Ele não perdeu destaque: perdeu só a pressa. -->
+<section class="vsec estreita">
+  <div class="mecan">
+    <span class="eyebrow gold">A pergunta que você está fazendo agora</span>
+    <h2 class="grande" id="mecanH2">Dá tempo de tudo isso no tempo que falta?</h2>
+    <p class="p" id="mecanP1">Não do jeito que você está imaginando, e é bom que não. <b>Você não vai estudar as 11 matérias</b> antes desta prova: quem tenta aprender matéria nova na reta final perde os pontos que já tinha no núcleo duro, e a conta não fecha.</p>
+    <p class="p"><b>O cronograma existe para tomar essa decisão no seu lugar.</b> Ele olha os dias que faltam, as suas matérias fracas e as horas que você tem, e escolhe o que entra no calendário e o que fica de fora, disponível para consulta.</p>
+
+    <div class="prazos" id="prazos"></div>
+    <p class="notap" id="prazoNota">Os três são o mesmo gerador, com a data da prova mudada. Ele não encolhe o plano: muda o que o plano faz.</p>
+
+    <!-- Como se faz, em três passos. Substitui a ideia de um GIF de tela: aqui o
+         texto é nítido em qualquer tela, funciona no celular, não pesa e não
+         obriga ninguém a esperar um laço de animação chegar na parte que importa. -->
+    <div class="passos">
+      <div class="passo"><b>1</b><span>Você diz quantas horas tem por dia e confirma a data da prova</span></div>
+      <div class="passo"><b>2</b><span>Aperta gerar. Leva menos de um minuto</span></div>
+      <div class="passo"><b>3</b><span>O calendário sai pronto, dia a dia, e você marca o que já fez</span></div>
+    </div>
+
+    <!-- Largura inteira, e não um terço de grid: era a única tela que a pessoa
+         não consegue imaginar sozinha e estava pequena demais para ser lida. -->
+    <!-- Começa como imagem parada e vira o GIF depois de carregar, e só para quem
+         não pediu menos movimento no sistema. Assim os 132 KB do GIF não pesam no
+         primeiro paint, e quem tem sensibilidade a movimento fica com a versão
+         estática, que conta a mesma coisa. O alt cobre os dois casos. -->
+    <figure class="telona">
+      <img src="assets/telas/cronograma.webp" data-anim="assets/telas/cronograma.gif"
+           alt="O cronograma sendo gerado: escolher as horas por dia, apertar gerar, e marcar os dias como feitos"
+           loading="lazy" decoding="async">
+      <figcaption>Você escolhe as horas, aperta gerar, e marca o que já fez. Cada linha traz a matéria, o recorte dentro dela e quantas questões.</figcaption>
+    </figure>
+
+    <div class="cardb" style="margin-top:18px">
+      <h4 style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:8px">E se eu não conseguir seguir?</h4>
+      <p style="font-size:15px;line-height:1.6;color:var(--sec)">Você já tentou se organizar antes, e provavelmente largou. Todo mundo larga o plano que não cabe no dia. Por isso o cronograma não te entrega um mês: entrega <b>um dia de cada vez</b>, com a matéria, o recorte e quantas questões, no tamanho das horas que você disse ter. E cada dia tem um botão de feito, para você ver a barra andar. Não é motivação, é a única coisa que faz alguém voltar no dia seguinte.</p>
+    </div>
+  </div>
+</section>
+
 <section class="vsec larga">
   <span class="eyebrow">Veja por dentro</span>
   <!-- ===== SÓ TELAS EXCLUSIVAS =====
@@ -524,6 +534,12 @@
     <div class="ri">Uma segunda compra do que você já tem</div>
     <div class="ri">Promessa de aprovação</div>
     <p class="ripe"><b>E ele não é o Kit Reta Final.</b> O Kit é o item de R$ 19 do carrinho: o plano das últimas três semanas, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco. Se você marcou o Kit, ele já é seu e continua sendo, independente do que decidir aqui. Se não marcou, ele não entra nesta compra: são coisas diferentes, e o Plano Completo não inclui o Kit.</p>
+    <!-- "O Kit já não faz isso?" era a objeção que a página deixava no ar: dizia
+         que o Kit está fora, e nunca dizia por que alguém quereria os dois. Quem
+         levou o bump ficava sem saber se estava comprando repetido. A distinção
+         real é de natureza: um é texto fixo sobre as três últimas semanas, o
+         outro é calendário calculado com data, matéria e carga. -->
+    <p class="ripe"><b>Então o Kit já não faz isso?</b> Não, e a diferença é fácil de ver quando os dois estão na mesa. O Kit é um texto pronto sobre as últimas três semanas, igual para todo mundo, mais o que fazer na véspera e dentro da prova. O cronograma é calendário: nasce da sua data, das suas matérias fracas e das suas horas, e diz o que fazer <b>na quarta-feira</b>. Um te prepara para o dia da prova; o outro organiza os dias até lá. Quem tem os dois usa o cronograma até a última semana e o Kit quando ela chega.</p>
     <p class="ripe">Você não precisa trocar de curso nem parar o que já está fazendo. O Plano Completo diz <b>em que ordem</b> usar o tempo que sobrou. A direção é nossa; a aprovação é sua.</p>
   </div>
 </section>
@@ -552,6 +568,18 @@
     <div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>
     <div class="selo2">Seus dados não são vendidos</div>
     <p class="avisomail" id="avisomail">No checkout, confirme o e-mail: ele precisa ser o mesmo que você usou na compra do Mapa, senão o seu acesso vai parar em dois cadastros diferentes.</p>
+  </div>
+
+  <!-- A objeção do gasto recente. É a mais forte de todo o funil pós-compra e não
+       estava escrita em lugar nenhum: quem lê esta página não avalia R$127 no
+       vácuo, avalia R$127 em cima de um gasto de dois minutos atrás. Fica no
+       contexto de funil, onde a compra acabou de acontecer; por link, dias
+       depois, ela não faz sentido e o bloco não aparece. -->
+  <div class="objecao" id="objGasto" hidden>
+    <h3>Você acabou de gastar. Eu sei.</h3>
+    <p>É estranho ver outro preço dois minutos depois de pagar, e não vou fingir que não é.</p>
+    <p style="margin-top:10px">Duas coisas que talvez ajudem a decidir. A primeira: <b>o que você comprou não fica pela metade se você disser não aqui</b>. O diagnóstico, as fichas do núcleo e os simulados focados são um material inteiro, e muita gente passa só com eles. A segunda: se fizer sentido, mas não agora, o preço é o mesmo daqui a duas semanas, e os 12 meses passam a contar de lá.</p>
+    <p class="fine">O motivo de esta oferta aparecer justamente aqui não é pressa: é que só neste momento dá para acrescentar ao pedido, sem começar outro checkout do zero.</p>
   </div>
 
   <div class="objecao">
@@ -985,6 +1013,9 @@
         if(preco) preco.insertBefore(linha, preco.firstChild);
       }
       $('tgtopo').textContent = 'Proposta de upgrade';
+      // A objeção do gasto recente só existe para quem acabou de pagar.
+      var og = $('objGasto');
+      if(og) og.hidden = false;
       $('molduraK').textContent = 'Leia antes de sair';
       $('molduraH').textContent = 'Esta página é uma oferta. Ela não faz parte do que você acabou de pagar.';
       $('molduraP').innerHTML = 'Aqui, e só aqui, você pode <b>acrescentar o Plano Completo à compra de agora</b>. É opcional. Fechar esta página não tira nada de você.';
@@ -1036,14 +1067,20 @@
     el.innerHTML = TRIO.map(function(x){
       return '<div class="prz'+(x === atual ? ' atual' : '')+'"><b>'+x+' dias</b><span>'+esc(contaPrazo(x))+'</span></div>';
     }).join('');
-    // O título só cita o número de dias quando ele existe e quando a afirmação é
-    // verdadeira naquele prazo: acima de 35 dias o gerador PÕE disciplinas de fora
-    // do núcleo no plano, e aí dizer "você não vai estudar as 11" seria mentira.
+    // O título é a pergunta que a pessoa acabou de fazer ao ler a tabela, com o
+    // prazo dela dentro. Sem data de prova à frente, fica a versão sem número.
     var h2 = $('mecanH2');
-    if(h2 && d){
-      h2.textContent = d > 35
-        ? 'Você não vai estudar as 11 matérias todas de uma vez. E não é para estudar.'
-        : 'Você não vai estudar as 11 matérias em ' + d + (d === 1 ? ' dia' : ' dias') + '. E não é para estudar.';
+    if(h2 && d) h2.textContent = 'Dá tempo de tudo isso em ' + d + (d === 1 ? ' dia' : ' dias') + '?';
+
+    // Acima de 35 dias o gerador PÕE disciplinas de fora do núcleo no calendário,
+    // então "você não vai estudar as 11" deixa de ser verdade e vira promessa
+    // quebrada ao contrário: a pessoa abriria o plano e encontraria mais do que a
+    // página prometeu. Prazo longo ganha a versão que descreve o que ele faz.
+    var p1 = $('mecanP1');
+    if(p1 && d && d > 35){
+      p1.innerHTML = 'Do jeito que você está imaginando, não. <b>Você não estuda as 11 de uma vez</b>, '
+        + 'e nem deveria: o que decide a ordem é quanto tempo sobra, e a essa distância da prova '
+        + 'ainda cabem as de maior incidência fora do núcleo.';
     }
     var nota = $('prazoNota');
     if(nota){
