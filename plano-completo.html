@@ -264,6 +264,11 @@
   .hcard p{font-size:14px;line-height:1.5;color:var(--sec);margin-top:6px}
   .hpe{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);
        font-size:14.5px;line-height:1.6;color:rgba(191,220,238,.9)}
+  /* A última linha do bloco navy, e a última coisa lida antes do preço. Fica maior
+     e mais clara que a .hpe de propósito: a .hpe só aponta para os três cartões,
+     esta diz o que acontece no dia se nada mudar. */
+  .hfim{margin-top:12px;font-size:16.5px;line-height:1.6;color:var(--paper)}
+  .hfim b{color:#fff}
 
   .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
          padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
@@ -1148,7 +1153,17 @@
         + (d > 21
             ? 'Hoje você está no primeiro. Em duas semanas estará no do meio.'
             : (d > 3 ? 'Você já passou do primeiro.' : 'O terceiro é o de agora.'))
-        + '</p>';
+        + '</p>'+
+      // O CUSTO DE NÃO FAZER NADA (07/08/2026). A página inteira descrevia o que a
+      // pessoa ganha e nunca o que acontece se ela sair. Faltando isso, a decisão
+      // fica entre "gastar R$127" e "gastar zero", e zero ganha sempre.
+      // A versão que NÃO se pode escrever é a de medo ("você vai reprovar"): além de
+      // ser promessa ao contrário, é mentira, porque muita gente passa só com o R$47,
+      // e a própria página diz isso duas seções acima. O que é verdade e basta é o
+      // momento da descoberta: a conta das onze matérias não medidas vai ser feita de
+      // um jeito ou de outro, hoje ou no caderno de prova. Só um dos dois dá para
+      // corrigir. Nada aqui é dito no futuro do indicativo sobre o resultado dela.
+      '<p class="hfim">Se nada mudar até lá, essa conta não some: ela passa a ser feita no dia 6, quando você abrir o caderno e descobrir ali quais das onze matérias caíram e como você vai nelas. <b>É a mesma descoberta, no único dia em que ela não dá mais para corrigir.</b></p>';
   }
 
   // Frases que dependem dos dias e vivem fora do bloco de calendário.
