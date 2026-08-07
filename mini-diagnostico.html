@@ -917,6 +917,15 @@
       a:'São cinco etapas, na ordem, dentro da área do aluno no navegador. Primeiro você responde 24 questões (10 a 15 minutos) mais 7 perguntas sobre a sua hora de prova. Na hora que termina, sai o seu Relatório dos Dois Eixos: onde você está, o placar em cada matéria do núcleo duro e as prescrições nomeando as suas matérias fracas e os temas exatos onde perdeu ponto. Aí você usa as fichas dessas matérias, mede com os simulados e fecha com a folha de tática de prova. Cada etapa só existe porque a anterior te diz o que fazer nela.' },
     { q:'Eu estudo só o que cai mesmo? Só os temas mais cobrados?',
       a:'É a proposta. As fichas cobrem as 6 matérias do núcleo duro, que sozinhas valem 70% da prova, e o Relatório te diz quais dessas 6 são as suas fracas. Você estuda essas primeiro, não uma lista genérica de "mais cobrados".' },
+    // 07/08/2026. É a primeira pergunta do repetente e a página não respondia em lugar
+    // nenhum: ele já resolveu as provas recentes e sabe que questão inventada sem
+    // critério não vale nada. A resposta é o que está escrito no cabeçalho de
+    // assets/banco-de-questoes.js ("questões ORIGINAIS, redigidas a partir de lei seca,
+    // súmulas e entendimentos consolidados; NÃO são cópia da FGV", revisão jurídica de
+    // 04/07/2026) — não é copy, é o fato. Sem número de questões aqui de propósito: o
+    // banco soma todos os planos, e o R$47 não entrega o banco inteiro.
+    { q:'As questões são de exames anteriores da FGV?',
+      a:'Não, são inéditas. Cada uma é escrita a partir de lei seca, súmula e entendimento consolidado, no padrão com que a banca cobra, e revisada contra as fontes primárias. Prova antiga tem gabarito circulando em qualquer grupo, e quem já prestou costuma ter resolvido as recentes: refazer isso não mede mais nada. O que se aproveita da FGV é a forma de montar a questão, e é justamente isso que o Guia de leitura ensina a reconhecer.' },
     { q:'Isto é um curso de OAB?',
       a:'Não, e essa é a diferença. Não tem vídeoaula para assistir, nem aula com horário, nem mensalidade. O que você compra é a direção: o exame que descobre onde o ponto está vazando, mais os materiais para tapar exatamente esses vazamentos. Você pode continuar no curso que já faz: o Mapa diz em que ordem usar o tempo.' },
     { q:'Preciso saber tudo para passar?',
@@ -2898,9 +2907,18 @@
        select percentile_cont(0.5) within group (order by acertos) as mediana,
               count(*) filter (where acertos>=5), count(*)
        from public.leads where acertos is not null; */
+  /* 07/08/2026, segunda versão. A primeira comparava a pessoa com o GRUPO e os dois
+     lados do if consolavam, cada um do seu jeito: quem tirava 5 ou mais lia "entre os
+     25% que mais acertam" (elogio) e quem tirava 3 lia "a mediana de quem faz este
+     teste é 3" (você está na média). Como 3 É a mediana, o caso mais comum da base
+     recebia anestésico exatamente no bloco onde a página precisa de tensão.
+     A régua passou a ser EXTERNA e é a única que decide de verdade: a prova corta em
+     40 de 80, metade. A frase é aritmética da própria nota, não veredito — não diz
+     que a pessoa passaria nem que reprovaria, e 7 questões não autorizariam nenhum
+     dos dois. */
   function comparaMediana(c){
-    if(c >= 5) return 'entre os 25% que mais acertam aqui';
-    return 'a mediana de quem faz este teste é 3';
+    var pct = Math.round(100*c/CONTENT.length);
+    return pct + '% de acerto · o corte da prova é 50%';
   }
 
   function perfilNome(r){
@@ -3244,6 +3262,11 @@
         '<div class="eyebrow">Como este diagnóstico pensa</div>'+
         '<h2>A palavra que a banca trocou nesta questão</h2>'+
         gabarito()+
+        // 07/08/2026: a origem da questão, dita no único lugar da página onde a pessoa
+        // está olhando para uma. Sem esta linha, o repetente conclui sozinho que a
+        // questão é inventada — e ele conclui isso justamente no bloco que existe para
+        // provar competência. Fato conferido em assets/banco-de-questoes.js, não copy.
+        '<p class="p" style="margin-top:16px">Ela é inédita, escrita a partir de lei seca, súmula e entendimento consolidado, no padrão com que a banca cobra. Não é cópia de exame anterior, e isso é de propósito: prova antiga já tem gabarito circulando, e quem já prestou normalmente já resolveu as recentes.</p>'+
         '<div class="vidlinha">'+
           '<span>Quer entender por que este diagnóstico existe?</span>'+
           '<a href="#" id="vplay">▶ 28 segundos</a>'+
