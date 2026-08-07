@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>Plano Completo · Só o que Cai</title>
+<!-- Preview de compartilhamento. Passou a ser necessário quando esta página deixou
+     de servir só o funil pós-compra: a régua de WhatsApp e o e-mail mandam o link
+     dela, e sem estas tags o cartão do WhatsApp sai como uma tira cinza sem título.
+     noindex e og convivem: um impede indexar, o outro só desenha o cartão. -->
+<meta property="og:title" content="Plano Completo · Só o que Cai">
+<meta property="og:description" content="Você mediu 6 matérias. A prova cobra 17. As 11 que faltam, dois simulados de 80 questões e o cronograma até a prova, no mesmo acesso que você já tem.">
+<meta property="og:image" content="https://sooquecai.online/assets/og.png">
+<meta property="og:url" content="https://sooquecai.online/plano-completo.html">
+<meta property="og:type" content="website">
 <!-- ===== PÁGINA DE UPSELL DO PLANO COMPLETO (reescrita em 07/08/2026) =====
 
      A versão anterior (02/08) tinha quatro furos, todos confirmados na página viva:
@@ -39,9 +48,17 @@
        uma linha de JavaScript, são três textos fixos.
      - vídeos: o array VIDEOS em mentalidade.html está vazio.
      - o par 38 questões / 40 acertos / 48%: contradiz a página do R$47, que diz
-       que as mesmas 6 matérias valem 70% da prova. O argumento agora é de
-       COBERTURA (mediu 6, a prova cobra 17), que é conferível e convive com o
-       outro.
+       que as mesmas 6 matérias valem 70% da prova.
+
+     E CUIDADO COM A ARITMÉTICA, que já se contradisse uma vez aqui: se as 6 do
+     núcleo valem 70% de 80 questões, são 56, e o corte é 40. Ou seja, NÃO se
+     pode dizer que "os pontos que fecham os 40 estão nas outras 11" enquanto o
+     número 70% estiver na página: quem lê faz a conta e vê que dominar o núcleo
+     bastaria. Por isso o argumento aqui não é de contagem de ponto, é de
+     CEGUEIRA: você mediu 6 matérias de 17, e não tem medida nenhuma sobre as
+     outras 11. Isso é verdadeiro qualquer que seja o peso de cada uma, e é
+     conferível contra assets/fichas.js (17 matérias) e FICHAS_NUCLEO no
+     middleware.js (as 6). Nenhum percentual de prova entra nesta página.
      ======================================================================== -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -279,9 +296,14 @@
   <div class="in">
     <span class="eyebrow gold">A conta que ninguém te faz</span>
     <h1>Este diagnóstico mediu <em>6 matérias</em>. A prova cobra <em>17</em>.</h1>
-    <p class="p" id="heroP1">As 7 questões que você respondeu passaram por Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal. São as 6 do núcleo duro, e é por elas que o diagnóstico começa: valem 70% da prova.</p>
-    <p class="p">O que ele não tocou foram as outras: Trabalho, Processo do Trabalho, Tributário, Administrativo, Empresarial, Consumidor, Ambiental, ECA, Internacional, Direitos Humanos e Filosofia do Direito. <b>São onze, e é nelas que estão os pontos que fecham a conta dos 40.</b></p>
-    <p class="p" id="heroErrou" hidden></p>
+    <!-- NEUTRO DE PROPÓSITO quanto ao número de questões. Esta página é lida por
+         quem fez o teste de 7 questões (funil e régua) E por quem já está na área
+         do aluno e fez o diagnóstico de 24 (?via=app). Dizer "as 7 questões que
+         você respondeu" seria falso para o segundo grupo. As 6 matérias, essas,
+         são as mesmas nos dois. -->
+    <p class="p" id="heroP1">O diagnóstico que você fez mediu Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal. São as 6 do núcleo duro, as de maior peso, e é por isso que ele começa por elas.</p>
+    <p class="p">O que ele não tocou foram as outras: Trabalho, Processo do Trabalho, Tributário, Administrativo, Empresarial, Consumidor, Ambiental, ECA, Internacional, Direitos Humanos e Filosofia do Direito. <b>São onze matérias sobre as quais você não tem medida nenhuma.</b> Não sabe se está bem, não sabe se está mal, e elas caem na sua prova do mesmo jeito.</p>
+    <p class="p" id="reancora" hidden></p>
     <div class="nums">
       <div class="num"><b>6</b><span>matérias medidas neste diagnóstico</span></div>
       <div class="num"><b>17</b><span>matérias que a prova cobra em todo exame</span></div>
@@ -324,7 +346,7 @@
     </div>
   </div>
   <div class="honesto">
-    <p><b>Duas coisas ditas do jeito que são.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho: se o seu tempo por dia mudar, você gera de novo, e leva menos de um minuto. E para ele sair com as suas matérias, faça o diagnóstico de 24 questões dentro do app, no mesmo aparelho em que for estudar. O teste de 7 questões que te trouxe até aqui mora em outro endereço e não conversa com o gerador. Sem esse passo, o cronograma sai equilibrado pelas matérias de maior peso, e a própria página avisa quando isso acontece.</p>
+    <p><b>Duas coisas ditas do jeito que são.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho: se o seu tempo por dia mudar, você gera de novo, e leva menos de um minuto. E para ele sair com as suas matérias, faça o diagnóstico de 24 questões dentro do app, no mesmo aparelho em que for estudar. É esse diagnóstico que o gerador lê, não o teste rápido do site, que mora em outro endereço. Sem esse passo, o cronograma sai equilibrado pelas matérias de maior peso, e a própria página avisa quando isso acontece.</p>
   </div>
 </section>
 
@@ -389,7 +411,7 @@
 
 <section class="vsec larga centro">
   <span class="eyebrow">Quem já usou</span>
-  <h2>Fichas e simulados, na palavra de quem usou</h2>
+  <h2>As fichas e os simulados, por quem estudou com eles</h2>
   <div class="deps">
     <div class="dep2">
       <div class="asp">&ldquo;</div>
@@ -431,6 +453,18 @@
 <section class="vsec estreita">
   <h2>Perguntas que costumam travar aqui</h2>
   <div class="faq" id="faq"></div>
+</section>
+
+<!-- CTA final. Cortei este bloco no desenho por colisão de regra com o bloco de
+     preço, e reconsiderei ao reler a página inteira: entre o preço e o fim da FAQ
+     há mais de 600 palavras, e quem lê a FAQ até o fim é justamente quem estava em
+     dúvida e acabou de resolvê-la. Deixá-la sem botão obriga a rolar de volta. Não
+     é repetição de argumento, é caminho: nenhum argumento novo entra aqui. -->
+<section class="vsec estreita centro" id="fim">
+  <div class="ctaslim">
+    <a class="btn-lar grande" id="buy0" data-v="127" href="https://pay.hotmart.com/O106944368L?checkoutMode=10">Quero o Plano Completo: R$ 127</a>
+    <div class="price">pagamento único · acesso na hora, por 12 meses · garantia de 7 dias</div>
+  </div>
 </section>
 
 <div class="fecho" id="fecho" hidden>
@@ -542,19 +576,58 @@
 
   function aplicarPessoa(){
     if(PESSOA.nome){
-      $('heroP1').innerHTML = esc(PESSOA.nome) + ', as 7 questões que você respondeu passaram por '
+      $('heroP1').innerHTML = esc(PESSOA.nome) + ', o diagnóstico que você fez mediu '
         + 'Ética, Constitucional, Civil, Processo Civil, Penal e Processo Penal. São as 6 do núcleo '
-        + 'duro, e é por elas que o diagnóstico começa: valem 70% da prova.';
+        + 'duro, as de maior peso, e é por isso que ele começa por elas.';
     }
-    // Frase inteira, ou nada. Some se a pessoa acertou as 7, ou se não sabemos.
+    montarLembrete();
+  }
+
+  /* Uma frase só, montada a partir do que sabemos. Duas frases separadas (uma para
+     o placar, outra para as matérias) começavam ambas com "no teste" e liam como
+     repetição. Cada pedaço entra inteiro ou não entra, e o resultado é gramatical
+     em todas as combinações. */
+  function montarLembrete(){
+    var el = $('reancora');
+    if(!el) return;
+
+    // O placar só reaparece para quem chega por link: no funil a pessoa acabou de
+    // ver o resultado, e repetir seria enchimento. A data escrita é o que separa
+    // "eu lembro de você" de adivinhação, e por isso só entra quando existe.
+    var placar = '';
+    if(CONTEXTO === 'link' && PESSOA.acertos != null && PESSOA.total){
+      var quando = '';
+      if(PESSOA.quando){
+        var dt = new Date(PESSOA.quando);
+        // 2 dias é o piso: "no teste que você fez hoje" soa a robô.
+        if(!isNaN(dt.getTime()) && (Date.now() - PESSOA.quando) > 2*24*60*60*1000){
+          quando = ' que você fez em ' + porExtenso(dt);
+        }
+      }
+      placar = 'No teste' + quando + ', você acertou <b>' + PESSOA.acertos + ' de ' + PESSOA.total + '</b>';
+    }
+
+    var mats = '';
     if(PESSOA.errou && PESSOA.errou.length){
       var lista = PESSOA.errou.map(function(m){ return esc(m); });
-      var texto = lista.length === 1 ? lista[0]
-                : lista.slice(0,-1).join(', ') + ' e ' + lista[lista.length-1];
-      $('heroErrou').innerHTML = 'No seu teste, os pontos foram embora em <b>' + texto
-        + '</b>. As outras onze matérias você ainda não testou.';
-      $('heroErrou').hidden = false;
+      mats = lista.length === 1 ? lista[0]
+           : lista.slice(0,-1).join(', ') + ' e ' + lista[lista.length-1];
     }
+
+    var frase = '';
+    if(placar && mats){
+      frase = placar + ', e os pontos foram embora em <b>' + mats + '</b>.';
+    } else if(placar){
+      frase = placar + '.';
+    } else if(mats){
+      frase = 'No seu teste, os pontos foram embora em <b>' + mats + '</b>.';
+    } else {
+      el.hidden = true;
+      return;
+    }
+
+    el.innerHTML = frase + ' As outras onze matérias você ainda não testou.';
+    el.hidden = false;
   }
 
   /* ---------- checkout ----------
@@ -574,7 +647,7 @@
     var sck = sckManual || ('up127-' + (CONTEXTO || 'link') + (VIA ? '-' + VIA : '') + (LEAD_ID ? '-' + LEAD_ID : ''));
     q += '&sck=' + encodeURIComponent(sck);
 
-    ['buy2','buy3'].forEach(function(id){
+    ['buy2','buy3','buy0'].forEach(function(id){
       var el = $(id);
       if(el) el.href = CHECKOUT + q;
     });
@@ -595,7 +668,7 @@
 
   var icDisparado = false;
   function ligarCompra(){
-    ['buy2','buy3'].forEach(function(id){
+    ['buy2','buy3','buy0'].forEach(function(id){
       var el = $(id);
       if(!el) return;
       el.addEventListener('click', function(){
@@ -801,7 +874,7 @@
             : 'Os '+d+' dias que faltam são todos de reta final. Dá para revisar as matérias que você não mediu e fazer os dois simulados de 80, com o cronograma organizando a ordem.')+
         '</p></div>'+
         '<div class="hcard"><b>Em duas semanas</b><p>Sobra a reta final. Dá para revisar, não dá para aprender matéria nova com calma, e um dos simulados provavelmente fica sem revisão.</p></div>'+
-        '<div class="hcard"><b>Na véspera</b><p>Sobra Cabeça para a prova e a folha de tática. Ajuda, e é a menor parte do que você pagaria.</p></div>'+
+        '<div class="hcard"><b>Na véspera</b><p>Sobra o Cabeça para a prova. Ajuda, e é a menor parte do que você pagaria.</p></div>'+
       '</div>'+
       '<p class="hpe">Se você só puder entrar depois de setembro, entre depois. Os 12 meses começam a contar no dia da compra, e as inscrições do 48º Exame abrem em 28 de setembro. O preço vai ser o mesmo. O que não volta é o mês que você tem agora.</p>';
   }
