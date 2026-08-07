@@ -241,7 +241,11 @@
      rótulo já está apertada e a linha extra viraria três linhas de texto. */
   .tlin span i.obs{display:block;font-style:normal;font-size:12.5px;font-weight:400;
                    color:var(--muted);text-align:left;margin-top:3px;line-height:1.35}
-  @media(max-width:460px){ .tlin span i.obs{display:none} }
+  /* A nota some abaixo de 460 px era economia de espaço mal feita: só UMA linha
+     da tabela tem nota, e é justamente a que ninguém entende sem ela ("Modelos de
+     semana" pode ser lido como o cronograma outra vez). No celular, que é de onde
+     vem o tráfego, a linha ficava sendo um nome solto. Fica menor, não some. */
+  @media(max-width:460px){ .tlin span i.obs{font-size:11.5px;margin-top:2px} }
   @media(max-width:460px){
     .tlin{grid-template-columns:1fr 54px 54px;padding:11px 12px;font-size:13.5px}
     .tcab,.tcab i{font-size:10.5px;letter-spacing:.8px}
