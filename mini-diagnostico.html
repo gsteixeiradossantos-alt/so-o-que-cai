@@ -918,7 +918,7 @@
     { q:'Quanto tempo leva?',
       a:'Cerca de 40 minutos entre as 24 questões e as 7 perguntas de comportamento. Você pode parar e voltar depois: fica salvo de onde parou. O Relatório sai na hora que você termina.' },
     { q:'Não tenho os R$ 47 hoje. Tem outra forma?',
-      a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora). Se o parcelado não resolver, me manda mensagem no WhatsApp que eu respondo pessoalmente. O preço não muda em outro dia: sempre foi R$ 47.' },
+      a:'Tem: '+PARCELA+' no cartão (menos de nove reais por mês, com acesso liberado na hora). No parcelado você recebe exatamente a mesma coisa, liberada no mesmo minuto.' },
     { q:'Quais são as formas de pagamento?',
       a:'Pix e cartão de crédito em até 6x. O acesso chega assim que o pagamento é confirmado, em minutos.' },
     // Duas dúvidas operacionais que travavam a compra e não tinham resposta na página
@@ -2689,7 +2689,7 @@
           '<i>vinha só no Plano Completo</i></div>'+
           '<p>Uma das seis regras: ler a última linha antes do resto, que é onde a banca inverte o pedido. As outras cinco vêm junto. Não é decorar macete, é entender como a FGV monta a questão e ter o que fazer quando ela aparecer.</p></div>'+
       '</div>'+
-      '<div class="bpe">Se você só puder pagar em outro dia, o preço continua R$ 47: nunca foi outro. O bônus eu não garanto.</div>'+
+      '<div class="bpe">Se você só puder pagar em outro dia, tudo bem, sem drama. O bônus é que eu não garanto.</div>'+
     '</div>';
   }
 
@@ -2812,16 +2812,21 @@
 
   // Calendário como urgência, nunca escassez falsa (04/08/2026). O handoff da página de
   // vendas pedia este bloco antes do preço, com 3 cartões (hoje / 3 semanas / véspera).
-  // O texto nunca promete que o preço sobe nem que a vaga acaba, porque nenhuma das
-  // duas coisas é verdade: R$ 47 continua R$ 47 amanhã. O que muda de verdade é quanto
-  // do material ainda cabe no tempo que falta, e é isso que os três cartões medem.
+  // O que muda de verdade é quanto do material ainda cabe no tempo que falta, e é isso
+  // que os três cartões medem.
+  // 07/08/2026, POSTURA SOBRE PREÇO (decisão do Gustavo): NEUTRA. A página não inventa
+  // que o preço sobe, e também não anuncia que ele nunca sobe. A versão anterior abria
+  // este bloco justamente com "o preço é R$ 47 hoje e vai ser R$ 47 depois", entregando
+  // de graça o argumento para adiar a quem estava em cima do muro. Não mentir não
+  // obriga a advogar contra a própria página. Saiu junto um travessão, que a marca
+  // proíbe e que tinha sobrevivido aqui.
   function porqueHoje(){
     var d=diasParaProva();
     return '<div class="hoje">'+
       '<div class="hk">Por que hoje, '+esc(hojeExtenso())+', e não depois</div>'+
-      '<p class="hp">Não é escassez de vaga nem preço que sobe: o preço é R$ 47 hoje e vai ser R$ 47 depois. O que muda é o calendário'+
-        (d? ' — faltam '+d+' dias para a prova' : '')+
-        ', e a cada semana que passa sobram menos horas para redistribuir entre as matérias que você errou.</p>'+
+      '<p class="hp">'+
+        (d? 'Faltam '+d+' dias para a prova, e a' : 'A')+
+        ' cada semana que passa sobram menos horas para redistribuir entre as matérias que você errou.</p>'+
       '<div class="hgrid">'+
         '<div class="hcard"><b>Hoje</b><p>Dá para reorganizar a ordem das matérias e ainda medir se funcionou, nos simulados.</p></div>'+
         '<div class="hcard"><b>Em 3 semanas</b><p>Ainda dá para corrigir as matérias fracas, mas sem muito tempo de conferir o resultado antes da prova.</p></div>'+
@@ -2852,7 +2857,7 @@
       '<ul>'+
         '<li><b>'+PARCELA+' no cartão.</b> Menos de nove reais por mês, com o acesso liberado na hora.</li>'+
       '</ul>'+
-      '<div class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só semana que vem, entre semana que vem: a única coisa que muda é quanto de prova o material ainda cobre.</div>'+
+      '<div class="fine">O que não espera é a prova: ela é no dia 6 de setembro com ou sem material, e cada semana que passa tira um pedaço do que ele ainda alcança.</div>'+
     '</div>';
   }
 

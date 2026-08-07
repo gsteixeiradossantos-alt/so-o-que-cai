@@ -612,7 +612,7 @@
     <h3>Você acabou de gastar. Eu sei.</h3>
     <p>É estranho ver outro preço dois minutos depois de pagar, e não vou fingir que não é.</p>
     <p style="margin-top:10px"><b>O que você comprou não fica pela metade se você disser não aqui.</b> O diagnóstico, as fichas do núcleo e os simulados focados são um material inteiro, e muita gente passa só com eles. Isto aqui é outra coisa: é o que fazer com os dias que ainda restam.</p>
-    <p class="fine">E o motivo de a oferta aparecer justamente agora não é pressa inventada: é que só neste momento ela se acrescenta ao pedido que você acabou de fazer, sem outro checkout e sem outro cadastro.</p>
+    <p class="fine">E a oferta aparece agora por um motivo prático: só neste momento ela se acrescenta ao pedido que você acabou de fazer, sem outro checkout e sem outro cadastro.</p>
   </div>
 
   <div class="objecao">
@@ -621,14 +621,14 @@
     <ul>
       <li><b>6x de R$ 23,83 no cartão.</b> Com o acesso liberado na hora.</li>
     </ul>
-    <!-- A frase anterior oferecia o adiamento como opção confortável ("se der
-         para entrar só no mês que vem, continua aqui, e os 12 meses passam a
-         contar de lá"). Isso é honesto e é ruim: dava permissão para sair, numa
-         página que é lida uma vez só. O que a marca proíbe é inventar escassez de
-         PREÇO, e essa proibição continua valendo: o preço não sobe e a página diz
-         isso. O que não se pode é fingir que o CALENDÁRIO também espera. Ele não
-         espera, e essa urgência é real, não fabricada. -->
-    <p class="fine">O preço não sobe depois, e não vou fingir que sobe. O que não dá para adiar é a prova: ela é no dia 6 de setembro com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.</p>
+    <!-- POSTURA SOBRE PREÇO (07/08/2026, decisão do Gustavo): NEUTRA. A página não
+         inventa que o preço sobe, e também não sai anunciando que ele nunca sobe.
+         A versão anterior fazia a segunda coisa em três lugares ("o preço não sobe
+         e não vou fingir que sobe"), o que é honestidade jogada contra a própria
+         página: quem estava em cima do muro ganhava, de graça, o argumento para
+         descer dele. Não mentir não obriga a advogar contra si. O único argumento
+         de tempo que a página usa é o calendário, que é real e verificável. -->
+    <p class="fine">O que não dá para adiar é a prova: ela é no dia 6 de setembro com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.</p>
   </div>
 </section>
 
@@ -669,8 +669,14 @@
   </div>
 </section>
 
+<!-- 07/08/2026: esta linha era a ÚLTIMA da página e dizia "Prefere continuar só com
+     o Mapa? Tudo bem", com o endereço clicável logo depois. Depois do último botão,
+     isso é a porta de saída aberta e sinalizada. A promessa de que a compra não é
+     afetada já está no alto da página, onde ela serve para a pessoa continuar lendo
+     sem medo; repeti-la no fim só serve para deixar ir. Sobrou a informação (onde
+     fica o acesso), sem o convite e sem o link concorrendo com o botão de compra. -->
 <div class="fecho" id="fecho" hidden>
-  <p>Prefere continuar só com o Mapa? Tudo bem. O seu acesso está em <a href="https://app.sooquecai.online">app.sooquecai.online</a> e não muda em nada.</p>
+  <p>O seu acesso ao Mapa fica em app.sooquecai.online, e o endereço vai também no e-mail de confirmação.</p>
 </div>
 
 <footer>
@@ -1123,7 +1129,7 @@
     var reta = Math.min(21, d), base = d - reta;
     el.innerHTML =
       '<div class="hk">Por que hoje, '+esc(porExtenso(new Date()))+', e não em outubro</div>'+
-      '<p class="hp">Não é escassez de vaga nem preço que sobe: R$ 127 hoje e R$ 127 depois. O que muda é o calendário. '+esc(diasFrase(d))+', que é dia 6 de setembro, um domingo.</p>'+
+      '<p class="hp">'+esc(diasFrase(d))+', que é dia 6 de setembro, um domingo. O que cabe nesses dias encolhe toda semana.</p>'+
       '<div class="hgrid">'+
         '<div class="hcard"><b>Hoje</b><p>'+
           (base > 0
@@ -1136,13 +1142,12 @@
       // Este era o pior dos três: um convite explícito a adiar ("se você só puder
       // entrar depois de setembro, entre depois"), dentro do bloco cuja única
       // função é mostrar que o calendário aperta. O bloco desmontava a si mesmo.
-      // O que sobrou é a mesma verdade sem a permissão: o preço não muda, e é
-      // justamente por isso que o único custo de esperar é o de calendário.
-      '<p class="hpe">Não é o preço que muda com o tempo: ele é o mesmo hoje e em outubro. O que muda é em qual desses três cartões você está. '
-        + esc(diasFrase(d)) + ', '
+      // O que sobrou é o custo real de esperar, medido nos três cartões acima, sem
+      // nenhuma frase sobre preço (ver POSTURA SOBRE PREÇO, no bloco da objeção).
+      '<p class="hpe">O que o tempo muda é em qual desses três cartões você está. '
         + (d > 21
-            ? 'e em duas semanas você estará no do meio.'
-            : (d > 3 ? 'e você já passou do primeiro.' : 'e o terceiro é o de agora.'))
+            ? 'Hoje você está no primeiro. Em duas semanas estará no do meio.'
+            : (d > 3 ? 'Você já passou do primeiro.' : 'O terceiro é o de agora.'))
         + '</p>';
   }
 
