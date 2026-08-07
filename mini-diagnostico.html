@@ -554,6 +554,49 @@
   .objecao .fine{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
                  font-size:13px;color:var(--sec);line-height:1.55}
 
+  /* ---- degrau de cima: Plano Completo R$127 (07/08/2026) ----
+     SEM borda dourada, de propósito: esse tratamento é exclusivo do bloco .preco,
+     onde acontece a decisão principal. Este é um degrau ao lado, não um concorrente. */
+  .tier{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--navy);
+        border-radius:12px;padding:22px 24px;margin-top:14px}
+  .tier h4{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700;
+           color:var(--navy);margin:0 0 8px}
+  .tier>p{font-size:15px;line-height:1.6;color:var(--ink);margin:0}
+  /* padding:0 explícito: sem ele o recuo padrão do <ul> joga os itens 40 px para a
+     direita e a lista desalinha do parágrafo logo acima, que é o que dá a impressão
+     de dois blocos diferentes dentro do mesmo cartão. */
+  .tier ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .tier li{font-size:14.5px;line-height:1.5;color:var(--sec);padding-left:16px;position:relative}
+  .tier li:before{content:'+';position:absolute;left:0;color:var(--ocre2);font-weight:700}
+  .tier .tv{margin-top:16px;font-family:'Source Serif 4',Georgia,serif;font-size:26px;
+            font-weight:700;color:var(--navy)}
+  .tier .tv span{font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:400;color:var(--sec)}
+  .tier .tb{margin-top:12px}
+  .tier .tb .btn-lar{background:var(--navy)}
+  .tier .tb .btn-lar:hover{background:#0e1820}
+  .tier .tfine{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
+               font-size:13px;color:var(--sec);line-height:1.55}
+
+  /* Linha compacta de autoria, no TOPO da oferta. O cartão inteiro continua lá
+     embaixo; aqui é só o crachá, porque o preço aparece antes dele. */
+  .autorof{display:flex;gap:11px;align-items:center;margin:0 0 16px}
+  .autorof img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0}
+  .autorof b{display:block;font-size:14.5px;font-weight:700;color:var(--ink)}
+  .autorof i{display:block;font-style:normal;font-size:12.5px;color:var(--sec)}
+
+  /* Faixa de quem VOLTOU (07/08/2026). Fica no topo do resultado e existe para
+     que a segunda visita não cobre o mesmo pedágio de rolagem da primeira. */
+  .revolta{background:var(--navy);border-radius:12px;padding:20px 22px;color:var(--paper);
+           margin:0 0 4px}
+  .revolta .rk{font-family:'Source Sans 3',sans-serif;font-size:11.5px;font-weight:700;
+               letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)}
+  .revolta h2{font-family:'Source Serif 4',Georgia,serif;font-size:21px;font-weight:700;
+              line-height:1.3;margin:9px 0 0;color:var(--paper)}
+  .revolta p{font-size:14.5px;line-height:1.6;color:var(--azul);margin:9px 0 0}
+  .revolta .rb{margin-top:15px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .revolta .rl{font-size:13.5px;color:var(--azul);text-decoration:underline;
+               text-underline-offset:3px}
+
   /* ---- depoimentos ---- */
   .deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
   .dep2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px}
@@ -848,9 +891,17 @@
 <script>
   // ===== CONFIGURAR =====
   var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I?checkoutMode=10"; // diagnóstico completo R$47 + Order Bump Kit Reta Final
-  // O checkout do Plano Completo (R$127) saiu daqui em 03/08: esta página vende UMA
-  // coisa, o R$47. O R$127 virou upsell pós-compra na Hotmart, que é onde o compromisso
-  // está no pico. Se um dia precisar voltar, o link está no histórico do git.
+  /* O checkout do Plano Completo (R$127) saiu daqui em 03/08 e VOLTOU em 07/08/2026.
+     O que mudou não foi opinião, foi dado: em 07/08 uma pessoa comprou o R$47 + Kit e,
+     14 minutos depois, sem nenhuma nova interação de anúncio, pagou o R$127 também.
+     Ou seja, existe demanda de subir de tier que esta página estava recusando de
+     propósito. E a aritmética favorece muito: o líquido do Completo é R$113,43 contra
+     R$41,35 do Diagnóstico, então cada pessoa que sobe vale +R$72,08 sem um centavo de
+     mídia nova.
+     ATENÇÃO ao escrever qualquer copy com isto: na Hotmart são compras INDEPENDENTES.
+     Quem compra o R$47 e depois quiser o Completo paga os R$127 cheios, sem abatimento.
+     A página não pode insinuar upgrade com crédito, porque não existe. */
+  var CHECKOUT_COMPLETO = "https://pay.hotmart.com/O106944368L?checkoutMode=10"; // Plano Completo R$127
   // Para onde enviar os leads (nome/e-mail/WhatsApp). Cole aqui um endpoint de formulário
   // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
   // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
@@ -870,6 +921,19 @@
   // de casar e-mail, e (b) marcar o clique em comprar. Fica null se a gravação
   // falhar; nesse caso a página funciona igual, só sem rastreio.
   var LEAD_ID = null;
+
+  /* QUEM VOLTOU (07/08/2026). Medido em 253 leads desde o marco zero: os 29 cliques em
+     comprar aconteceram TODOS entre 0 e 15 minutos do lead, e 28 dos 29 foram clique
+     único. Ou seja, ninguém que sai desta página volta e clica. A persistência do
+     resultado subiu em 06/08 e resolveu metade do problema (quem volta reencontra o
+     próprio diagnóstico em vez de um teste em branco), mas a outra metade ficou: a
+     segunda visita recebia a peça IDÊNTICA à da primeira, com 20 telas de celular até
+     o botão de compra. Na primeira visita a pessoa paga esse pedágio com curiosidade;
+     na segunda ela não tem com o que pagar.
+     VOLTOU troca só o cartão da tela 2 (o .vresumo, que é navegação e não argumento).
+     O resto da página continua igual e continua rolável para quem quiser reler. */
+  var VOLTOU = false;
+  var VOLTOU_QUANDO = null;
 
   // Nome do produto. Em um lugar só porque ele aparece no hero, no resumo, na oferta,
   // na barra fixa e no FAQ — e já mudou três vezes.
@@ -944,8 +1008,10 @@
       a:'Assim que o pagamento é confirmado, você recebe a confirmação e entra em app.sooquecai.online com o mesmo e-mail que usou na compra. Não tem senha para criar nem para lembrar: o sistema confere o e-mail e libera na hora. Dá para usar em até 3 aparelhos, e o acesso vale por 12 meses.' },
     { q:'Vale para o Exame de setembro ou para o próximo?',
       a:'Para os dois. O material trata do que se repete em toda 1ª fase, as 6 matérias do núcleo duro e a tática de prova, e não de uma edição específica. Como o acesso vale 12 meses, quem presta em setembro usa agora e quem vai prestar em janeiro tem o tempo inteiro de preparação pela frente.' },
-    { q:'Já estudo com outro curso. Isso substitui?',
-      a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto. A maioria das pessoas usa os dois juntos.' },
+    // "Já estudo com outro curso. Isso substitui?" saiu daqui em 07/08/2026 e virou
+    // cartão dentro da seção da oferta, logo depois de stackOferta(). É a objeção mais
+    // comum deste público e, aqui, ela era a 11ª de 17, fechada, em 14.314 px, isto é,
+    // depois do último botão de compra. Regra do inventário: uma pergunta, um bloco.
     { q:'E as outras 11 matérias, fora do núcleo duro?',
       a:'O diagnóstico e as fichas deste material cobrem as 6 matérias do núcleo duro, que são as de maior peso, e o Relatório avisa isso com clareza: ele mediu essas 6, a prova cobra 17. Se depois você quiser as fichas das outras 11, existe o Plano Completo. Mas a ordem certa é começar pelas que mais valem ponto.' },
     { q:'Sou iniciante / faz tempo que parei. Vale para mim?',
@@ -2744,6 +2810,83 @@
     '</div>';
   }
 
+  /* O DEGRAU DE CIMA (07/08/2026). Plano Completo, R$ 127.
+
+     Por que ele entra aqui e não é upsell genérico: a própria página CONSTRÓI o
+     argumento dele e depois batia numa parede. O cartão "Corrija o que está faltando"
+     diz que o núcleo vale 70% da prova e que tirar os 40 pontos só ali dentro exigiria
+     acertar 7 de cada 10. Quem lê com atenção conclui sozinho "então eu preciso das
+     outras 11 matérias", faz a pergunta certa, e até 07/08 não recebia resposta
+     nenhuma. Este bloco é a resposta a uma pergunta que a página já tinha feito.
+
+     POSIÇÃO: depois do bloco .preco e depois do Kit, pelo mesmo motivo que moveu o Kit
+     em 07/08 — segunda decisão não pode aparecer na frente de quem ainda não tomou a
+     primeira. E vem ANTES da objeção de dinheiro, porque aquele bloco fecha o assunto
+     para quem nem o R$47 cabe: pôr o tier de cima depois dele seria responder "então
+     pague mais caro" a quem acabou de dizer que não tem.
+
+     RECOMENDAÇÃO EXPLÍCITA de começar pelo R$47. Não é modéstia: é a mesma coisa que o
+     FAQ já responde ("a ordem certa é começar pelas que mais valem ponto") e é o que
+     evita reembolso de quem compra o caro por ansiedade.
+
+     São compras INDEPENDENTES na Hotmart. A frase sobre isso é obrigatória e não pode
+     virar promessa de upgrade com crédito, que não existe. O Completo é superset do
+     Diagnóstico (ver LINHAS em so-o-que-cai-app/index.html), então quem escolhe ele NÃO
+     deve comprar os dois — e a página tem que dizer isso, senão alguém paga R$174.
+
+     Entregas conferidas contra a tabela real (LINHAS), não estimadas: fichas das outras
+     11 disciplinas, 2 simulados completos de 80 questões, cronograma personalizado,
+     plano por carga semanal e "Cabeça para a prova". Se a tabela mudar, este texto muda
+     junto: aqui é promessa. */
+  /* A faixa de quem voltou. Ocupa o mesmo slot do .vresumo (tela 2 do celular) e é
+     ÂNCORA, nunca checkout: botão de compra a 852 px dispara InitiateCheckout em quem
+     talvez nem tenha lido a oferta, e isso já custou uma medição em 04/08 (17% de
+     conversão no atalho contra 80% no CTA do fim).
+     O único argumento de tempo é o calendário, que é real e é o que de fato mudou entre
+     a primeira visita e esta. Nada aqui inventa escassez, não afirma que o preço sobe e
+     também não anuncia que ele nunca sobe. */
+  function faixaVoltou(){
+    var quando = '';
+    try{
+      if(VOLTOU_QUANDO){
+        var dt = new Date(VOLTOU_QUANDO);
+        quando = ' de ' + porExtenso(dt);
+      }
+    }catch(e){}
+    var d = diasParaProva();
+    return '<section class="vresumo"><div class="revolta">'+
+      '<div class="rk">Você já esteve aqui</div>'+
+      '<h2>Este é o mesmo diagnóstico'+esc(quando)+'. Ele não mudou.</h2>'+
+      '<p>'+(d? diasFrase(d)+', e é isso que mudou desde a última vez. ' : '')+
+        'O que estas 7 questões acharam você já leu. O que continua em aberto é a sua porcentagem em cada matéria do núcleo, em quais conteúdos dentro delas o ponto vaza e em que ordem corrigir.</p>'+
+      '<div class="rb">'+
+        '<a class="btn-lar" href="#oferta" id="verofvolta">Ir direto para a oferta</a>'+
+        '<span class="rl" style="text-decoration:none">ou releia o diagnóstico inteiro, abaixo</span>'+
+      '</div>'+
+    '</div></section>';
+  }
+
+  // Recebe a URL pronta em vez de montá-la: quem tem o telefone e o e-mail da pessoa
+  // é o ctx(), e duplicar aquele pré-preenchimento aqui criaria duas versões do mesmo
+  // parâmetro para divergirem na primeira mudança.
+  function planoCompleto(buyUrl){
+    return '<div class="tier">'+
+      '<div class="eyebrow">Se as 6 do núcleo não bastarem</div>'+
+      '<h4>Plano Completo</h4>'+
+      '<p>O material acima cobre as 6 matérias do núcleo duro. Elas valem 70% da prova, e é por isso que se começa por elas, mas tirar os 40 pontos só ali dentro exigiria acertar 7 de cada 10. O Plano Completo é o mesmo diagnóstico com a prova inteira em volta.</p>'+
+      '<ul>'+
+        '<li>Fichas das outras 11 disciplinas, as 17 da prova</li>'+
+        '<li>2 simulados completos de 80 questões, no formato do exame</li>'+
+        '<li>Cronograma montado pelo seu tempo disponível e pelo seu resultado</li>'+
+        '<li>Plano por carga semanal, para saber o que fazer em cada semana</li>'+
+        '<li>Cabeça para a prova: o que fazer com o nervosismo no dia</li>'+
+      '</ul>'+
+      '<div class="tv">R$ 127 <span>pagamento único · mesmos 12 meses · mesma garantia</span></div>'+
+      '<div class="tb"><a class="btn-lar" href="'+buyUrl+'" id="buycompleto" data-v="127">Quero a prova inteira: R$ 127</a></div>'+
+      '<div class="tfine">O Completo já inclui tudo o que está descrito acima, então é um ou outro, nunca os dois. Se você está em dúvida, comece pelo Diagnóstico: ele é que descobre onde o ponto está vazando, e essa parte é igual nos dois.</div>'+
+    '</div>';
+  }
+
   // Reescrita em 03/08/2026, e CORRIGIDA em 05/08/2026: a versão anterior descrevia o
   // inventário TOTAL do produto (17 matérias de fichas, 5 simulados, 248 questões —
   // números batidos contra assets/fichas.js, assets/simulados.js e
@@ -3030,6 +3173,9 @@
       r:r, q:q, L:L, h1:h1,
       nome: esc((S.nome.split(' ')[0])||'você'),
       buyUrl: CHECKOUT_URL+fill,
+      // Mesmo pré-preenchimento do R$47: quem sobe de tier não pode encarar
+      // formulário vazio justamente no checkout mais caro.
+      buyUrlCompleto: CHECKOUT_COMPLETO+fill,
       forte: !!q.forte,
       erroN: CONTENT.length-r.c-r.estourou,
       // Mesma régua da manchete e do 'sabe'. A tabela não pode prometer "descobrir a
@@ -3075,7 +3221,16 @@
     // 'buydep' entrou em 07/08/2026 (botão depois dos depoimentos). 'buyslim' agora
     // existe só na tela de reencontro: no resultado ele virou âncora (#verof2), para
     // não disparar InitiateCheckout antes de a pessoa ver a oferta.
-    ['buyslim','buy0','buy','buydep'].forEach(function(id){
+    // 'buycompleto' entrou em 07/08/2026 com o degrau de R$127. Ele passa pelo MESMO
+    // tratamento dos outros de propósito: o sck (sem ele a venda de R$127 vinda daqui
+    // ficaria sem atribuição de criativo) e o data-v, que é lido logo abaixo e manda
+    // 127 para o InitiateCheckout e para /api/clique, onde `oferta_clicada` é o que
+    // separa o clique do tier de cima do clique do R$47.
+    // A faixa de quem voltou NÃO entra aqui: o botão dela é âncora para #oferta, não
+    // checkout. Mesma razão que tirou o #verof2 desta lista em 07/08 — disparar
+    // InitiateCheckout a 852 px ensina a Meta a caçar quem aperta botão, e isso já foi
+    // medido uma vez (17% de conversão no atalho contra 80% no CTA do fim).
+    ['buyslim','buy0','buy','buydep','buycompleto'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -3208,11 +3363,16 @@
       // ===== RESUMO DA OFERTA — atalho para quem já decidiu =====
       // Não responde pergunta nova: é navegação. Por isso não tem argumento, só
       // nome, preço e um link para a seção que argumenta.
+      // Para quem VOLTOU este slot muda de função (07/08/2026). Ele é o mesmo px, o
+      // mesmo tamanho e a mesma âncora: o que muda é que deixa de apresentar um preço
+      // a quem já viu esse preço e passa a dizer o que está diferente hoje, que é o
+      // calendário. Ver a nota em VOLTOU para o número que motivou isto.
+      (VOLTOU ? faixaVoltou() :
       '<section class="vresumo"><div class="cardres">'+
         '<div><div class="t">'+PRODUTO+'</div>'+
           '<div class="s">R$ 47 único · acesso na hora, por 12 meses · garantia de 7 dias</div></div>'+
         '<a href="#oferta" class="btn-lar" id="verof">Ver a oferta completa</a>'+
-      '</div></section>'+
+      '</div></section>')+
 
       // ===== 2. O QUE ISSO SIGNIFICA =====
       '<section class="vsec estreita">'+
@@ -3344,10 +3504,29 @@
       // em 06/08/2026: print do produto e prova de entrega, e prova serve no momento
       // da decisao, nao dois blocos antes dela.
       '<section class="vsec larga" id="oferta">'+
+        // 07/08/2026: o crachá de quem assina, no TOPO da oferta. O cartão completo
+        // continua lá embaixo, ao lado da garantia. O problema que isto resolve: a
+        // página dá um veredito sobre a vida da pessoa e pede R$ 47 assinada por
+        // ninguém até 12.435 px, que é a tela 15 num celular. Quem decide antes disso
+        // decide sem saber de quem está comprando. Uma linha, não um bloco: o
+        // argumento de autoridade tem dono e é o cartão do fim.
+        '<div class="autorof">'+
+          '<img src="assets/gustavo.webp" alt="Gustavo S. Teixeira dos Santos, advogado" width="44" height="44" loading="lazy">'+
+          '<div><b>Gustavo S. Teixeira dos Santos</b><i>Advogado, OAB/PR 112.743 · quem escreveu e revisou o material</i></div>'+
+        '</div>'+
         '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
         '<h2 class="grande">'+PRODUTO+'</h2>'+
         '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
+        // 07/08/2026: "eu já faço cursinho" era a 11ª de 17 perguntas do FAQ, fechada,
+        // em 14.314 px, ou seja, DEPOIS do último botão de compra. É a objeção mais
+        // comum deste público e ela estava sendo respondida tarde demais para servir.
+        // Saiu do FAQ na mesma edição: pela regra do inventário, duas respostas para a
+        // mesma pergunta significam que uma tem que ir embora.
+        '<div class="cardb" style="margin-top:14px">'+
+          '<h4 style="font-family:\'Source Serif 4\',Georgia,serif;font-size:18px;margin:0 0 6px">Você já faz um cursinho? Isto não substitui</h4>'+
+          '<p style="font-size:14.5px;line-height:1.55;color:var(--sec);margin:0">Ele direciona. Mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto, sem você trocar de curso nem parar o que está fazendo. A maioria usa os dois juntos.</p>'+
+        '</div>'+
         // As telas reais do produto entram logo depois da lista de entregas: a lista
         // diz o que a pessoa recebe, e o print prova que aquilo existe. Ficavam duas
         // secoes acima, antes de qualquer preco, onde nao respondiam a nenhuma duvida.
@@ -3368,6 +3547,11 @@
         // encontrá-lo no checkout, com esta mesma descrição. Depois do preço ele
         // deixa de competir e passa a ser o que é, um "e ainda tem isto ali".
         mencaoKit()+
+        // O degrau de cima entra DEPOIS do preço e do Kit e ANTES da objeção de
+        // dinheiro. Ver a nota inteira em planoCompleto(): pôr o tier de R$127 depois
+        // de "e se os R$47 não couberem?" seria responder "então pague mais caro" a
+        // quem acabou de dizer que não tem.
+        planoCompleto(C.buyUrlCompleto)+
         objecaoDinheiro()+
       '</section>'+
 
@@ -3598,6 +3782,16 @@
     if(!m || !m.s) return false;
     Object.keys(m.s).forEach(function(k){ S[k] = m.s[k]; });
     if(m.lead) LEAD_ID = m.lead;
+    // Toda entrada por aqui é, por definição, uma volta: só existe memória se a pessoa
+    // já terminou o teste alguma vez. Ver a nota em VOLTOU.
+    VOLTOU = true;
+    VOLTOU_QUANDO = m.quando || null;
+    // O passo vai para o BANCO, não só para o pixel. Até 07/08 o retorno era marcado
+    // apenas com fbq('trackCustom','VoltouAoResultado'), que morre no Events Manager —
+    // e o Events Manager é justamente o painel que a régua deste projeto manda não usar
+    // como veredito. Sem coluna em `leads` não há como responder a única pergunta que
+    // importa aqui: a correção de 06/08 fez alguém voltar e clicar?
+    marcarPasso('voltou');
     S.screen = 'result';
     render();
     window.scrollTo(0,0);
