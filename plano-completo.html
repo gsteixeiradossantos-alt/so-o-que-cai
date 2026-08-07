@@ -611,8 +611,8 @@
   <div class="objecao" id="objGasto" hidden>
     <h3>Você acabou de gastar. Eu sei.</h3>
     <p>É estranho ver outro preço dois minutos depois de pagar, e não vou fingir que não é.</p>
-    <p style="margin-top:10px">Duas coisas que talvez ajudem a decidir. A primeira: <b>o que você comprou não fica pela metade se você disser não aqui</b>. O diagnóstico, as fichas do núcleo e os simulados focados são um material inteiro, e muita gente passa só com eles. A segunda: se fizer sentido, mas não agora, o preço é o mesmo daqui a duas semanas, e os 12 meses passam a contar de lá.</p>
-    <p class="fine">O motivo de esta oferta aparecer justamente aqui não é pressa: é que só neste momento dá para acrescentar ao pedido, sem começar outro checkout do zero.</p>
+    <p style="margin-top:10px"><b>O que você comprou não fica pela metade se você disser não aqui.</b> O diagnóstico, as fichas do núcleo e os simulados focados são um material inteiro, e muita gente passa só com eles. Isto aqui é outra coisa: é o que fazer com os dias que ainda restam.</p>
+    <p class="fine">E o motivo de a oferta aparecer justamente agora não é pressa inventada: é que só neste momento ela se acrescenta ao pedido que você acabou de fazer, sem outro checkout e sem outro cadastro.</p>
   </div>
 
   <div class="objecao">
@@ -621,7 +621,14 @@
     <ul>
       <li><b>6x de R$ 23,83 no cartão.</b> Com o acesso liberado na hora.</li>
     </ul>
-    <p class="fine">O preço nunca foi outro e não vai subir depois. Se der para entrar só no mês que vem, o Plano Completo continua aqui, e os 12 meses passam a contar de lá. A única coisa que muda é quanto da prova de setembro ele ainda alcança.</p>
+    <!-- A frase anterior oferecia o adiamento como opção confortável ("se der
+         para entrar só no mês que vem, continua aqui, e os 12 meses passam a
+         contar de lá"). Isso é honesto e é ruim: dava permissão para sair, numa
+         página que é lida uma vez só. O que a marca proíbe é inventar escassez de
+         PREÇO, e essa proibição continua valendo: o preço não sobe e a página diz
+         isso. O que não se pode é fingir que o CALENDÁRIO também espera. Ele não
+         espera, e essa urgência é real, não fabricada. -->
+    <p class="fine">O preço não sobe depois, e não vou fingir que sobe. O que não dá para adiar é a prova: ela é no dia 6 de setembro com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.</p>
   </div>
 </section>
 
@@ -1126,7 +1133,17 @@
         '<div class="hcard"><b>Em duas semanas</b><p>Sobra a reta final. Dá para revisar, não dá para aprender matéria nova com calma, e um dos simulados provavelmente fica sem revisão.</p></div>'+
         '<div class="hcard"><b>Na véspera</b><p>Sobra o Cabeça para a prova. Ajuda, e é a menor parte do que você pagaria.</p></div>'+
       '</div>'+
-      '<p class="hpe">Se você só puder entrar depois de setembro, entre depois. Os 12 meses começam a contar no dia da compra, e as inscrições do 48º Exame abrem em 28 de setembro. O preço vai ser o mesmo. O que não volta é o mês que você tem agora.</p>';
+      // Este era o pior dos três: um convite explícito a adiar ("se você só puder
+      // entrar depois de setembro, entre depois"), dentro do bloco cuja única
+      // função é mostrar que o calendário aperta. O bloco desmontava a si mesmo.
+      // O que sobrou é a mesma verdade sem a permissão: o preço não muda, e é
+      // justamente por isso que o único custo de esperar é o de calendário.
+      '<p class="hpe">Não é o preço que muda com o tempo: ele é o mesmo hoje e em outubro. O que muda é em qual desses três cartões você está. '
+        + esc(diasFrase(d)) + ', '
+        + (d > 21
+            ? 'e em duas semanas você estará no do meio.'
+            : (d > 3 ? 'e você já passou do primeiro.' : 'e o terceiro é o de agora.'))
+        + '</p>';
   }
 
   // Frases que dependem dos dias e vivem fora do bloco de calendário.
