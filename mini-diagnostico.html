@@ -323,6 +323,12 @@
   .placar .nota .n span{font-size:26px;font-weight:400}
   .placar .nota .lb{font-family:'Source Sans 3',sans-serif;font-size:12px;letter-spacing:2px;
                     text-transform:uppercase;font-weight:700}
+  /* A comparação com os outros. Fica dentro do cartão dourado, colada no número,
+     porque é o número que ela qualifica. Sem caixa alta e sem peso: é referência,
+     não veredito. */
+  .placar .nota .lbcomp{font-family:'Source Sans 3',sans-serif;font-size:11.5px;
+                        line-height:1.3;text-align:center;max-width:150px;
+                        color:rgba(20,48,74,.78);margin-top:4px}
   .placar .eixos{flex:1;min-width:220px;display:flex;flex-direction:column;gap:12px}
   .placar .eixo{background:rgba(247,244,238,.08);border:1px solid rgba(191,220,238,.3);
                 border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;
@@ -2882,6 +2888,21 @@
   // gargalo(r) e na manchete. Extraída à parte (04/08) porque virou dependência
   // de dois lugares: o quadrante e a pill "perfil provável" do hero — os dois
   // têm que sempre concordar, então os dois chamam a mesma função.
+  /* Comparação com quem já fez, medida no banco em 07/08/2026 sobre 252 testes
+     respondidos: mediana 3 de 7, média 3,50, e 62 pessoas (24,6%) com 5 ou mais.
+     Existe porque a página inteira mede a pessoa contra ela mesma e nunca contra
+     ninguém. "4 de 7" não diz se é bom ou ruim, e quem nunca prestou o Exame não
+     tem referência nenhuma para saber. Duas frases só, e nenhuma delas elogia: a
+     do quartil superior é fato, e a mediana serve igual para quem ficou abaixo.
+     PARA ATUALIZAR o número:
+       select percentile_cont(0.5) within group (order by acertos) as mediana,
+              count(*) filter (where acertos>=5), count(*)
+       from public.leads where acertos is not null; */
+  function comparaMediana(c){
+    if(c >= 5) return 'entre os 25% que mais acertam aqui';
+    return 'a mediana de quem faz este teste é 3';
+  }
+
   function perfilNome(r){
     var hiX=r.X>=CORTE_X, hiY=r.Y>=CORTE_Y;
     if(hiX&&hiY) return 'Pronta de verdade';
@@ -3134,7 +3155,15 @@
           : '<h1>'+g.h1+'</h1>')+
         '<div class="placar">'+
           '<div class="nota"><div class="n">'+r.c+'<span>/'+CONTENT.length+'</span></div>'+
-            '<div class="lb">acertos</div></div>'+
+            '<div class="lb">acertos</div>'+
+            // COMPARAÇÃO EXTERNA (07/08/2026). A página inteira media a pessoa contra
+            // ela mesma e nunca contra ninguém: "4 de 7" não diz se é bom ou ruim, e
+            // quem nunca prestou o Exame não tem como saber. A mediana real de 252
+            // testes respondidos é 3. Quem faz 5 ou mais está no quarto superior
+            // (62 de 252 = 24,6%).
+            // PARA ATUALIZAR: select percentile_cont(0.5) within group (order by
+            // acertos), count(*) from leads where acertos is not null.
+            '<div class="lbcomp">'+esc(comparaMediana(r.c))+'</div></div>'+
           '<div class="eixos">'+
             '<div class="eixo"><span>'+esc(bx.rot)+'</span>'+
               '<b class="laranja">'+esc(bx.v)+'</b></div>'+
