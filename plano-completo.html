@@ -132,6 +132,11 @@
                  transform:rotate(-45deg)}
   .okslim{font-size:13.5px;color:var(--green-d);background:var(--green-w);
           border:1px solid var(--green-l);border-radius:8px;padding:9px 14px}
+  /* Miúda de propósito: informa quem procurou, sem virar assunto para quem não
+     tinha a dúvida. */
+  .ok .valor{font-size:12.5px;line-height:1.5;color:var(--green-d);opacity:.85;
+             margin-top:12px;padding-top:10px;border-top:1px solid var(--green-l)}
+  .ok .valor b{font-weight:700;opacity:1}
 
   .moldura{background:var(--card);border:1px solid var(--line);border-radius:12px;
            padding:20px 22px;border-left:3px solid var(--ocre2)}
@@ -348,6 +353,12 @@
       <li>Se disser não aqui, o seu material continua liberado do mesmo jeito, com a garantia de 7 dias.</li>
       <li>Se você marcou o Kit Reta Final no carrinho, ele entra no mesmo acesso.</li>
     </ul>
+    <!-- O valor cobrado, dito antes de qualquer oferta. Quem marcou o Kit vê R$66
+         no extrato depois de ter clicado num anúncio de R$47, e sem explicação
+         isso lê como cobrança a mais, ainda mais num momento em que a página
+         seguinte pede outros R$127. É serviço, não venda: por isso fica em letra
+         miúda no bloco de confirmação e não junto do preço. -->
+    <p class="valor">No seu extrato: <b>R$ 47</b> do Mapa da Aprovação, e mais <b>R$ 19</b> se você marcou o Kit Reta Final, o que dá <b>R$ 66</b>. Nenhum outro valor foi cobrado.</p>
   </div>
 
   <div class="moldura" id="moldura">
