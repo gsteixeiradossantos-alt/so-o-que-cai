@@ -170,6 +170,28 @@
   .honesto p{font-size:14.5px;line-height:1.6;color:var(--ink)}
   .honesto p b{font-weight:700}
 
+  /* O bloco do mecanismo. É o único da página com fundo navy cheio fora do hero:
+     a página inteira usa cartão branco, e o navy aqui é o que diz "pare, é isto".
+     Mesma disciplina do bloco de preço na página do R$47, que é o único com borda
+     dourada de 2px porque é onde a decisão acontece. */
+  .mecan{background:var(--navy);color:var(--paper);border-radius:14px;padding:28px 26px}
+  .mecan h2{color:var(--paper);margin-top:10px}
+  .mecan .p{color:var(--azul);margin-top:14px}
+  .mecan .p b{color:var(--paper);font-weight:600}
+  /* O cartão branco dentro do bloco navy precisa reverter a cor do texto: sem
+     isto o título herda o claro do .mecan e some no fundo branco. */
+  .mecan .cardb{background:#fff;color:var(--ink)}
+  .mecan .cardb h4{color:var(--ink)}
+  .prazos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:20px}
+  .prz{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:14px 16px}
+  .prz b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:700;color:var(--gold)}
+  .prz span{display:block;font-size:13.5px;line-height:1.5;color:var(--azul);margin-top:6px}
+  /* O prazo de hoje ganha destaque: é o que se aplica a quem está lendo agora. */
+  .prz.atual{background:#fff;border-color:#fff}
+  .prz.atual b{color:var(--navy)}
+  .prz.atual span{color:var(--sec)}
+  .notap{font-size:12.5px;line-height:1.5;color:rgba(191,220,238,.75);margin-top:12px}
+
   .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;align-items:start}
   .provas img{display:block;width:100%;height:auto;border:1px solid var(--line);
               border-radius:10px;background:var(--card)}
@@ -320,21 +342,45 @@
   </div>
 </section>
 
+<!-- ===== O MECANISMO =====
+     Bloco próprio, fora do grid de entregas, porque o cronograma não é um item
+     de lista: é o que torna a promessa possível. E ele abre admitindo o que o
+     gerador realmente faz, que é NÃO colocar as 11 matérias no plano de quem tem
+     30 dias (qtdSec cai a zero abaixo de 35 dias, em qualquer carga horária).
+     Antes desta seção a página vendia "as 11 matérias" e o produto entregava um
+     calendário só de núcleo duro. A contradição era do texto, não do gerador: em
+     30 dias, estudar matéria nova custa os pontos que a pessoa já tem. -->
+<section class="vsec estreita">
+  <div class="mecan">
+    <span class="eyebrow gold">O que decide a sua ordem</span>
+    <h2 class="grande" id="mecanH2">Você não vai estudar as 11 matérias no tempo que falta. E não é para estudar.</h2>
+    <p class="p">Quem tenta aprender onze matérias novas na reta final perde os pontos que já tinha no núcleo duro, e a conta não fecha. <b>O cronograma existe para tomar essa decisão no seu lugar</b>: ele olha os dias que faltam, as suas matérias fracas e as horas que você tem, e escolhe o que entra e o que fica de fora.</p>
+
+    <div class="prazos" id="prazos"></div>
+    <p class="notap" id="prazoNota">Os três são o mesmo gerador, com a data da prova mudada. Ele não encolhe o plano: muda o que o plano faz.</p>
+
+    <div class="cardb" style="margin-top:18px">
+      <h4 style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:8px">E se eu não conseguir seguir?</h4>
+      <p style="font-size:15px;line-height:1.6;color:var(--sec)">Você já tentou se organizar antes, e provavelmente largou. Todo mundo larga o plano que não cabe no dia. Por isso o cronograma não te entrega um mês: entrega <b>um dia de cada vez</b>, com a matéria, o recorte e quantas questões, no tamanho das horas que você disse ter. E cada dia tem um botão de feito, para você ver a barra andar. Não é motivação, é a única coisa que faz alguém voltar no dia seguinte.</p>
+    </div>
+  </div>
+</section>
+
 <section class="vsec larga">
   <span class="eyebrow">O que entra no seu acesso</span>
-  <h2 class="grande" id="entregaH2">As 11 matérias que faltam, dois simulados no tamanho da prova e o calendário até o dia 6 de setembro.</h2>
+  <h2 class="grande" id="entregaH2">O calendário até o dia 6 de setembro, dois simulados no tamanho da prova e as fichas das 17 matérias.</h2>
   <div class="grade">
     <div class="cardb pequeno">
       <h4>Mais 11 matérias de fichas</h4>
-      <p>Trabalho, Processo do Trabalho, Tributário, Administrativo, Empresarial, Consumidor, Ambiental, ECA, Internacional, Direitos Humanos e Filosofia do Direito. Mesmo formato das que você já tem: a regra, a súmula aplicável e a pegadinha que mais reprova. Com elas você passa de 6 matérias para 17.</p>
+      <p>Trabalho, Processo do Trabalho, Tributário, Administrativo, Empresarial, Consumidor, Ambiental, ECA, Internacional, Direitos Humanos e Filosofia do Direito. Mesmo formato das que você já tem: a regra, a súmula e a pegadinha. Com elas você passa de 6 para 17. Na reta final elas ficam para consulta; num prazo maior, o cronograma põe as de maior incidência no calendário.</p>
     </div>
     <div class="cardb pequeno">
       <h4>Dois simulados completos de 80 questões</h4>
       <p>No tamanho da prova, cronometrados, com gabarito comentado. São 160 questões ao todo, e nenhuma se repete de um simulado para o outro.</p>
     </div>
     <div class="cardb pequeno">
-      <h4>Cronograma dia a dia até a prova</h4>
-      <p id="cronoP">Você abre a página, diz quantas horas tem por dia e a data da prova, e clica em gerar. Ele monta o calendário começando pelas suas matérias fracas e sai pronto para imprimir.</p>
+      <h4>O cronograma, dia a dia até a prova</h4>
+      <p id="cronoP">Cada dia traz a matéria, o recorte dentro dela e quantas questões, no tamanho das horas que você tem. Sai pronto para imprimir, e você marca o dia como feito conforme avança.</p>
     </div>
     <div class="cardb pequeno">
       <h4>Cabeça para a prova</h4>
@@ -346,13 +392,26 @@
     </div>
   </div>
   <div class="honesto">
-    <p><b>Duas coisas ditas do jeito que são.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho: se o seu tempo por dia mudar, você gera de novo, e leva menos de um minuto. E para ele sair com as suas matérias, faça o diagnóstico de 24 questões dentro do app, no mesmo aparelho em que for estudar. É esse diagnóstico que o gerador lê, não o teste rápido do site, que mora em outro endereço. Sem esse passo, o cronograma sai equilibrado pelas matérias de maior peso, e a própria página avisa quando isso acontece.</p>
+    <p><b>Duas coisas ditas do jeito que são, e o motivo de cada uma.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho. É de propósito: um plano que se reescreve sem você pedir é um plano em que você para de confiar na terça, quando ele muda o que tinha combinado na segunda. Se o seu tempo por dia mudar, você gera de novo, leva menos de um minuto, e os dias que já marcou continuam marcados.</p>
+    <p style="margin-top:12px">A segunda: para o calendário sair com as suas matérias, o gerador lê o diagnóstico de 24 questões feito <b>dentro do app</b>. Se você abrir num aparelho onde ainda não fez, ele pergunta em quais matérias você mais perde ponto e monta a partir da sua resposta, dizendo na tela que foi assim que montou. Ninguém recebe um plano de ninguém.</p>
   </div>
 </section>
 
 <section class="vsec larga">
   <span class="eyebrow">Veja por dentro</span>
   <div class="provas">
+    <!-- O cronograma vem PRIMEIRO: é a única das três telas que a pessoa não
+         consegue imaginar sozinha, e a única que só existe no R$127. Ficha e
+         simulado qualquer um projeta na cabeça sem ver.
+         Gerado rodando o próprio cronograma.html com um diagnóstico de exemplo
+         (fracas em Civil, Processo Civil e Penal, 2 horas por dia, prova em 06/09,
+         quatro dias já marcados). É saída real da ferramenta, recortada, nunca uma
+         maquete: a legenda afirma isso, e afirmação em página de venda tem que ser
+         verdadeira. -->
+    <figure>
+      <img src="assets/telas/cronograma.webp" alt="O cronograma dia a dia, com dias marcados como feitos" loading="lazy" decoding="async">
+      <figcaption><b>O cronograma, em uso.</b> Um dia de cada vez, com a barra andando conforme você marca o que já fez.</figcaption>
+    </figure>
     <figure>
       <img src="assets/telas/ficha.webp" alt="Uma ficha de matéria" loading="lazy" decoding="async">
       <figcaption><b>As fichas.</b> A regra, a súmula do STJ e a pegadinha, agora nas 17 matérias.</figcaption>
@@ -360,14 +419,6 @@
     <figure>
       <img src="assets/telas/simulado.webp" alt="Um simulado cronometrado" loading="lazy" decoding="async">
       <figcaption><b>Os simulados.</b> No tamanho da prova, cronometrado, com o comentário de cada questão.</figcaption>
-    </figure>
-    <!-- Gerado rodando o próprio cronograma.html com um diagnóstico de exemplo
-         (fracas em Civil, Processo Civil e Penal, 2 horas por dia, prova em 06/09).
-         É saída real da ferramenta, recortada, nunca uma maquete: a legenda abaixo
-         afirma isso, e afirmação em página de venda tem que ser verdadeira. -->
-    <figure>
-      <img src="assets/telas/cronograma.webp" alt="O cronograma dia a dia até a prova" loading="lazy" decoding="async">
-      <figcaption><b>O cronograma.</b> O seu calendário até a prova, dia a dia, na ordem das suas matérias fracas.</figcaption>
     </figure>
   </div>
   <p class="provas-nota">Telas reais do que entra no seu acesso. O cronograma acima saiu do próprio gerador, com 30 dias até a prova.</p>
@@ -393,7 +444,11 @@
   <div class="preco">
     <span class="eyebrow" id="precoK">Subir para o Plano Completo</span>
     <div class="v">R$ 127 <span id="parcela">no Pix · ou 6x de R$ 23,83 no cartão (R$ 142,98)</span></div>
-    <p class="compara">Para comparar com honestidade: um cursinho de reta final passa de R$ 1.000, e a inscrição do exame que você já pagou custou R$ 350.</p>
+    <!-- A âncora não é mais o cursinho: quem está lendo isto já decidiu não
+         comprar cursinho, então comparar com R$ 1.000 não move ninguém. A âncora
+         que morde é o custo de repetir, e para quem já reprovou esse número não é
+         hipótese, é memória. -->
+    <p class="compara">A inscrição do Exame custa R$ 350, e é o que se paga de novo a cada vez que a prova não sai. O Plano Completo custa pouco mais de um terço disso, uma vez só.</p>
 
     <!-- Quando a sonda validar o widget, ele é movido para cá. Enquanto isso, este
          nó fica vazio e não ocupa espaço. -->
@@ -860,6 +915,52 @@
     });
   }
 
+  /* ---------- os três prazos ----------
+     Reproduz as MESMAS contas do gerador (cronograma.html no app): reta =
+     min(21, dias), base = dias - reta, e a tabela de disciplinas fora do núcleo
+     qtdSec = dias>70?6 : dias>50?4 : dias>35?2 : 0, aqui na carga de 2h por dia.
+     Se essas regras mudarem lá, mudam aqui: isto é promessa, e promessa que não
+     bate com o produto vira reembolso na primeira semana. O cartão do meio é
+     sempre o prazo de hoje, para a página não seguir dizendo "30 dias" em
+     outubro. */
+  function contaPrazo(d){
+    var reta = Math.min(21, d), base = d - reta;
+    var sec = d > 70 ? 6 : d > 50 ? 4 : d > 35 ? 2 : 0;
+    if(base <= 0) return d + (d === 1 ? ' dia, todo' : ' dias, todos') + ' de reta final: revisão e simulado, nada de matéria nova';
+    if(sec === 0) return base + ' de base e ' + reta + ' de reta final, só no núcleo duro. As outras fichas ficam para consulta';
+    return base + ' de base e ' + reta + ' de reta final, com ' + sec + ' disciplina' + (sec > 1 ? 's' : '') + ' de fora do núcleo entrando no plano';
+  }
+
+  function montarPrazos(){
+    var el = $('prazos');
+    if(!el) return;
+    var d = diasParaProva();
+    // Trio FIXO, um por regime: com disciplinas fora do núcleo, só núcleo, e só
+    // reta final. Tentei montar o trio em volta do prazo de hoje e, a partir de
+    // 21 dias, os três caíam no mesmo regime e os cartões saíam idênticos, o que
+    // é o oposto de demonstrar ajuste. O prazo da pessoa entra na linha abaixo.
+    var TRIO = [60, 30, 10];
+    var atual = d ? TRIO.reduce(function(a, b){ return Math.abs(b - d) < Math.abs(a - d) ? b : a; }) : null;
+    el.innerHTML = TRIO.map(function(x){
+      return '<div class="prz'+(x === atual ? ' atual' : '')+'"><b>'+x+' dias</b><span>'+esc(contaPrazo(x))+'</span></div>';
+    }).join('');
+    // O título só cita o número de dias quando ele existe e quando a afirmação é
+    // verdadeira naquele prazo: acima de 35 dias o gerador PÕE disciplinas de fora
+    // do núcleo no plano, e aí dizer "você não vai estudar as 11" seria mentira.
+    var h2 = $('mecanH2');
+    if(h2 && d){
+      h2.textContent = d > 35
+        ? 'Você não vai estudar as 11 matérias todas de uma vez. E não é para estudar.'
+        : 'Você não vai estudar as 11 matérias em ' + d + (d === 1 ? ' dia' : ' dias') + '. E não é para estudar.';
+    }
+    var nota = $('prazoNota');
+    if(nota){
+      nota.textContent = d
+        ? 'Os três são o mesmo gerador, com a data da prova mudada. Ele não encolhe o plano: muda o que o plano faz. Hoje ' + (d === 1 ? 'falta 1 dia' : 'faltam ' + d + ' dias') + ', então o seu é ' + esc(contaPrazo(d)) + '.'
+        : 'Os três são o mesmo gerador, com a data da prova mudada. Ele não encolhe o plano: muda o que o plano faz.';
+    }
+  }
+
   /* ---------- bloco de calendário ---------- */
   function montarHoje(){
     var d = diasParaProva();
@@ -957,6 +1058,7 @@
   daMemoria();
   aplicarPessoa();
   montarCheckout();
+  montarPrazos();
   montarHoje();
   ajustarDias();
   montarFaq();
