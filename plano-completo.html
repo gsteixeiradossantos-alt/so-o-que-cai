@@ -232,6 +232,11 @@
   .tlin.nova{background:#FCFAF4}
   .tlin.nova span{font-weight:600;color:var(--ink)}
   .tlin.nova i.on{color:var(--green)}
+  /* Observação dentro da linha da tabela: some no celular, onde a coluna de
+     rótulo já está apertada e a linha extra viraria três linhas de texto. */
+  .tlin span i.obs{display:block;font-style:normal;font-size:12.5px;font-weight:400;
+                   color:var(--muted);text-align:left;margin-top:3px;line-height:1.35}
+  @media(max-width:460px){ .tlin span i.obs{display:none} }
   @media(max-width:460px){
     .tlin{grid-template-columns:1fr 54px 54px;padding:11px 12px;font-size:13.5px}
     .tcab,.tcab i{font-size:10.5px;letter-spacing:.8px}
@@ -408,9 +413,15 @@
 
     <!-- Largura inteira, e não um terço de grid: era a única tela que a pessoa
          não consegue imaginar sozinha e estava pequena demais para ser lida. -->
+    <!-- Começa como imagem parada e vira o GIF depois de carregar, e só para quem
+         não pediu menos movimento no sistema. Assim os 132 KB do GIF não pesam no
+         primeiro paint, e quem tem sensibilidade a movimento fica com a versão
+         estática, que conta a mesma coisa. O alt cobre os dois casos. -->
     <figure class="telona">
-      <img src="assets/telas/cronograma.webp" alt="O cronograma gerado, com quatro dias marcados como feitos" loading="lazy" decoding="async">
-      <figcaption>O que sai do gerador com 30 dias até a prova, quatro dias já marcados. Cada linha traz a matéria, o recorte dentro dela e quantas questões.</figcaption>
+      <img src="assets/telas/cronograma.webp" data-anim="assets/telas/cronograma.gif"
+           alt="O cronograma sendo gerado: escolher as horas por dia, apertar gerar, e marcar os dias como feitos"
+           loading="lazy" decoding="async">
+      <figcaption>Você escolhe as horas, aperta gerar, e marca o que já fez. Cada linha traz a matéria, o recorte dentro dela e quantas questões.</figcaption>
     </figure>
 
     <div class="cardb" style="margin-top:18px">
@@ -461,7 +472,12 @@
     <div class="tlin nova"><span>2 simulados completos, 80 questões cada</span><i>não</i><i class="on">sim</i></div>
     <div class="tlin nova"><span>Cronograma dia a dia até a data da prova</span><i>não</i><i class="on">sim</i></div>
     <div class="tlin nova"><span>Cabeça para a prova, os protocolos de nervosismo</span><i>não</i><i class="on">sim</i></div>
-    <div class="tlin nova"><span>Plano por carga semanal</span><i>não</i><i class="on">sim</i></div>
+    <!-- O nome da matriz do app ("Plano por carga semanal") não diz nada para
+         quem lê. É plano-de-estudo.html: três modelos fixos de semana, sem
+         personalização. Fica na tabela porque é entrega real, mas descrito pelo
+         que é, e sem competir com o cronograma, que faz o mesmo por dia e de
+         verdade. -->
+    <div class="tlin nova"><span>Modelos de semana, por hora disponível <i class="obs">referência fixa, para quem não quer o calendário dia a dia</i></span><i>não</i><i class="on">sim</i></div>
   </div>
   <p class="provas-nota">As cinco linhas de baixo são o que muda. As de cima já são suas e continuam sendo.</p>
 
@@ -1134,6 +1150,23 @@
   daMemoria();
   aplicarPessoa();
   montarCheckout();
+  /* Troca a imagem parada do cronograma pelo GIF, quando cabe. Duas guardas: o
+     sistema pode pedir menos movimento, e a conexão pode ser cara (Save-Data ou
+     rede lenta declarada). Nos dois casos a imagem estática fica, e ela conta a
+     mesma história. Só troca depois que o GIF carregou, para não piscar. */
+  function animarTelona(){
+    var img = document.querySelector('.telona img[data-anim]');
+    if(!img) return;
+    try{
+      if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var c = navigator.connection;
+      if(c && (c.saveData || /^(slow-)?2g$/.test(c.effectiveType || ''))) return;
+    }catch(e){}
+    var pre = new Image();
+    pre.onload = function(){ img.src = img.getAttribute('data-anim'); };
+    pre.src = img.getAttribute('data-anim');
+  }
+
   montarPrazos();
   montarHoje();
   ajustarDias();
@@ -1142,6 +1175,7 @@
   vestirContexto();
   doLinkAssinado();     // assíncrono: reescreve nome e checkout se o servidor responder
 
+  animarTelona();
   marcarOferta();
   window.addEventListener('scroll', marcarOferta, {passive:true});
   window.addEventListener('resize', marcarOferta);
