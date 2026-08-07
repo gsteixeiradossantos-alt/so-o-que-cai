@@ -192,12 +192,50 @@
   .prz.atual span{color:var(--sec)}
   .notap{font-size:12.5px;line-height:1.5;color:rgba(191,220,238,.75);margin-top:12px}
 
+  /* Três colunas fixas em tela larga: com auto-fit o terceiro passo caía sozinho
+     numa segunda linha e a sequência deixava de ler como sequência. */
+  .passos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+  @media(max-width:620px){ .passos{grid-template-columns:1fr} }
+  .passo{display:flex;gap:11px;align-items:flex-start;background:rgba(255,255,255,.07);
+         border-radius:10px;padding:13px 15px}
+  .passo b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--navy);
+           display:grid;place-items:center;font-size:13px;font-weight:700}
+  .passo span{font-size:13.5px;line-height:1.45;color:var(--azul)}
+
+  /* O cronograma em largura inteira. Estava dividindo um grid de três colunas e
+     saía a 295px, ilegível: é a única tela que a pessoa não consegue imaginar
+     sozinha, e a que mais precisa ser vista. */
+  .telona{margin-top:18px}
+  .telona img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,.16)}
+  .telona figcaption{font-size:13px;line-height:1.5;color:var(--azul);margin-top:10px}
+
   .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;align-items:start}
   .provas img{display:block;width:100%;height:auto;border:1px solid var(--line);
               border-radius:10px;background:var(--card)}
   .provas figcaption{font-size:13px;line-height:1.5;color:var(--sec);margin-top:9px}
   .provas figcaption b{color:var(--ink);font-weight:600}
   .provas-nota{font-size:12.5px;line-height:1.5;color:var(--muted)}
+
+  /* Tabela comparativa. Grid e não <table>: no celular a coluna de rótulo precisa
+     poder quebrar em duas linhas sem empurrar as colunas de sim/não para fora. */
+  .tabela{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .tlin{display:grid;grid-template-columns:1fr 76px 76px;align-items:center;gap:8px;
+        padding:12px 16px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.4}
+  .tlin:first-child{border-top:0}
+  .tlin span{min-width:0}
+  .tlin i{font-style:normal;text-align:center;font-size:13px;color:var(--muted)}
+  .tlin i.on{color:var(--ink);font-weight:700}
+  .tcab{background:#FBF6EA;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--sec)}
+  .tcab i{font-size:12px;letter-spacing:1px;color:var(--sec)}
+  .tcab i.on{color:var(--ocre)}
+  /* As linhas que mudam ganham marca própria: é onde o olho tem que parar. */
+  .tlin.nova{background:#FCFAF4}
+  .tlin.nova span{font-weight:600;color:var(--ink)}
+  .tlin.nova i.on{color:var(--green)}
+  @media(max-width:460px){
+    .tlin{grid-template-columns:1fr 54px 54px;padding:11px 12px;font-size:13.5px}
+    .tcab,.tcab i{font-size:10.5px;letter-spacing:.8px}
+  }
 
   .riscado .ri{font-size:16px;line-height:1.5;color:var(--muted);text-decoration:line-through;
                padding:7px 0;border-top:1px solid var(--line)}
@@ -359,6 +397,22 @@
     <div class="prazos" id="prazos"></div>
     <p class="notap" id="prazoNota">Os três são o mesmo gerador, com a data da prova mudada. Ele não encolhe o plano: muda o que o plano faz.</p>
 
+    <!-- Como se faz, em três passos. Substitui a ideia de um GIF de tela: aqui o
+         texto é nítido em qualquer tela, funciona no celular, não pesa e não
+         obriga ninguém a esperar um laço de animação chegar na parte que importa. -->
+    <div class="passos">
+      <div class="passo"><b>1</b><span>Você diz quantas horas tem por dia e confirma a data da prova</span></div>
+      <div class="passo"><b>2</b><span>Aperta gerar. Leva menos de um minuto</span></div>
+      <div class="passo"><b>3</b><span>O calendário sai pronto, dia a dia, e você marca o que já fez</span></div>
+    </div>
+
+    <!-- Largura inteira, e não um terço de grid: era a única tela que a pessoa
+         não consegue imaginar sozinha e estava pequena demais para ser lida. -->
+    <figure class="telona">
+      <img src="assets/telas/cronograma.webp" alt="O cronograma gerado, com quatro dias marcados como feitos" loading="lazy" decoding="async">
+      <figcaption>O que sai do gerador com 30 dias até a prova, quatro dias já marcados. Cada linha traz a matéria, o recorte dentro dela e quantas questões.</figcaption>
+    </figure>
+
     <div class="cardb" style="margin-top:18px">
       <h4 style="font-family:'Source Serif 4',Georgia,serif;font-size:18px;font-weight:700;margin-bottom:8px">E se eu não conseguir seguir?</h4>
       <p style="font-size:15px;line-height:1.6;color:var(--sec)">Você já tentou se organizar antes, e provavelmente largou. Todo mundo larga o plano que não cabe no dia. Por isso o cronograma não te entrega um mês: entrega <b>um dia de cada vez</b>, com a matéria, o recorte e quantas questões, no tamanho das horas que você disse ter. E cada dia tem um botão de feito, para você ver a barra andar. Não é motivação, é a única coisa que faz alguém voltar no dia seguinte.</p>
@@ -391,6 +445,26 @@
       <p>Não é outro login nem mensalidade. O seu acesso vira Plano Completo na hora, e o prazo é renovado por 12 meses.</p>
     </div>
   </div>
+  <!-- ===== A DIFERENÇA, LINHA A LINHA =====
+       Copiada da matriz canônica LINHAS em app/index.html, que é a tabela que a
+       área do aluno desenha. Se um item mudar de plano lá, muda aqui: é a mesma
+       promessa vista de dois lugares, e a pessoa compara. O Kit fica de fora da
+       tabela de propósito: ele não é um tier, é bump, e misturá-lo faz parecer
+       que o R$127 o inclui. -->
+  <div class="tabela">
+    <div class="tlin tcab"><span>O que você tem e o que passa a ter</span><i>R$ 47</i><i class="on">R$ 127</i></div>
+    <div class="tlin"><span>Diagnóstico de 24 questões e o Relatório dos 2 Eixos</span><i>sim</i><i class="on">sim</i></div>
+    <div class="tlin"><span>Fichas do núcleo duro, 6 matérias</span><i>sim</i><i class="on">sim</i></div>
+    <div class="tlin"><span>3 simulados focados, 24 questões</span><i>sim</i><i class="on">sim</i></div>
+    <div class="tlin"><span>Folha de tática de prova e Guia de leitura da FGV</span><i>sim</i><i class="on">sim</i></div>
+    <div class="tlin nova"><span>Fichas das outras 11 disciplinas</span><i>não</i><i class="on">sim</i></div>
+    <div class="tlin nova"><span>2 simulados completos, 80 questões cada</span><i>não</i><i class="on">sim</i></div>
+    <div class="tlin nova"><span>Cronograma dia a dia até a data da prova</span><i>não</i><i class="on">sim</i></div>
+    <div class="tlin nova"><span>Cabeça para a prova, os protocolos de nervosismo</span><i>não</i><i class="on">sim</i></div>
+    <div class="tlin nova"><span>Plano por carga semanal</span><i>não</i><i class="on">sim</i></div>
+  </div>
+  <p class="provas-nota">As cinco linhas de baixo são o que muda. As de cima já são suas e continuam sendo.</p>
+
   <div class="honesto">
     <p><b>Duas coisas ditas do jeito que são, e o motivo de cada uma.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho. É de propósito: um plano que se reescreve sem você pedir é um plano em que você para de confiar na terça, quando ele muda o que tinha combinado na segunda. Se o seu tempo por dia mudar, você gera de novo, leva menos de um minuto, e os dias que já marcou continuam marcados.</p>
     <p style="margin-top:12px">A segunda: para o calendário sair com as suas matérias, o gerador lê o diagnóstico de 24 questões feito <b>dentro do app</b>. Se você abrir num aparelho onde ainda não fez, ele pergunta em quais matérias você mais perde ponto e monta a partir da sua resposta, dizendo na tela que foi assim que montou. Ninguém recebe um plano de ninguém.</p>
@@ -399,29 +473,31 @@
 
 <section class="vsec larga">
   <span class="eyebrow">Veja por dentro</span>
+  <!-- ===== SÓ TELAS EXCLUSIVAS =====
+       Até 07/08 esta seção mostrava ficha.webp e simulado.webp, e as duas eram
+       um problema. A ficha é a MESMA imagem da página do R$47: quem comprou
+       quinze minutos antes já a viu, e revê-la sugere "é a mesma coisa" no
+       momento exato em que a página precisa provar o contrário. E simulado.webp
+       mostra o placar "19/24", que é o simulado FOCADO, do R$47: eu estava
+       provando a entrega exclusiva com a tela do produto que a pessoa já tem.
+       Agora as três telas só existem no R$127: o cronograma, um simulado de 80 em
+       questão de Tributário, e uma ficha marcada pelo próprio produto como
+       "matéria complementar". Todas geradas rodando as ferramentas de verdade. -->
+  <p class="provas-nota" style="margin-bottom:2px">Três telas que só existem no Plano Completo. Nenhuma delas é do material que você já tem.</p>
   <div class="provas">
-    <!-- O cronograma vem PRIMEIRO: é a única das três telas que a pessoa não
-         consegue imaginar sozinha, e a única que só existe no R$127. Ficha e
-         simulado qualquer um projeta na cabeça sem ver.
-         Gerado rodando o próprio cronograma.html com um diagnóstico de exemplo
-         (fracas em Civil, Processo Civil e Penal, 2 horas por dia, prova em 06/09,
-         quatro dias já marcados). É saída real da ferramenta, recortada, nunca uma
-         maquete: a legenda afirma isso, e afirmação em página de venda tem que ser
-         verdadeira. -->
     <figure>
-      <img src="assets/telas/cronograma.webp" alt="O cronograma dia a dia, com dias marcados como feitos" loading="lazy" decoding="async">
-      <figcaption><b>O cronograma, em uso.</b> Um dia de cada vez, com a barra andando conforme você marca o que já fez.</figcaption>
+      <img src="assets/telas/simulado-80.webp" alt="Simulado completo, questão 12 de 80, matéria Tributário" loading="lazy" decoding="async">
+      <figcaption><b>O simulado de 80.</b> No tamanho da prova, e caindo em matérias que o seu diagnóstico não mediu, como esta de Tributário.</figcaption>
     </figure>
     <figure>
-      <img src="assets/telas/ficha.webp" alt="Uma ficha de matéria" loading="lazy" decoding="async">
-      <figcaption><b>As fichas.</b> A regra, a súmula do STJ e a pegadinha, agora nas 17 matérias.</figcaption>
-    </figure>
-    <figure>
-      <img src="assets/telas/simulado.webp" alt="Um simulado cronometrado" loading="lazy" decoding="async">
-      <figcaption><b>Os simulados.</b> No tamanho da prova, cronometrado, com o comentário de cada questão.</figcaption>
+      <img src="assets/telas/ficha-complementar.webp" alt="Ficha de Direito do Trabalho, marcada como matéria complementar" loading="lazy" decoding="async">
+      <figcaption><b>As fichas das outras 11.</b> Mesmo formato das que você tem, agora em Trabalho, Tributário, Administrativo e as demais.</figcaption>
     </figure>
   </div>
-  <p class="provas-nota">Telas reais do que entra no seu acesso. O cronograma acima saiu do próprio gerador, com 30 dias até a prova.</p>
+  <!-- O cronograma NÃO se repete aqui: ele já aparece em largura inteira no bloco
+       do mecanismo, acima. Mostrá-lo duas vezes gastaria a única tela realmente
+       nova em miniatura, depois de tê-la mostrado grande. -->
+  <p class="provas-nota">Telas reais, geradas nas próprias ferramentas.</p>
 </section>
 
 <section class="vsec estreita">
