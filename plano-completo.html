@@ -270,6 +270,32 @@
   .hfim{margin-top:12px;font-size:16.5px;line-height:1.6;color:var(--paper)}
   .hfim b{color:#fff}
 
+  /* BARRA FIXA (07/08/2026). A página tem 11.679 px no celular, umas 14 telas.
+     A barra entra depois que a pessoa passa do primeiro botão e sai de cena
+     quando o bloco de preço ou o CTA final estão à vista, para não competir com
+     eles. No contexto de funil com o widget da Hotmart vivo ela NUNCA aparece:
+     cobriria o checkout embutido, que é o caminho mais curto da página inteira.
+     Estado fechado usa visibility para o link não ficar tabulável fora da tela. */
+  .barra{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--navy);
+         border-top:1px solid rgba(255,255,255,.14);box-shadow:0 -8px 24px rgba(10,26,42,.24);
+         padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));
+         transform:translateY(115%);visibility:hidden;
+         transition:transform .22s ease, visibility .22s}
+  .barra.on{transform:none;visibility:visible}
+  .bwrap{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .btxt{flex:1;min-width:0;color:var(--paper);line-height:1.3}
+  .btxt b{display:block;font-size:15px}
+  .btxt span{font-size:12.5px;color:rgba(191,220,238,.92)}
+  .btn-bar{flex:none;background:var(--gold);color:var(--navy);font-weight:700;
+           border-radius:10px;padding:13px 20px;font-size:15px;text-decoration:none;
+           white-space:nowrap}
+  /* A primeira versão escondia o preço abaixo de 380 px, e 375 é a largura de
+     iPhone mini e SE: a barra aparecia sem número justamente nos aparelhos mais
+     apertados. Medido a 375: a linha de preço ocupa cerca de 190 px dos 234
+     disponíveis, então ela cabe. Só o respiro do botão diminui. */
+  @media (max-width:380px){ .btxt span{font-size:12px} .btn-bar{padding:13px 16px} }
+  @media (prefers-reduced-motion: reduce){ .barra{transition:none} }
+
   .preco{background:var(--card);border:2px solid var(--gold);border-radius:14px;
          padding:32px 26px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
   .preco .v{font-family:'Source Serif 4',Georgia,serif;font-size:46px;font-weight:700;line-height:1}
@@ -451,10 +477,17 @@
     <div class="tlin nova"><span>Modelos de semana, por hora disponível <i class="obs">referência fixa, para quem não quer o calendário dia a dia</i></span><i>não</i><i class="on">sim</i></div>
   </div>
   <p class="provas-nota">As cinco linhas de baixo são o que muda. As de cima já são suas e continuam sendo.</p>
+</section>
 
-  <div class="honesto">
-    <p><b>Duas coisas ditas do jeito que são, e o motivo de cada uma.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho. É de propósito: um plano que se reescreve sem você pedir é um plano em que você para de confiar na terça, quando ele muda o que tinha combinado na segunda. Se o seu tempo por dia mudar, você gera de novo, leva menos de um minuto, e os dias que já marcou continuam marcados.</p>
-    <p style="margin-top:12px">A segunda: para o calendário sair com as suas matérias, o gerador lê o diagnóstico de 24 questões feito <b>dentro do app</b>. Se você abrir num aparelho onde ainda não fez, ele pergunta em quais matérias você mais perde ponto e monta a partir da sua resposta, dizendo na tela que foi assim que montou. Ninguém recebe um plano de ninguém.</p>
+<!-- A tabela é o pico de desejo da página: a pessoa acabou de ver cinco linhas
+     de "não" virarem "sim". Até 07/08/2026 não havia botão aqui, e o próximo
+     ficava 7.300 px abaixo, nove telas de celular adiante. As ressalvas do
+     gerador, que ocupavam este lugar, foram para junto da FAQ: detalhe
+     operacional se lê depois de querer, não no meio de querer. -->
+<section class="vsec estreita">
+  <div class="ctaslim">
+    <a class="btn-lar" id="buytab" data-v="127" href="https://pay.hotmart.com/O106944368L?checkoutMode=10">Quero as cinco linhas de baixo: R$ 127</a>
+    <div class="price">Pix ou cartão, acesso na hora, no mesmo login que você já tem.</div>
   </div>
 </section>
 
@@ -564,6 +597,15 @@
   </div>
 </section>
 
+<!-- Segundo botão do vão morto: prova social termina e a pessoa precisa ter
+     onde clicar antes de entrar na seção de objeções. -->
+<section class="vsec estreita">
+  <div class="ctaslim">
+    <a class="btn-lar" id="buydep" data-v="127" href="https://pay.hotmart.com/O106944368L?checkoutMode=10">Quero o Plano Completo: R$ 127</a>
+    <div class="price">Pix ou cartão · acesso na hora, por 12 meses · garantia de 7 dias</div>
+  </div>
+</section>
+
 <section class="vsec estreita">
   <h2>O que o Plano Completo não é</h2>
   <div class="cardb riscado">
@@ -660,6 +702,17 @@
 <section class="vsec estreita">
   <h2>Perguntas que costumam travar aqui</h2>
   <div class="faq" id="faq"></div>
+
+  <!-- Estas duas ressalvas moraram, até 07/08/2026, entre a tabela comparativa e o
+       bloco do mecanismo, com cerca de 700 px de texto corrido em cima do pico de
+       desejo da página. O conteúdo tem que existir, e nada nele foi suavizado: o
+       cronograma não se refaz sozinho, e ele lê o diagnóstico feito dentro do app.
+       Mas é detalhe de operação, e detalhe de operação se lê no mesmo lugar em que
+       a pessoa vai procurar "como funciona na prática", que é a FAQ. -->
+  <div class="honesto" style="margin-top:22px">
+    <p><b>Duas coisas ditas do jeito que são, e o motivo de cada uma.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho. É de propósito: um plano que se reescreve sem você pedir é um plano em que você para de confiar na terça, quando ele muda o que tinha combinado na segunda. Se o seu tempo por dia mudar, você gera de novo, leva menos de um minuto, e os dias que já marcou continuam marcados.</p>
+    <p style="margin-top:12px">A segunda: para o calendário sair com as suas matérias, o gerador lê o diagnóstico de 24 questões feito <b>dentro do app</b>. Se você abrir num aparelho onde ainda não fez, ele pergunta em quais matérias você mais perde ponto e monta a partir da sua resposta, dizendo na tela que foi assim que montou. Ninguém recebe um plano de ninguém.</p>
+  </div>
 </section>
 
 <!-- CTA final. Cortei este bloco no desenho por colisão de regra com o bloco de
@@ -681,13 +734,23 @@
      sem medo; repeti-la no fim só serve para deixar ir. Sobrou a informação (onde
      fica o acesso), sem o convite e sem o link concorrendo com o botão de compra. -->
 <div class="fecho" id="fecho" hidden>
-  <p>O seu acesso ao Mapa fica em app.sooquecai.online, e o endereço vai também no e-mail de confirmação.</p>
+  <!-- "o endereço vai também no e-mail de confirmação" era verdade só para quem
+       acabou de comprar, e este fecho aparece SEMPRE para quem chega por link,
+       dias depois. Trocado pela versão que vale nos dois casos. -->
+  <p>O seu acesso ao Mapa fica em app.sooquecai.online, no mesmo e-mail que você usou na compra.</p>
 </div>
 
 <footer>
   Só o que Cai · ferramenta de estudo por incidência para a 1ª fase da OAB<br>
   Não é vinculado à FGV nem à OAB · não promete aprovação, entrega direção
 </footer>
+
+<div class="barra" id="barra">
+  <div class="bwrap">
+    <div class="btxt"><b>Plano Completo</b><span>R$ 127 no Pix ou 6x de R$ 23,83</span></div>
+    <a class="btn-bar" id="buybar" data-v="127" href="https://pay.hotmart.com/O106944368L?checkoutMode=10">Adicionar</a>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -860,7 +923,7 @@
     var sck = sckManual || ('up127-' + (CONTEXTO || 'link') + (VIA ? '-' + VIA : '') + (LEAD_ID ? '-' + LEAD_ID : ''));
     q += '&sck=' + encodeURIComponent(sck);
 
-    ['buy2','buy3','buy0'].forEach(function(id){
+    ['buy2','buytab','buydep','buy3','buy0','buybar'].forEach(function(id){
       var el = $(id);
       if(el) el.href = CHECKOUT + q;
     });
@@ -881,7 +944,7 @@
 
   var icDisparado = false;
   function ligarCompra(){
-    ['buy2','buy3','buy0'].forEach(function(id){
+    ['buy2','buytab','buydep','buy3','buy0','buybar'].forEach(function(id){
       var el = $(id);
       if(!el) return;
       el.addEventListener('click', function(){
@@ -1252,12 +1315,46 @@
     pre.src = img.getAttribute('data-anim');
   }
 
+  /* BARRA FIXA. Regras, em ordem de precedência:
+     1. Widget da Hotmart vivo na página: a barra não existe, ponto. Ela ficaria
+        por cima do checkout embutido, que é o caminho mais curto que a página
+        tem. O widget entra assíncrono (até ~4,5s), então a checagem é feita a
+        cada avaliação, não uma vez só na partida.
+     2. Só depois que o primeiro botão saiu da tela por cima. Antes disso a
+        pessoa ainda está lendo a promessa e já tem botão à mão.
+     3. Some quando o bloco de preço ou o CTA final estão à vista: dois pedidos
+        na mesma tela concorrem entre si, e o grande sempre perde para o pequeno.
+     A avaliação é chamada direto no scroll, como marcarOferta logo abaixo já faz.
+     A primeira versão passava por requestAnimationFrame e a barra nunca aparecia
+     em aba de fundo, onde o rAF não roda: o pedido ficava pendurado e o estado
+     congelava. Três getBoundingClientRect por evento não justificam o risco. */
+  function ligarBarra(){
+    var bar = $('barra'), b2 = $('buy2'), preco = document.querySelector('.preco'), fim = $('fim');
+    if(!bar || !b2 || !preco) return;
+    function naTela(el){
+      if(!el) return false;
+      var r = el.getBoundingClientRect();
+      return r.top < (window.innerHeight || 0) && r.bottom > 0;
+    }
+    function avaliar(){
+      var mostrar =
+        !document.querySelector('#funil-vivo iframe') &&
+        b2.getBoundingClientRect().bottom < 0 &&
+        !naTela(preco) && !naTela(fim);
+      bar.classList.toggle('on', mostrar);
+    }
+    window.addEventListener('scroll', avaliar, {passive:true});
+    window.addEventListener('resize', avaliar);
+    avaliar();
+  }
+
   montarPrazos();
   montarHoje();
   ajustarDias();
   montarFaq();
   ligarCompra();
   vestirContexto();
+  ligarBarra();
   doLinkAssinado();     // assíncrono: reescreve nome e checkout se o servidor responder
 
   animarTelona();
