@@ -2871,9 +2871,17 @@
   // parâmetro para divergirem na primeira mudança.
   function planoCompleto(buyUrl){
     return '<div class="tier">'+
-      '<div class="eyebrow">Se as 6 do núcleo não bastarem</div>'+
+      // 07/08/2026, segunda versão, na revisão do mesmo dia. A primeira abria com
+      // "Se as 6 do núcleo não bastarem" e repetia que tirar 40 pontos só no núcleo
+      // exigiria acertar 7 de cada 10. As duas coisas juntas faziam este bloco
+      // ARGUMENTAR CONTRA o R$47, 675 px depois de a pessoa ter lido o preço dele: para
+      // quem está em cima do muro, isso não vende o de cima, mata o de baixo. E a frase
+      // dos 7 em 10 já é feita no cartão "Corrija o que está faltando", onde ela é
+      // honestidade útil; repetida aqui ela trocava de função. A moldura agora é
+      // aditiva, e o que sustenta o preço é o que vem A MAIS, não o que faltaria.
+      '<div class="eyebrow">Se você quiser as 17 matérias</div>'+
       '<h4>Plano Completo</h4>'+
-      '<p>O material acima cobre as 6 matérias do núcleo duro. Elas valem 70% da prova, e é por isso que se começa por elas, mas tirar os 40 pontos só ali dentro exigiria acertar 7 de cada 10. O Plano Completo é o mesmo diagnóstico com a prova inteira em volta.</p>'+
+      '<p>O material acima cobre as 6 matérias do núcleo duro, que é por onde se começa. O Plano Completo é o mesmo diagnóstico com a prova inteira em volta.</p>'+
       '<ul>'+
         '<li>Fichas das outras 11 disciplinas, as 17 da prova</li>'+
         '<li>2 simulados completos de 80 questões, no formato do exame</li>'+
