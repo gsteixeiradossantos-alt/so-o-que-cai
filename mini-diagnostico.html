@@ -3029,7 +3029,10 @@
     // 'buyslim' entrou em 06/08/2026: e o atalho colado no veredito. Precisa estar
     // aqui para receber o mesmo tratamento dos outros, principalmente o sck (sem
     // ele a venda vinda do atalho ficaria sem atribuicao) e o eventID do checkout.
-    ['buyslim','buy0','buy'].forEach(function(id){
+    // 'buydep' entrou em 07/08/2026 (botão depois dos depoimentos). 'buyslim' agora
+    // existe só na tela de reencontro: no resultado ele virou âncora (#verof2), para
+    // não disparar InitiateCheckout antes de a pessoa ver a oferta.
+    ['buyslim','buy0','buy','buydep'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -3184,8 +3187,19 @@
         // Discreto de propósito: uma linha e um preço, sem repetir a promessa. Quem
         // quiser entender antes de comprar continua rolando e encontra tudo.
         '<div class="ctaslim">'+
-          '<a class="btn-lar" href="'+C.buyUrl+'" id="buyslim" data-v="47">Ver o Mapa da Aprovação: R$ 47</a>'+
-          '<div class="price">Pix ou cartão, acesso na hora. Ou continue lendo o seu diagnóstico abaixo.</div>'+
+          // 07/08/2026: este botão levava DIRETO ao checkout, a 2.079 px, enquanto a
+          // seção da oferta só começa em 7.088. A própria legenda dizia "ou continue
+          // lendo o seu diagnóstico abaixo", isto é, a página admitia que a pessoa
+          // ainda não tinha lido o que estava comprando. É o mesmo erro da barra fixa
+          // removida em 04/08, e daquela vez ele foi medido: dos 18 cliques, 10 de
+          // gente com viu_oferta_em nulo, 17% de conversão contra 80% do CTA final, e
+          // cada um deles disparando o InitiateCheckout pelo qual a campanha é
+          // otimizada. Vira âncora para a oferta: mantém o atalho de quem já decidiu,
+          // sem ensinar a Meta a caçar quem aperta botão.
+          // Rótulo diferente do #verof lá de cima, que fica no cartão de preço 900 px
+          // antes: aquele é "ver a oferta", este é "pular o resto do diagnóstico".
+          '<a class="btn-lar" href="#oferta" id="verof2">Pular para a oferta: R$ 47</a>'+
+          '<div class="price">Leva direto para a oferta. Ou continue lendo o seu diagnóstico abaixo.</div>'+
         '</div>'+
       '</section>'+
 
@@ -3301,6 +3315,19 @@
         '<div class="eyebrow">Quem já fez</div>'+
         '<h2>Três pessoas que estavam onde você está agora</h2>'+
         depoimentos()+
+      '</section>'+
+
+      // Botão depois da prova social (07/08/2026). Entre o bloco de preço (10.079)
+      // e o CTA final (13.905) havia 3.826 px, quase cinco telas de celular, com
+      // objeção, depoimentos, autor, garantia e FAQ no meio: a pessoa termina de
+      // ser convencida e precisa rolar de volta para comprar. Aqui é seguro, ao
+      // contrário do atalho lá de cima: quem chegou até este ponto já passou pela
+      // oferta inteira, então o clique não é de quem "viu um botão".
+      '<section class="vsec estreita">'+
+        '<div class="ctaslim">'+
+          '<a class="btn-lar" href="'+C.buyUrl+'" id="buydep" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+          '<div class="price">Pix ou cartão · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
+        '</div>'+
       '</section>'+
 
       // ===== 7 e 8. AUTORIDADE e RISCO, lado a lado =====

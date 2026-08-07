@@ -1348,18 +1348,31 @@
      em aba de fundo, onde o rAF não roda: o pedido ficava pendurado e o estado
      congelava. Três getBoundingClientRect por evento não justificam o risco. */
   function ligarBarra(){
-    var bar = $('barra'), b2 = $('buy2'), preco = document.querySelector('.preco'), fim = $('fim');
-    if(!bar || !b2 || !preco) return;
+    var bar = $('barra'), preco = document.querySelector('.preco'), fim = $('fim');
+    if(!bar || !preco) return;
     function naTela(el){
       if(!el) return false;
       var r = el.getBoundingClientRect();
       return r.top < (window.innerHeight || 0) && r.bottom > 0;
     }
+    // CORREÇÃO 07/08/2026, noite. A primeira versão revelava a barra assim que o
+    // PRIMEIRO botão saía da tela, lá em 1.797 px, ou seja, bem antes de a pessoa
+    // ter visto a entrega, a tabela e o preço. Isso repete um erro que esta casa
+    // já cometeu e já mediu no mini: a barra colhe o clique de quem ainda não sabe
+    // o que está comprando, e cada clique desses dispara um InitiateCheckout, que
+    // é o evento pelo qual a campanha da Meta é otimizada. Nos dados de 03 a
+    // 05/08, dos 18 cliques na barra do mini, 10 vieram de gente com
+    // viu_oferta_em nulo, e a taxa de compra deles foi 17% contra 80% do CTA
+    // final. Agora a barra só existe DEPOIS de o bloco de preço ter entrado na
+    // tela uma vez: ela deixa de ser atalho para virar caminho de volta.
+    var precoVisto = false;
     function avaliar(){
+      var precoAgora = naTela(preco);
+      if(precoAgora) precoVisto = true;
       var mostrar =
+        precoVisto &&
         !document.querySelector('#funil-vivo iframe') &&
-        b2.getBoundingClientRect().bottom < 0 &&
-        !naTela(preco) && !naTela(fim);
+        !precoAgora && !naTela(fim);
       bar.classList.toggle('on', mostrar);
     }
     window.addEventListener('scroll', avaliar, {passive:true});
