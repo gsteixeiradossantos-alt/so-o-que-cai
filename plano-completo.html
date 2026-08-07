@@ -276,8 +276,13 @@
      eles. No contexto de funil com o widget da Hotmart vivo ela NUNCA aparece:
      cobriria o checkout embutido, que é o caminho mais curto da página inteira.
      Estado fechado usa visibility para o link não ficar tabulável fora da tela. */
-  .barra{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--navy);
-         border-top:1px solid rgba(255,255,255,.14);box-shadow:0 -8px 24px rgba(10,26,42,.24);
+  /* Fundo em navy2, não navy: dentro dos blocos escuros da página (o mecanismo é
+     um deles) a barra em navy virava navy sobre navy, deixava de ler como camada
+     flutuante e o texto atrás dela aparecia cortado no meio da frase sem
+     explicação nenhuma. A borda dourada de topo é fina de propósito: separa sem
+     virar mais um elemento gritando na tela. */
+  .barra{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--navy2);
+         border-top:1px solid rgba(240,180,41,.34);box-shadow:0 -10px 28px rgba(10,26,42,.42);
          padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom));
          transform:translateY(115%);visibility:hidden;
          transition:transform .22s ease, visibility .22s}
@@ -710,8 +715,7 @@
        Mas é detalhe de operação, e detalhe de operação se lê no mesmo lugar em que
        a pessoa vai procurar "como funciona na prática", que é a FAQ. -->
   <div class="honesto" style="margin-top:22px">
-    <p><b>Duas coisas ditas do jeito que são, e o motivo de cada uma.</b> O cronograma é gerado por você, num clique, e não se refaz sozinho. É de propósito: um plano que se reescreve sem você pedir é um plano em que você para de confiar na terça, quando ele muda o que tinha combinado na segunda. Se o seu tempo por dia mudar, você gera de novo, leva menos de um minuto, e os dias que já marcou continuam marcados.</p>
-    <p style="margin-top:12px">A segunda: para o calendário sair com as suas matérias, o gerador lê o diagnóstico de 24 questões feito <b>dentro do app</b>. Se você abrir num aparelho onde ainda não fez, ele pergunta em quais matérias você mais perde ponto e monta a partir da sua resposta, dizendo na tela que foi assim que montou. Ninguém recebe um plano de ninguém.</p>
+    <p><b>Uma coisa dita do jeito que é.</b> Para o calendário sair com as suas matérias, o gerador lê o diagnóstico de 24 questões feito <b>dentro do app</b>. Se você abrir num aparelho onde ainda não fez, ele pergunta em quais matérias você mais perde ponto e monta a partir da sua resposta, dizendo na tela que foi assim que montou. Ninguém recebe um plano de ninguém.</p>
   </div>
 </section>
 
@@ -1123,6 +1127,11 @@
     } else {
       $('tgtopo').textContent = 'Plano Completo';
       $('fecho').hidden = false;
+      // "Adicionar" pressupõe um pedido aberto, e por link não existe pedido
+      // nenhum: a pessoa chega dias depois. E é justamente este o contexto em que
+      // a barra mais aparece, porque no funil com widget vivo ela é suprimida.
+      var bb = $('buybar');
+      if(bb) bb.textContent = 'Quero o Plano';
     }
     pixel('Upsell127Aberto', {
       contexto: CONTEXTO,
@@ -1262,8 +1271,11 @@
       ['O Kit Reta Final está incluído?',
        'Não. O Kit é o item de R$ 19 do carrinho e continua separado. Se você marcou lá, ele já é seu.'],
       [d ? 'Dá tempo em '+d+' dias?' : 'Dá tempo de usar?', prazo],
+      // Esta resposta absorveu o MOTIVO que morava na caixa de ressalvas logo
+      // abaixo, porque as duas ficaram na mesma tela dizendo a mesma coisa depois
+      // que a caixa mudou de lugar. A caixa ficou só com a ressalva do app.
       ['O cronograma se monta sozinho?',
-       'Não. Você informa as horas por dia e a data da prova e clica em gerar. Leva menos de um minuto e sai pronto para imprimir. Se o seu tempo mudar, você gera de novo.'],
+       'Não, e é de propósito. Você informa as horas por dia e a data da prova e clica em gerar: leva menos de um minuto e sai pronto para imprimir. Um plano que se reescreve sem você pedir é um plano em que você para de confiar na terça, quando ele muda o que tinha combinado na segunda. Se o seu tempo mudar, você gera de novo, e os dias que já marcou continuam marcados.'],
       ['E se eu não gostar?',
        '7 dias de garantia, sem perguntas. O reembolso do Plano Completo não mexe no Mapa da Aprovação.']
     ];
