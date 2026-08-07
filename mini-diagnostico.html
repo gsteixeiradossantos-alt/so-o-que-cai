@@ -2755,7 +2755,11 @@
       ['Entenda por que errou',
        'Cada questão explica por que a sua resposta parecia correta, por que a banca escolheu outra e qual detalhe da lei fez a diferença.'],
       ['Corrija o que está faltando',
-       'Fichas das 6 matérias do núcleo duro, que sozinhas valem 70% da prova: a regra, a súmula aplicável e a pegadinha que mais reprova candidatos.'],
+       // 07/08/2026: o "70%" sozinho autoriza a conta errada. 70% de 80 são 56, e
+       // como a linha de corte é 40, o leitor conclui que o núcleo basta e que nada
+       // mais importa. A conta honesta é a outra: para tirar 40 só dentro dessas 56 é
+       // preciso acertar 7 de cada 10. O número fica, a inferência falsa não.
+       'Fichas das 6 matérias do núcleo duro, que sozinhas valem 70% da prova: a regra, a súmula aplicável e a pegadinha que mais reprova candidatos. É onde está o maior peso, e é por isso que se começa por elas: tirar os 40 pontos só aí dentro exigiria acertar 7 de cada 10.'],
       ['Faça a prova melhor',
        'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada.'],
       ['Confirme que evoluiu',
@@ -3297,7 +3301,6 @@
         // secoes acima, antes de qualquer preco, onde nao respondiam a nenhuma duvida.
         provas()+
         bonusGuia()+
-        mencaoKit()+
         porqueHoje()+
         // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
         // tratamento: é o ponto onde a decisão acontece.
@@ -3307,6 +3310,12 @@
           '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
           '<div class="selo2">Seus dados não são vendidos</div>'+
         '</div>'+
+        // 07/08/2026: o Kit ficava ANTES do bloco de preço. Isso põe uma SEGUNDA
+        // decisão na frente de quem ainda não tomou a primeira, e no momento em que
+        // ela está mais perto de decidir. O Kit é order bump: quem quiser vai
+        // encontrá-lo no checkout, com esta mesma descrição. Depois do preço ele
+        // deixa de competir e passa a ser o que é, um "e ainda tem isto ali".
+        mencaoKit()+
         objecaoDinheiro()+
       '</section>'+
 
@@ -3325,7 +3334,9 @@
       // oferta inteira, então o clique não é de quem "viu um botão".
       '<section class="vsec estreita">'+
         '<div class="ctaslim">'+
-          '<a class="btn-lar" href="'+C.buyUrl+'" id="buydep" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+          // Rótulo diferente dos outros dois de propósito: este vem logo depois da
+          // prova social, então fala de onde a pessoa acabou de estar.
+          '<a class="btn-lar" href="'+C.buyUrl+'" id="buydep" data-v="47">Quero o mesmo material que elas usaram: R$ 47</a>'+
           '<div class="price">Pix ou cartão · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
         '</div>'+
       '</section>'+
@@ -3360,7 +3371,9 @@
       // repete argumento que já foi feito acima: isso seria a quinta resposta para
       // uma pergunta que já tem dono.
       '<section class="vsec estreita">'+
-        '<div class="eyebrow">Perguntas rápidas</div>'+
+        // "Perguntas rápidas" em cima de dezesseis acordeões é promessa quebrada no
+        // próprio rótulo. O conteúdo continua o mesmo; o nome passou a ser verdade.
+        '<div class="eyebrow">Perguntas frequentes</div>'+
         '<div class="faq">'+FAQ.map(function(f,i){
           return '<div class="fitem" data-i="'+i+'">'+
             '<button class="fq" type="button"><span>'+esc(f.q)+'</span><i>+</i></button>'+
