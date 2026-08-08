@@ -380,6 +380,14 @@
   .callout{background:var(--card);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;
            padding:16px 20px;font-family:'Source Serif 4',Georgia,serif;font-size:19px;
            font-weight:600;line-height:1.45}
+  /* No celular este bloco chega a 77 palavras e 418 px, quase meia tela, e vem logo
+     depois de um paragrafo de 45. Serifado em 19px seminegrito nesse comprimento deixa
+     de ser destaque e vira muro, no ponto em que a pessoa acabou de receber o veredito
+     e ainda esta decidindo se continua rolando. O texto e bom e nao muda: o que muda e
+     o peso. A borda dourada continua fazendo o trabalho de dizer "isto importa". */
+  @media (max-width:560px){
+    .callout{font-size:17px;font-weight:500;line-height:1.5;padding:15px 17px}
+  }
   .obsgrid{display:flex;flex-direction:column;gap:12px}
   .obs{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
        display:flex;gap:14px;align-items:flex-start}
@@ -3397,7 +3405,13 @@
       // ===== 2. O QUE ISSO SIGNIFICA =====
       '<section class="vsec estreita">'+
         '<div class="eyebrow">O que isso significa</div>'+
-        '<p class="p">O erro mais comum depois de um resultado como este é tentar resolver tudo ao mesmo tempo. Quando falta conteúdo, treinar só estratégia de prova não recupera ponto. Quando falta execução, estudar mais matéria também não resolve sozinho.</p>'+
+        // 07/08/2026: esta abertura tinha três frases e as duas últimas ("quando falta
+        // conteúdo... quando falta execução...") diziam a mesma coisa que o callout
+        // logo abaixo, que é personalizado pelo perfil. Pela regra do inventário, duas
+        // respostas para a mesma pergunta significam que uma sai; sai a fixa, porque a
+        // outra é a que fala do resultado da pessoa. Sobrou a frase que prepara o
+        // leitor, que é a única função que só ela tinha.
+        '<p class="p">O erro mais comum depois de um resultado como este é tentar resolver tudo ao mesmo tempo.</p>'+
         '<div class="callout">'+esc(podar(q.p1))+'</div>'+
         ((vt||vp||vx)? '<div class="obsgrid">'+
           (vx? '<div class="obs"><i>'+esc(vx.k)+'</i><p>'+vx.p+'</p></div>' : '')+
@@ -3429,8 +3443,20 @@
           // sem ensinar a Meta a caçar quem aperta botão.
           // Rótulo diferente do #verof lá de cima, que fica no cartão de preço 900 px
           // antes: aquele é "ver a oferta", este é "pular o resto do diagnóstico".
-          '<a class="btn-lar" href="#oferta" id="verof2">Pular para a oferta: R$ 47</a>'+
-          '<div class="price">Leva direto para a oferta. Ou continue lendo o seu diagnóstico abaixo.</div>'+
+          /* 07/08/2026, rótulo refeito. O anterior era "Pular para a oferta: R$ 47" e
+             o Gustavo clicou esperando pagar: preço colado no rótulo lê como botão de
+             compra, e o que vinha era uma seção de texto. Mandar ao checkout resolveria
+             a frustração e criaria outra coisa pior, já medida em 04/08 (atalho frio
+             converteu 17% contra 80% do CTA do fim, e ensina a Meta a caçar quem aperta
+             botão), então quem muda é o rótulo: ele passa a nomear o DESTINO.
+             A legenda também mudou. A antiga dizia "Leva direto para a oferta. Ou
+             continue lendo o seu diagnóstico abaixo." — a primeira frase repetia o
+             botão, e a segunda oferecia de graça o motivo para não clicar, no único
+             botão dos primeiros 11.700 px. É o mesmo defeito de "o preço não sobe
+             depois": não mentir não obriga a advogar contra a própria página. O preço
+             desce para cá, onde é informação e não promessa de destino. */
+          '<a class="btn-lar" href="#oferta" id="verof2">Ver o Mapa da Aprovação</a>'+
+          '<div class="price">R$ 47, pagamento único, com 7 dias de garantia.</div>'+
         '</div>'+
       '</section>'+
 
@@ -3534,19 +3560,22 @@
       // em 06/08/2026: print do produto e prova de entrega, e prova serve no momento
       // da decisao, nao dois blocos antes dela.
       '<section class="vsec larga" id="oferta">'+
-        // 07/08/2026: o crachá de quem assina, no TOPO da oferta. O cartão completo
-        // continua lá embaixo, ao lado da garantia. O problema que isto resolve: a
-        // página dá um veredito sobre a vida da pessoa e pede R$ 47 assinada por
-        // ninguém até 12.435 px, que é a tela 15 num celular. Quem decide antes disso
-        // decide sem saber de quem está comprando. Uma linha, não um bloco: o
-        // argumento de autoridade tem dono e é o cartão do fim.
+        '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
+        '<h2 class="grande">'+PRODUTO+'</h2>'+
+        '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
+        /* O crachá de quem assina. Subiu para a oferta em 07/08 porque a página dava um
+           veredito sobre a vida da pessoa e pedia R$ 47 assinada por ninguém até
+           12.435 px, a tela 15 num celular.
+           Na primeira versão ele ficou ANTES da tarja e do título, e a seção abria com
+           um nome antes de dizer do que se tratava: assinatura sem assunto. Agora vem
+           depois do parágrafo que nomeia o produto e o preço, que é a ordem natural —
+           o que é isto, quanto custa, quem assina — e continua 4.700 px acima de onde
+           o nome aparecia antes. O cartão inteiro, com a citação, segue no fim, ao lado
+           da garantia: o argumento de autoridade tem dono e é ele; aqui é só o crachá. */
         '<div class="autorof">'+
           '<img src="assets/gustavo.webp" alt="Gustavo S. Teixeira dos Santos, advogado" width="44" height="44" loading="lazy">'+
           '<div><b>Gustavo S. Teixeira dos Santos</b><i>Advogado, OAB/PR 112.743 · quem escreveu e revisou o material</i></div>'+
         '</div>'+
-        '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
-        '<h2 class="grande">'+PRODUTO+'</h2>'+
-        '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
         stackOferta()+
         // 07/08/2026: "eu já faço cursinho" era a 11ª de 17 perguntas do FAQ, fechada,
         // em 14.314 px, ou seja, DEPOIS do último botão de compra. É a objeção mais
