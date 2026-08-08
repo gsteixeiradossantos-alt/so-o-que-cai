@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  P1 · O PLACAR · público frio · campanha de Compra · 1080x1350
+  ------------------------------------------------------------
+  Saída da sala de criação de 08/08/2026 (dupla copy + direção de arte).
+  Briefing: ../../soqc-prompt-sala-de-criacao.md
+
+  A tese da peça: o filtro não é temático, é gramatical. "A sua nota" pressupõe
+  que existe uma, e existir uma é a definição exata do público. Quem nunca
+  prestou não completa a frase com nada da vida dela.
+
+  O dispositivo é a escala do edital, com o corte no 40 e o 39 encostado nele.
+  Os 11px de papel entre o número e a barra são a única coisa NÃO impressa na
+  peça: é a questão que faltou. O 39 é hipótese em segunda pessoa apoiada numa
+  escala pública (40 em 80 é fato do edital), não afirmação sobre resultado de
+  aluno.
+
+  Hierarquia declarada: 1º o número, que qualifica como forma, antes da leitura.
+  2º a frase. 3º o remate.
+
+  Render: ./render.sh p1-o-placar.html
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=Hanken+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--ink:#231F1A;--navy:#15212B;--ocre:#A65D1E}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+
+  /* ---------- banda 1 · impacto: a escala do edital ---------- */
+  .rot-corte{position:absolute;left:566px;top:380px;font-family:'Space Mono',monospace;font-weight:700;
+             font-size:26px;color:var(--navy);letter-spacing:.07em}
+  .trilho{position:absolute;left:88px;top:470px;width:904px;height:10px;border-radius:5px;
+          background:rgba(35,31,26,.14)}
+  .tick{position:absolute;top:470px;width:2px;height:22px;background:rgba(35,31,26,.28)}
+  .tnum{position:absolute;top:502px;font-family:'Space Mono',monospace;font-size:24px;
+        color:rgba(35,31,26,.45)}
+  .corte{position:absolute;left:537px;top:427px;width:6px;height:96px;background:var(--navy);border-radius:3px}
+  .num39{position:absolute;right:554px;top:260px;height:210px;display:flex;align-items:flex-end}
+  .num39 span{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:210px;line-height:.74;
+              color:var(--ocre);letter-spacing:-.02em}
+
+  /* ---------- banda 2 · a frase ---------- */
+  .frase{position:absolute;left:88px;top:720px;width:904px;font-family:'Spectral',Georgia,serif;
+         font-weight:700;font-size:68px;line-height:1.12;color:var(--ink);letter-spacing:-.015em}
+
+  /* ---------- banda 3 · base ---------- */
+  .remate{position:absolute;left:88px;top:1050px;width:904px;font-weight:600;font-size:35px;
+          line-height:1.2;color:rgba(35,31,26,.75)}
+  .selo{position:absolute;left:88px;top:1112px;font-family:'Space Mono',monospace;font-weight:700;
+        font-size:26px;color:var(--navy);letter-spacing:.12em}
+  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-size:24px;
+         color:rgba(35,31,26,.45);letter-spacing:.14em}
+</style></head><body data-render="1080x1350">
+<div class="art">
+
+  <div class="rot-corte">LINHA DE CORTE · 40 EM 80</div>
+
+  <div class="trilho"></div>
+  <div class="tick" style="left:88px"></div>
+  <div class="tick" style="left:201px"></div>
+  <div class="tick" style="left:314px"></div>
+  <div class="tick" style="left:427px"></div>
+  <div class="tick" style="left:653px"></div>
+  <div class="tick" style="left:766px"></div>
+  <div class="tick" style="left:879px"></div>
+  <div class="tick" style="left:991px"></div>
+  <!-- sem rótulo no 40: a barra marinha já é o 40, e o rótulo colidia com ela. -->
+  <div class="tnum" style="left:88px">0</div>
+  <div class="tnum" style="left:992px;transform:translateX(-100%)">80</div>
+  <div class="corte"></div>
+
+  <div class="num39"><span>39</span></div>
+
+  <div class="frase">Faltou uma questão.<br>Ninguém te disse qual.</div>
+
+  <div class="remate">Um ponto de diferença custou quatro meses.</div>
+  <div class="selo">7 QUESTÕES · 4 MINUTOS · GRÁTIS</div>
+
+  <div class="marca">SÓ O QUE CAI · 1ª FASE DA OAB</div>
+</div>
+</body></html>

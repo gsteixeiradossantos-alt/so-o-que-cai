@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  P2 · A CENA DA REPETIÇÃO · público frio · campanha de Compra · 1080x1350
+  -----------------------------------------------------------------------
+  Saída da sala de criação de 08/08/2026 (dupla copy + direção de arte).
+  Briefing: ../../soqc-prompt-sala-de-criacao.md
+
+  O filtro mora num advérbio de duas sílabas: "de novo". Só estuda tudo de novo
+  quem estudou tudo uma vez, e para ESTA prova. "Pela segunda vez. Talvez pela
+  terceira." é o sinal de saída para quem está na faculdade: ela lê e conclui,
+  corretamente, que a peça conta a história de outra pessoa.
+
+  Aqui a frase ganha a banda de impacto, e não o dispositivo: "de novo" qualifica
+  por leitura, e as três colunas idênticas só ganham sentido depois da frase.
+
+  As colunas são o MESMO plano três vezes, filete por filete. Os rótulos ficam em
+  segunda pessoa ("A VEZ ANTERIOR", "A ÚLTIMA VEZ") em vez de numerar as edições:
+  numerar presume o histórico dela, o rótulo não presume nada e filtra melhor.
+
+  Render: ./render.sh p2-a-repeticao.html
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=Hanken+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--ink:#231F1A;--navy:#15212B;--ocre:#A65D1E}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+
+  /* ---------- banda 1 · impacto: a frase ---------- */
+  .frase{position:absolute;left:88px;top:150px;width:904px;font-family:'Spectral',Georgia,serif;
+         font-weight:700;font-size:86px;line-height:1.1;color:var(--ink);letter-spacing:-.02em}
+  .sub{position:absolute;left:88px;top:420px;width:904px;font-weight:600;font-size:44px;
+       line-height:1.28;color:rgba(35,31,26,.70)}
+
+  /* ---------- banda 2 · dispositivo: o mesmo plano, três vezes ---------- */
+  .cols{position:absolute;left:88px;top:650px;width:904px;display:flex;gap:32px}
+  .col{width:280px;display:flex;flex-direction:column;gap:12px}
+  .col i{display:block;height:14px;border-radius:7px;background:rgba(35,31,26,.20)}
+  .col.agora i{background:var(--navy)}
+  .rots{position:absolute;left:88px;top:920px;width:904px;display:flex;gap:32px;
+        font-family:'Space Mono',monospace;font-weight:700;font-size:26px;letter-spacing:.09em}
+  .rots span{width:280px;color:rgba(35,31,26,.45)}
+  .rots span.agora{color:var(--ocre)}
+
+  /* ---------- banda 3 · base ---------- */
+  .remate{position:absolute;left:88px;top:1050px;width:904px;font-weight:600;font-size:35px;
+          line-height:1.2;color:rgba(35,31,26,.75)}
+  .selo{position:absolute;left:88px;top:1112px;font-family:'Space Mono',monospace;font-weight:700;
+        font-size:26px;color:var(--navy);letter-spacing:.12em}
+  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-size:24px;
+         color:rgba(35,31,26,.45);letter-spacing:.14em}
+</style></head><body data-render="1080x1350">
+<div class="art">
+
+  <div class="frase">Você vai estudar<br>tudo de novo.</div>
+  <div class="sub">Pela segunda vez. Talvez pela terceira.<br>Com o mesmo material e a mesma rotina.</div>
+
+  <div class="cols">
+    <div class="col"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="col"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="col agora"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="rots">
+    <span>O MESMO CADERNO</span>
+    <span>A MESMA ROTINA</span>
+    <span class="agora">06 DE SETEMBRO</span>
+  </div>
+
+  <div class="remate">Estudar do mesmo jeito costuma devolver a mesma nota.</div>
+  <div class="selo">7 QUESTÕES · 4 MINUTOS · GRÁTIS</div>
+
+  <div class="marca">SÓ O QUE CAI · 1ª FASE DA OAB</div>
+</div>
+</body></html>
