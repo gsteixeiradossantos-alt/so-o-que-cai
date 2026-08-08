@@ -509,9 +509,22 @@
        somem, e a dica de que da para arrastar continua existindo: a figura seguinte
        aparece cortada porque cada uma ocupa 82% da largura. */
     .provas{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;
-            -webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;padding-bottom:4px}
+            -webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;padding-bottom:4px;
+            /* stretch, e nao o `start` da regra do grid: com `start` cada figura fica
+               com a altura da propria midia, e as tres midias tem alturas muito
+               diferentes (592, 165 e 239 px). O resultado era um serrilhado de 428 px
+               entre a primeira legenda e a segunda, com a legenda do simulado flutuando
+               no meio do video ao lado. Esticando todas e colando a legenda na base, as
+               tres terminam na mesma linha. */
+            align-items:stretch}
     .provas::-webkit-scrollbar{display:none}
-    .provas figure{flex:0 0 82%;scroll-snap-align:start}
+    .provas figure{flex:0 0 82%;scroll-snap-align:start;display:flex;flex-direction:column}
+    .provas figure figcaption{margin-top:auto;padding-top:9px}
+    /* Com UMA prova só (07/08/2026, os dois prints saíram), 82% deixaria 18% de papel
+       vazio à direita prometendo uma figura que não existe: o corte na borda é a dica
+       de arrastar, e arrastar não leva a lugar nenhum. Sozinha, ela ocupa a largura
+       inteira. Se um print voltar, o carrossel volta junto sem ninguém mexer aqui. */
+    .provas figure:only-child{flex:0 0 100%}
   }
   /* video entra na mesma regra da imagem: a figura do meio nao pode ter moldura
      diferente das outras duas so por ser video. */
@@ -3004,22 +3017,18 @@
        Autoplay mudo em loop, que é o que o iOS e o Android permitem sem toque, com
        poster para não piscar antes do primeiro quadro e para o caso de o autoplay ser
        bloqueado (modo de economia de bateria ou de dados). 384 KB contra 274 KB do GIF.
-       O print do SIMULADO foi cortado logo abaixo do cartão do 19/24, também a pedido:
-       a lista "onde você perdeu ponto, por matéria" que vinha embaixo é a mesma coisa
-       que o vídeo já mostra por dentro, e aqui ela só alongava a figura. A legenda
-       acompanhou o corte, senão prometeria o que a imagem deixou de mostrar. */
+       OS DOIS PRINTS SAÍRAM em 07/08/2026, a pedido, e o bloco ficou com o vídeo só.
+       O argumento de cada um já era frágil e o vídeo resolveu os dois:
+       - o do SIMULADO tinha acabado de ser cortado logo abaixo do cartão do 19/24, e o
+         que sobrou era um placar sem contexto. Placar de outra pessoa não prova nada
+         que o vídeo não prove melhor.
+       - o do GABARITO já era redundante quando entrou: a página mostra um gabarito
+         comentado AO VIVO em 2.417 px, com a questão que a PRÓPRIA pessoa errou, e o
+         print vinha sete telas depois com a questão de outra. Pela regra 2 do
+         inventário, evidência que não acrescenta um tipo novo não precisa existir.
+       Os arquivos continuam em assets/telas/, então repor é devolver duas linhas. */
     var itens=[
-      ['produto-no-celular.mp4', 'O produto no celular', 'A área do aluno, do topo ao fim: as cinco etapas na ordem em que se faz. Roda no navegador, sem instalar nada.'],
-      /* Os três continuam, e o gabarito quase saiu. O argumento contra ele era bom e
-         continua verdadeiro: a página já mostra um gabarito comentado AO VIVO em
-         2.417 px, com a questão que a PRÓPRIA pessoa errou, e este print fica nove
-         telas depois mostrando o mesmo com a questão de outra. O que mudou foi o custo:
-         empilhados, os três somavam 1.414 px; em carrossel, a altura passa a ser a do
-         MAIOR item, então tirar o gabarito deixou de economizar um pixel sequer.
-         Redundância que não custa altura é redundância barata, e ele ainda é a única
-         peça que mostra o "por que a banca escolheu a outra" sem exigir clique. */
-      ['simulado.webp', 'O simulado corrigido',  'A sua nota, medida contra a mesma linha de corte da prova.'],
-      ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
+      ['produto-no-celular.mp4', 'O produto no celular', 'A área do aluno, do topo ao fim: as cinco etapas na ordem em que se faz. Roda no navegador, sem instalar nada.']
     ];
     return '<div class="eyebrow" style="margin-top:8px">Veja por dentro, antes de comprar</div>'+
     '<div class="provas">'+itens.map(function(i){
@@ -3036,7 +3045,11 @@
         '<figcaption><b>'+esc(i[1])+'.</b> '+esc(i[2])+'</figcaption>'+
       '</figure>';
     }).join('')+'</div>'+
-    '<p class="provas-nota">Telas reais do que você recebe. O relatório sai com o seu nome e com as suas matérias.</p>';
+    // A nota falava de "telas" no plural, quando havia três figuras. Com uma só, o
+    // plural mentia. O que ela precisa continuar afirmando é o que a imagem não diz
+    // sozinha: que aquilo é a ferramenta de verdade e que o relatório sai com o nome
+    // de quem comprou.
+    '<p class="provas-nota">É a ferramenta de verdade, gravada da tela. O seu relatório sai com o seu nome e com as suas matérias.</p>';
   }
 
 
