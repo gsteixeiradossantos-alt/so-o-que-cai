@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  Criativo de anúncio · mini-diagnóstico · ângulo de DOR · "reprovou duas ou mais"
+  -------------------------------------------------------------------------------
+  Irmã de minidiag-dor-uma-vez-7q.html, para o outro corte do campo `momento`.
+  Este é o público de maior taxa de oferta na base (65% em 07/08/2026), e o que
+  mais compra: das 5 vendas do funil vivo, 4 vieram de quem já reprovou.
+
+  Marca: sem emoji, sem travessão, sem promessa de aprovação, sem escassez
+  inventada. Nada aqui afirma que a terceira tentativa passa, só que repetir a
+  mesma preparação tende a repetir o mesmo resultado.
+
+  Render: ver criativos/render.sh (Chrome headless, 1080x1080).
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45;
+    --muted:#8A8378; --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E;
+    --pill:#F6E7D6;
+  }
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{
+    position:relative; width:1080px; height:1080px; overflow:hidden;
+    background:var(--paper); font-family:'Hanken Grotesk',system-ui,sans-serif;
+  }
+
+  .marca{position:absolute; left:80px; top:78px; display:flex; align-items:center; gap:22px}
+  .selo{width:66px; height:66px; border-radius:16px; background:var(--navy); position:relative}
+  .selo .anel{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:30px; height:30px; border-radius:50%; border:3px solid var(--paper);
+  }
+  .selo .miolo{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:13px; height:13px; border-radius:50%; background:var(--ocre);
+  }
+  .selo i{position:absolute; background:var(--paper); border-radius:1px}
+  .selo .t-n{left:50%; top:9px;  margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-s{left:50%; bottom:9px;margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-l{top:50%;  left:9px;  margin-top:-1.5px;  height:3px; width:9px}
+  .selo .t-o{top:50%;  right:9px; margin-top:-1.5px;  height:3px; width:9px}
+  .nome{font-family:'Spectral',Georgia,serif; font-weight:700; font-size:46px;
+        color:var(--ink); line-height:1; letter-spacing:-.01em}
+  .sub{font-family:'Space Mono',monospace; font-size:19px; color:var(--muted);
+       letter-spacing:.19em; margin-top:9px}
+
+  .pill{position:absolute; left:80px; top:212px; height:58px; padding:0 30px;
+        border-radius:29px; background:var(--pill); border:2px solid var(--ocre);
+        display:flex; align-items:center; gap:16px;
+        font-family:'Space Mono',monospace; font-weight:700; font-size:23px;
+        color:var(--ocre); letter-spacing:.07em}
+  .pill .dot{width:14px; height:14px; border-radius:50%; background:var(--ocre)}
+
+  .h{position:absolute; left:80px; top:312px; font-family:'Spectral',Georgia,serif;
+     font-weight:700; font-size:75px; line-height:1.13; color:var(--ink);
+     letter-spacing:-.02em}
+  .h em{font-style:italic; color:var(--ocre); display:block}
+
+  /* ---------- duas tentativas, mesmo ponto cego ---------- */
+  .tents{position:absolute; left:80px; top:588px; display:flex; gap:26px}
+  .tent{width:286px; height:104px; border-radius:16px; background:var(--card);
+        border:2px solid var(--line); position:relative}
+  .tent .n{position:absolute; left:26px; top:24px; font-family:'Space Mono',monospace;
+           font-weight:700; font-size:21px; color:var(--muted); letter-spacing:.1em}
+  .tent .r{position:absolute; left:26px; top:56px; font-family:'Spectral',Georgia,serif;
+           font-weight:700; font-size:30px; color:var(--ink)}
+  .tent .x{position:absolute; right:26px; top:50%; margin-top:-17px; width:34px; height:34px;
+           border-radius:50%; background:var(--pill); border:2px solid var(--ocre)}
+  .tent .x i{position:absolute; left:50%; top:50%; width:17px; height:3px; margin:-1.5px 0 0 -8.5px;
+             background:var(--ocre); border-radius:2px}
+  .tent.aberta{border-style:dashed; border-color:var(--ocre); background:transparent}
+  .tent.aberta .r{color:var(--ocre)}
+
+  .linhas{position:absolute; left:80px; top:744px; font-size:33px;
+          line-height:1.42; color:var(--muted2); font-weight:400}
+  .linhas b{font-weight:600; color:var(--ink)}
+  .cta{position:absolute; left:80px; top:930px; height:80px; padding:0 34px;
+       border-radius:15px; background:var(--navy); display:flex; align-items:center;
+       gap:26px; font-family:'Space Mono',monospace; font-weight:700; font-size:29px;
+       color:var(--paper); letter-spacing:.05em}
+  .seta{font-size:33px; line-height:1}
+</style></head>
+<body>
+<div class="art">
+
+  <div class="marca">
+    <div class="selo">
+      <i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div>
+    </div>
+    <div>
+      <div class="nome">Só o que Cai</div>
+      <div class="sub">1ª FASE · OAB</div>
+    </div>
+  </div>
+
+  <div class="pill"><span class="dot"></span>JÁ REPROVOU DUAS OU MAIS</div>
+
+  <div class="h">Já foram duas.<em>A terceira não pode ser igual.</em></div>
+
+  <div class="tents">
+    <div class="tent">
+      <div class="n">1ª TENTATIVA</div>
+      <div class="r">Abaixo da linha</div>
+      <div class="x"><i></i></div>
+    </div>
+    <div class="tent">
+      <div class="n">2ª TENTATIVA</div>
+      <div class="r">Abaixo da linha</div>
+      <div class="x"><i></i></div>
+    </div>
+    <div class="tent aberta">
+      <div class="n">06 DE SETEMBRO</div>
+      <div class="r">Depende do quê?</div>
+    </div>
+  </div>
+
+  <div class="linhas">
+    Se o ponto que vaza continuar o mesmo, o resultado<br>
+    também continua. <b>7 questões grátis</b>, com o relógio<br>
+    correndo, mostram qual é o seu.
+  </div>
+
+  <div class="cta">DESCUBRA ABAIXO <span class="seta">↓</span></div>
+
+</div>
+</body></html>

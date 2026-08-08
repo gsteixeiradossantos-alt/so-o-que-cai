@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  Criativo de anúncio · mini-diagnóstico · ângulo de DOR · "reprovou uma vez"
+  --------------------------------------------------------------------------
+  Por que existe: as artes no ar (relógio, mock do quiz) falam do MECANISMO do
+  teste, não da dor de quem já reprovou. Medido em 07/08/2026: os criativos que
+  nomeavam a dor selecionavam 59-61% de leads que já reprovaram, contra 44% dos
+  que estão no ar. Quem já reprovou chega na oferta em 60-65% das vezes; quem
+  nunca prestou, em 32%. Esta arte existe para puxar a primeira população.
+
+  Marca: sem emoji, sem travessão, sem promessa de aprovação, sem escassez
+  inventada. A linha de corte de 40 em 80 é do edital, é fato.
+
+  Render: ver criativos/render.sh (Chrome headless, 1080x1080).
+  Paleta e tipografia espelham minidiag-v4-relogio-7q.html.
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --paper:#F3EEE4; --card:#FBF9F4; --ink:#231F1A; --muted2:#574F45;
+    --muted:#8A8378; --line:#E4DBC9; --navy:#15212B; --ocre:#A65D1E;
+    --pill:#F6E7D6;
+  }
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{
+    position:relative; width:1080px; height:1080px; overflow:hidden;
+    background:var(--paper); font-family:'Hanken Grotesk',system-ui,sans-serif;
+  }
+
+  /* ---------- assinatura ---------- */
+  .marca{position:absolute; left:80px; top:78px; display:flex; align-items:center; gap:22px}
+  .selo{width:66px; height:66px; border-radius:16px; background:var(--navy); position:relative}
+  .selo .anel{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:30px; height:30px; border-radius:50%; border:3px solid var(--paper);
+  }
+  .selo .miolo{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:13px; height:13px; border-radius:50%; background:var(--ocre);
+  }
+  .selo i{position:absolute; background:var(--paper); border-radius:1px}
+  .selo .t-n{left:50%; top:9px;  margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-s{left:50%; bottom:9px;margin-left:-1.5px; width:3px; height:9px}
+  .selo .t-l{top:50%;  left:9px;  margin-top:-1.5px;  height:3px; width:9px}
+  .selo .t-o{top:50%;  right:9px; margin-top:-1.5px;  height:3px; width:9px}
+  .nome{font-family:'Spectral',Georgia,serif; font-weight:700; font-size:46px;
+        color:var(--ink); line-height:1; letter-spacing:-.01em}
+  .sub{font-family:'Space Mono',monospace; font-size:19px; color:var(--muted);
+       letter-spacing:.19em; margin-top:9px}
+
+  /* ---------- etiqueta de público ---------- */
+  .pill{position:absolute; left:80px; top:212px; height:58px; padding:0 30px;
+        border-radius:29px; background:var(--pill); border:2px solid var(--ocre);
+        display:flex; align-items:center; gap:16px;
+        font-family:'Space Mono',monospace; font-weight:700; font-size:23px;
+        color:var(--ocre); letter-spacing:.07em}
+  .pill .dot{width:14px; height:14px; border-radius:50%; background:var(--ocre)}
+
+  /* ---------- manchete ---------- */
+  .h{position:absolute; left:80px; top:312px; font-family:'Spectral',Georgia,serif;
+     font-weight:700; font-size:80px; line-height:1.13; color:var(--ink);
+     letter-spacing:-.02em}
+  .h em{font-style:italic; color:var(--ocre); display:block}
+
+  /* ---------- linha de corte ---------- */
+  .trilho{position:absolute; left:80px; top:604px; width:920px; height:28px;
+          border-radius:14px; background:var(--line)}
+  .trilho .preenche{position:absolute; left:0; top:0; height:28px; width:392px;
+                    border-radius:14px; background:var(--ocre)}
+  .corte{position:absolute; left:538px; top:580px; width:5px; height:76px;
+         background:var(--navy); border-radius:3px}
+  .rot{position:absolute; left:562px; top:528px; font-family:'Space Mono',monospace;
+       font-weight:700; font-size:22px; color:var(--navy); letter-spacing:.1em}
+  .rot span{display:block; font-weight:400; font-size:20px; color:var(--muted);
+            letter-spacing:.06em; margin-top:6px}
+
+  /* ---------- pé ---------- */
+  .linhas{position:absolute; left:80px; top:744px; font-size:33px;
+          line-height:1.42; color:var(--muted2); font-weight:400}
+  .linhas b{font-weight:600; color:var(--ink)}
+  .cta{position:absolute; left:80px; top:930px; height:80px; padding:0 34px;
+       border-radius:15px; background:var(--navy); display:flex; align-items:center;
+       gap:26px; font-family:'Space Mono',monospace; font-weight:700; font-size:29px;
+       color:var(--paper); letter-spacing:.05em}
+  .seta{font-size:33px; line-height:1}
+</style></head>
+<body>
+<div class="art">
+
+  <div class="marca">
+    <div class="selo">
+      <i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div>
+    </div>
+    <div>
+      <div class="nome">Só o que Cai</div>
+      <div class="sub">1ª FASE · OAB</div>
+    </div>
+  </div>
+
+  <div class="pill"><span class="dot"></span>JÁ REPROVOU UMA VEZ</div>
+
+  <div class="h">Você reprovou.<em>Ninguém te disse onde.</em></div>
+
+  <div class="trilho"><div class="preenche"></div></div>
+  <div class="corte"></div>
+  <div class="rot">LINHA DE CORTE<span>40 acertos em 80</span></div>
+
+  <div class="linhas">
+    Matéria, tempo ou troca de resposta no fim<br>
+    são causas diferentes, e cada uma se corrige<br>
+    de um jeito. <b>7 questões grátis</b> mostram a sua.
+  </div>
+
+  <div class="cta">DESCUBRA ABAIXO <span class="seta">↓</span></div>
+
+</div>
+</body></html>
