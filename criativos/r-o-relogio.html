@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  R · O RELÓGIO · público frio · campanha de Compra · 1080x1350
+  -------------------------------------------------------------
+  Redesenho do criativo que mais vendeu (minidiag-v4-relogio-7q). Briefing:
+  ../../soqc-prompt-redesign-provados.md
+
+  POR QUE ESTA PEÇA EXISTE, E POR QUE ELA E NÃO O MOCK DO QUIZ
+
+  A ideia era pegar o que já vendeu e trocar SÓ a linguagem, para o teste medir
+  uma variável e não duas. Entre os dois criativos provados, só este passa nesse
+  critério: a correção dele é aditiva (entra um quadrante, não sai nada). O mock
+  precisaria sair de "pergunta sendo feita" para "resposta já dada e perdida",
+  o que é dispositivo novo, não linguagem nova.
+
+  O mock ainda tinha um defeito ativo: o cartão anuncia ÉTICA em ocre, o que é
+  um anúncio dizendo "aqui tem conteúdo para estudar" -- o ímã mais forte que
+  existe para exatamente quem se quer repelir. Manchete nova não resolve isso:
+  quando manchete e imagem se contradizem no feed, o leitor resolve a favor da
+  imagem, porque viu a imagem primeiro. Ele foi guardado para remarketing, onde
+  o público é morno, para para ler e já viveu aquela tela.
+
+  O ELEMENTO NOVO, E É UM SÓ
+
+  O ponteiro dos minutos vai para o 9 e o quadrante entre 9 e 12 fica ocre
+  sólido. O mostrador deixa de dizer "tem tempo correndo" -- que serve para
+  vestibular, concurso e CNH -- e passa a dizer FALTAVAM QUINZE MINUTOS. Aquele
+  quarto de hora, com questão em branco e cartão-resposta por preencher, é
+  memória para quem já sentou naquela cadeira e desenho bonito para quem não
+  sentou. É ele que qualifica, e por isso é dele o uso único do ocre: a manchete
+  perdeu o itálico ocre que tinha na versão antiga.
+
+  Quinze minutos e não "a última hora": assim a peça não afirma duração de prova
+  nem horário de início. Quarto de hora marcado é convenção universal de disco
+  de estacionamento, e não depende de nenhum fato do edital.
+
+  DUAS DECISÕES TÉCNICAS QUE PARECEM ARBITRÁRIAS E NÃO SÃO
+
+  1. Ponteiro das horas em 142,5° (entre o 4 e o 5). Se ficasse perto do 12
+     cairia dentro do setor ocre, e marinho sobre ocre dá 3,28:1. Na face clara
+     ele fica a 14:1. De quebra, o mostrador passa a marcar uma hora concreta de
+     uma tarde em vez de um diagrama simétrico -- diagrama lê como gráfico, hora
+     concreta lê como relógio.
+  2. Doze traços viraram quatro, e o <script> que os montava foi apagado. Os
+     doze davam 4px cada na entrega a 400px: poeira. E uma peça de anúncio não
+     deveria depender de JS para existir.
+
+  Render: ./render.sh r-o-relogio.html
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@600;700&family=Hanken+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--navy:#15212B;--ocre:#A65D1E}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+
+  .olho{position:absolute;left:88px;top:118px;font-family:'Space Mono',monospace;
+        font-weight:700;font-size:36px;letter-spacing:.10em;color:var(--navy)}
+
+  /* ---------- banda 1 · a frase ---------- */
+  .frase{position:absolute;left:88px;top:230px;width:904px;font-family:'Spectral',Georgia,serif;
+         font-weight:700;font-size:78px;line-height:1.1;color:var(--ink);letter-spacing:-.02em}
+
+  /* ---------- banda 2 · o mostrador ---------- */
+  /* Caixa de conteúdo de 360x360 com borda POR FORA (388 no total). Os filhos se
+     posicionam sobre esses 360, e é por isso que o centro de rotação dos traços
+     cai em 180px. Mexer no tamanho exige refazer o transform-origin. */
+  .relogio{position:absolute;left:50%;top:530px;transform:translateX(-50%);
+           width:360px;height:360px;border-radius:50%;
+           background:var(--card);border:14px solid var(--navy)}
+  /* O último quarto de hora: do 9 ao 12. Vértices em vez de conic-gradient porque
+     saem exatos sem matemática de ângulo, e há menos o que quebrar no headless.
+     Ocre sólido, sem alfa: a 34% o setor daria 1,58:1 contra o disco e sumiria
+     no celular ao sol. Sólido dá 4,74:1. */
+  .setor{position:absolute;left:0;top:0;width:360px;height:360px;border-radius:50%;
+         background:var(--ocre);clip-path:polygon(50% 50%, 50% 0%, 0% 0%, 0% 50%)}
+  .tick{position:absolute;left:50%;top:16px;width:6px;height:28px;margin-left:-3px;
+        background:var(--navy);border-radius:3px;transform-origin:3px 164px}
+  .ponteiro{position:absolute;left:50%;top:50%;background:var(--navy);
+            border-radius:8px;transform-origin:50% 100%}
+  .p-min{width:12px;height:132px;margin-left:-6px;margin-top:-132px;transform:rotate(270deg)}
+  .p-hora{width:16px;height:92px;margin-left:-8px;margin-top:-92px;transform:rotate(142.5deg)}
+  .pino{position:absolute;left:50%;top:50%;width:24px;height:24px;margin:-12px 0 0 -12px;
+        border-radius:50%;background:var(--navy)}
+
+  /* Centralizado porque pertence ao mostrador, o único elemento centrado da peça. */
+  .rot-setor{position:absolute;left:0;top:952px;width:1080px;text-align:center;
+             font-family:'Space Mono',monospace;font-weight:700;font-size:36px;
+             letter-spacing:.10em;color:var(--ocre)}
+
+  /* ---------- banda 3 · base ---------- */
+  .remate{position:absolute;left:88px;top:1040px;width:904px;font-weight:600;font-size:38px;
+          line-height:1.2;color:rgba(35,31,26,.75)}
+  .selo{position:absolute;left:88px;top:1100px;font-weight:700;font-size:40px;color:var(--navy)}
+  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-weight:700;
+         font-size:28px;color:rgba(35,31,26,.70);letter-spacing:.14em}
+</style></head><body data-render="1080x1350">
+<div class="art">
+
+  <!-- Aqui o olho nomeia o exame, ao contrário da P2: a manchete desta peça fala
+       da hora, não da prova. A regra é "a zona quente nomeia o exame uma vez". -->
+  <div class="olho">1ª FASE DA OAB · 06 DE SETEMBRO</div>
+
+  <div class="frase">Da última vez,<br>você sabia.<br>O relógio não esperou.</div>
+
+  <div class="relogio">
+    <div class="setor"></div>
+    <div class="tick" style="transform:rotate(0deg)"></div>
+    <div class="tick" style="transform:rotate(90deg)"></div>
+    <div class="tick" style="transform:rotate(180deg)"></div>
+    <div class="tick" style="transform:rotate(270deg)"></div>
+    <div class="ponteiro p-hora"></div>
+    <div class="ponteiro p-min"></div>
+    <div class="pino"></div>
+  </div>
+  <div class="rot-setor">SEUS ÚLTIMOS 15 MINUTOS</div>
+
+  <div class="remate">Saber a matéria não é pontuar na prova.</div>
+  <div class="selo">Faça o teste grátis. 7 questões, 4 minutos.</div>
+
+  <div class="marca">SÓ O QUE CAI</div>
+</div>
+</body></html>
