@@ -457,6 +457,17 @@
   .quad .cell p{font-size:13px;line-height:1.5;color:var(--sec);margin-top:6px}
   .quad .cell.green{background:#EAF3EA;border-color:#4E7A4E}
   .quad .cell.here{background:#FBEDE2;border:2px solid var(--ocre2)}
+  /* No celular as duas colunas ficam com 145 px, e 36 px disso é padding: sobram 109 px
+     para um título serifado de 17 px. "Pronta de verdade" saía em TRÊS linhas e "Sabe
+     mas trava" também, o que faz o quadrante, que é o único gráfico da página, parecer
+     quebrado justo onde ele deveria ser lido de relance. Não dá para empilhar as
+     células: um quadrante empilhado deixa de ser um quadrante. Então aperta o padrão e
+     a tipografia só onde o espaço aperta. */
+  @media (max-width:420px){
+    .quad .cell{padding:12px 13px}
+    .quad .cell b{font-size:15px}
+    .quad .cell p{font-size:12.5px;margin-top:5px}
+  }
   .quad .cell .badge{display:inline-block;background:var(--ocre2);color:#fff;font-size:10px;
                      font-weight:700;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;
                      margin-left:6px;white-space:nowrap;vertical-align:middle}
@@ -2882,9 +2893,34 @@
   // Cada print vira PROMESSA: o que aparece aqui é o que o comprador encontra ao entrar.
   // Se alguma dessas telas mudar, o print muda junto — igual aos números da stackOferta.
   function provas(){
+    /* 07/08/2026: o print do Mapa saiu e entrou o do simulado corrigido.
+       Dois motivos, e o segundo é o que decide.
+       1. Redundância. O quadrante AO VIVO, com o ponto e o selo "você está aqui" da
+          própria pessoa, já aparece 2.586 px antes disto. O print provava pior o que
+          o bloco vivo prova melhor, e a regra 2 do inventário manda que cada bloco
+          acrescente um TIPO novo de evidência.
+       2. O nome. O print carrega "Gustavo" no ponto do quadrante, e a legenda dele
+          prometia "com o seu nome". Numa página que acabou de escrever o nome da
+          pessoa no hero, o nome do vendedor era o pior possível ali.
+       O simulado corrigido não tem nenhum dos dois problemas e é evidência mais forte:
+       ele mostra na tela exatamente o item que o lockbox risca como fechado ("sua
+       porcentagem em cada uma das 6"), e usa a mesma régua dos 50% que o placar do topo
+       passou a usar. Prova que a entrega existe sem entregar o diagnóstico da pessoa.
+       É o simulado FOCADO de 24 questões, que é o que o R$47 dá (o de 80 é do
+       Completo); se um dia trocar o print, conferir isso antes. */
+    /* A ficha SAIU em 07/08/2026, e isto é um defeito, não uma escolha de estilo.
+       `ficha.webp` mostra "responsabilidade tributária". Tributário NÃO está no núcleo
+       duro: a tabela real de entregas (LINHAS em so-o-que-cai-app/index.html) dá ao
+       R$47 as fichas das 6 do núcleo (Ética, Constitucional, Civil, Processo Civil,
+       Penal, Processo Penal) e põe as outras 11 no Plano Completo. Ou seja, o bloco que
+       existe para PROVAR a entrega estava provando com uma tela que o comprador de R$47
+       não encontra lá dentro, embaixo de uma nota que diz "telas reais do que você
+       recebe". Isso é reembolso pedindo para acontecer.
+       `ficha-complementar.webp` não serve de troca: é Trabalho, também das 11.
+       Dos prints que existem no repo, só estes dois são inequivocamente do R$47. O
+       terceiro volta assim que houver um print de ficha de matéria do núcleo. */
     var itens=[
-      ['mapa.webp',     'O Mapa da Aprovação',   'Onde você cai nos dois eixos, com o seu nome no ponto.'],
-      ['ficha.webp',    'As fichas',             'A regra, a súmula do STJ e a pegadinha, matéria por matéria.'],
+      ['simulado.webp', 'O simulado corrigido',  'A sua porcentagem em cada matéria do núcleo, que é o que estas 7 questões não mostram.'],
       ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
     ];
     return '<div class="eyebrow" style="margin-top:8px">Veja por dentro, antes de comprar</div>'+
