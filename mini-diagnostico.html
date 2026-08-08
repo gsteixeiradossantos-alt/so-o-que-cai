@@ -581,7 +581,10 @@
 
   /* Linha compacta de autoria, no TOPO da oferta. O cartão inteiro continua lá
      embaixo; aqui é só o crachá, porque o preço aparece antes dele. */
-  .autorof{display:flex;gap:11px;align-items:center;margin:0 0 16px}
+  /* margem em cima tambem, desde 07/08: o crachá deixou de abrir a seção e passou a
+     ficar entre o parágrafo do preço e a lista de entregas, então precisa de respiro
+     dos dois lados para não colar no texto de cima. */
+  .autorof{display:flex;gap:11px;align-items:center;margin:18px 0 16px}
   .autorof img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0}
   .autorof b{display:block;font-size:14.5px;font-weight:700;color:var(--ink)}
   .autorof i{display:block;font-style:normal;font-size:12.5px;color:var(--sec)}
