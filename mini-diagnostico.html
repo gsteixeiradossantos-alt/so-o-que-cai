@@ -2953,19 +2953,31 @@
        continua sendo do núcleo duro. */
     /* 07/08/2026, segunda versão do bloco no mesmo dia.
        O GIF virou VÍDEO, a pedido: 7 quadros com salto entre eles liam como travado, e
-       o que se quer provar aqui é fluidez de uso. O mp4 tem 13,7 s a 24 fps com scroll
-       contínuo e três cenas (o hub, a ficha de Ética rolando, o simulado abrindo e
-       sendo respondido), então também responde "onde é que eu mexo nisso", que o GIF
-       não respondia por não mostrar o menu.
+       o que se quer provar aqui é fluidez de uso. O mp4 tem 10,6 s a 24 fps com scroll
+       contínuo, e mostra SÓ a área do aluno, do topo ao rodapé, SEM CLIQUE NENHUM.
+       Três coisas que ele não faz, e cada uma custou uma versão:
+       - não passeia por dentro da ficha nem do simulado. Isso entrega de graça o que
+         está sendo vendido. O menu responde "onde é que eu mexo nisso" sem abrir o
+         conteúdo.
+       - não rola até o navegador das 17 matérias. As 11 secundárias são do Completo, e
+         mostrá-las aqui era o mesmo defeito do print de Tributário por outra via.
+       - NÃO CLICA EM NADA. A versão que abria a etapa 3 caiu num modal de ordem ("a
+         etapa 3 vem depois da 1") que escurece a tela inteira: o vídeo passava dez
+         segundos exibindo um aviso de bloqueio. O hub libera etapa por etapa, então
+         qualquer clique fora de ordem cai nesse aviso. Se um dia for preciso abrir uma
+         aba no vídeo, tem de ser com o progresso simulado antes, não com clique seco.
+       O Cronograma aparece fechado, com a etiqueta vermelha do Plano Completo, e isso
+       é de propósito: é o que torna a diferença entre os planos legível em vez de
+       escondida, dentro do próprio produto.
        Autoplay mudo em loop, que é o que o iOS e o Android permitem sem toque, com
-       poster para não piscar antes do primeiro quadro. 882 KB contra 274 KB do GIF: o
-       preço da fluidez, pago com preload="metadata" e loading tardio.
+       poster para não piscar antes do primeiro quadro e para o caso de o autoplay ser
+       bloqueado (modo de economia de bateria ou de dados). 384 KB contra 274 KB do GIF.
        O print do SIMULADO foi cortado logo abaixo do cartão do 19/24, também a pedido:
        a lista "onde você perdeu ponto, por matéria" que vinha embaixo é a mesma coisa
        que o vídeo já mostra por dentro, e aqui ela só alongava a figura. A legenda
        acompanhou o corte, senão prometeria o que a imagem deixou de mostrar. */
     var itens=[
-      ['produto-no-celular.mp4', 'O produto no celular', 'O menu, a ficha de Ética e o simulado sendo respondido, no navegador, sem instalar nada.'],
+      ['produto-no-celular.mp4', 'O produto no celular', 'A área do aluno, do topo ao fim: as cinco etapas na ordem em que se faz. Roda no navegador, sem instalar nada.'],
       ['simulado.webp', 'O simulado corrigido',  'A sua nota, medida contra a mesma linha de corte da prova.'],
       ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
     ];
