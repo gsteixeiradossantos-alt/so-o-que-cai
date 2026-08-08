@@ -484,7 +484,9 @@
   .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
           gap:18px;margin-top:18px;align-items:start}
   .provas figure{margin:0}
-  .provas img{display:block;width:100%;height:auto;border:1px solid var(--line);
+  /* video entra na mesma regra da imagem: a figura do meio nao pode ter moldura
+     diferente das outras duas so por ser video. */
+  .provas img,.provas video{display:block;width:100%;height:auto;border:1px solid var(--line);
               border-radius:10px;background:var(--card)}
   .provas figcaption{font-size:13px;line-height:1.5;color:var(--sec);margin-top:9px}
   .provas figcaption b{color:var(--ink);font-weight:600}
@@ -2391,7 +2393,17 @@
     var ponto, titulo, texto;
     if(reprovouMais()){
       ponto = forte
-        ? 'Duas provas ou mais sem passar, e a matéria do núcleo você tem. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
+        // 07/08/2026. Este fecho saía TRUNCADO na tela: podar() corta no gatilho
+        // "Então o que te derruba está no que", porque dali em diante o texto invade a
+        // seção 4, e o que sobrava era "Duas provas ou mais sem passar, e a matéria do
+        // núcleo você tem." — uma linha que termina no ar. O COPY-resultados.md já
+        // marcava isso em 04/08 e nunca foi corrigido.
+        // Custa caro: é o fecho de quem reprovou duas vezes ou mais E acertou 7 de 7, e
+        // esse é o público que mais chega na oferta (69%). O melhor público, no melhor
+        // resultado, recebia a frase mais fraca da página.
+        // A correção não é mexer no podar(), que protege a arquitetura: é escrever uma
+        // oração de fecho ANTES do gatilho, para que o texto podado já feche sozinho.
+        ? 'Duas provas ou mais sem passar, e a matéria do núcleo você tem. Duas reprovações com este resultado apontam para fora do caderno. Então o que te derruba está no que este teste nem tocou: as outras 11 matérias, o ritmo ao longo de 80 questões e o cansaço da terceira hora. Duas reprovações apontam para o mesmo lugar, e você nunca teve como medir esse lugar.'
         : sabe
         ? 'Duas provas ou mais sem passar, e o que te derrubou aqui não foi a matéria. O que cedeu foi a hora, e agora isso tem registro: aconteceu de novo, num teste de quatro minutos. Duas reprovações e este resultado apontam para o mesmo lugar, e não é o caderno.'
         // Encurtado em 02/08: eram cinco linhas no ponto em que a pessoa já aceitou o
@@ -2453,7 +2465,12 @@
       // Nenhum dos 18 leads reais marcou esta opção, então o texto é curto de
       // propósito: existe para a página não quebrar, não para converter.
       ponto = forte
-        ? 'Você entrou por curiosidade e não perdeu nenhuma. Isso responde uma pergunta e abre outra: estas '+CONTENT.length+' não medem o que acontece na questão 40, com três horas de prova nas costas.'
+        // Mesma doença e mesma correção do fecho de "duas ou mais" acima: podado no
+        // gatilho, sobrava "Você entrou por curiosidade e não perdeu nenhuma." e mais
+        // nada, o único desfecho da página com uma linha só. A oração nova espelha de
+        // propósito o outro fecho deste mesmo momento ("curiosidade que encontra buraco
+        // deixa de ser curiosidade"), para os dois lerem como a mesma voz.
+        ? 'Você entrou por curiosidade e não perdeu nenhuma. Curiosidade que não encontra buraco nenhum costuma ser conhecimento que ainda não tem nome. Isso responde uma pergunta e abre outra: estas '+CONTENT.length+' não medem o que acontece na questão 40, com três horas de prova nas costas.'
         : sabe
         ? 'Você entrou por curiosidade e a matéria não foi o problema. O que apareceu foi a hora, num teste de quatro minutos feito sem sala cheia e sem cinco horas de prova.'
         : 'Você entrou por curiosidade e o teste achou alguma coisa. Curiosidade que encontra buraco deixa de ser curiosidade.';
@@ -2934,19 +2951,36 @@
        vocabulário de infoproduto genérico e não responde pergunta nenhuma.
        274 KB, 7 quadros, 96 cores sem dither. Se for regravado, conferir que a matéria
        continua sendo do núcleo duro. */
+    /* 07/08/2026, segunda versão do bloco no mesmo dia.
+       O GIF virou VÍDEO, a pedido: 7 quadros com salto entre eles liam como travado, e
+       o que se quer provar aqui é fluidez de uso. O mp4 tem 13,7 s a 24 fps com scroll
+       contínuo e três cenas (o hub, a ficha de Ética rolando, o simulado abrindo e
+       sendo respondido), então também responde "onde é que eu mexo nisso", que o GIF
+       não respondia por não mostrar o menu.
+       Autoplay mudo em loop, que é o que o iOS e o Android permitem sem toque, com
+       poster para não piscar antes do primeiro quadro. 882 KB contra 274 KB do GIF: o
+       preço da fluidez, pago com preload="metadata" e loading tardio.
+       O print do SIMULADO foi cortado logo abaixo do cartão do 19/24, também a pedido:
+       a lista "onde você perdeu ponto, por matéria" que vinha embaixo é a mesma coisa
+       que o vídeo já mostra por dentro, e aqui ela só alongava a figura. A legenda
+       acompanhou o corte, senão prometeria o que a imagem deixou de mostrar. */
     var itens=[
-      ['produto-no-celular.gif', 'O produto no celular', 'A ficha de Ética e o simulado focado, no navegador, sem instalar nada.'],
-      ['simulado.webp', 'O simulado corrigido',  'A sua porcentagem em cada matéria do núcleo, que é o que estas 7 questões não mostram.'],
+      ['produto-no-celular.mp4', 'O produto no celular', 'O menu, a ficha de Ética e o simulado sendo respondido, no navegador, sem instalar nada.'],
+      ['simulado.webp', 'O simulado corrigido',  'A sua nota, medida contra a mesma linha de corte da prova.'],
       ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
     ];
     return '<div class="eyebrow" style="margin-top:8px">Veja por dentro, antes de comprar</div>'+
     '<div class="provas">'+itens.map(function(i){
-      return '<figure>'+
-        // assets/TELAS, não assets/produto: o .gitignore deste repo tem a regra `produto/`
-        // (material interno mora no repo privado so-o-que-cai-produto, este aqui é público).
-        // A regra casaria com assets/produto/ e as imagens sumiriam do deploy sem erro
-        // nenhum: o commit passa, o site sobe e o bloco fica com três quadrados quebrados.
-        '<img src="assets/telas/'+i[0]+'" alt="'+esc(i[1])+'" loading="lazy" decoding="async">'+
+      // assets/TELAS, não assets/produto: o .gitignore deste repo tem a regra `produto/`
+      // (material interno mora no repo privado so-o-que-cai-produto, este aqui é público).
+      // A regra casaria com assets/produto/ e as mídias sumiriam do deploy sem erro
+      // nenhum: o commit passa, o site sobe e o bloco fica com três quadrados quebrados.
+      var midia = /\.mp4$/.test(i[0])
+        ? '<video src="assets/telas/'+i[0]+'" poster="assets/telas/'+i[0].replace('.mp4','.jpg')+'"'+
+          ' autoplay muted loop playsinline preload="metadata"'+
+          ' aria-label="'+esc(i[1])+'"></video>'
+        : '<img src="assets/telas/'+i[0]+'" alt="'+esc(i[1])+'" loading="lazy" decoding="async">';
+      return '<figure>'+midia+
         '<figcaption><b>'+esc(i[1])+'.</b> '+esc(i[2])+'</figcaption>'+
       '</figure>';
     }).join('')+'</div>'+
@@ -3337,16 +3371,16 @@
       // ===== RESUMO DA OFERTA — atalho para quem já decidiu =====
       // Não responde pergunta nova: é navegação. Por isso não tem argumento, só
       // nome, preço e um link para a seção que argumenta.
-      // Para quem VOLTOU este slot muda de função (07/08/2026). Ele é o mesmo px, o
-      // mesmo tamanho e a mesma âncora: o que muda é que deixa de apresentar um preço
-      // a quem já viu esse preço e passa a dizer o que está diferente hoje, que é o
-      // calendário. Ver a nota em VOLTOU para o número que motivou isto.
-      (VOLTOU ? faixaVoltou() :
-      '<section class="vresumo"><div class="cardres">'+
-        '<div><div class="t">'+PRODUTO+'</div>'+
-          '<div class="s">R$ 47 único · acesso na hora, por 12 meses · garantia de 7 dias</div></div>'+
-        '<a href="#oferta" class="btn-lar" id="verof">Ver a oferta completa</a>'+
-      '</div></section>')+
+      /* O cartão de preço que ficava aqui, na TELA 2, saiu em 07/08/2026, a pedido.
+         Ele nasceu como atalho para quem já tinha decidido, mas na segunda tela do
+         celular ninguém decidiu ainda: a pessoa acaba de receber um veredito sobre o
+         estudo dela e a próxima coisa que a página faz é mostrar um preço. Passavam
+         por ele 100% dos leads, e é o momento em que "então era só isca" fica mais
+         barato de pensar. Quem quiser o atalho continua com o "pular para a oferta"
+         colado no veredito, 1.500 px abaixo, onde ele vem DEPOIS do argumento.
+         O slot continua existindo para quem VOLTOU, e nesse caso ele não mostra preço:
+         mostra o que mudou desde a última visita, que é o calendário. */
+      (VOLTOU ? faixaVoltou() : '')+
 
       // ===== 2. O QUE ISSO SIGNIFICA =====
       '<section class="vsec estreita">'+
@@ -3394,20 +3428,30 @@
       // e pedir é um sinal de interesse que a página não tinha como ler antes.
       '<section class="vsec estreita">'+
         '<div class="eyebrow">Como este diagnóstico pensa</div>'+
-        '<h2>A palavra que a banca trocou nesta questão</h2>'+
+        /* 07/08/2026: o título era "A palavra que a banca trocou nesta questão" e
+           prometia uma coisa que a tela não mostrava. O comentário fica COLAPSADO por
+           decisão de 04/08, então a palavra em questão só aparece depois do clique, e
+           mesmo depois: das 7 questões, só 4 têm comentário que nomeia uma palavra
+           trocada; as outras 3 tratam de conceito confundido (impedimento contra
+           incompatibilidade, erro de tipo contra erro de proibição). Título que promete
+           o que a tela não entrega é o mesmo defeito do print de Tributário, só que em
+           texto. O novo descreve o que é verdade nas 7, que são todas dif:true. */
+        '<h2>Por que quem sabe a matéria erra esta questão</h2>'+
         gabarito()+
         // 07/08/2026: a origem da questão, dita no único lugar da página onde a pessoa
         // está olhando para uma. Sem esta linha, o repetente conclui sozinho que a
         // questão é inventada — e ele conclui isso justamente no bloco que existe para
         // provar competência. Fato conferido em assets/banco-de-questoes.js, não copy.
         '<p class="p" style="margin-top:16px">Ela é inédita, escrita a partir de lei seca, súmula e entendimento consolidado, no padrão com que a banca cobra. Não é cópia de exame anterior, e isso é de propósito: prova antiga já tem gabarito circulando, e quem já prestou normalmente já resolveu as recentes.</p>'+
-        '<div class="vidlinha">'+
-          '<span>Quer entender por que este diagnóstico existe?</span>'+
-          '<a href="#" id="vplay">▶ 28 segundos</a>'+
-        '</div>'+
-        '<div class="vid" id="vwrap" hidden><video controls playsinline preload="none" poster="assets/video/diagnostico-explicado.jpg">'+
-          '<source src="assets/video/diagnostico-explicado.mp4" type="video/mp4">'+
-        '</video></div>'+
+        /* O vídeo de 28 segundos saiu em 07/08/2026, a pedido. Ele entrou pelo
+           inventário como "evidência de transparência, quem está falando", e essa
+           pergunta passou a ter dono melhor: o crachá com nome e OAB no topo da oferta
+           (06 e 07/08) e o cartão do autor com a citação, os dois em texto, os dois
+           lidos sem clique. Vídeo escondido atrás de "▶ 28 segundos" cobra uma decisão
+           antes de entregar qualquer coisa, e num público que lê no celular com o dado
+           contado isso é atrito com pouco retorno.
+           Os arquivos continuam em assets/video/, então voltar é só devolver estas
+           linhas. */
       '</section>'+
 
       // ===== 4. O QUE FALTA — só perguntas =====
@@ -3610,10 +3654,8 @@
     app.innerHTML = html;
     ligarCompra();
 
-    // Vídeo sob demanda: só entra no DOM quando pedido.
-    var vp2=document.getElementById('vplay'), vw=document.getElementById('vwrap');
-    if(vp2&&vw) vp2.onclick=function(e){ e.preventDefault(); vw.hidden=false; vp2.parentNode.hidden=true;
-      try{ vw.querySelector('video').play(); }catch(err){} };
+    // O ligador do vídeo saiu junto com o vídeo, em 07/08/2026. Ver a nota na seção
+    // "Como este diagnóstico pensa".
 
     // Comentário da questão. Fechado por padrão; o rótulo alterna.
     var gb=document.getElementById('gabtoggle'), gx=document.getElementById('gabexp');
