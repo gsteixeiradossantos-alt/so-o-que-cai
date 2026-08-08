@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  C3 · ângulo "calendário e execução" · público frio · Compra
+  ----------------------------------------------------------
+  A urgência aqui é verdadeira: 1ª fase do 47º Exame em 06/09/2026, data do
+  edital. É o único argumento de tempo permitido pela marca. O ângulo também
+  cumpre a decisão de posicionamento da reta final: NÃO competir com revisão de
+  conteúdo, porque Estratégia e Ceisc entregam revisão de véspera de graça no
+  YouTube. O território livre é execução.
+
+  Render: criativos/render.sh
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--muted2:#574F45;--muted:#8A8378;
+        --line:#E4DBC9;--navy:#15212B;--ocre:#A65D1E;--pill:#F6E7D6}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1080px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+  .marca{position:absolute;left:80px;top:78px;display:flex;align-items:center;gap:22px}
+  .selo{width:66px;height:66px;border-radius:16px;background:var(--navy);position:relative}
+  .selo .anel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;
+              border-radius:50%;border:3px solid var(--paper)}
+  .selo .miolo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;
+               border-radius:50%;background:var(--ocre)}
+  .selo i{position:absolute;background:var(--paper);border-radius:1px}
+  .selo .t-n{left:50%;top:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-s{left:50%;bottom:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-l{top:50%;left:9px;margin-top:-1.5px;height:3px;width:9px}
+  .selo .t-o{top:50%;right:9px;margin-top:-1.5px;height:3px;width:9px}
+  .nome{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:46px;color:var(--ink);line-height:1}
+  .sub{font-family:'Space Mono',monospace;font-size:19px;color:var(--muted);letter-spacing:.19em;margin-top:9px}
+
+  /* bloco da data */
+  .data{position:absolute;left:80px;top:216px;width:250px;height:250px;border-radius:22px;background:var(--navy);
+        display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .data .dia{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:112px;color:var(--paper);line-height:.9}
+  .data .mes{font-family:'Space Mono',monospace;font-weight:700;font-size:26px;color:var(--ocre);
+             letter-spacing:.22em;margin-top:14px}
+  .data .dom{font-family:'Space Mono',monospace;font-size:19px;color:#8FA0AC;letter-spacing:.12em;margin-top:10px}
+
+  .h{position:absolute;left:372px;top:228px;font-family:'Spectral',Georgia,serif;font-weight:700;
+     font-size:66px;line-height:1.14;color:var(--ink);letter-spacing:-.02em}
+  .h em{font-style:italic;color:var(--ocre);display:block}
+
+  .linhas{position:absolute;left:80px;top:552px;font-size:34px;line-height:1.45;color:var(--muted2)}
+  .linhas b{font-weight:600;color:var(--ink)}
+
+  .nota{position:absolute;left:80px;top:770px;width:920px;padding:26px 30px;border-radius:16px;
+        background:var(--card);border-left:6px solid var(--ocre);font-size:29px;line-height:1.38;
+        color:var(--ink);box-sizing:border-box}
+  .cta{position:absolute;left:80px;top:930px;height:80px;padding:0 34px;border-radius:15px;background:var(--navy);
+       display:flex;align-items:center;gap:26px;font-family:'Space Mono',monospace;font-weight:700;
+       font-size:29px;color:var(--paper);letter-spacing:.05em}
+  .seta{font-size:33px;line-height:1}
+</style></head><body>
+<div class="art">
+  <div class="marca">
+    <div class="selo"><i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div></div>
+    <div><div class="nome">Só o que Cai</div><div class="sub">1ª FASE · OAB</div></div>
+  </div>
+
+  <div class="data">
+    <div class="dia">06</div>
+    <div class="mes">SETEMBRO</div>
+    <div class="dom">DOMINGO</div>
+  </div>
+
+  <div class="h">Não dá para<em>estudar tudo<br>de novo.</em></div>
+
+  <div class="linhas">
+    O que cabe nas últimas semanas não é conteúdo novo.<br>
+    É parar de perder ponto no que você já sabe.
+  </div>
+
+  <div class="nota"><b>7 questões grátis</b>, com o relógio correndo, mostram onde o ponto vaza.</div>
+
+  <div class="cta">DESCUBRA ABAIXO <span class="seta">↓</span></div>
+</div>
+</body></html>

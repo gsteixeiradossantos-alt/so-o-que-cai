@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  C2 · ângulo "você estudou, então por que reprovou" · público frio · Compra
+  -------------------------------------------------------------------------
+  Ataca a crença central da persona: "reprovei porque estudei pouco". Os dois
+  eixos do diagnóstico dizem outra coisa. Entre os compradores do período, a
+  média de eixo_conteudo foi 61 e a de eixo_pressao 64: a perda está dividida,
+  não concentrada em matéria. É exatamente a lacuna que sustenta o produto,
+  porque todo concorrente vende conteúdo e nenhum vende diagnóstico.
+
+  Render: criativos/render.sh
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--muted2:#574F45;--muted:#8A8378;
+        --line:#E4DBC9;--navy:#15212B;--ocre:#A65D1E;--pill:#F6E7D6}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1080px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+  .marca{position:absolute;left:80px;top:78px;display:flex;align-items:center;gap:22px}
+  .selo{width:66px;height:66px;border-radius:16px;background:var(--navy);position:relative}
+  .selo .anel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;
+              border-radius:50%;border:3px solid var(--paper)}
+  .selo .miolo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;
+               border-radius:50%;background:var(--ocre)}
+  .selo i{position:absolute;background:var(--paper);border-radius:1px}
+  .selo .t-n{left:50%;top:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-s{left:50%;bottom:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-l{top:50%;left:9px;margin-top:-1.5px;height:3px;width:9px}
+  .selo .t-o{top:50%;right:9px;margin-top:-1.5px;height:3px;width:9px}
+  .nome{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:46px;color:var(--ink);line-height:1}
+  .sub{font-family:'Space Mono',monospace;font-size:19px;color:var(--muted);letter-spacing:.19em;margin-top:9px}
+  .h{position:absolute;left:80px;top:236px;font-family:'Spectral',Georgia,serif;font-weight:700;
+     font-size:70px;line-height:1.15;color:var(--ink);letter-spacing:-.02em}
+  .h em{font-style:italic;color:var(--ocre);display:block}
+
+  /* dois eixos */
+  .eixos{position:absolute;left:80px;top:498px;display:flex;gap:28px}
+  .eixo{width:446px;height:188px;border-radius:18px;background:var(--card);border:2px solid var(--line);
+        position:relative;overflow:hidden}
+  .eixo .tit{position:absolute;left:28px;top:26px;font-family:'Space Mono',monospace;font-weight:700;
+             font-size:22px;letter-spacing:.1em;color:var(--navy)}
+  .eixo .desc{position:absolute;left:28px;top:66px;right:28px;font-size:25px;line-height:1.32;color:var(--muted2)}
+  .eixo .barra{position:absolute;left:28px;right:28px;bottom:30px;height:14px;border-radius:7px;background:var(--line)}
+  .eixo .barra i{position:absolute;left:0;top:0;height:14px;border-radius:7px;background:var(--ocre)}
+  .eixo.b .tit{color:var(--ocre)}
+
+  .linhas{position:absolute;left:80px;top:730px;font-size:33px;line-height:1.42;color:var(--muted2)}
+  .linhas b{font-weight:600;color:var(--ink)}
+  .cta{position:absolute;left:80px;top:930px;height:80px;padding:0 34px;border-radius:15px;background:var(--navy);
+       display:flex;align-items:center;gap:26px;font-family:'Space Mono',monospace;font-weight:700;
+       font-size:29px;color:var(--paper);letter-spacing:.05em}
+  .seta{font-size:33px;line-height:1}
+</style></head><body>
+<div class="art">
+  <div class="marca">
+    <div class="selo"><i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div></div>
+    <div><div class="nome">Só o que Cai</div><div class="sub">1ª FASE · OAB</div></div>
+  </div>
+
+  <div class="h">Você estudou.<em>Então por que reprovou?</em></div>
+
+  <div class="eixos">
+    <div class="eixo">
+      <div class="tit">MATÉRIA</div>
+      <div class="desc">O conteúdo não assentou.<br>Se resolve estudando.</div>
+      <div class="barra"><i style="width:61%"></i></div>
+    </div>
+    <div class="eixo b">
+      <div class="tit">PRESSÃO</div>
+      <div class="desc">Você sabia e errou mesmo assim.<br>Estudar mais não resolve.</div>
+      <div class="barra"><i style="width:64%"></i></div>
+    </div>
+  </div>
+
+  <div class="linhas">
+    São dois problemas diferentes e o plano das<br>
+    últimas semanas muda conforme a resposta.<br>
+    <b>7 questões grátis</b> mostram qual é o seu.
+  </div>
+
+  <div class="cta">DESCUBRA ABAIXO <span class="seta">↓</span></div>
+</div>
+</body></html>
