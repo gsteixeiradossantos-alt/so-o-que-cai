@@ -430,6 +430,10 @@
   .cardn h3{font-family:'Source Serif 4',Georgia,serif;font-size:20px;font-weight:700;
             line-height:1.3;margin:8px 0 10px}
   .cardn p{font-size:15px;line-height:1.6;color:var(--azul);margin:0}
+  /* O fecho da garantia: a conta dos 7 dias contra o calendario da prova. Separado por
+     um filete porque e argumento, e o paragrafo acima e a regra. */
+  .cardn p.gfecho{margin-top:14px;padding-top:12px;border-top:1px solid rgba(243,238,228,.22);
+                  font-size:14px;color:var(--gold)}
   .grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
 
   /* ---- rota em 5 etapas (04/08) ---- */
@@ -3564,6 +3568,18 @@
           '<div class="eyebrow gold">Sem risco</div>'+
           '<h3>Use o material inteiro. Só depois decida se valeu.</h3>'+
           '<p>Se em até 7 dias você concluir que ele não trouxe valor, basta pedir o reembolso. Sem perguntas e sem discussão. O risco é meu, não seu.</p>'+
+          // 07/08/2026: a garantia existia como PROTEÇÃO e nunca era usada como
+          // ARGUMENTO. "7 dias" ao lado de "faltam 30 dias para a prova" é uma conta que
+          // a página fazia a pessoa fazer sozinha, e quase ninguém faz. Dita, ela vira a
+          // resposta para "decido depois": não existe depois mais barato que este.
+          // Só aparece quando a conta é verdadeira. Faltando 7 dias ou menos ela se
+          // inverte (a garantia passaria a vencer depois da prova) e some sozinha, sem
+          // ninguém reescrever nada na véspera, que é o dia de maior tráfego do ano.
+          (function(){
+            var d = diasParaProva();
+            if(!d || d <= 8) return '';
+            return '<p class="gfecho">'+diasFrase(d)+'. Use os 7 da garantia para conferir se presta e ainda sobram '+(d-7)+' para aplicar o que você descobrir.</p>';
+          })()+
         '</div>'+
       '</div></section>'+
 
