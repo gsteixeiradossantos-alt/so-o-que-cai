@@ -2,17 +2,28 @@
 <!--
   P3 · A INVERSÃO DA CRENÇA · público frio · campanha de Compra · 1080x1350
   ------------------------------------------------------------------------
-  Saída da sala de criação de 08/08/2026 (dupla copy + direção de arte).
+  Versão 2, depois da revisão da dupla sênior (+45 anos).
   Briefing: ../../soqc-prompt-sala-de-criacao.md
 
-  É a única das três que oferece absolvição em vez de acusação. Absolvição só
-  interessa a quem já foi condenado: "da última vez" é literalmente sem sentido
-  para quem nunca prestou, e é por isso que a versão curta ("Não foi falta de
-  estudo.") foi descartada — ela perde o passado, e o passado é o filtro.
+  O QUE MUDOU E POR QUÊ
 
-  Os dois blocos não levam porcentagem nem barra: número de eixo aqui viraria
-  alegação sobre resultado alheio. O argumento inteiro é a assimetria de peso
-  entre eles — o vazado é o que todo mundo vende, o sólido é o que ninguém vende.
+  1. Os rótulos saíram do vocabulário de dentro de casa. MATÉRIA e PRESSÃO são o
+     nome que o produto dá aos dois eixos; ninguém de fora sabe disso. NÃO SABIA e
+     SABIA E ERREI são a fala dela, e a segunda é reconhecimento imediato para
+     quem já sentou naquela prova.
+
+  2. As duas caixas pararam de parecer tabela de planos. O conjunto cantos
+     arredondados + par simétrico + filete de cor embaixo é literalmente o desenho
+     de "Básico / Premium", e a peça que existe para dizer QUE NÃO É CURSO estava
+     comunicando curso. Raio de 16 para 4, o filete ocre morreu, e entrou uma
+     linha acima do par amarrando o dispositivo à oferta.
+
+  3. Corpo e contraste dos rótulos. 28px a 55% de tinta dava 10,4px efetivos a
+     3,58:1: ilegível na entrega, e era metade do argumento da peça.
+
+  4. A manchete não se toca. "Estudar mais não resolveu da última vez" é a tese do
+     produto em uma linha: contradiz a crença dela, absolve sem bajular e não
+     promete nada. O filtro inteiro mora naquele pretérito.
 
   Render: ./render.sh p3-a-inversao.html
 -->
@@ -23,51 +34,54 @@
   .art{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--paper);
        font-family:'Hanken Grotesk',system-ui,sans-serif}
 
+  .olho{position:absolute;left:88px;top:118px;font-family:'Space Mono',monospace;
+        font-weight:700;font-size:36px;letter-spacing:.10em;color:var(--navy)}
+
   /* ---------- banda 1 · impacto: a frase ---------- */
-  .frase{position:absolute;left:88px;top:150px;width:904px;font-family:'Spectral',Georgia,serif;
+  .frase{position:absolute;left:88px;top:230px;width:904px;font-family:'Spectral',Georgia,serif;
          font-weight:700;font-size:86px;line-height:1.1;color:var(--ink);letter-spacing:-.02em}
 
-  /* ---------- banda 2 · dispositivo: os dois eixos, em peso desigual ---------- */
+  /* ---------- banda 2 · dispositivo: os dois motivos, em peso desigual ---------- */
+  .eixo{position:absolute;left:88px;top:570px;font-family:'Space Mono',monospace;
+        font-weight:700;font-size:32px;letter-spacing:.12em;color:var(--navy)}
   .blocos{position:absolute;left:88px;top:640px;width:904px;display:flex;gap:32px}
-  .b{width:436px;height:200px;border-radius:16px;box-sizing:border-box;padding:28px 30px;position:relative;
+  .b{width:436px;height:200px;border-radius:4px;box-sizing:border-box;padding:28px 30px;
      display:flex;flex-direction:column;justify-content:center}
-  .b.vazio{border:3px solid rgba(35,31,26,.25)}
+  .b.vazio{border:4px solid rgba(35,31,26,.50)}
   .b.cheio{background:var(--navy)}
-  .b .tit{font-family:'Space Mono',monospace;font-weight:700;font-size:28px;letter-spacing:.12em}
-  .b .sub{margin-top:14px;font-weight:600;font-size:30px;line-height:1.24}
-  .b.vazio .tit,.b.vazio .sub{color:rgba(35,31,26,.55)}
+  .b .tit{font-family:'Space Mono',monospace;font-weight:700;font-size:32px;letter-spacing:.12em}
+  .b .sub{margin-top:16px;font-weight:600;font-size:36px;line-height:1.22}
+  .b.vazio .tit,.b.vazio .sub{color:rgba(35,31,26,.70)}
   .b.cheio .tit,.b.cheio .sub{color:var(--paper)}
-  .filete{position:absolute;left:556px;top:846px;width:436px;height:6px;border-radius:3px;background:var(--ocre)}
 
   /* ---------- banda 3 · base ---------- */
-  .remate{position:absolute;left:88px;top:1050px;width:904px;font-weight:600;font-size:35px;
+  .remate{position:absolute;left:88px;top:1040px;width:904px;font-weight:600;font-size:38px;
           line-height:1.2;color:rgba(35,31,26,.75)}
-  .selo{position:absolute;left:88px;top:1112px;font-family:'Space Mono',monospace;font-weight:700;
-        font-size:26px;color:var(--navy);letter-spacing:.12em}
-  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-size:24px;
-         color:rgba(35,31,26,.45);letter-spacing:.14em}
+  .selo{position:absolute;left:88px;top:1100px;font-weight:700;font-size:40px;color:var(--navy)}
+  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-weight:700;
+         font-size:28px;color:rgba(35,31,26,.70);letter-spacing:.14em}
 </style></head><body data-render="1080x1350">
 <div class="art">
 
-  <!-- Três linhas, e não duas: em 86px "Estudar mais não resolveu" não cabe nos 904px
-       e quebrava sozinha num rag torto. Três linhas equilibradas preservam o corpo. -->
+  <div class="olho">1ª FASE DA OAB · 06 DE SETEMBRO</div>
+
   <div class="frase">Estudar mais<br>não resolveu<br>da última vez.</div>
 
+  <div class="eixo">O TESTE SEPARA OS DOIS</div>
   <div class="blocos">
     <div class="b vazio">
-      <div class="tit">MATÉRIA</div>
+      <div class="tit">NÃO SABIA</div>
       <div class="sub">resolve estudando</div>
     </div>
     <div class="b cheio">
-      <div class="tit">PRESSÃO</div>
+      <div class="tit">SABIA E ERREI</div>
       <div class="sub">estudar mais não resolve</div>
     </div>
   </div>
-  <div class="filete"></div>
 
   <div class="remate">Você nunca soube qual dos dois era o seu.</div>
-  <div class="selo">7 QUESTÕES · 4 MINUTOS · GRÁTIS</div>
+  <div class="selo">Faça o teste grátis. 7 questões, 4 minutos.</div>
 
-  <div class="marca">SÓ O QUE CAI · 1ª FASE DA OAB</div>
+  <div class="marca">SÓ O QUE CAI</div>
 </div>
 </body></html>

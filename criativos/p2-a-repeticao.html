@@ -2,20 +2,29 @@
 <!--
   P2 · A CENA DA REPETIÇÃO · público frio · campanha de Compra · 1080x1350
   -----------------------------------------------------------------------
-  Saída da sala de criação de 08/08/2026 (dupla copy + direção de arte).
+  Versão 2, depois da revisão da dupla sênior (+45 anos).
   Briefing: ../../soqc-prompt-sala-de-criacao.md
 
-  O filtro mora num advérbio de duas sílabas: "de novo". Só estuda tudo de novo
-  quem estudou tudo uma vez, e para ESTA prova. "Pela segunda vez. Talvez pela
-  terceira." é o sinal de saída para quem está na faculdade: ela lê e conclui,
-  corretamente, que a peça conta a história de outra pessoa.
+  O QUE MUDOU E POR QUÊ
 
-  Aqui a frase ganha a banda de impacto, e não o dispositivo: "de novo" qualifica
-  por leitura, e as três colunas idênticas só ganham sentido depois da frase.
+  1. A manchete deixou de dizer "estudar". "Você vai estudar tudo de novo"
+     CONFIRMA a crença que o produto inteiro existe para desmentir, e anima quem
+     quer mais estudo, que é justamente o clique que entra e vai embora sem ver o
+     preço. "Você vai fazer a 1ª fase de novo" troca a acusação pelo fato e
+     nomeia o exame no corpo grande, que é onde faltava.
 
-  As colunas são o MESMO plano três vezes, filete por filete. Os rótulos ficam em
-  segunda pessoa ("A VEZ ANTERIOR", "A ÚLTIMA VEZ") em vez de numerar as edições:
-  numerar presume o histórico dela, o rótulo não presume nada e filtra melhor.
+  2. Três colunas viraram duas. A leitora sênior não viu "o mesmo caderno três
+     vezes": viu skeleton loader, o desenho universal de página que não carregou.
+     Filetes de 14px viravam textura de 5,2px na entrega. Duas colunas de filetes
+     mais grossos dizem "de novo" melhor, e liberam largura para os rótulos, que
+     eram o que morria: "O MESMO CADERNO" a 26px dava 9,6px efetivos.
+
+  3. Os rótulos deixaram de ser coisas e voltaram a ser tempo. A ÚLTIMA VEZ e
+     06 DE SETEMBRO montam a sequência sozinhos; a data para de flutuar sem
+     legenda e para de ser lida como "tem uma live dia 6".
+
+  4. Olho, linha da oferta e piso de contraste: iguais aos das outras duas. A base
+     compartilhada é o que faz o teste ser atribuível.
 
   Render: ./render.sh p2-a-repeticao.html
 -->
@@ -26,49 +35,52 @@
   .art{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--paper);
        font-family:'Hanken Grotesk',system-ui,sans-serif}
 
+  .olho{position:absolute;left:88px;top:118px;font-family:'Space Mono',monospace;
+        font-weight:700;font-size:36px;letter-spacing:.10em;color:var(--navy)}
+
   /* ---------- banda 1 · impacto: a frase ---------- */
-  .frase{position:absolute;left:88px;top:150px;width:904px;font-family:'Spectral',Georgia,serif;
-         font-weight:700;font-size:86px;line-height:1.1;color:var(--ink);letter-spacing:-.02em}
-  .sub{position:absolute;left:88px;top:420px;width:904px;font-weight:600;font-size:44px;
+  .frase{position:absolute;left:88px;top:230px;width:904px;font-family:'Spectral',Georgia,serif;
+         font-weight:700;font-size:78px;line-height:1.1;color:var(--ink);letter-spacing:-.02em}
+  .sub{position:absolute;left:88px;top:530px;width:904px;font-weight:600;font-size:44px;
        line-height:1.28;color:rgba(35,31,26,.70)}
 
-  /* ---------- banda 2 · dispositivo: o mesmo plano, três vezes ---------- */
-  .cols{position:absolute;left:88px;top:650px;width:904px;display:flex;gap:32px}
-  .col{width:280px;display:flex;flex-direction:column;gap:12px}
-  .col i{display:block;height:14px;border-radius:7px;background:rgba(35,31,26,.20)}
+  /* ---------- banda 2 · dispositivo: o mesmo plano, outra vez ---------- */
+  .cols{position:absolute;left:88px;top:690px;width:904px;display:flex;gap:32px}
+  .col{width:436px;display:flex;flex-direction:column;gap:18px}
+  .col i{display:block;height:22px;border-radius:11px;background:rgba(35,31,26,.20)}
   .col.agora i{background:var(--navy)}
-  .rots{position:absolute;left:88px;top:920px;width:904px;display:flex;gap:32px;
-        font-family:'Space Mono',monospace;font-weight:700;font-size:26px;letter-spacing:.09em}
-  .rots span{width:280px;color:rgba(35,31,26,.45)}
+  .rots{position:absolute;left:88px;top:940px;width:904px;display:flex;gap:32px;
+        font-family:'Space Mono',monospace;font-weight:700;font-size:36px;letter-spacing:.09em}
+  .rots span{width:436px;color:rgba(35,31,26,.70)}
   .rots span.agora{color:var(--ocre)}
 
   /* ---------- banda 3 · base ---------- */
-  .remate{position:absolute;left:88px;top:1050px;width:904px;font-weight:600;font-size:35px;
+  .remate{position:absolute;left:88px;top:1040px;width:904px;font-weight:600;font-size:38px;
           line-height:1.2;color:rgba(35,31,26,.75)}
-  .selo{position:absolute;left:88px;top:1112px;font-family:'Space Mono',monospace;font-weight:700;
-        font-size:26px;color:var(--navy);letter-spacing:.12em}
-  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-size:24px;
-         color:rgba(35,31,26,.45);letter-spacing:.14em}
+  .selo{position:absolute;left:88px;top:1100px;font-weight:700;font-size:40px;color:var(--navy)}
+  .marca{position:absolute;left:88px;top:1250px;font-family:'Space Mono',monospace;font-weight:700;
+         font-size:28px;color:rgba(35,31,26,.70);letter-spacing:.14em}
 </style></head><body data-render="1080x1350">
 <div class="art">
 
-  <div class="frase">Você vai estudar<br>tudo de novo.</div>
+  <div class="olho">1ª FASE DA OAB · 06 DE SETEMBRO</div>
+
+  <div class="frase">Você vai fazer<br>a 1ª fase<br>de novo.</div>
   <div class="sub">Pela segunda vez. Talvez pela terceira.<br>Com o mesmo material e a mesma rotina.</div>
 
   <div class="cols">
-    <div class="col"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="col"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="col agora"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="col"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="col agora"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </div>
   <div class="rots">
-    <span>O MESMO CADERNO</span>
-    <span>A MESMA ROTINA</span>
+    <span>A ÚLTIMA VEZ</span>
     <span class="agora">06 DE SETEMBRO</span>
   </div>
 
-  <div class="remate">Estudar do mesmo jeito costuma devolver a mesma nota.</div>
-  <div class="selo">7 QUESTÕES · 4 MINUTOS · GRÁTIS</div>
+  <!-- Encurtado: a 38px a versão longa quebrava em duas linhas e batia no selo. -->
+  <div class="remate">Do mesmo jeito, a nota costuma ser a mesma.</div>
+  <div class="selo">Faça o teste grátis. 7 questões, 4 minutos.</div>
 
-  <div class="marca">SÓ O QUE CAI · 1ª FASE DA OAB</div>
+  <div class="marca">SÓ O QUE CAI</div>
 </div>
 </body></html>
