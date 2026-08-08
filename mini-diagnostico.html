@@ -489,9 +489,30 @@
      seis entregas e não mostrava nenhuma delas. São prints da ferramenta real, e o
      alinhamento ao topo é de propósito — as três têm alturas diferentes e forçar a
      mesma altura cortaria justamente o miolo que serve de prova. */
+  /* CARROSSEL (07/08/2026). Empilhadas, as tres provas somavam 1.414 px no celular:
+     tres telas inteiras entre a lista de entregas e o preco, num trecho em que 8 de
+     cada 18 pessoas que chegam na oferta desistem antes de ver o botao de comprar.
+     Deslizando na horizontal, o bloco passa a ter a altura do MAIOR item e nenhuma
+     evidencia e cortada. scroll-snap para parar certo em cada prova, e a barra fica
+     escondida porque a dica de que da para arrastar e o proprio corte da terceira
+     figura na borda direita. Em tela larga volta a ser grade: la o espaco sobra e
+     carrossel so esconderia conteudo. */
   .provas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
           gap:18px;margin-top:18px;align-items:start}
   .provas figure{margin:0}
+  @media (max-width:700px){
+    /* Sem margem negativa de proposito. A primeira versao sangrava ate a borda da tela
+       com margin -24px e padding 24px, e errava duas vezes: o padding da secao e 20,
+       nao 24, entao a figura vazava 4 px para fora; e o padding num container de
+       scroll-snap era consumido no calculo, entao o carrossel NASCIA com
+       scrollLeft 24, ja cortando a primeira prova. Dentro do padding da secao os dois
+       somem, e a dica de que da para arrastar continua existindo: a figura seguinte
+       aparece cortada porque cada uma ocupa 82% da largura. */
+    .provas{display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;
+            -webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;padding-bottom:4px}
+    .provas::-webkit-scrollbar{display:none}
+    .provas figure{flex:0 0 82%;scroll-snap-align:start}
+  }
   /* video entra na mesma regra da imagem: a figura do meio nao pode ter moldura
      diferente das outras duas so por ser video. */
   .provas img,.provas video{display:block;width:100%;height:auto;border:1px solid var(--line);
@@ -2989,6 +3010,14 @@
        acompanhou o corte, senão prometeria o que a imagem deixou de mostrar. */
     var itens=[
       ['produto-no-celular.mp4', 'O produto no celular', 'A área do aluno, do topo ao fim: as cinco etapas na ordem em que se faz. Roda no navegador, sem instalar nada.'],
+      /* Os três continuam, e o gabarito quase saiu. O argumento contra ele era bom e
+         continua verdadeiro: a página já mostra um gabarito comentado AO VIVO em
+         2.417 px, com a questão que a PRÓPRIA pessoa errou, e este print fica nove
+         telas depois mostrando o mesmo com a questão de outra. O que mudou foi o custo:
+         empilhados, os três somavam 1.414 px; em carrossel, a altura passa a ser a do
+         MAIOR item, então tirar o gabarito deixou de economizar um pixel sequer.
+         Redundância que não custa altura é redundância barata, e ele ainda é a única
+         peça que mostra o "por que a banca escolheu a outra" sem exigir clique. */
       ['simulado.webp', 'O simulado corrigido',  'A sua nota, medida contra a mesma linha de corte da prova.'],
       ['gabarito.webp', 'O gabarito comentado',  'A sua resposta, a correta, e por que a banca escolheu a outra.']
     ];
@@ -3593,8 +3622,16 @@
         // diz o que a pessoa recebe, e o print prova que aquilo existe. Ficavam duas
         // secoes acima, antes de qualquer preco, onde nao respondiam a nenhuma duvida.
         provas()+
-        bonusGuia()+
-        porqueHoje()+
+        /* 07/08/2026: bonusGuia() e porqueHoje() DESCERAM para depois do preço.
+           Os dois respondem a mesma pergunta, "por que agora", e os dois estavam antes
+           de a pessoa saber quanto custa. Urgência antes de preço é urgência sem
+           âncora: não há o que apressar quando o valor ainda não foi dito. Depois do
+           preço eles passam a empurrar uma decisão que já tem número, que é o mesmo
+           raciocínio que já tinha posto o Kit e a objeção de dinheiro ali embaixo.
+           E vale a distância: eram 1.050 px entre a lista de entregas e o preço.
+           Medido antes: o preço ficava a 4.161 px do topo da oferta, cinco telas de
+           celular, e o `viu_cta_em` mostra que 8 das 18 pessoas que chegam na oferta
+           nunca veem o botão de comprar. Quem vê, clica em 50%. */
         // Bloco de preço. Borda dourada de 2px é o único elemento da página com esse
         // tratamento: é o ponto onde a decisão acontece.
         '<div class="preco">'+
@@ -3609,6 +3646,12 @@
         // encontrá-lo no checkout, com esta mesma descrição. Depois do preço ele
         // deixa de competir e passa a ser o que é, um "e ainda tem isto ali".
         mencaoKit()+
+        // A urgência entra AQUI, depois do preço e do Kit: o bônus do Guia (que é o que
+        // se ganha entrando hoje) e o calendário da prova. Ver a nota lá em cima.
+        bonusGuia()+
+        porqueHoje()+
+        // A objeção de dinheiro fecha a seção, e continua sendo a última coisa: ela é
+        // para quem já viu tudo e travou no valor.
         objecaoDinheiro()+
       '</section>'+
 
