@@ -365,6 +365,18 @@
            white-space:nowrap;border:none;cursor:pointer;transition:.15s;text-align:center}
   .btn-lar:hover{background:var(--laranja2);color:#fff}
   .btn-lar.grande{font-size:18px;padding:16px 36px;border-radius:10px;white-space:normal}
+  /* 09/08/2026: o botão que vai para o CHECKOUT ganha cor própria. Dois motivos, e
+     nenhum é "verde converte mais", que é folclore sem evidência:
+     1. CONTRASTE. Branco sobre --ocre2 dá ~3,4:1, que passa raspando no mínimo de 3:1
+        para texto grande. Sobre --green dá ~5:1. No celular, sob sol, isso aparece.
+     2. HIERARQUIA. A página inteira é ocre — âncoras, rótulos, destaques, tarjas. O
+        botão de comprar era mais um laranja no meio de laranjas. Sendo o único elemento
+        verde da página, ele vira o único candidato óbvio a clique.
+     Vale SÓ para os botões que abrem a Hotmart (a lista em ligarCompra). Âncora que
+     rola a página (#verof, #verof2) continua ocre de propósito: cor diferente para ação
+     diferente é o que ensina a diferença sem a pessoa precisar ler o rótulo. */
+  .btn-lar.btn-comprar{background:var(--green)}
+  .btn-lar.btn-comprar:hover{background:var(--green2)}
 
   /* ---- seções ---- */
   .vsec{margin:0 auto;padding:56px 24px 8px;display:flex;flex-direction:column;gap:20px}
@@ -905,12 +917,17 @@
      primeiro CTA ainda está visível e a barra seria redundante e agressiva. */
   .sticky{position:fixed;left:0;right:0;bottom:0;background:rgba(243,238,228,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:20;transform:translateY(110%);transition:transform .28s cubic-bezier(.2,.7,.3,1)}
   .sticky.on{transform:none}
+  /* Enquanto a barra está no ar ela cobre ~86 px do rodapé, e o que mora lá embaixo é
+     justamente o CTA final — a barra taparia o botão que ela existe para reforçar.
+     A classe entra no body junto com o .on (ver marcarCta) e sai da conta quando a
+     barra não aparece, que é o caso de quem nunca chegou na oferta. */
+  body.com-barra{padding-bottom:86px}
   .sticky .in{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:12px}
   .sticky .t{flex:1;min-width:0}
   .sticky .t .a{font-size:14px;font-weight:600;line-height:1.25}
   .sticky .t .b{font-family:'Hanken Grotesk',sans-serif;font-size:11px;color:var(--muted)}
-  .sticky a{background:var(--ocre);color:#fff;border-radius:11px;padding:14px 20px;font-size:15.5px;font-weight:600;text-decoration:none;white-space:nowrap}
-  .sticky a:hover{background:#8c4d18;color:#fff}
+  .sticky a{background:var(--green);color:#fff;border-radius:11px;padding:14px 20px;font-size:15.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+  .sticky a:hover{background:var(--green2);color:#fff}
   @media (prefers-reduced-motion: reduce){ .sticky{transition:none} }
 </style>
 </head>
@@ -3303,7 +3320,10 @@
     // checkout. Mesma razão que tirou o #verof2 desta lista em 07/08 — disparar
     // InitiateCheckout a 852 px ensina a Meta a caçar quem aperta botão, e isso já foi
     // medido uma vez (17% de conversão no atalho contra 80% no CTA do fim).
-    ['buyslim','buy0','buy','buydep'].forEach(function(id){
+    // 'buybar' voltou em 09/08/2026 com a barra fixa. Entra na lista pelo mesmo motivo
+    // dos outros: sem isso o clique na barra iria para a Hotmart sem sck (venda sem
+    // atribuição) e sem o eventID que evita o servidor duplicar o InitiateCheckout.
+    ['buyslim','buy0','buy','buydep','buybar'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -3332,10 +3352,13 @@
     });
   }
 
-  // Barra fixa saiu da página (05/08/2026), a pedido: o preço já aparece no resumo
-  // logo após o hero, no meio da oferta e no CTA final — a barra era um quarto
-  // lugar dizendo a mesma coisa. marcarOferta() continua registrando o passo e o
-  // ViewContent, que servem independente de barra nenhuma existir.
+  // A barra fixa saiu em 04/08 e VOLTOU em 09/08/2026, agora com trava: só acende
+  // quando marcarCta() dispara, isto é, quando a pessoa alcançou o #buy0. O argumento
+  // de 04/08 ("o preço já aparece no resumo, na oferta e no CTA final") continua
+  // verdadeiro, mas ele descreve uma página que a pessoa está LENDO — quem já rolou
+  // 20 telas e quer voltar não tem os três à mão, tem o fim. Nota inteira na montagem
+  // do #barra. marcarOferta() segue registrando o passo e o ViewContent, que servem
+  // independente de barra nenhuma existir.
 
   // ===== TELA 1: DIAGNÓSTICO =====
   // Nenhum preço, nenhum botão de compra, nenhum depoimento. Só o que o teste achou.
@@ -3499,8 +3522,22 @@
              botão, e a segunda oferecia de graça o motivo para não clicar, no único
              botão dos primeiros 11.700 px. É o mesmo defeito de "o preço não sobe
              depois": não mentir não obriga a advogar contra a própria página. O preço
-             desce para cá, onde é informação e não promessa de destino. */
-          '<a class="btn-lar" href="#oferta" id="verof2">Ver o Mapa da Aprovação</a>'+
+             desce para cá, onde é informação e não promessa de destino.
+
+             09/08/2026: A CORREÇÃO ACIMA NÃO FUNCIONOU. O Gustavo testou o funil de novo
+             e clicou esperando pagar OUTRA VEZ, no mesmo botão. Tirar o preço do rótulo
+             não bastou, e o motivo é que o rótulo antigo nomeava o PRODUTO ("Ver o Mapa
+             da Aprovação"), não o destino — e "ver o produto" lê como "ir para a página
+             de compra". A linha de preço logo abaixo, pequena e centralizada, fecha a
+             leitura de "termos deste botão".
+             Agora o rótulo nomeia a AÇÃO e a DIREÇÃO, com a seta que os criativos já
+             usam ("DESCUBRA ABAIXO ↓"). Continua distinto do #verof lá de cima, que é
+             "ver a oferta"; este é "pular o resto do diagnóstico".
+             A cor também passou a informar: âncora é ocre, checkout é verde
+             (.btn-comprar). Se ainda assim alguém clicar esperando pagar, o próximo
+             passo é tirar a linha de preço daqui, não mandar para o checkout — mandar
+             desfaria a medição de 04/08. */
+          '<a class="btn-lar" href="#oferta" id="verof2">Pular para a oferta ↓</a>'+
           '<div class="price">R$ 47, pagamento único, com 7 dias de garantia.</div>'+
         '</div>'+
       '</section>'+
@@ -3649,7 +3686,7 @@
         // tratamento: é o ponto onde a decisão acontece.
         '<div class="preco">'+
           '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
-          '<a class="btn-lar grande" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+          '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
           '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
           '<div class="selo2">Seus dados não são vendidos</div>'+
         '</div>'+
@@ -3685,7 +3722,7 @@
         '<div class="ctaslim">'+
           // Rótulo diferente dos outros dois de propósito: este vem logo depois da
           // prova social, então fala de onde a pessoa acabou de estar.
-          '<a class="btn-lar" href="'+C.buyUrl+'" id="buydep" data-v="47">Quero o mesmo material que elas usaram: R$ 47</a>'+
+          '<a class="btn-lar btn-comprar" href="'+C.buyUrl+'" id="buydep" data-v="47">Quero o mesmo material que elas usaram: R$ 47</a>'+
           '<div class="price">Pix ou cartão · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
         '</div>'+
       '</section>'+
@@ -3747,9 +3784,44 @@
       '<section class="vfim">'+
         '<h2>40 acertos em 80. A direção é nossa; a aprovação é sua.</h2>'+
         '<div class="pfim">R$ 47 à vista no Pix · ou '+PARCELA+' no cartão</div>'+
-        '<a class="btn-lar grande" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+        '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
         '<div class="micro2">pagamento único · acesso na hora · garantia de 7 dias</div>'+
-      '</section>';
+      '</section>'+
+
+      /* BARRA FIXA — volta em 09/08/2026, COM TRAVA.
+
+         Saiu em 09a6127 (04/08) porque "o preço já aparece no resumo, na oferta e no
+         CTA final". O CSS ficou órfão desde então (.sticky, lá em cima), o que fazia
+         parecer recurso quebrado em vez de removido.
+
+         O que mudou e autoriza a volta: havia DOIS argumentos contra, e um morreu.
+         MORTO: "cada clique na barra dispara InitiateCheckout, que é o evento pelo qual
+           a campanha otimiza, e isso ensina a Meta a caçar quem aperta botão". As duas
+           campanhas ativas hoje otimizam por COMPRA (OFFSITE_CONVERSIONS /
+           fb_pixel_purchase); as de Iniciar Checkout estão pausadas. Clique ruim de IC
+           não ensina mais nada ao algoritmo.
+         VIVO: dos 18 cliques na barra entre 03 e 05/08, 10 vieram de gente com
+           viu_oferta_em nulo, e esses converteram 17% contra 80% do CTA do fim.
+
+         A TRAVA responde ao que sobrou: a barra não aparece por pixel rolado, e sim
+         quando marcarCta() dispara — ou seja, quando a pessoa alcançou o #buy0, o
+         primeiro botão de compra de verdade. Quem não leu a oferta nunca vê a barra,
+         então o clique frio dos 17% não tem como acontecer. Quem leu e continuou
+         rolando ganha o caminho de volta, que numa página de ~20 telas de celular é
+         justamente quem precisa.
+
+         Sem IntersectionObserver, de propósito: a casa já descartou por não disparar de
+         forma confiável (ver a nota em marcarOferta). Aqui não custa nada seguir o
+         mesmo padrão, porque a trava pega carona num gatilho que já existe. */
+      '<div class="sticky" id="barra">'+
+        '<div class="in">'+
+          '<div class="t">'+
+            '<div class="a">Mapa da Aprovação</div>'+
+            '<div class="b">R$ 47 · Pix ou cartão · garantia de 7 dias</div>'+
+          '</div>'+
+          '<a href="'+C.buyUrl+'" id="buybar" data-v="47">Comprar</a>'+
+        '</div>'+
+      '</div>';
 
     app.innerHTML = html;
     ligarCompra();
@@ -3826,6 +3898,12 @@
     function marcarCta(){
       if(marcouCta) return; marcouCta=true;
       marcarPasso('oferta_cta');
+      // 09/08/2026: é aqui que a barra fixa acende. Ver a nota inteira na montagem do
+      // #barra. Em resumo: acender por pixel rolado colhia clique de quem ainda não
+      // tinha visto a oferta (17% de conversão contra 80%); acender aqui garante que só
+      // vê a barra quem já alcançou o botão de compra de verdade.
+      var barra=document.getElementById('barra');
+      if(barra){ barra.classList.add('on'); document.body.classList.add('com-barra'); }
     }
     if(alvoCta){
       var conferirCta=function(){
@@ -4037,7 +4115,7 @@
           '<p class="p sec">O gabarito comentado questão a questão fica no aparelho em que você fez o teste. '+
             'Se quiser rever tudo, dá para <a href="'+location.pathname+'" style="text-decoration:underline">refazer o teste</a>.</p>'+
           '<div class="ctaslim">'+
-            '<a class="btn-lar" href="'+buyUrl+'" id="buyslim" data-v="47">Ver o Mapa da Aprovação: R$ 47</a>'+
+            '<a class="btn-lar btn-comprar" href="'+buyUrl+'" id="buyslim" data-v="47">Ver o Mapa da Aprovação: R$ 47</a>'+
             '<div class="price">Pix ou cartão, acesso na hora.</div>'+
           '</div>'+
         '</section>'+
@@ -4051,7 +4129,7 @@
           porqueHoje()+
           '<div class="preco">'+
             '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
-            '<a class="btn-lar grande" href="'+buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+            '<a class="btn-lar grande btn-comprar" href="'+buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
             '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
           '</div>'+
         '</section>'+
