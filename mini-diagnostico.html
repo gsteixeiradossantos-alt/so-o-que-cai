@@ -3813,8 +3813,8 @@
          VIVO: dos 18 cliques na barra entre 03 e 05/08, 10 vieram de gente com
            viu_oferta_em nulo, e esses converteram 17% contra 80% do CTA do fim.
 
-         A TRAVA responde ao que sobrou: a barra não aparece por pixel rolado, e sim
-         quando marcarCta() dispara — ou seja, quando a pessoa alcançou o #buy0, o
+         A TRAVA responde ao que sobrou: a barra só acende dentro de um evento de scroll
+         de verdade E com o #buy0 já na tela — ou seja, quando a pessoa alcançou o
          primeiro botão de compra de verdade. Quem não leu a oferta nunca vê a barra,
          então o clique frio dos 17% não tem como acontecer. Quem leu e continuou
          rolando ganha o caminho de volta, que numa página de ~20 telas de celular é
@@ -3908,12 +3908,6 @@
     function marcarCta(){
       if(marcouCta) return; marcouCta=true;
       marcarPasso('oferta_cta');
-      // 09/08/2026: é aqui que a barra fixa acende. Ver a nota inteira na montagem do
-      // #barra. Em resumo: acender por pixel rolado colhia clique de quem ainda não
-      // tinha visto a oferta (17% de conversão contra 80%); acender aqui garante que só
-      // vê a barra quem já alcançou o botão de compra de verdade.
-      var barra=document.getElementById('barra');
-      if(barra){ barra.classList.add('on'); document.body.classList.add('com-barra'); }
     }
     if(alvoCta){
       var conferirCta=function(){
@@ -3926,6 +3920,44 @@
       window.addEventListener('scroll', conferirCta, {passive:true});
       window.addEventListener('resize', conferirCta);
       conferirCta();
+    }
+
+    /* BARRA FIXA: gatilho PRÓPRIO, e nunca na checagem inicial (09/08/2026, corrigindo
+       o mesmo dia).
+
+       A primeira versão pendurou a barra dentro do marcarCta(), e ela acendia no
+       carregamento — anulando a trava inteira e devolvendo exatamente a barra que colhia
+       clique frio (17% de conversão contra 80% do CTA do fim). O motivo é que
+       conferirCta() roda SÍNCRONO logo depois do innerHTML, e naquele instante o #buy0
+       aparece perto do topo por qualquer um destes dois:
+         - o layout ainda não assentou (há imagem com loading="lazy" e sem width/height,
+           que ocupa altura zero até carregar e faz tudo abaixo subir);
+         - o scroll veio herdado da tela do quiz, que é substituída no mesmo documento.
+
+       Por isso aqui NÃO existe chamada inicial: a barra só é avaliada dentro de um evento
+       de scroll de verdade, que é a única coisa que nenhum dos dois casos produz. O piso
+       de 400px é cinto e suspensório para um micro-scroll enquanto a página ainda mexe —
+       quem chega na oferta está a milhares de pixels do topo.
+
+       Uma vez acesa, fica: quem já leu a oferta não perde o caminho de volta ao subir.
+
+       marcarCta() voltou a fazer só o que fazia antes. Ele continua disparando cedo
+       demais, e isso provavelmente infla o passo 'oferta_cta' desde 06/08 — mas isso é
+       medição, é anterior a esta barra, e mexer nela muda série histórica no meio de uma
+       campanha rodando. Fica registrado aqui para não se perder. */
+    var barra=document.getElementById('barra');
+    if(barra && alvoCta){
+      var barraAcesa=false;
+      var conferirBarra=function(){
+        if(barraAcesa) return;
+        if(window.scrollY < 400) return;
+        if(alvoCta.getBoundingClientRect().top >= window.innerHeight*0.85) return;
+        barraAcesa=true;
+        barra.classList.add('on');
+        document.body.classList.add('com-barra');
+        window.removeEventListener('scroll', conferirBarra);
+      };
+      window.addEventListener('scroll', conferirBarra, {passive:true});
     }
   }
 
