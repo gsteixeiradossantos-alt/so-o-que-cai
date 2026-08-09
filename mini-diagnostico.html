@@ -2867,7 +2867,17 @@
      frase passa a descrever a semana da pessoa sozinha, sem ninguém reescrever nada.
 
      Sem borda dourada de propósito: esse tratamento é exclusivo do bloco de preço,
-     que é onde a decisão acontece. O Kit não pode competir com ele. */
+     que é onde a decisão acontece. O Kit não pode competir com ele.
+
+     O PREÇO VOLTOU EM 09/08/2026, a pedido. Ele tinha saído em 8d7a10a (06/08), também
+     a pedido e sem outra razão registrada. Junto com o preço saiu o "à parte", e este
+     só volta em espírito: o "· R$ 19" na tarja já diz que é item pago, sem precisar da
+     palavra.
+     O QUE OBSERVAR: sem preço, "Também no carrinho" podia ser lido como incluso, o que
+     é bom para o clique e ruim para a confiança de quem descobre no checkout. Com preço,
+     a pessoa soma R$ 66 no momento de decidir os R$ 47. É uma troca real, não uma
+     correção óbvia -- vale olhar a conversão do R$ 47 na semana seguinte antes de dar
+     por certo. */
   function mencaoKit(){
     var d = diasParaProva();
     var faixa = d
@@ -2876,7 +2886,7 @@
           : diasFrase(d) + '. Você já está dentro da janela que este plano cobre.')
       : 'É o plano da reta final, semana a semana.';
     return '<div class="cardb kitdestaque" style="margin-top:14px">'+
-      '<div class="eyebrow gold" style="margin-bottom:8px">Também no carrinho</div>'+
+      '<div class="eyebrow gold" style="margin-bottom:8px">Também no carrinho · R$ 19</div>'+
       '<h4 style="margin:0 0 6px">Kit Reta Final</h4>'+
       '<p class="kitfaixa">'+esc(faixa)+'</p>'+
       '<p style="margin:0">O plano das últimas três semanas, semana a semana, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
