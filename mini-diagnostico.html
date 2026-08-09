@@ -613,6 +613,29 @@
   .objecao .fine{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
                  font-size:13px;color:var(--sec);line-height:1.55}
 
+  /* ---- degrau de cima: Plano Completo R$127 (07/08/2026) ----
+     SEM borda dourada, de propósito: esse tratamento é exclusivo do bloco .preco,
+     onde acontece a decisão principal. Este é um degrau ao lado, não um concorrente. */
+  .tier{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--navy);
+        border-radius:12px;padding:22px 24px;margin-top:14px}
+  .tier h4{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:700;
+           color:var(--navy);margin:0 0 8px}
+  .tier>p{font-size:15px;line-height:1.6;color:var(--ink);margin:0}
+  /* padding:0 explícito: sem ele o recuo padrão do <ul> joga os itens 40 px para a
+     direita e a lista desalinha do parágrafo logo acima, que é o que dá a impressão
+     de dois blocos diferentes dentro do mesmo cartão. */
+  .tier ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .tier li{font-size:14.5px;line-height:1.5;color:var(--sec);padding-left:16px;position:relative}
+  .tier li:before{content:'+';position:absolute;left:0;color:var(--ocre2);font-weight:700}
+  .tier .tv{margin-top:16px;font-family:'Source Serif 4',Georgia,serif;font-size:26px;
+            font-weight:700;color:var(--navy)}
+  .tier .tv span{font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:400;color:var(--sec)}
+  .tier .tb{margin-top:12px}
+  .tier .tb .btn-lar{background:var(--navy)}
+  .tier .tb .btn-lar:hover{background:#0e1820}
+  .tier .tfine{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
+               font-size:13px;color:var(--sec);line-height:1.55}
+
   /* Linha compacta de autoria, no TOPO da oferta. O cartão inteiro continua lá
      embaixo; aqui é só o crachá, porque o preço aparece antes dele. */
   /* margem em cima tambem, desde 07/08: o crachá deixou de abrir a seção e passou a
@@ -930,19 +953,31 @@
 <script>
   // ===== CONFIGURAR =====
   var CHECKOUT_URL = "https://pay.hotmart.com/B106546831I?checkoutMode=10"; // diagnóstico completo R$47 + Order Bump Kit Reta Final
-  /* O checkout do Plano Completo (R$127) NÃO mora aqui, e já saiu duas vezes.
-     03/08: saiu porque esta página vende UMA coisa, o R$47. O R$127 é upsell
-            pós-compra na Hotmart, onde o compromisso está no pico.
-     07/08: voltou por algumas horas, com o argumento de que a venda espontânea de
-            R$170,90 daquele dia provava demanda de subir de tier, e o líquido do
-            Completo (R$113,43 contra R$41,35) pagaria bem. Foi retirado no mesmo dia,
-            por decisão do Gustavo.
-     Antes de propor pela terceira vez, o que a tentativa de 07/08 ensinou: mesmo com a
-     moldura aditiva ("se você quiser as 17 matérias") e posicionado depois do preço,
-     o bloco criou uma fila de TRÊS ofertas seguidas (R$47, Kit sem preço, R$127) e pôs
-     um item sem preço entre dois com preço. O ganho por unidade era real; o custo era
-     transformar o momento da decisão num cardápio. Está no histórico do git, em
-     7538d99 e 96a154a, com o texto pronto, se um dia houver número que justifique. */
+  /* O checkout do Plano Completo (R$127) já saiu e voltou três vezes. O histórico inteiro,
+     para ninguém reabrir a discussão do zero:
+       03/08: saiu. A página vende UMA coisa, o R$47; o R$127 é upsell pós-compra.
+       07/08: voltou. Uma pessoa comprou o R$47 + Kit e, 14 minutos depois, sem nenhuma
+              nova interação de anúncio, pagou o R$127 também — existia demanda de subir
+              de tier que a página recusava.
+       07/08: saiu no mesmo dia, 31 min depois. O defeito não era o preço, era o ARRANJO:
+              colado no mencaoKit(), o bloco criava uma fila de TRÊS ofertas seguidas
+              (R$47, Kit sem preço, R$127), com um item sem preço entre dois com preço.
+       09/08: VOLTOU, e é o estado atual. Duas coisas mudaram desde então.
+              (a) Número: ticket médio de R$51 nos últimos 3 dias contra R$43,59 em 30,
+                  e a prova é em 06/09 — 28 dias. Ticket é o que define o CPA que a
+                  operação aguenta, e é ele que trava a escala de mídia antes do prazo.
+              (b) Arranjo: bonusGuia() e porqueHoje() desceram para depois do Kit em
+                  48f8dc0, então agora existe conteúdo entre os dois blocos de preço e a
+                  fila de três deixou de existir. Ver a nota na chamada de planoCompleto().
+     A aritmética que sustenta: líquido do Completo é R$113,43 contra R$41,35 do
+     Diagnóstico. Cada pessoa que sobe vale +R$72,08 sem um centavo de mídia nova.
+     SEGUE VALENDO: o Kit continua sem preço na tela (decisão de 8d7a10a, 06/08), então
+     metade do defeito de arranjo original ainda está lá. Se a fila de ofertas voltar a
+     incomodar, é por aí que se mexe primeiro.
+     ATENÇÃO ao escrever qualquer copy com isto: na Hotmart são compras INDEPENDENTES.
+     Quem compra o R$47 e depois quiser o Completo paga os R$127 cheios, sem abatimento.
+     A página não pode insinuar upgrade com crédito, porque não existe. */
+  var CHECKOUT_COMPLETO = "https://pay.hotmart.com/O106944368L?checkoutMode=10"; // Plano Completo R$127
   // Para onde enviar os leads (nome/e-mail/WhatsApp). Cole aqui um endpoint de formulário
   // (ex.: Formspree, um Apps Script do Google, ou a API da sua ferramenta de e-mail).
   // Enquanto estiver vazio, o lead é só guardado no navegador (localStorage) e nada é perdido,
@@ -2866,6 +2901,34 @@
     '</div>';
   }
 
+  /* O DEGRAU DE CIMA (07/08/2026). Plano Completo, R$ 127.
+
+     Por que ele entra aqui e não é upsell genérico: a própria página CONSTRÓI o
+     argumento dele e depois batia numa parede. O cartão "Corrija o que está faltando"
+     diz que o núcleo vale 70% da prova e que tirar os 40 pontos só ali dentro exigiria
+     acertar 7 de cada 10. Quem lê com atenção conclui sozinho "então eu preciso das
+     outras 11 matérias", faz a pergunta certa, e até 07/08 não recebia resposta
+     nenhuma. Este bloco é a resposta a uma pergunta que a página já tinha feito.
+
+     POSIÇÃO: depois do bloco .preco e depois do Kit, pelo mesmo motivo que moveu o Kit
+     em 07/08 — segunda decisão não pode aparecer na frente de quem ainda não tomou a
+     primeira. E vem ANTES da objeção de dinheiro, porque aquele bloco fecha o assunto
+     para quem nem o R$47 cabe: pôr o tier de cima depois dele seria responder "então
+     pague mais caro" a quem acabou de dizer que não tem.
+
+     RECOMENDAÇÃO EXPLÍCITA de começar pelo R$47. Não é modéstia: é a mesma coisa que o
+     FAQ já responde ("a ordem certa é começar pelas que mais valem ponto") e é o que
+     evita reembolso de quem compra o caro por ansiedade.
+
+     São compras INDEPENDENTES na Hotmart. A frase sobre isso é obrigatória e não pode
+     virar promessa de upgrade com crédito, que não existe. O Completo é superset do
+     Diagnóstico (ver LINHAS em so-o-que-cai-app/index.html), então quem escolhe ele NÃO
+     deve comprar os dois — e a página tem que dizer isso, senão alguém paga R$174.
+
+     Entregas conferidas contra a tabela real (LINHAS), não estimadas: fichas das outras
+     11 disciplinas, 2 simulados completos de 80 questões, cronograma personalizado,
+     plano por carga semanal e "Cabeça para a prova". Se a tabela mudar, este texto muda
+     junto: aqui é promessa. */
   /* A faixa de quem voltou. Ocupa o mesmo slot do .vresumo (tela 2 do celular) e é
      ÂNCORA, nunca checkout: botão de compra a 852 px dispara InitiateCheckout em quem
      talvez nem tenha lido a oferta, e isso já custou uma medição em 04/08 (17% de
@@ -2892,6 +2955,35 @@
         '<span class="rl" style="text-decoration:none">ou releia o diagnóstico inteiro, abaixo</span>'+
       '</div>'+
     '</div></section>';
+  }
+
+  // Recebe a URL pronta em vez de montá-la: quem tem o telefone e o e-mail da pessoa
+  // é o ctx(), e duplicar aquele pré-preenchimento aqui criaria duas versões do mesmo
+  // parâmetro para divergirem na primeira mudança.
+  function planoCompleto(buyUrl){
+    return '<div class="tier">'+
+      // 07/08/2026, segunda versão, na revisão do mesmo dia. A primeira abria com
+      // "Se as 6 do núcleo não bastarem" e repetia que tirar 40 pontos só no núcleo
+      // exigiria acertar 7 de cada 10. As duas coisas juntas faziam este bloco
+      // ARGUMENTAR CONTRA o R$47, 675 px depois de a pessoa ter lido o preço dele: para
+      // quem está em cima do muro, isso não vende o de cima, mata o de baixo. E a frase
+      // dos 7 em 10 já é feita no cartão "Corrija o que está faltando", onde ela é
+      // honestidade útil; repetida aqui ela trocava de função. A moldura agora é
+      // aditiva, e o que sustenta o preço é o que vem A MAIS, não o que faltaria.
+      '<div class="eyebrow">Se você quiser as 17 matérias</div>'+
+      '<h4>Plano Completo</h4>'+
+      '<p>O material acima cobre as 6 matérias do núcleo duro, que é por onde se começa. O Plano Completo é o mesmo diagnóstico com a prova inteira em volta.</p>'+
+      '<ul>'+
+        '<li>Fichas das outras 11 disciplinas, as 17 da prova</li>'+
+        '<li>2 simulados completos de 80 questões, no formato do exame</li>'+
+        '<li>Cronograma montado pelo seu tempo disponível e pelo seu resultado</li>'+
+        '<li>Plano por carga semanal, para saber o que fazer em cada semana</li>'+
+        '<li>Cabeça para a prova: o que fazer com o nervosismo no dia</li>'+
+      '</ul>'+
+      '<div class="tv">R$ 127 <span>pagamento único · mesmos 12 meses · mesma garantia</span></div>'+
+      '<div class="tb"><a class="btn-lar" href="'+buyUrl+'" id="buycompleto" data-v="127">Quero a prova inteira: R$ 127</a></div>'+
+      '<div class="tfine">O Completo já inclui tudo o que está descrito acima, então é um ou outro, nunca os dois. Se você está em dúvida, comece pelo Diagnóstico: ele é que descobre onde o ponto está vazando, e essa parte é igual nos dois.</div>'+
+    '</div>';
   }
 
   // Reescrita em 03/08/2026, e CORRIGIDA em 05/08/2026: a versão anterior descrevia o
@@ -3254,6 +3346,9 @@
       r:r, q:q, L:L, h1:h1,
       nome: esc((S.nome.split(' ')[0])||'você'),
       buyUrl: CHECKOUT_URL+fill,
+      // Mesmo pré-preenchimento do R$47: quem sobe de tier não pode encarar
+      // formulário vazio justamente no checkout mais caro.
+      buyUrlCompleto: CHECKOUT_COMPLETO+fill,
       forte: !!q.forte,
       erroN: CONTENT.length-r.c-r.estourou,
       // Mesma régua da manchete e do 'sabe'. A tabela não pode prometer "descobrir a
@@ -3299,11 +3394,16 @@
     // 'buydep' entrou em 07/08/2026 (botão depois dos depoimentos). 'buyslim' agora
     // existe só na tela de reencontro: no resultado ele virou âncora (#verof2), para
     // não disparar InitiateCheckout antes de a pessoa ver a oferta.
+    // 'buycompleto' entrou em 07/08/2026 com o degrau de R$127. Ele passa pelo MESMO
+    // tratamento dos outros de propósito: o sck (sem ele a venda de R$127 vinda daqui
+    // ficaria sem atribuição de criativo) e o data-v, que é lido logo abaixo e manda
+    // 127 para o InitiateCheckout e para /api/clique, onde `oferta_clicada` é o que
+    // separa o clique do tier de cima do clique do R$47.
     // A faixa de quem voltou NÃO entra aqui: o botão dela é âncora para #oferta, não
     // checkout. Mesma razão que tirou o #verof2 desta lista em 07/08 — disparar
     // InitiateCheckout a 852 px ensina a Meta a caçar quem aperta botão, e isso já foi
     // medido uma vez (17% de conversão no atalho contra 80% no CTA do fim).
-    ['buyslim','buy0','buy','buydep'].forEach(function(id){
+    ['buyslim','buy0','buy','buydep','buycompleto'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -3663,6 +3763,18 @@
         // se ganha entrando hoje) e o calendário da prova. Ver a nota lá em cima.
         bonusGuia()+
         porqueHoje()+
+        // O degrau de cima entra DEPOIS do preço e do Kit e ANTES da objeção de
+        // dinheiro. Ver a nota inteira em planoCompleto(): pôr o tier de R$127 depois
+        // de "e se os R$47 não couberem?" seria responder "então pague mais caro" a
+        // quem acabou de dizer que não tem.
+        //
+        // 09/08/2026: a POSIÇÃO mudou em relação à tentativa de 07/08, e de propósito.
+        // Lá o tier vinha colado no mencaoKit(), e o defeito que o derrubou foi a fila
+        // de TRÊS ofertas seguidas (R$47, Kit sem preço, R$127). O bônus e o calendário
+        // desceram para cá em 48f8dc0, DEPOIS daquela remoção; com eles no meio, os dois
+        // blocos de preço deixam de ser lidos como cardápio. A correção do defeito veio
+        // de graça, de uma mudança feita por outro motivo.
+        planoCompleto(C.buyUrlCompleto)+
         // A objeção de dinheiro fecha a seção, e continua sendo a última coisa: ela é
         // para quem já viu tudo e travou no valor.
         objecaoDinheiro()+
