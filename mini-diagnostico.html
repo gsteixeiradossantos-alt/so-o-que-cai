@@ -1753,15 +1753,8 @@
   // `extras` só vem preenchido no clique em que o pixel disparou o InitiateCheckout.
   // É ele que autoriza o servidor a mandar o mesmo evento pela Conversions API, com
   // o mesmo id — os dois lados contam como um evento só.
-  function marcarClique(botao, oferta, extras){
-    if(!LEAD_ID){ return enfileirar(function(){ marcarClique(botao, oferta, extras); }); }
+  function enviarClique(dados){
     try{
-      var dados={ lead_id:LEAD_ID, botao:botao, oferta:String(oferta) };
-      if(extras){
-        dados.ic_event_id = extras.ic_event_id;
-        if(extras.fbp) dados.fbp = extras.fbp;
-        if(extras.fbc) dados.fbc = extras.fbc;
-      }
       var corpo=JSON.stringify(dados);
       if(navigator.sendBeacon){
         navigator.sendBeacon(CLIQUE_URL, new Blob([corpo], {type:'text/plain;charset=UTF-8'}));
@@ -1770,6 +1763,31 @@
                            body:corpo, keepalive:true}).catch(function(){});
       }
     }catch(e){}
+  }
+
+  function marcarClique(botao, oferta, extras){
+    /* Sem LEAD_ID o registro no banco não tem onde ser gravado e espera na fila.
+       O EVENTO, não: até 10/08/2026 ele esperava junto, e a fila morre quando a aba
+       sai para a Hotmart — então o checkout de quem clicou antes do id chegar do
+       banco só existia no pixel do navegador, que iOS e bloqueador engolem.
+       Agora o beacon do evento sai na hora, sem lead_id; o endpoint aceita esse
+       caso desde a mesma data e manda o InitiateCheckout pela Conversions API só
+       com fbp/fbc/IP. Na fila fica apenas o registro do clique, com `extras` já
+       zerado para o servidor não mandar o mesmo evento duas vezes. */
+    if(!LEAD_ID){
+      if(extras){
+        enviarClique({ botao:botao, oferta:String(oferta), pagina:'mini-diagnostico',
+                       ic_event_id:extras.ic_event_id, fbp:extras.fbp, fbc:extras.fbc });
+      }
+      return enfileirar(function(){ marcarClique(botao, oferta, null); });
+    }
+    var dados={ lead_id:LEAD_ID, botao:botao, oferta:String(oferta), pagina:'mini-diagnostico' };
+    if(extras){
+      dados.ic_event_id = extras.ic_event_id;
+      if(extras.fbp) dados.fbp = extras.fbp;
+      if(extras.fbc) dados.fbc = extras.fbc;
+    }
+    enviarClique(dados);
   }
 
   // Registra que a pessoa atravessou a PONTE, isto é, pediu para ver a oferta.

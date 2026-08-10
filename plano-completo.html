@@ -979,8 +979,27 @@
   // do degrau mais importante do funil principal. Escrever nelas a partir do upsell
   // destruiria essa medida em silêncio.
   function marcarClique(botao, extras){
-    if(!LEAD_ID) return;                  // sem lead_id o endpoint devolve 400
-    var corpo = { lead_id: LEAD_ID, botao: botao, oferta: '127' };
+    /* Até 10/08/2026 este return silencioso levava junto o InitiateCheckout: sem
+       lead_id o endpoint devolvia 400, então nem se tentava, e o evento ficava só
+       no pixel do navegador — que some quando a aba sai para a Hotmart. O endpoint
+       passou a aceitar o beacon sem lead_id justamente para contar esse checkout,
+       então agora o evento sai e só o registro no banco é abandonado. */
+    if(!LEAD_ID){
+      if(extras){
+        var so = JSON.stringify({ botao: botao, oferta: '127', pagina: 'plano-completo',
+                                  ic_event_id: extras.ic_event_id,
+                                  fbp: extras.fbp, fbc: extras.fbc });
+        try{
+          if(navigator.sendBeacon){
+            navigator.sendBeacon(CLIQUE_URL, new Blob([so], {type:'text/plain'}));
+          } else {
+            fetch(CLIQUE_URL, {method:'POST', headers:{'Content-Type':'text/plain'}, body:so, keepalive:true});
+          }
+        }catch(e){}
+      }
+      return;
+    }
+    var corpo = { lead_id: LEAD_ID, botao: botao, oferta: '127', pagina: 'plano-completo' };
     if(extras){
       corpo.ic_event_id = extras.ic_event_id;
       if(extras.fbp) corpo.fbp = extras.fbp;
