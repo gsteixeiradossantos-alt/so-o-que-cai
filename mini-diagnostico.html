@@ -3499,7 +3499,7 @@
       (VOLTOU ? faixaVoltou() : '')+
 
       // ===== 2. O QUE ISSO SIGNIFICA =====
-      '<section class="vsec estreita">'+
+      '<section class="vsec estreita" id="sec-significa">'+
         '<div class="eyebrow">O que isso significa</div>'+
         // 07/08/2026: esta abertura tinha três frases e as duas últimas ("quando falta
         // conteúdo... quando falta execução...") diziam a mesma coisa que o callout
@@ -3613,7 +3613,7 @@
       // importante da página". Fato real e externo (a prova tem 80 questões, corte
       // em 40), a mesma conta já usada na oferta.html — não é o CORTE_X/CORTE_Y
       // deste teste, que é calibração interna, coisa diferente.
-      '<section class="regua"><div class="in">'+
+      '<section class="regua" id="sec-regua"><div class="in">'+
         '<div class="eyebrow gold">Antes de estudar mais, lembre da régua</div>'+
         '<div class="rtop">'+
           '<div class="rnum"><div class="n">40<span>/80</span></div><div class="lb">linha de corte</div></div>'+
@@ -3631,7 +3631,7 @@
       // custa. Números batidos contra a tabela real de entregas do R$47 (mesma nota
       // da stackOferta()): 6 matérias do núcleo duro, 3 simulados focados. As outras
       // 11 matérias e os 2 simulados completos são do Plano Completo, R$127.
-      '<section class="vsec larga">'+
+      '<section class="vsec larga" id="sec-mapa">'+
         '<div class="eyebrow">O que é o Mapa da Aprovação</div>'+
         // Frase-mestra, alinhada com a página de vendas autônoma (oferta.html, 05/08/2026).
         // Ela ataca a objeção mais cara do funil — "preciso estudar tudo e comprar mais
@@ -3884,12 +3884,26 @@
       };
     });
 
-    // Âncora suave do resumo até a oferta.
-    var vo=document.getElementById('verof');
+    /* Âncora suave até a oferta.
+
+       09/08/2026: isto procurava '#verof', que era o botão do cartão de preço da tela 2
+       — cartão removido em 07/08. Ou seja, estava morto desde então, guardado só pelo
+       if(vo). Quem sobrou é o '#verof2', e ele estava fazendo o pulo NATIVO do
+       href="#oferta": instantâneo, sem transição.
+
+       Repontar em vez de apagar, porque o movimento visível resolve o mesmo problema
+       que o rótulo: o Gustavo clicou nesse botão esperando pagar duas vezes (07/08 e
+       09/08). Pulo instantâneo lê como "não aconteceu nada" ou como troca de página;
+       a rolagem mostra que a página andou, e mostra para onde.
+
+       Respeita prefers-reduced-motion, como a barra fixa já faz no CSS. */
+    var vo=document.getElementById('verof2');
     if(vo) vo.onclick=function(e){
-      e.preventDefault();
       var alvo2=document.getElementById('oferta');
-      if(alvo2) alvo2.scrollIntoView({behavior:'smooth', block:'start'});
+      if(!alvo2) return;                       // sem destino, deixa o href nativo agir
+      e.preventDefault();
+      var reduz = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      alvo2.scrollIntoView({behavior: reduz ? 'auto' : 'smooth', block:'start'});
     };
 
     // Marca que chegou na oferta. Sem a ponte, o sinal é a seção entrar na tela.
@@ -3963,6 +3977,61 @@
        demais, e isso provavelmente infla o passo 'oferta_cta' desde 06/08 — mas isso é
        medição, é anterior a esta barra, e mexer nela muda série histórica no meio de uma
        campanha rodando. Fica registrado aqui para não se perder. */
+    /* CURVA DE ABANDONO DA PÁGINA (09/08/2026).
+
+       A página tem 20,3 telas de celular e o preço aparece na 12,4. Dos que chegam ao
+       resultado, 23% alcançam a seção da oferta — e desses, 31% compram. Ou seja: quem
+       chega converte muito bem, e a perda inteira acontece ANTES. Mas até agora não
+       havia como saber ONDE: os únicos marcos do caminho eram 'oferta' e 'oferta_cta',
+       os dois já dentro da oferta. As primeiras 12 telas não tinham nenhum.
+
+       Sem isso, encurtar a página é palpite — e palpite caro, porque a casa já mediu
+       que quem pula direto para o checkout converte 17% contra 80% de quem chega pelo
+       fim. O comprimento faz trabalho de qualificação; cortar a seção errada derruba
+       aqueles 31%.
+
+       VAI PELO PIXEL, NÃO PELO BANCO, e a razão é a mesma já registrada no funil
+       pré-lead: marcarPasso() grava numa COLUNA PRÓPRIA por passo e tem lista branca no
+       servidor (PASSOS, em api/clique.js), então cada marco novo custaria migração em
+       produção mais deploy do app. O pixel responde a pergunta que importa aqui — taxa
+       por seção, quebrável por campanha no Events Manager — sem nada disso.
+
+       UM evento com a seção como parâmetro, não um nome por seção: mesma decisão do
+       QuizProgresso. Cinco nomes diferentes poluiriam o dataset e ainda impediriam ler
+       a curva como distribuição de um mesmo evento.
+
+       SEM chamada inicial e com piso de scroll, ao contrário de marcarOferta() e
+       marcarCta(), que rodam uma checagem síncrona logo após o innerHTML e por isso
+       disparam no carregamento (ver a nota da barra fixa). Estes marcos nascem certos;
+       aqueles dois continuam como estavam para não quebrar série histórica. */
+    var MARCOS = [
+      ['sec-significa', 'significa'],
+      ['sec-regua',     'regua'],
+      ['sec-mapa',      'mapa'],
+      ['oferta',        'oferta'],
+      ['buy0',          'preco']
+    ];
+    (function(){
+      var pendentes = MARCOS.slice();
+      var conferirMarcos = function(){
+        if(!pendentes.length) return;
+        if(window.scrollY < 200) return;
+        var restam = [];
+        for(var i=0; i<pendentes.length; i++){
+          var el = document.getElementById(pendentes[i][0]);
+          if(!el) continue;                       // seção ausente nesta variante: some da lista
+          if(el.getBoundingClientRect().top < window.innerHeight*0.85){
+            marcarPixel('RolouAte', { secao: pendentes[i][1] });
+          } else {
+            restam.push(pendentes[i]);
+          }
+        }
+        pendentes = restam;
+        if(!pendentes.length) window.removeEventListener('scroll', conferirMarcos);
+      };
+      window.addEventListener('scroll', conferirMarcos, {passive:true});
+    })();
+
     var barra=document.getElementById('barra');
     if(barra && alvoCta){
       var barraAcesa=false;
