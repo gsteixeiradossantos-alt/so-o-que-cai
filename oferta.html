@@ -1156,8 +1156,34 @@ function porqueHoje(){
   });
 
   /* InitiateCheckout uma vez só. Aqui NÃO há LEAD_ID (a pessoa pode chegar sem ter
-     feito o teste), então o clique não vai para /api/clique — o que este endpoint
-     grava é a coluna do lead, e sem lead não há linha para gravar. */
+     feito o teste), e por isso, até 10/08/2026, o clique não ia para /api/clique:
+     o que aquele endpoint grava é a coluna do lead, e sem lead não há linha.
+
+     O raciocínio estava certo para o BANCO e errado para a META. O evento saía só
+     pelo pixel do navegador, sem eventID e sem cópia pelo servidor, no exato
+     instante em que a aba vai embora para a Hotmart — a pior janela possível para
+     um request do navegador, e a que iOS e bloqueador cortam primeiro. A Compra,
+     essa, chega sempre, porque vem do webhook da Hotmart, que é servidor.
+
+     Daí o número impossível na conta: nas duas campanhas que vendem, 7 checkouts
+     para 8 compras e 3 para 5. Ninguém compra sem iniciar o checkout; o que havia
+     era checkout não contado. E duas campanhas otimizadas por Iniciar checkout
+     aprenderam com esse número — entregaram ROAS 0,35 e 0,00.
+
+     Agora o evento sai pelos dois caminhos, com o mesmo eventID para a Meta contar
+     um só: o pixel daqui e a Conversions API no /api/clique, que desde a mesma data
+     aceita beacon sem lead_id e manda o evento com fbp/fbc/IP. sendBeacon porque
+     aqui existe navegação de verdade e um fetch normal é cancelado. Falhar não pode
+     atrapalhar a ida para o checkout, então tudo vai dentro de try. */
+  var CLIQUE_URL = 'https://app.sooquecai.online/api/clique';
+
+  function lerCookie(nome){
+    try{
+      var m = document.cookie.match(new RegExp('(^|;\\s*)' + nome + '=([^;]*)'));
+      return m ? decodeURIComponent(m[2]) : null;
+    }catch(e){ return null; }
+  }
+
   var icDisparado = false;
   ['buy0','buy'].forEach(function(id){
     var el = document.getElementById(id);
@@ -1165,7 +1191,24 @@ function porqueHoje(){
     el.addEventListener('click', function(){
       if (icDisparado) return;
       icDisparado = true;
-      try { fbq('track','InitiateCheckout',{value:47,currency:'BRL'}); } catch(e) {}
+
+      var eventId = 'ic-oferta-' + Date.now().toString(36) + '-' +
+                    Math.random().toString(36).slice(2, 8);
+
+      try { fbq('track','InitiateCheckout',{value:47,currency:'BRL'},{eventID:eventId}); } catch(e) {}
+
+      try{
+        var corpo = JSON.stringify({
+          botao: id, oferta: '47', pagina: 'oferta',
+          ic_event_id: eventId, fbp: lerCookie('_fbp'), fbc: lerCookie('_fbc')
+        });
+        if (navigator.sendBeacon){
+          navigator.sendBeacon(CLIQUE_URL, new Blob([corpo], {type:'text/plain;charset=UTF-8'}));
+        } else {
+          fetch(CLIQUE_URL, {method:'POST', headers:{'Content-Type':'text/plain'},
+                             body:corpo, keepalive:true}).catch(function(){});
+        }
+      }catch(e){}
     });
   });
 })();
