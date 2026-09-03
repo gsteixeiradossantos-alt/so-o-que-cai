@@ -2898,16 +2898,26 @@
      por certo. */
   function mencaoKit(){
     var d = diasParaProva();
-    var faixa = d
-      ? (d > 21
-          ? diasFrase(d) + '. As últimas 21 são as que mais decidem, e é delas que este plano trata.'
-          : diasFrase(d) + '. Você já está dentro da janela que este plano cobre.')
-      : 'É o plano da reta final, semana a semana.';
+    // 03/09/2026: a 7 dias ou menos, "o plano das últimas três semanas" descreve o que a
+    // pessoa NÃO tem mais. O que o Kit entrega nesse prazo é a outra metade dele: a
+    // véspera, a manhã e a sala. A descrição segue o calendário; o conteúdo é o mesmo.
+    var faixa, desc;
+    if(d && d<=7){
+      faixa = diasFrase(d) + '. O que sobra do plano é a véspera e o dia, e é disso que o Kit trata agora.';
+      desc  = 'O checklist da véspera (a hora de parar, o que deixar pronto, o sono), a conta da manhã a partir do fechamento dos portões, e o que fazer dentro da sala: o branco, a terceira hora, a transcrição do gabarito.';
+    } else {
+      faixa = d
+        ? (d > 21
+            ? diasFrase(d) + '. As últimas 21 são as que mais decidem, e é delas que este plano trata.'
+            : diasFrase(d) + '. Você já está dentro da janela que este plano cobre.')
+        : 'É o plano da reta final, semana a semana.';
+      desc  = 'O plano das últimas três semanas, semana a semana, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.';
+    }
     return '<div class="cardb kitdestaque" style="margin-top:14px">'+
       '<div class="eyebrow gold" style="margin-bottom:8px">Também no carrinho · R$ 19</div>'+
       '<h4 style="margin:0 0 6px">Kit Reta Final</h4>'+
       '<p class="kitfaixa">'+esc(faixa)+'</p>'+
-      '<p style="margin:0">O plano das últimas três semanas, semana a semana, o checklist da véspera e do dia da prova, a estratégia para as 80 questões e o protocolo anti-branco.</p>'+
+      '<p style="margin:0">'+desc+'</p>'+
     '</div>';
   }
 
@@ -3108,8 +3118,17 @@
   // de graça o argumento para adiar a quem estava em cima do muro. Não mentir não
   // obriga a advogar contra a própria página. Saiu junto um travessão, que a marca
   // proíbe e que tinha sobrevivido aqui.
+  // 03/09/2026, a 3 dias da prova: os três cartões antigos (hoje / 3 semanas / véspera)
+  // foram escritos para quem tinha semanas. A 7 dias ou menos, o cartão "na véspera"
+  // descrevia exatamente o leitor e dizia que sobrava "a menor parte do que você pagou":
+  // a página advogava contra a própria compra no dia de maior tráfego. Abaixo de 7 dias
+  // o bloco passa a medir o que AINDA cabe até domingo, dia a dia, com o que o material
+  // de fato entrega nesse prazo (mapa, simulados focados, folha de tática, e o Kit para a
+  // véspera e o dia). Tudo verdadeiro; nenhuma promessa de aprovação. Acima de 7 dias,
+  // nada muda.
   function porqueHoje(){
     var d=diasParaProva();
+    if(d && d<=7) return porqueHojeRetaFinal(d);
     return '<div class="hoje">'+
       '<div class="hk">Por que hoje, '+esc(hojeExtenso())+', e não depois</div>'+
       '<p class="hp">'+
@@ -3120,6 +3139,30 @@
         '<div class="hcard"><b>Em 3 semanas</b><p>Ainda dá para corrigir as matérias fracas, mas sem muito tempo de conferir o resultado antes da prova.</p></div>'+
         '<div class="hcard"><b>Na véspera</b><p>Sobra a folha de tática de prova. Ajuda, mas é a menor parte do que você pagou.</p></div>'+
       '</div>'+
+    '</div>';
+  }
+  function porqueHojeRetaFinal(d){
+    // Três cartões de novo, para não mexer no CSS da grade: o que fazer hoje, o que
+    // fazer amanhã (ou até a véspera), e o domingo. Em d=1 (véspera) o primeiro cartão
+    // já é a véspera, então os textos seguem o dia, não uma contagem fixa.
+    var hoje, amanha, dia;
+    if(d>=3){
+      hoje   = '<div class="hcard"><b>Hoje</b><p>Mapa do que mais cai e os 3 simulados focados: dá para fazer os três e ver, hoje mesmo, onde o ponto vaza.</p></div>';
+      amanha = '<div class="hcard"><b>Até sábado</b><p>Só revisão do que você errou nos simulados, pelo mapa. Nada de matéria nova; segurança vale mais que volume.</p></div>';
+      dia    = '<div class="hcard"><b>Domingo</b><p>A Folha de tática na mão: as duas passadas, o relógio, o que fazer quando bate o branco.</p></div>';
+    } else if(d===2){
+      hoje   = '<div class="hcard"><b>Hoje</b><p>Mapa do que mais cai e os simulados focados, cronometrados. É a última medição antes da prova.</p></div>';
+      amanha = '<div class="hcard"><b>Sábado</b><p>Revisão do que você errou, só até o meio da tarde. Depois disso, descanso: o que entra na véspera não chega inteiro.</p></div>';
+      dia    = '<div class="hcard"><b>Domingo</b><p>A Folha de tática na mão: as duas passadas, o relógio, o que fazer quando bate o branco.</p></div>';
+    } else {
+      hoje   = '<div class="hcard"><b>Hoje, véspera</b><p>Uma passada no mapa do que mais cai, até o meio da tarde. Nada novo entra depois disso.</p></div>';
+      amanha = '<div class="hcard"><b>Hoje à noite</b><p>Documento, comprovante, canetas, o trajeto conferido. Dormir no horário de sempre.</p></div>';
+      dia    = '<div class="hcard"><b>Amanhã</b><p>A Folha de tática na mão: as duas passadas, o relógio, o que fazer quando bate o branco.</p></div>';
+    }
+    return '<div class="hoje">'+
+      '<div class="hk">O que ainda cabe até domingo</div>'+
+      '<p class="hp">'+esc(diasFrase(d))+'. Não é hora de aprender matéria nova: é hora de parar de perder ponto no que você já sabe. É para isso que o material serve nesse prazo.</p>'+
+      '<div class="hgrid">'+hoje+amanha+dia+'</div>'+
     '</div>';
   }
 

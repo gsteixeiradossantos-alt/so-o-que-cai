@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  Criativo de anúncio · mini-diagnóstico · "3 dias" · 7 questões
+  ----------------------------------------------------------------
+  03/09/2026. Peça de sprint para quem deixou para a última hora: a 1ª fase é
+  domingo, 06/09, e o número no alto é a única urgência da marca, porque é real.
+  A promessa é o que ainda cabe em 3 dias (parar de perder ponto no que já sabe),
+  nunca aprovação. Sem escassez inventada, sem desconto, sem travessão.
+
+  O número grande é FIXO na arte ("3 dias"): a peça vale quinta e sexta. No sábado
+  a leitura vira "1 dia" e a arte precisa ser trocada ou pausada, não deixada no
+  ar dizendo 3.
+
+  Render: criativos/render.sh minidiag-3-dias-7q.html (Chrome headless, 1080x1080).
+  Paleta e tipografia espelham minidiag-v4-relogio-7q.html, o criativo que já vendeu.
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--muted2:#574F45;--muted:#8A8378;
+        --line:#E4DBC9;--navy:#15212B;--ocre:#A65D1E}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1080px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+  .marca{position:absolute;left:80px;top:78px;display:flex;align-items:center;gap:22px}
+  .selo{width:66px;height:66px;border-radius:16px;background:var(--navy);position:relative}
+  .selo .anel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;
+              border-radius:50%;border:3px solid var(--paper)}
+  .selo .miolo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;
+               border-radius:50%;background:var(--ocre)}
+  .selo i{position:absolute;background:var(--paper);border-radius:1px}
+  .selo .t-n{left:50%;top:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-s{left:50%;bottom:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-l{top:50%;left:9px;margin-top:-1.5px;height:3px;width:9px}
+  .selo .t-o{top:50%;right:9px;margin-top:-1.5px;height:3px;width:9px}
+  .nome{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:46px;color:var(--ink);line-height:1}
+  .sub{font-family:'Space Mono',monospace;font-size:19px;color:var(--muted);letter-spacing:.19em;margin-top:9px}
+
+  /* o bloco do prazo: o número é a manchete */
+  .prazo{position:absolute;left:80px;top:216px;width:300px;height:300px;border-radius:24px;background:var(--navy);
+         display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .prazo .n{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:190px;color:var(--paper);line-height:.85}
+  .prazo .u{font-family:'Space Mono',monospace;font-weight:700;font-size:30px;color:var(--ocre);
+            letter-spacing:.24em;margin-top:18px}
+  .prazo .d{font-family:'Space Mono',monospace;font-weight:700;font-size:19px;color:var(--paper);
+            letter-spacing:.08em;margin-top:12px;opacity:.85}
+
+  .h{position:absolute;left:424px;top:224px;width:580px;font-family:'Spectral',Georgia,serif;font-weight:700;
+     font-size:64px;line-height:1.12;color:var(--ink);letter-spacing:-.02em}
+  .h em{font-style:italic;color:var(--ocre);display:block}
+
+  .linhas{position:absolute;left:80px;top:590px;width:920px;font-size:34px;line-height:1.42;color:var(--muted2)}
+  .linhas b{font-weight:600;color:var(--ink)}
+
+  .nota{position:absolute;left:80px;top:772px;width:920px;padding:24px 30px;border-radius:16px;
+        background:var(--card);border-left:6px solid var(--ocre);font-size:29px;line-height:1.38;
+        color:var(--ink);box-sizing:border-box}
+  .nota b{font-weight:700}
+  .cta{position:absolute;left:80px;top:930px;height:80px;padding:0 34px;border-radius:15px;background:var(--navy);
+       display:flex;align-items:center;gap:26px;font-family:'Space Mono',monospace;font-weight:700;
+       font-size:29px;color:var(--paper);letter-spacing:.05em}
+  .seta{font-size:33px;line-height:1}
+</style></head><body>
+<div class="art">
+  <div class="marca">
+    <div class="selo"><i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div></div>
+    <div><div class="nome">Só o que Cai</div><div class="sub">1ª FASE · OAB</div></div>
+  </div>
+
+  <div class="prazo">
+    <div class="n">3</div>
+    <div class="u">DIAS</div>
+    <div class="d">PROVA DOMINGO, 06/09</div>
+  </div>
+
+  <div class="h">Deixou para<br>a última hora?<em>Ainda dá para não perder ponto.</em></div>
+
+  <div class="linhas">
+    Em 3 dias não entra matéria nova. O que cabe é descobrir<br>
+    <b>onde você erra no que já sabe</b> e segurar esses pontos no domingo.
+  </div>
+
+  <div class="nota"><b>7 questões grátis, 3 minutos:</b> o mapa do que mais cai e onde o seu ponto vaza. Resultado na hora.</div>
+
+  <div class="cta">FAÇA O TESTE AGORA <span class="seta">↓</span></div>
+</div>
+</body></html>
