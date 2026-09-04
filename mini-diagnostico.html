@@ -3141,6 +3141,22 @@
       '</div>'+
     '</div>';
   }
+  // 04/09/2026: o parágrafo de abertura da oferta, que era fixo, passa a usar o calendário
+  // quando faltam 7 dias ou menos. A urgência é verdadeira e tem duas partes: a data da
+  // prova, e o fato de que o estudo útil acaba na TARDE DE SÁBADO (é o que o Kit manda:
+  // o que entra na véspera não chega inteiro). Nada de vaga, preço subindo ou aprovação.
+  function ofertaIntro(){
+    var d=diasParaProva();
+    var fixo='O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.';
+    if(!d || d>7){
+      return '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. '+fixo+'</p>';
+    }
+    var prazo = d>=3 ? 'o estudo útil acaba na tarde de sábado'
+              : d===2 ? 'o estudo útil acaba amanhã à tarde'
+              : 'o estudo útil acaba hoje à tarde';
+    return '<p class="p">Por <strong>R$ 47</strong>, acesso na hora. '+esc(diasFrase(d))+', e '+prazo+': o que entrar depois disso não chega inteiro no domingo. '+
+      'Cada hora que for para a matéria errada não volta, e o Mapa existe para dizer <strong>onde gastar as horas que restam</strong>. '+fixo+'</p>';
+  }
   function porqueHojeRetaFinal(d){
     // Três cartões de novo, para não mexer no CSS da grade: o que fazer hoje, o que
     // fazer amanhã (ou até a véspera), e o domingo. Em d=1 (véspera) o primeiro cartão
@@ -3715,7 +3731,7 @@
       '<section class="vsec larga" id="oferta">'+
         '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
         '<h2 class="grande">'+PRODUTO+'</h2>'+
-        '<p class="p">Por <strong>R$ 47</strong>, acesso imediato para transformar este diagnóstico em pontos na prova. O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.</p>'+
+        ofertaIntro()+
         /* O crachá de quem assina. Subiu para a oferta em 07/08 porque a página dava um
            veredito sobre a vida da pessoa e pedia R$ 47 assinada por ninguém até
            12.435 px, a tela 15 num celular.

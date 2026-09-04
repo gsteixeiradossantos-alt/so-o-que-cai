@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<!--
+  Criativo de anúncio · mini-diagnóstico · "1 dia" · 7 questões
+  ---------------------------------------------------------------
+  Para o SÁBADO 05/09/2026, véspera da 1ª fase. Entra no lugar do "2 dias".
+  A urgência é o calendário: a prova é amanhã e o estudo útil acaba hoje à tarde
+  (o que o próprio Kit manda). O que ainda cabe: revisar o que a pessoa já sabe e
+  saber o que fazer dentro da sala. Sem promessa de aprovação, sem vaga, sem
+  preço subindo, sem travessão.
+
+  Render: criativos/render.sh minidiag-1-dia-7q.html (Chrome headless, 1080x1080).
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;0,700;1,600;1,700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  :root{--paper:#F3EEE4;--card:#FBF9F4;--ink:#231F1A;--muted2:#574F45;--muted:#8A8378;
+        --line:#E4DBC9;--navy:#15212B;--ocre:#A65D1E}
+  html,body{margin:0;padding:0;background:var(--paper)}
+  .art{position:relative;width:1080px;height:1080px;overflow:hidden;background:var(--paper);
+       font-family:'Hanken Grotesk',system-ui,sans-serif}
+  .marca{position:absolute;left:80px;top:78px;display:flex;align-items:center;gap:22px}
+  .selo{width:66px;height:66px;border-radius:16px;background:var(--navy);position:relative}
+  .selo .anel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;
+              border-radius:50%;border:3px solid var(--paper)}
+  .selo .miolo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:13px;height:13px;
+               border-radius:50%;background:var(--ocre)}
+  .selo i{position:absolute;background:var(--paper);border-radius:1px}
+  .selo .t-n{left:50%;top:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-s{left:50%;bottom:9px;margin-left:-1.5px;width:3px;height:9px}
+  .selo .t-l{top:50%;left:9px;margin-top:-1.5px;height:3px;width:9px}
+  .selo .t-o{top:50%;right:9px;margin-top:-1.5px;height:3px;width:9px}
+  .nome{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:46px;color:var(--ink);line-height:1}
+  .sub{font-family:'Space Mono',monospace;font-size:19px;color:var(--muted);letter-spacing:.19em;margin-top:9px}
+
+  .prazo{position:absolute;left:80px;top:216px;width:300px;height:300px;border-radius:24px;background:var(--ocre);
+         display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .prazo .n{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:190px;color:var(--paper);line-height:.85}
+  .prazo .u{font-family:'Space Mono',monospace;font-weight:700;font-size:30px;color:var(--navy);
+            letter-spacing:.24em;margin-top:18px}
+  .prazo .d{font-family:'Space Mono',monospace;font-weight:700;font-size:19px;color:var(--paper);
+            letter-spacing:.08em;margin-top:12px;opacity:.9}
+
+  .h{position:absolute;left:424px;top:216px;width:590px;font-family:'Spectral',Georgia,serif;font-weight:700;
+     font-size:62px;line-height:1.1;color:var(--ink);letter-spacing:-.02em}
+  .h em{font-style:italic;color:var(--ocre);display:block;margin-top:6px}
+
+  .linhas{position:absolute;left:80px;top:590px;width:920px;font-size:34px;line-height:1.42;color:var(--muted2)}
+  .linhas b{font-weight:600;color:var(--ink)}
+
+  .nota{position:absolute;left:80px;top:772px;width:920px;padding:24px 30px;border-radius:16px;
+        background:var(--card);border-left:6px solid var(--ocre);font-size:29px;line-height:1.38;
+        color:var(--ink);box-sizing:border-box}
+  .nota b{font-weight:700}
+  .cta{position:absolute;left:80px;top:930px;height:80px;padding:0 34px;border-radius:15px;background:var(--navy);
+       display:flex;align-items:center;gap:26px;font-family:'Space Mono',monospace;font-weight:700;
+       font-size:29px;color:var(--paper);letter-spacing:.05em}
+  .seta{font-size:33px;line-height:1}
+</style></head><body>
+<div class="art">
+  <div class="marca">
+    <div class="selo"><i class="t-n"></i><i class="t-s"></i><i class="t-l"></i><i class="t-o"></i>
+      <div class="anel"></div><div class="miolo"></div></div>
+    <div><div class="nome">Só o que Cai</div><div class="sub">1ª FASE · OAB</div></div>
+  </div>
+
+  <div class="prazo">
+    <div class="n">1</div>
+    <div class="u">DIA</div>
+    <div class="d">A PROVA É AMANHÃ</div>
+  </div>
+
+  <div class="h">É amanhã.<em>Ainda dá para não perder ponto no que você já sabe.</em></div>
+
+  <div class="linhas">
+    Hoje à tarde o estudo acaba e começa a véspera. <b>3 minutos para saber o que revisar agora</b>, e o que fazer amanhã na sala.
+  </div>
+
+  <div class="nota"><b>7 questões grátis:</b> onde o seu ponto vaza, no que mais cai. Resultado na hora.</div>
+
+  <div class="cta">FAÇA O TESTE AGORA <span class="seta">↓</span></div>
+</div>
+</body></html>
