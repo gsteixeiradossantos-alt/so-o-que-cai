@@ -2219,7 +2219,19 @@
       : (ps.exec===0
           ? 'As matérias, com nome, e quanto falta em cada uma'
           : 'Saber se o que te derruba é a matéria ou a hora da prova');
-    if(jaReprovou()){
+    var ddv=diasParaProva();
+    if(jaReprovou() && ddv && ddv<=2){
+      // 05/09/2026, véspera: a tabela normal fala em "próxima", "tentar de novo" e
+      // "inscrição do próximo exame". A 1 dia da prova, é a página anunciando a
+      // reprovação de amanhã. Aqui a comparação é entre entrar amanhã como da outra
+      // vez ou entrar sabendo onde perde ponto e com uma tática.
+      linhas=[
+        ['Entrar amanhã com a mesma tática da outra vez','Entrar com a Folha de tática lida hoje à noite'],
+        ['Descobrir só no dia onde o ponto vai embora','Saber hoje, em 20 minutos, com nome'],
+        [TAXA_EXAME+' já pagos na inscrição de amanhã','R$47, uma vez, ou '+PARCELA],
+        ['Repetir a mesma prova, sem saber o que corrigir', promessa]
+      ];
+    } else if(jaReprovou()){
       linhas=[
         ['Mais uma reprovação, pelo mesmo motivo de antes','O motivo, com nome, antes da próxima'],
         [ESPERA_EXAME+' até poder tentar de novo','20 minutos'],
@@ -2508,6 +2520,21 @@
       // O rabo "aparece ali com nome" só para quem de fato perdeu matéria: para X cheio
       // o veredito acabou de dizer que matéria não é o problema, e a frase desmentiria.
       texto = DIAG + ((forte||sabe)? '' : ' Se o que te derrubou está entre essas 6 matérias, ele aparece ali com nome.');
+      // 05/09/2026, véspera: medido no sprint, quem já reprovou chegou na oferta (18 de
+      // 27) e não clicou (2) nem comprou (0), enquanto quem nunca prestou comprou 3 de
+      // 14. O veredito acima fala em "segunda tentativa" e "repetir a preparação", que
+      // a 1 dia da prova lê como "compre para o próximo exame". Na véspera o texto
+      // fala do dia de amanhã, que é o único que essa pessoa tem na cabeça.
+      (function(){
+        var dd=diasParaProva(); if(!dd || dd>2) return;
+        ponto = forte
+          ? 'Você acertou tudo aqui e mesmo assim já prestou e não passou. Entre o que você sabe e a nota que saiu, alguma coisa se perde no dia, e não é matéria. Amanhã você entra na sala de novo, e o que dá para mudar em um dia não é o conteúdo: é como você joga a prova.'
+          : sabe
+          ? 'Você já prestou e não passou, e aqui a matéria não foi o problema: foi a hora, num teste de quatro minutos. Amanhã são cinco horas e 80 questões, e o que dá para mudar até lá não é o conteúdo: é como você joga a prova.'
+          : 'Você já prestou e não passou, e o mesmo resultado reapareceu num teste de quatro minutos. Amanhã não dá para refazer a preparação. Dá para saber, hoje à noite, onde você perde ponto no que já sabe, e entrar na sala com uma tática em vez de repetir a de antes.';
+        titulo = 'O que ainda muda até amanhã';
+        texto = DIAG + ' A Folha de tática vem junto: as duas passadas, o relógio, o que fazer quando bate o branco.';
+      })();
     } else if(nuncaPrestou()){
       // Ramo único de quem nunca prestou. O texto não pode assumir faculdade nem
       // bacharelado, porque agora os dois caem aqui: fala do que ambos têm em comum,
@@ -2861,7 +2888,9 @@
           '<i>vinha só no Plano Completo</i></div>'+
           '<p>Uma das seis regras: ler a última linha antes do resto, que é onde a banca inverte o pedido. As outras cinco vêm junto. Não é decorar macete, é entender como a FGV monta a questão e ter o que fazer quando ela aparecer.</p></div>'+
       '</div>'+
-      '<div class="bpe">Se você só puder pagar em outro dia, tudo bem, sem drama. O bônus é que eu não garanto.</div>'+
+      '<div class="bpe">'+((d && d<=1)
+        ? 'Depois da prova ele continua valendo, mas é hoje à noite que ele rende: a última linha da questão é onde a FGV inverte o pedido.'
+        : 'Se você só puder pagar em outro dia, tudo bem, sem drama. O bônus é que eu não garanto.')+'</div>'+
     '</div>';
   }
 
@@ -2960,6 +2989,26 @@
   // prova" são exclusivos do Plano Completo (R$127) — este site não vende esse tier.
   // Prometer o inventário inteiro por R$47 aqui gera reembolso.
   function stackOferta(){
+    var dv=diasParaProva();
+    if(dv && dv<=1){
+      // 05/09/2026, véspera: a mesma entrega, na ordem em que ela se usa daqui até a
+      // prova. Fichas e simulados continuam no acesso (12 meses), mas não são o que a
+      // pessoa vai usar nas próximas 20 horas, e a lista antiga os vendia como programa
+      // de semanas. Nada aqui promete o que o R$47 não entrega.
+      var bv=[
+        ['Hoje à noite: a Folha de tática de prova',
+         'Quando insistir e quando pular, como voltar depois, como dividir as cinco horas e como não trocar resposta certa por errada. Lê em 15 minutos, deitado.'],
+        ['Hoje à noite: o mapa de onde você perde ponto',
+         '24 questões nas 6 matérias do núcleo e 7 perguntas sobre a sua hora de prova. Diz se o ponto foi embora por matéria ou por execução, com nome. Leva 20 minutos.'],
+        ['Amanhã cedo: uma passada leve no que errou',
+         'Cada questão do mapa explica por que a sua resposta parecia certa e qual detalhe da lei decidiu. Não é estudar: é não cair na mesma amanhã.'],
+        ['Depois da prova: o resto fica',
+         'Fichas das 6 matérias do núcleo e 3 simulados focados continuam no seu acesso por 12 meses, seja para a 2ª fase ou para o próximo Exame.']
+      ];
+      return '<div class="grade">'+bv.map(function(b){
+        return '<div class="cardb pequeno"><h4>'+esc(b[0])+'</h4><p>'+esc(b[1])+'</p></div>';
+      }).join('')+'</div>';
+    }
     // Ordenada por RESULTADO, não por mecanismo: o rótulo é o verbo que a pessoa
     // executa, e a entrega vem em cinza logo abaixo como prova de que o verbo é
     // possível. Ninguém compra ficha; compra saber o que corrigir.
@@ -3145,6 +3194,11 @@
   // quando faltam 7 dias ou menos. A urgência é verdadeira e tem duas partes: a data da
   // prova, e o fato de que o estudo útil acaba na TARDE DE SÁBADO (é o que o Kit manda:
   // o que entra na véspera não chega inteiro). Nada de vaga, preço subindo ou aprovação.
+  // 05/09/2026: rótulo dos botões principais. Na véspera, "corrigir" soa a semanas de
+  // estudo; o que a pessoa leva hoje é o Mapa e a Folha de tática.
+  function rotuloComprar(){
+    return (diasParaProva()===1)? 'Quero o Mapa e a Folha de tática agora: R$ 47' : 'Quero descobrir exatamente o que corrigir: R$ 47';
+  }
   function ofertaIntro(){
     var d=diasParaProva();
     var fixo='O objetivo não é estudar mais: é estudar <strong>o que precisa</strong> e fazer a prova com uma estratégia melhor.';
@@ -3222,7 +3276,10 @@
       '<ul>'+
         '<li><b>'+PARCELA+' no cartão.</b> Menos de nove reais por mês, com o acesso liberado na hora.</li>'+
       '</ul>'+
-      '<div class="fine">O que não espera é a prova: ela é no dia 6 de setembro com ou sem material, e cada semana que passa tira um pedaço do que ele ainda alcança.</div>'+
+      '<div class="fine">'+(function(){ var dd=diasParaProva();
+        if(dd===1) return 'O que não espera é a prova: ela é amanhã, com ou sem material. O que ele ainda alcança é a noite de hoje e a manhã de amanhã.';
+        if(dd && dd<=7) return 'O que não espera é a prova: ela é domingo, 6 de setembro, com ou sem material, e cada dia que passa tira um pedaço do que ele ainda alcança.';
+        return 'O que não espera é a prova: ela é no dia 6 de setembro com ou sem material, e cada semana que passa tira um pedaço do que ele ainda alcança.'; })()+'</div>'+
     '</div>';
   }
 
@@ -3428,7 +3485,7 @@
     // 'buybar' voltou em 09/08/2026 com a barra fixa. Entra na lista pelo mesmo motivo
     // dos outros: sem isso o clique na barra iria para a Hotmart sem sck (venda sem
     // atribuição) e sem o eventID que evita o servidor duplicar o InitiateCheckout.
-    ['buyslim','buy0','buy','buydep','buybar'].forEach(function(id){
+    ['buyslim','buy0','buy','buydep','buybar','buyvesp'].forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       el.onclick=function(){
@@ -3750,6 +3807,18 @@
         '<div class="eyebrow">Continue de onde este diagnóstico parou</div>'+
         '<h2 class="grande">'+PRODUTO+'</h2>'+
         ofertaIntro()+
+        // 05/09/2026, véspera: no sprint, 8 das 34 pessoas que chegaram na oferta nunca
+        // viram o botão de comprar (24%), que fica depois da lista de entregas, do
+        // cartão do cursinho e do vídeo. Quem compra na véspera decide em 3 a 5 minutos
+        // (as duas vendas do sprint). A 1 dia da prova o preço e o botão aparecem
+        // também aqui, logo depois do parágrafo que já diz o que se leva hoje à noite.
+        // Não substitui o bloco de preço de baixo; é o mesmo destino, mais cedo.
+        (function(){ var dd=diasParaProva(); if(!(dd && dd<=1)) return '';
+          return '<div class="preco" style="margin-top:14px">'+
+            '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
+            '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buyvesp" data-v="47">'+rotuloComprar()+'</a>'+
+            '<div class="micro2">Pix cai na hora e o acesso chega no e-mail · garantia de 7 dias · 12 meses de acesso</div>'+
+          '</div>'; })()+
         /* O crachá de quem assina. Subiu para a oferta em 07/08 porque a página dava um
            veredito sobre a vida da pessoa e pedia R$ 47 assinada por ninguém até
            12.435 px, a tela 15 num celular.
@@ -3791,7 +3860,7 @@
         // tratamento: é o ponto onde a decisão acontece.
         '<div class="preco">'+
           '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
-          '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+          '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buy0" data-v="47">'+rotuloComprar()+'</a>'+
           '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
           '<div class="selo2">Seus dados não são vendidos</div>'+
         '</div>'+
@@ -3889,7 +3958,7 @@
       '<section class="vfim">'+
         '<h2>40 acertos em 80. A direção é nossa; a aprovação é sua.</h2>'+
         '<div class="pfim">R$ 47 à vista no Pix · ou '+PARCELA+' no cartão</div>'+
-        '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buy" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+        '<a class="btn-lar grande btn-comprar" href="'+C.buyUrl+'" id="buy" data-v="47">'+rotuloComprar()+'</a>'+
         '<div class="micro2">pagamento único · acesso na hora · garantia de 7 dias</div>'+
       '</section>'+
 
@@ -4266,7 +4335,7 @@
           porqueHoje()+
           '<div class="preco">'+
             '<div class="v">R$ 47 <span>no Pix · ou '+PARCELA+' no cartão ('+TOTAL_PARCELADO+')</span></div>'+
-            '<a class="btn-lar grande btn-comprar" href="'+buyUrl+'" id="buy0" data-v="47">Quero descobrir exatamente o que corrigir: R$ 47</a>'+
+            '<a class="btn-lar grande btn-comprar" href="'+buyUrl+'" id="buy0" data-v="47">'+rotuloComprar()+'</a>'+
             '<div class="micro2">pagamento único, sem mensalidade · acesso na hora, por 12 meses · garantia de 7 dias</div>'+
           '</div>'+
         '</section>'+
