@@ -838,7 +838,7 @@ function porExtenso(d){
            'agosto','setembro','outubro','novembro','dezembro'];
     return d.getDate()+' de '+M[d.getMonth()];
   }
-var DATA_PROVA=new Date(2026,8,6); // 06/09/2026 — mesma constante de mini-diagnostico.html
+var DATA_PROVA=new Date(2027,0,10); // 10/01/2027, domingo (48º Exame). Mesma constante de mini-diagnostico.html
 function diasParaProva(){
     var d=Math.ceil((DATA_PROVA-new Date())/86400000);
     return d>0? d : null;
@@ -864,8 +864,8 @@ var FAQ = [
     // LIMITE_DISPOSITIVOS = 3) e o prazo de acesso vem do webhook (365 dias).
     { q:'Como o acesso chega depois que eu pago?',
       a:'Assim que o pagamento é confirmado, você recebe a confirmação e entra em app.sooquecai.online com o mesmo e-mail que usou na compra. Não tem senha para criar nem para lembrar: o sistema confere o e-mail e libera na hora. Dá para usar em até 3 aparelhos, e o acesso vale por 12 meses.' },
-    { q:'Vale para o Exame de setembro ou para o próximo?',
-      a:'Para os dois. O material trata do que se repete em toda 1ª fase, as 6 matérias do núcleo duro e a tática de prova, e não de uma edição específica. Como o acesso vale 12 meses, quem presta em setembro usa agora e quem vai prestar em janeiro tem o tempo inteiro de preparação pela frente.' },
+    { q:'Vale para o Exame de janeiro ou para o próximo?',
+      a:'Para os dois. O material trata do que se repete em toda 1ª fase, as 6 matérias do núcleo duro e a tática de prova, e não de uma edição específica. O acesso vale 12 meses: quem presta em janeiro tem a preparação inteira pela frente, e se precisar voltar na edição seguinte o acesso continua lá.' },
     { q:'Já estudo com outro curso. Isso substitui?',
       a:'Não substitui, direciona. Ele mostra o que corrigir e em que ordem, para o estudo que você já faz render ponto. A maioria das pessoas usa os dois juntos.' },
     { q:'E as outras 11 matérias, fora do núcleo duro?',

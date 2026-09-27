@@ -1064,8 +1064,8 @@
     // LIMITE_DISPOSITIVOS = 3) e o prazo de acesso vem do webhook (365 dias).
     { q:'Como o acesso chega depois que eu pago?',
       a:'Assim que o pagamento é confirmado, você recebe a confirmação e entra em app.sooquecai.online com o mesmo e-mail que usou na compra. Não tem senha para criar nem para lembrar: o sistema confere o e-mail e libera na hora. Dá para usar em até 3 aparelhos, e o acesso vale por 12 meses.' },
-    { q:'Vale para o Exame de setembro ou para o próximo?',
-      a:'Para os dois. O material trata do que se repete em toda 1ª fase, as 6 matérias do núcleo duro e a tática de prova, e não de uma edição específica. Como o acesso vale 12 meses, quem presta em setembro usa agora e quem vai prestar em janeiro tem o tempo inteiro de preparação pela frente.' },
+    { q:'Vale para o Exame de janeiro ou para o próximo?',
+      a:'Para os dois. O material trata do que se repete em toda 1ª fase, as 6 matérias do núcleo duro e a tática de prova, e não de uma edição específica. O acesso vale 12 meses: quem presta em janeiro tem a preparação inteira pela frente, e se precisar voltar na edição seguinte o acesso continua lá.' },
     // "Já estudo com outro curso. Isso substitui?" saiu daqui em 07/08/2026 e virou
     // cartão dentro da seção da oferta, logo depois de stackOferta(). É a objeção mais
     // comum deste público e, aqui, ela era a 11ª de 17, fechada, em 14.314 px, isto é,
@@ -2174,7 +2174,7 @@
 
   // Dias até a 1ª fase. Urgência REAL, tirada do calendário, nunca inventada.
   // ATUALIZAR a cada edição do exame.
-  var DATA_PROVA=new Date(2026,8,6); // 06/09/2026
+  var DATA_PROVA=new Date(2027,0,10); // 10/01/2027, domingo (48º Exame)
   function diasParaProva(){
     var d=Math.ceil((DATA_PROVA-new Date())/86400000);
     return d>0? d : null;
@@ -3278,8 +3278,9 @@
       '</ul>'+
       '<div class="fine">'+(function(){ var dd=diasParaProva();
         if(dd===1) return 'O que não espera é a prova: ela é amanhã, com ou sem material. O que ele ainda alcança é a noite de hoje e a manhã de amanhã.';
-        if(dd && dd<=7) return 'O que não espera é a prova: ela é domingo, 6 de setembro, com ou sem material, e cada dia que passa tira um pedaço do que ele ainda alcança.';
-        return 'O que não espera é a prova: ela é no dia 6 de setembro com ou sem material, e cada semana que passa tira um pedaço do que ele ainda alcança.'; })()+'</div>'+
+        if(dd && dd<=7) return 'O que não espera é a prova: ela é domingo, '+DATA_PROVA.getDate()+' de '+['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'][DATA_PROVA.getMonth()]+', com ou sem material, e cada dia que passa tira um pedaço do que ele ainda alcança.';
+        if(!dd) return 'O que não espera é a prova: ela vem com ou sem material, e cada semana parada é uma semana a menos de preparação.';
+        return 'O que não espera é a prova: ela é no dia '+DATA_PROVA.getDate()+' de '+['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'][DATA_PROVA.getMonth()]+' com ou sem material, e cada semana que passa tira um pedaço do que ele ainda alcança.'; })()+'</div>'+
     '</div>';
   }
 

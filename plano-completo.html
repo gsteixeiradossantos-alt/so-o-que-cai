@@ -439,7 +439,7 @@
 
 <section class="vsec larga">
   <span class="eyebrow">O que entra no seu acesso</span>
-  <h2 class="grande" id="entregaH2">O calendário até o dia 6 de setembro, dois simulados no tamanho da prova e as fichas das 17 matérias.</h2>
+  <h2 class="grande" id="entregaH2">As 11 matérias que faltam, dois simulados no tamanho da prova e o calendário até a data da sua prova.</h2>
   <div class="grade">
     <div class="cardb pequeno">
       <h4>Mais 11 matérias de fichas</h4>
@@ -687,7 +687,7 @@
          página: quem estava em cima do muro ganhava, de graça, o argumento para
          descer dele. Não mentir não obriga a advogar contra si. O único argumento
          de tempo que a página usa é o calendário, que é real e verificável. -->
-    <p class="fine">O que não dá para adiar é a prova: ela é no dia 6 de setembro com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.</p>
+    <p class="fine" id="prazoFine">O que não dá para adiar é a prova: ela é no dia 10 de janeiro com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.</p>
   </div>
 </section>
 
@@ -787,7 +787,7 @@
      Urgência REAL, tirada do edital, nunca inventada. ATUALIZAR a cada edição.
      A variante de d===null não é detalhe: sem ela a página mente sozinha a partir
      de 07/09, e ela vai continuar no ar. */
-  var DATA_PROVA = new Date(2026,8,6);    // 06/09/2026, domingo
+  var DATA_PROVA = new Date(2027,0,10);   // 10/01/2027, domingo (48º Exame)
   function diasParaProva(){
     var d = Math.ceil((DATA_PROVA - new Date())/86400000);
     return d > 0 ? d : null;
@@ -1225,21 +1225,21 @@
     if(!d){
       // A partir de 07/09 a prova já passou e a página continua no ar.
       el.innerHTML =
-        '<div class="hk">A prova de setembro já passou</div>'+
-        '<p class="hp">As inscrições do 48º Exame abrem em 28 de setembro. O Plano Completo vale 12 meses a partir da compra, e o cronograma passa a ser montado para a data nova. Desta vez dá para começar pelo começo, e não pela reta final.</p>';
+        '<div class="hk">A prova de '+MES[DATA_PROVA.getMonth()]+' já passou</div>'+
+        '<p class="hp">O Plano Completo vale 12 meses a partir da compra, e o cronograma passa a ser montado para a data do próximo Exame. Desta vez dá para começar pelo começo, e não pela reta final.</p>';
       return;
     }
     var reta = Math.min(21, d), base = d - reta;
     el.innerHTML =
-      '<div class="hk">Por que hoje, '+esc(porExtenso(new Date()))+', e não em outubro</div>'+
-      '<p class="hp">'+esc(diasFrase(d))+', que é dia 6 de setembro, um domingo. O que cabe nesses dias encolhe toda semana.</p>'+
+      '<div class="hk">Por que hoje, '+esc(porExtenso(new Date()))+', e não em '+MES[(new Date().getMonth()+1)%12]+'</div>'+
+      '<p class="hp">'+esc(diasFrase(d))+', que é dia '+esc(porExtenso(DATA_PROVA))+', um domingo. O que cabe nesses dias encolhe toda semana.</p>'+
       '<div class="hgrid">'+
         '<div class="hcard"><b>Hoje</b><p>'+
           (base > 0
             ? 'Os '+d+' dias comportam as duas coisas: '+base+' dias de base nas matérias que você não mediu e '+reta+' de reta final. Os dois simulados de 80 cabem, com dias sobrando para revisar os erros de cada um.'
             : 'Os '+d+' dias que faltam são todos de reta final. Dá para revisar as matérias que você não mediu e fazer os dois simulados de 80, com o cronograma organizando a ordem.')+
         '</p></div>'+
-        '<div class="hcard"><b>Em duas semanas</b><p>Sobra a reta final. Dá para revisar, não dá para aprender matéria nova com calma, e um dos simulados provavelmente fica sem revisão.</p></div>'+
+        '<div class="hcard"><b>'+(d > 35 ? 'A 21 dias da prova' : 'Em duas semanas')+'</b><p>Sobra a reta final. Dá para revisar, não dá para aprender matéria nova com calma, e um dos simulados provavelmente fica sem revisão.</p></div>'+
         '<div class="hcard"><b>Na véspera</b><p>Sobra o Cabeça para a prova. Ajuda, e é a menor parte do que você pagaria.</p></div>'+
       '</div>'+
       // Este era o pior dos três: um convite explícito a adiar ("se você só puder
@@ -1249,7 +1249,7 @@
       // nenhuma frase sobre preço (ver POSTURA SOBRE PREÇO, no bloco da objeção).
       '<p class="hpe">O que o tempo muda é em qual desses três cartões você está. '
         + (d > 21
-            ? 'Hoje você está no primeiro. Em duas semanas estará no do meio.'
+            ? 'Hoje você está no primeiro. ' + (d > 35 ? 'Daqui a ' + (d - 21) + ' dias estará no do meio.' : 'Em duas semanas estará no do meio.')
             : (d > 3 ? 'Você já passou do primeiro.' : 'O terceiro é o de agora.'))
         + '</p>'+
       // O CUSTO DE NÃO FAZER NADA (07/08/2026). A página inteira descrevia o que a
@@ -1261,7 +1261,7 @@
       // momento da descoberta: a conta das onze matérias não medidas vai ser feita de
       // um jeito ou de outro, hoje ou no caderno de prova. Só um dos dois dá para
       // corrigir. Nada aqui é dito no futuro do indicativo sobre o resultado dela.
-      '<p class="hfim">Se nada mudar até lá, essa conta não some: ela passa a ser feita no dia 6, quando você abrir o caderno e descobrir ali quais das onze matérias caíram e como você vai nelas. <b>É a mesma descoberta, no único dia em que ela não dá mais para corrigir.</b></p>';
+      '<p class="hfim">Se nada mudar até lá, essa conta não some: ela passa a ser feita no dia '+DATA_PROVA.getDate()+', quando você abrir o caderno e descobrir ali quais das onze matérias caíram e como você vai nelas. <b>É a mesma descoberta, no único dia em que ela não dá mais para corrigir.</b></p>';
   }
 
   // Frases que dependem dos dias e vivem fora do bloco de calendário.
@@ -1272,6 +1272,9 @@
   // não se perdeu: ela é dita no bloco do mecanismo, com mais contexto.
   function ajustarDias(){
     var d = diasParaProva();
+    var fine = $('prazoFine');
+    if(fine && !d) fine.textContent = 'O que não dá para adiar é a prova: ela vem com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.';
+    else if(fine) fine.textContent = 'O que não dá para adiar é a prova: ela é no dia ' + porExtenso(DATA_PROVA) + ' com ou sem plano, e cada semana que passa tira um pedaço do que ainda cabe no calendário.';
     var h2 = $('entregaH2');
     if(!h2) return;
     h2.textContent = d
