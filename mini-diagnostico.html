@@ -22,11 +22,13 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2315212B'/%3E%3Cg stroke='%23F3EEE4' stroke-width='2.4' fill='none'%3E%3Ccircle cx='16' cy='16' r='7.2'/%3E%3Cpath d='M16 4.5v4M16 23.5v4M4.5 16h4M23.5 16h4'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3' fill='%23C77A2B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet"></noscript>
 <!-- Fontes da página de vendas (body.vendas), handoff de 04/08/2026: Cinzel só no
      wordmark do topo, Source Serif 4 para títulos e números, Source Sans 3 para o
      corpo. O quiz continua em Spectral/Hanken Grotesk/Space Mono, acima. -->
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
 <!-- ===== FACEBOOK PIXEL ===== -->
 <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -3455,6 +3457,52 @@
     };
   }
 
+  // Repassa utm_* e fbclid da URL da página para o link do checkout, sem duplicar o que já
+  // estiver nele. Falhar aqui nunca pode impedir a ida para a Hotmart.
+  function comUtm(href){
+    try{
+      var q=new URLSearchParams(location.search), u=new URL(href, location.href), mudou=false;
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(function(k){
+        var v=q.get(k);
+        if(v && !u.searchParams.has(k)){ u.searchParams.set(k, v); mudou=true; }
+      });
+      return mudou ? u.toString() : href;
+    }catch(e){ return href; }
+  }
+
+  // Medição de leitura da oferta: quanto da página a pessoa percorre e se chegou a ver o
+  // vídeo do produto. Só roda onde existe botão de compra (a tela de solução), para o
+  // scroll do quiz não entrar na conta. Cada marca dispara uma vez por sessão.
+  var leituraLigada=false;
+  function medirLeitura(){
+    if(leituraLigada) return;
+    leituraLigada=true;
+    var feitos={}, videoVisto=false, ticking=false;
+    function checar(){
+      ticking=false;
+      if(!document.getElementById('buy0')) return;
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      if(h>0){
+        var pct=Math.round(window.scrollY/h*100);
+        [25,50,75,100].forEach(function(m){
+          if(pct>=m && !feitos[m]){ feitos[m]=1; marcarPixel('ScrollOferta',{pct:m}); }
+        });
+      }
+      if(!videoVisto){
+        var v=document.querySelector('.provas video');
+        if(v){
+          var r=v.getBoundingClientRect();
+          if(r.top<window.innerHeight*0.8 && r.bottom>window.innerHeight*0.2){
+            videoVisto=true; marcarPixel('VideoDemoVisto');
+          }
+        }
+      }
+    }
+    window.addEventListener('scroll',function(){
+      if(!ticking){ ticking=true; requestAnimationFrame(checar); }
+    },{passive:true});
+  }
+
   // Liga os botões de compra. Chamado só na tela de solução, que é a única que os tem.
   // Três coisas acontecem no clique, e a ORDEM importa:
   // 1. sck=<id do lead> entra na URL agora, e não na hora de montar o HTML, porque o id
@@ -3470,6 +3518,7 @@
   //    Meta para o /api/clique repetir o checkout pela Conversions API.
   var icDisparado=false;
   function ligarCompra(){
+    medirLeitura();
     // 'buy2' saiu da lista em 03/08 junto com o link do Plano Completo. 'buy3' saiu em
     // 05/08 junto com a barra fixa. Sobraram os dois que apontam para o checkout de
     // R$47: meio da oferta e bloco final.
@@ -3492,6 +3541,9 @@
       el.onclick=function(){
         var oferta=parseInt(el.getAttribute('data-v'),10);
         if(LEAD_ID && el.href.indexOf('&sck=')<0) el.href = el.href + '&sck=' + encodeURIComponent(LEAD_ID);
+        // UTMs do anúncio viajam junto com o sck: o sck fecha lead -> venda, a UTM diz de qual
+        // campanha veio, e o relatório da Hotmart passa a mostrar as duas coisas.
+        el.href = comUtm(el.href);
 
         // O evento sai por dois caminhos: o pixel daqui e a Conversions API lá no
         // /api/clique, com nome, e-mail e telefone do lead, que o navegador não
